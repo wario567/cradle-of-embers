@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SWN Campaign — Sector Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles/theme.css" />
+</head>
+<body>
+<div id="root"></div>
+
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+    <defs>
+      <radialGradient id="bg" cx="50%" cy="50%" r="60%">
+        <stop offset="0%" stop-color="#3a1a0a"/>
+        <stop offset="50%" stop-color="#180a08"/>
+        <stop offset="100%" stop-color="#0a0507"/>
+      </radialGradient>
+      <radialGradient id="ember" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ffd66b"/>
+        <stop offset="40%" stop-color="#ff9457"/>
+        <stop offset="100%" stop-color="#d65a2c" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="200" height="200" fill="url(#bg)"/>
+    <circle cx="100" cy="100" r="80" fill="url(#ember)" opacity="0.6"/>
+    <polygon points="100,40 160,75 160,125 100,160 40,125 40,75" fill="none" stroke="#ff9457" stroke-width="3"/>
+    <circle cx="100" cy="100" r="14" fill="#ff9457"/>
+    <circle cx="100" cy="100" r="6" fill="#ffd66b"/>
+  </svg>
+</template>
+
+<!-- React + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<!-- Three.js for 3D planets -->
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+
+<!-- Firebase (compat builds for plain script-tag use) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+<!-- Data + utils (plain JS) -->
+<script src="utils/rng.js"></script>
+<script src="utils/planet-texture.js"></script>
+<script src="utils/claude.js"></script>
+<script src="utils/firebase.js"></script>
+<script src="data/swn-tables.js"></script>
+<script src="data/sector-gen.js"></script>
+
+<!-- Components (Babel JSX) -->
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="components/tooltip.jsx"></script>
+<script type="text/babel" src="components/starfield.jsx"></script>
+<script type="text/babel" src="components/sector-map.jsx"></script>
+<script type="text/babel" src="components/system-view.jsx"></script>
+<script type="text/babel" src="components/planet-view.jsx"></script>
+<script type="text/babel" src="components/lists-views.jsx"></script>
+<script type="text/babel" src="components/combat.jsx"></script>
+<script type="text/babel" src="components/gm-turn.jsx"></script>
+<script type="text/babel" src="components/forge-views.jsx"></script>
+<script type="text/babel" src="components/multiplayer-panel.jsx"></script>
+<script type="text/babel" src="app.jsx"></script>
+
+<script type="text/babel">
+  (function mount() {
+    if (!window.App || !window.Starfield || !window.SectorMap || !window.PlanetView || !window.SystemView || !window.FactionsView || !window.NPCsView || !window.CombatView || !window.GMTurnView || !window.MissionGeneratorView || !window.EncounterGeneratorView || !window.CharacterSheetsView || !window.Tooltip || !window.MultiplayerPanel) {
+      return setTimeout(mount, 50);
+    }
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(React.createElement(window.App));
+  })();
+</script>
+</body>
+</html>
