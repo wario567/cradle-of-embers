@@ -2,6 +2,11 @@
 
 const { useState: useASt, useEffect: useAEf, useMemo: useAMem, useRef: useAR } = React;
 
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str + '\0swn-gm'));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 const NAV_ICONS = {
   sector: '⬡',
   system: '◎',
@@ -52,6 +57,14 @@ function App() {
   // Multiplayer panel toggle
   const [mpOpen, setMpOpen] = useASt(false);
 
+  // GM mode
+  const [isGM, setIsGM] = useASt(false);
+  const [gmModal, setGmModal] = useASt(null); // null | 'unlock' | 'setup' | 'change'
+  const [gmPw, setGmPw] = useASt('');
+  const [gmPw2, setGmPw2] = useASt('');
+  const [gmErr, setGmErr] = useASt('');
+  const gmPendingView = useAR(null);
+
   // Re-generate when seed changes
   useAEf(() => {
     setSector(window.generateSector(tweaks.seed));
@@ -80,6 +93,49 @@ function App() {
       }
     } catch {}
   }, [storageKey, campaignKey]);
+
+  // Redirect off GM views when GM mode is locked
+  useAEf(() => {
+    if (!isGM && ['gmturn', 'missions', 'encounters'].includes(currentView)) setCurrentView('sector');
+  }, [isGM]);
+
+  // --- GM mode functions ---
+  function openGMModal() {
+    const stored = localStorage.getItem('swn-gm-hash');
+    setGmModal(stored ? 'unlock' : 'setup');
+  }
+  function closeGmModal() { setGmModal(null); setGmPw(''); setGmPw2(''); setGmErr(''); }
+  async function submitGMPassword() {
+    const GM_KEY = 'swn-gm-hash';
+    const stored = localStorage.getItem(GM_KEY);
+    if (gmModal === 'setup') {
+      if (!gmPw) return setGmErr('Enter a password.');
+      if (gmPw !== gmPw2) return setGmErr('Passwords do not match.');
+      localStorage.setItem(GM_KEY, await sha256(gmPw));
+      setIsGM(true);
+      if (gmPendingView.current) { setCurrentView(gmPendingView.current); gmPendingView.current = null; }
+      closeGmModal();
+    } else if (gmModal === 'unlock') {
+      if (!gmPw) return setGmErr('Enter password.');
+      if (await sha256(gmPw) === stored) {
+        setIsGM(true);
+        if (gmPendingView.current) { setCurrentView(gmPendingView.current); gmPendingView.current = null; }
+        closeGmModal();
+      } else {
+        setGmErr('Incorrect password.');
+      }
+    } else if (gmModal === 'change') {
+      if (!gmPw) return setGmErr('Enter new password.');
+      if (gmPw !== gmPw2) return setGmErr('Passwords do not match.');
+      localStorage.setItem(GM_KEY, await sha256(gmPw));
+      closeGmModal();
+    }
+  }
+  function tryGMView(view) {
+    if (isGM) { setCurrentView(view); return; }
+    gmPendingView.current = view;
+    openGMModal();
+  }
 
   function saveCampaign(patch) {
     const next = { party, missions, encounters, gmLog, ...patch };
@@ -318,10 +374,13 @@ function App() {
           NavItem('timeline', currentView === 'timeline', 'Timeline', sector.timeline.length, () => setCurrentView('timeline')),
         ),
         React.createElement('div', { className: 'nav-section' },
-          React.createElement('div', { className: 'nav-label' }, 'GM TOOLS'),
-          NavItem('gmturn', currentView === 'gmturn', 'GM Turn', gmLog.length || null, () => setCurrentView('gmturn')),
-          NavItem('missions', currentView === 'missions', 'Mission Forge', missions.length || null, () => setCurrentView('missions')),
-          NavItem('encounters', currentView === 'encounters', 'Encounter Forge', encounters.length || null, () => setCurrentView('encounters')),
+          React.createElement('div', { className: 'nav-label', style: { display: 'flex', alignItems: 'center' } },
+            'GM TOOLS',
+            React.createElement('span', { style: { marginLeft: 'auto', opacity: 0.55, fontSize: 10, letterSpacing: 0 } }, isGM ? '🔓' : '🔒')
+          ),
+          NavItem('gmturn', currentView === 'gmturn', 'GM Turn', gmLog.length || null, () => tryGMView('gmturn')),
+          NavItem('missions', currentView === 'missions', 'Mission Forge', missions.length || null, () => tryGMView('missions')),
+          NavItem('encounters', currentView === 'encounters', 'Encounter Forge', encounters.length || null, () => tryGMView('encounters')),
         ),
         React.createElement('div', { className: 'nav-section' },
           React.createElement('div', { className: 'nav-label' }, 'PLAY'),
@@ -381,6 +440,19 @@ function App() {
             title: 'Import a campaign JSON file',
             style: { flex: 1, fontSize: 11 },
           }, '↑ Import')
+        ),
+        // GM mode toggle
+        React.createElement('div', { style: { display: 'flex', gap: 6, width: '100%' } },
+          React.createElement('button', {
+            onClick: isGM ? () => setIsGM(false) : openGMModal,
+            style: { flex: 1, fontSize: 11, ...(isGM ? { borderColor: 'var(--accent)', color: 'var(--accent)' } : {}) },
+            title: isGM ? 'Click to lock GM mode' : 'Unlock GM-only views',
+          }, isGM ? '🔓 GM Mode: ON' : '🔒 GM Mode'),
+          isGM && React.createElement('button', {
+            onClick: () => { setGmPw(''); setGmPw2(''); setGmErr(''); setGmModal('change'); },
+            style: { fontSize: 11, padding: '6px 8px' },
+            title: 'Change GM password',
+          }, '⚙'),
         ),
         // Multiplayer (compact button or opens overlay)
         window.MultiplayerPanel && React.createElement(window.MultiplayerPanel, {
@@ -458,6 +530,58 @@ function App() {
     ),
 
     // Multiplayer panel renders from within sidebar footer above.
+
+    // GM password modal
+    gmModal && React.createElement('div', {
+      style: { position: 'fixed', inset: 0, background: 'rgba(10,5,7,0.88)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' },
+      onClick: e => e.target === e.currentTarget && closeGmModal(),
+    },
+      React.createElement('div', { style: { background: 'var(--bg-2)', border: '1px solid var(--border-1)', borderRadius: 10, padding: 28, width: 320, display: 'flex', flexDirection: 'column', gap: 12 } },
+        React.createElement('div', { style: { fontFamily: 'var(--font-display-alt)', fontWeight: 600, fontSize: 14, color: 'var(--fg-0)', letterSpacing: '0.08em', textTransform: 'uppercase' } },
+          gmModal === 'setup' ? '✶ Set GM Password' : gmModal === 'change' ? '✶ Change GM Password' : '✶ GM Mode'
+        ),
+        React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-3)', lineHeight: 1.6 } },
+          gmModal === 'setup' ? 'No GM password is set yet. Create one to lock GM-only views from players.' :
+          gmModal === 'change' ? 'Enter and confirm a new GM password.' :
+          'Enter the GM password to access GM Turn, Mission Forge, and Encounter Forge.'
+        ),
+        React.createElement('input', {
+          type: 'password',
+          placeholder: gmModal === 'unlock' ? 'Password…' : 'New password…',
+          value: gmPw,
+          autoFocus: true,
+          onChange: e => { setGmPw(e.target.value); setGmErr(''); },
+          onKeyDown: e => {
+            if (e.key === 'Enter') {
+              if (gmModal === 'unlock') submitGMPassword();
+              else { const el = document.getElementById('gm-pw2-input'); if (el) el.focus(); }
+            }
+            if (e.key === 'Escape') closeGmModal();
+          },
+          style: { fontSize: 13, padding: '8px 10px', background: 'var(--bg-3)', border: '1px solid var(--border-1)', borderRadius: 4, color: 'var(--fg-0)', outline: 'none', width: '100%' },
+        }),
+        (gmModal === 'setup' || gmModal === 'change') && React.createElement('input', {
+          id: 'gm-pw2-input',
+          type: 'password',
+          placeholder: 'Confirm password…',
+          value: gmPw2,
+          onChange: e => { setGmPw2(e.target.value); setGmErr(''); },
+          onKeyDown: e => {
+            if (e.key === 'Enter') submitGMPassword();
+            if (e.key === 'Escape') closeGmModal();
+          },
+          style: { fontSize: 13, padding: '8px 10px', background: 'var(--bg-3)', border: '1px solid var(--border-1)', borderRadius: 4, color: 'var(--fg-0)', outline: 'none', width: '100%' },
+        }),
+        gmErr && React.createElement('div', { style: { fontSize: 11, color: 'var(--danger)', fontWeight: 500 } }, gmErr),
+        React.createElement('div', { style: { display: 'flex', gap: 8, marginTop: 4 } },
+          React.createElement('button', { onClick: closeGmModal, style: { flex: 1, fontSize: 12 } }, 'Cancel'),
+          React.createElement('button', {
+            onClick: submitGMPassword,
+            style: { flex: 2, fontSize: 12, background: 'var(--accent)', color: '#1a0d08', border: 'none', fontWeight: 600, borderRadius: 4 },
+          }, gmModal === 'setup' ? 'Set Password' : gmModal === 'change' ? 'Change Password' : 'Unlock GM Mode')
+        )
+      )
+    )
   );
 }
 
