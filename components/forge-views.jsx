@@ -417,6 +417,10 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
   const [specialistSkill, setSpecialistSkill] = useMGs('Notice');
   const [disciplines, setDisciplines] = useMGs([]);
   const [pkg, setPkg] = useMGs(null);
+  // Attribute rolling: keep the rolled baseline so the rules' "raise one score
+  // to 14" option (SWN p.4, step 1) can move freely between attributes.
+  const [rolledAttrs, setRolledAttrs] = useMGs(null); // non-null = scores came from a roll
+  const [swap14, setSwap14] = useMGs(null);           // which attribute was raised to 14
 
   const isWarrior = cls === 'Warrior' || (cls === 'Adventurer' && partials.includes('Warrior'));
   const isExpert = cls === 'Expert' || (cls === 'Adventurer' && partials.includes('Expert'));
@@ -427,9 +431,18 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
     const r = () => Math.floor(Math.random() * 6) + 1;
     const next = {};
     ATTR_KEYS.forEach(k => next[k] = r() + r() + r());
-    setAttrs(next);
+    setAttrs(next); setRolledAttrs(next); setSwap14(null);
   }
-  function setArray() { setAttrs({ STR: 14, DEX: 12, CON: 11, INT: 10, WIS: 9, CHA: 7 }); }
+  function setArray() { setAttrs({ STR: 14, DEX: 12, CON: 11, INT: 10, WIS: 9, CHA: 7 }); setRolledAttrs(null); setSwap14(null); }
+  // Step 1: after rolling, the player may raise exactly one score to 14. Click to
+  // set it, click again to undo, click another to move it — always from the roll baseline.
+  function raiseTo14(key) {
+    if (!rolledAttrs) return;
+    if (swap14 === key) { setAttrs({ ...rolledAttrs }); setSwap14(null); }
+    else { setAttrs({ ...rolledAttrs, [key]: 14 }); setSwap14(key); }
+  }
+  // Editing a score by hand is full manual control — it leaves roll/swap mode.
+  function editAttr(key, val) { setAttrs({ ...attrs, [key]: +val || 0 }); setRolledAttrs(null); setSwap14(null); }
 
   // Resolve the final skill list (background quick skills, or custom picks), plus focus skill.
   function resolveSkills() {
@@ -476,7 +489,9 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
   function finish() {
     const r = () => Math.floor(Math.random() * 6) + 1;
     const dexMod = attrMod(attrs.DEX);
-    const hp = Math.max(1, r() + Math.max(0, attrMod(attrs.CON)) + (isWarrior ? 2 : 0));
+    // HP = 1d6 + Con modifier (+2 for Warriors/Partial Warriors). A Con penalty
+    // applies, but total HP can never drop below 1 (SWN p.4, step 11).
+    const hp = Math.max(1, r() + attrMod(attrs.CON) + (isWarrior ? 2 : 0));
     const p = CG.packages.find(x => x.name === pkg);
     const baseAc = p ? p.ac : 10;
     const weapons = p ? p.weapons.map(w => ({ name: w.name, dmg: w.dmg, range: w.range || '—', shock: '' })) : [];
@@ -535,19 +550,31 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
     );
   } else if (stepId === 'attrs') {
     body = React.createElement('div', null,
-      note('Six attributes set your raw potential. Assign the standard array — 14, 12, 11, 10, 9, 7 — however you like, or roll the dice. The badge beside each score is its modifier: the bonus you actually add to rolls.'),
+      note('Six attributes set your raw potential. Assign the standard array — 14, 12, 11, 10, 9, 7 — however you like, or roll 3d6 in order. The badge beside each score is its modifier: the bonus you actually add to rolls.'),
       React.createElement('div', { className: 'cb-seg' },
         React.createElement('button', { className: 'ghost', style: { fontSize: 12 }, onClick: setArray }, 'Standard Array'),
         React.createElement('button', { className: 'ghost', style: { fontSize: 12 }, onClick: rollAttrs }, '⚂ Roll 3d6')
+      ),
+      rolledAttrs && React.createElement('div', { className: 'cb-swap-hint' },
+        swap14
+          ? React.createElement('span', null, 'Raised ', React.createElement('b', null, swap14), ' to 14. Click another to move it, or click ', React.createElement('b', null, swap14), ' again to undo.')
+          : 'You rolled in order. The rules let you raise one score to 14 — click an attribute to set it.'
       ),
       React.createElement('div', { className: 'cb-attrs' },
         CG.attributes.map(a => {
           const m = attrMod(attrs[a.key]);
           const modCls = 'cb-attr-mod' + (m > 0 ? ' pos' : m < 0 ? ' neg' : '');
-          return React.createElement('div', { key: a.key, className: 'cb-attr' },
-            React.createElement('input', { type: 'number', className: 'cb-attr-score', value: attrs[a.key], onChange: e => setAttrs({ ...attrs, [a.key]: +e.target.value || 0 }), 'aria-label': a.name + ' score' }),
+          const swapped = swap14 === a.key;
+          return React.createElement('div', {
+            key: a.key,
+            className: 'cb-attr' + (rolledAttrs ? ' swappable' : '') + (swapped ? ' swapped' : ''),
+            onClick: rolledAttrs ? () => raiseTo14(a.key) : null,
+            title: rolledAttrs ? 'Click to raise ' + a.name + ' to 14' : null,
+          },
+            React.createElement('input', { type: 'number', className: 'cb-attr-score', value: attrs[a.key], onClick: e => e.stopPropagation(), onChange: e => editAttr(a.key, e.target.value), 'aria-label': a.name + ' score' }),
             React.createElement('div', { className: 'cb-attr-meta' },
-              React.createElement('div', { className: 'cb-attr-name' }, a.name),
+              React.createElement('div', { className: 'cb-attr-name' }, a.name,
+                swapped && React.createElement('span', { className: 'cb-attr-flag' }, '★ 14')),
               React.createElement('div', { className: 'cb-attr-blurb' }, a.blurb)
             ),
             React.createElement('div', { className: modCls, title: 'Modifier — added to relevant rolls' }, (m >= 0 ? '+' : '') + m)

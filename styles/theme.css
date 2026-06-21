@@ -765,6 +765,18 @@ textarea { resize: vertical; min-height: 60px; font-family: var(--font-sans); }
 }
 .cb-attr-mod.neg { color: var(--danger); border-color: rgba(239, 91, 91, 0.4); background: rgba(239, 91, 91, 0.08); }
 
+/* Step 1's "raise one rolled score to 14" affordance. */
+.cb-swap-hint {
+  font-size: 11.5px; line-height: 1.5; color: var(--accent);
+  background: var(--accent-bg); border: 1px solid rgba(255, 148, 87, 0.3);
+  border-radius: 8px; padding: 8px 11px; margin-bottom: 12px;
+}
+.cb-swap-hint b { color: var(--fg-0); font-family: var(--font-mono); }
+.cb-attr.swappable { cursor: pointer; }
+.cb-attr.swappable:hover { border-color: var(--accent-soft); }
+.cb-attr.swapped { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 0 16px rgba(255, 148, 87, 0.18); }
+.cb-attr-flag { font-family: var(--font-mono); font-size: 9px; color: var(--accent); margin-left: 6px; letter-spacing: 0.08em; }
+
 /* ───────────────────────── Responsive — narrow screens ─────────────────────────
    Desktop layout is unchanged; these rules only engage below the breakpoints, so
    the Playwright suite (Desktop Chrome, 1280px) sees identical structure. Card
