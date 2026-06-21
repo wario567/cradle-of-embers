@@ -685,3 +685,55 @@ textarea { resize: vertical; min-height: 60px; font-family: var(--font-sans); }
 .cb-card.selected { border-color: var(--accent); background: var(--accent-bg); }
 .cb-skillgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 @media (max-width: 560px) { .cb-skillgrid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ───────────────────────── Responsive — narrow screens ─────────────────────────
+   Desktop layout is unchanged; these rules only engage below the breakpoints, so
+   the Playwright suite (Desktop Chrome, 1280px) sees identical structure. Card
+   grids are made fluid inline with auto-fit/min(); here we handle the app shell,
+   the list/detail split panes, and the modals. */
+
+/* List/detail panes (roster+sheet, factions+detail, faction turn) stack to a
+   single scrolling column on narrow screens. !important overrides the inline
+   grid-template-columns these containers set for the desktop two-pane layout. */
+@media (max-width: 760px) {
+  .split-pane {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: min-content;
+    overflow-y: auto !important;
+  }
+  .split-pane > * {
+    overflow: visible !important;
+    border-right: none !important;
+    min-width: 0 !important; /* let panes shrink below content width instead of forcing horizontal scroll */
+  }
+}
+
+/* Planet view: stack the 3D stage above the character sheet, keeping the stage
+   tall enough for the canvas to render. */
+@media (max-width: 760px) {
+  .planet-view {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(280px, 44vh) 1fr;
+  }
+  .planet-sheet { border-left: none; border-top: 1px solid var(--border-soft); }
+}
+
+/* Two/three-up card panels fall to a single column on phones. */
+@media (max-width: 600px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+/* App shell: reclaim horizontal room by trimming the fixed sidebar/right rail.
+   Nav labels already ellipsis-truncate, so they stay legible. */
+@media (max-width: 760px) {
+  :root { --sidebar-w: 176px; --right-w: 300px; }
+  .topbar .search { width: 140px; }
+}
+@media (max-width: 520px) {
+  :root { --sidebar-w: 150px; }
+}
+
+/* Modals: pad the overlay and cap width so dialogs never touch the screen edge. */
+@media (max-width: 480px) {
+  .cb-modal { padding: 16px; }
+}

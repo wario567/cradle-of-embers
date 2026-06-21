@@ -84,7 +84,7 @@ Generate a complete mission. Return JSON shaped exactly:
           rows: 3,
           style: { marginBottom: 12, fontSize: 14 },
         }),
-        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 12 } },
+        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 10, marginBottom: 12 } },
           React.createElement('label', { style: { fontSize: 11, color: 'var(--fg-3)' } }, 'Tone',
             React.createElement('select', { value: tone, onChange: e => setTone(e.target.value), style: { marginTop: 4 } },
               ['Investigation', 'Heist', 'Combat', 'Diplomacy', 'Horror', 'Exploration', 'Rescue', 'Sabotage'].map(t => React.createElement('option', { key: t }, t))
@@ -124,7 +124,7 @@ Generate a complete mission. Return JSON shaped exactly:
     // Saved missions
     missions.length > 0 && React.createElement('div', null,
       React.createElement('div', { style: { fontFamily: 'JetBrains Mono', fontSize: 11, letterSpacing: '0.08em', color: 'var(--fg-3)', textTransform: 'uppercase', marginBottom: 8 } }, missions.length + ' SAVED MISSIONS'),
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))', gap: 14 } },
+      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(420px, 100%), 1fr))', gap: 14 } },
         missions.map(m => React.createElement('div', { key: m.id, className: 'panel' },
           React.createElement('div', { className: 'panel-title' },
             React.createElement('span', null, m.title),
@@ -249,7 +249,7 @@ Build the encounter. Return JSON shaped exactly:
     // Input
     React.createElement('div', { className: 'panel', style: { marginBottom: 18, maxWidth: 900 } },
       React.createElement('div', { className: 'panel-body' },
-        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 12 } },
+        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 10, marginBottom: 12 } },
           React.createElement('label', { style: { fontSize: 11, color: 'var(--fg-3)' } }, 'Planet',
             React.createElement('select', { value: planetId, onChange: e => setPlanetId(e.target.value), style: { marginTop: 4 } },
               sector.systems.flatMap(s => s.planets).map(p => React.createElement('option', { key: p.id, value: p.id }, p.name + ' (' + p.biome + ')'))
@@ -282,7 +282,7 @@ Build the encounter. Return JSON shaped exactly:
     // Saved
     encounters.length > 0 && React.createElement('div', { style: { marginTop: 12 } },
       React.createElement('div', { style: { fontFamily: 'JetBrains Mono', fontSize: 11, letterSpacing: '0.08em', color: 'var(--fg-3)', textTransform: 'uppercase', marginBottom: 8 } }, encounters.length + ' SAVED ENCOUNTERS'),
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))', gap: 14 } },
+      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(420px, 100%), 1fr))', gap: 14 } },
         encounters.map(e => React.createElement(EncounterCard, { key: e.id, encounter: e, onDelete: () => onDelete(e.id), onLoadToCombat }))
       )
     )
@@ -791,10 +791,10 @@ function CharacterSheetsView({ party = [], me = { id: 'anon', name: '' }, isGM =
     update({ saves: computeSaves(sel.level, sel.attrs) });
   }
 
-  return React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '300px 1fr', height: '100%', overflow: 'hidden' } },
+  return React.createElement('div', { className: 'split-pane', style: { display: 'grid', gridTemplateColumns: '300px 1fr', height: '100%', overflow: 'hidden' } },
     // Roster
     React.createElement('div', { style: { borderRight: '1px solid var(--border-soft)', overflowY: 'auto', padding: 16, background: 'rgba(10,5,7,0.6)' } },
-      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10, gap: 6 } },
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10, gap: 6, flexWrap: 'wrap' } },
         React.createElement('div', { style: { fontFamily: 'JetBrains Mono', fontSize: 11, letterSpacing: '0.08em', color: 'var(--fg-3)', textTransform: 'uppercase' } }, party.length + ' PCs'),
         React.createElement('div', { style: { display: 'flex', gap: 6 } },
           React.createElement('button', { className: 'primary', style: { fontSize: 11 }, onClick: () => setBuilderOpen(true), title: 'Guided character creation' }, '+ Create' + (isGM ? ' PC' : ' my character')),
@@ -822,9 +822,9 @@ function CharacterSheetsView({ party = [], me = { id: 'anon', name: '' }, isGM =
         !sel.ownerId && React.createElement('button', { className: 'primary', style: { marginLeft: 'auto', fontSize: 12 }, onClick: claim }, 'Claim as mine')
       ),
       React.createElement('div', { style: ro ? { pointerEvents: 'none', opacity: 0.9 } : null },
-      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 18 } },
-        React.createElement('div', { style: { flex: 1 } },
-          React.createElement('input', { value: sel.name, onChange: e => update({ name: e.target.value }), style: { fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 600, background: 'transparent', border: 'none', color: 'var(--fg-0)', padding: 0 } }),
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 18, gap: 8, flexWrap: 'wrap' } },
+        React.createElement('div', { style: { flex: 1, minWidth: 180 } },
+          React.createElement('input', { value: sel.name, onChange: e => update({ name: e.target.value }), style: { fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 600, background: 'transparent', border: 'none', color: 'var(--fg-0)', padding: 0, width: '100%' } }),
           React.createElement('div', { style: { display: 'flex', gap: 8, marginTop: 4, alignItems: 'center', flexWrap: 'wrap' } },
             React.createElement('select', { value: sel.class, onChange: e => update({ class: e.target.value }), style: { width: 'auto', padding: '2px 6px', fontSize: 12 } },
               CHAR_CLASSES.map(c => React.createElement('option', { key: c }, c))),
@@ -844,7 +844,7 @@ function CharacterSheetsView({ party = [], me = { id: 'anon', name: '' }, isGM =
       React.createElement('div', { className: 'panel', style: { marginBottom: 14 } },
         React.createElement('div', { className: 'panel-title' }, 'Attributes'),
         React.createElement('div', { className: 'panel-body' },
-          React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 10 } },
+          React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(76px, 1fr))', gap: 10 } },
             ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'].map(k => React.createElement('div', { key: k, style: { textAlign: 'center' } },
               React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } }, k),
               React.createElement('input', { type: 'number', value: sel.attrs?.[k] ?? 10, onChange: e => updateAttr(k, e.target.value),
@@ -868,7 +868,7 @@ function CharacterSheetsView({ party = [], me = { id: 'anon', name: '' }, isGM =
       React.createElement('div', { className: 'panel', style: { marginBottom: 14 } },
         React.createElement('div', { className: 'panel-title' }, 'Combat'),
         React.createElement('div', { className: 'panel-body' },
-          React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 } },
+          React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(118px, 1fr))', gap: 12 } },
             React.createElement('div', null,
               React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } }, 'HP'),
               React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 4 } },
@@ -897,7 +897,7 @@ function CharacterSheetsView({ party = [], me = { id: 'anon', name: '' }, isGM =
             )
           ),
           // Armor + credits
-          React.createElement('div', { style: { marginTop: 12, display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 } },
+          React.createElement('div', { style: { marginTop: 12, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 10 } },
             React.createElement('div', null,
               React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } }, 'Armor'),
               React.createElement('select', { value: sel.armor || 'None', onChange: e => setArmor(e.target.value) },
@@ -915,7 +915,7 @@ function CharacterSheetsView({ party = [], me = { id: 'anon', name: '' }, isGM =
                 TT ? React.createElement(TT, { content: React.createElement('div', null, React.createElement('strong', null, 'Saving Throws'), React.createElement('div', { style: { marginTop: 4 } }, '16 − level − best relevant attribute modifier. Roll d20 ≥ target to succeed. Lower is better.')) }, 'Saves') : 'Saves'),
               React.createElement('button', { className: 'ghost', style: { fontSize: 10, padding: '2px 6px' }, onClick: recomputeSaves }, '↻ Auto')
             ),
-            React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 } },
+            React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))', gap: 10 } },
               ['physical', 'evasion', 'mental'].map(s => React.createElement('div', { key: s },
                 React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'capitalize' } }, s),
                 React.createElement('div', { style: { display: 'flex', gap: 4 } },
