@@ -1,92 +1,105 @@
-// Firebase multiplayer sync — Firestore + anonymous auth + presence.
-// One Firestore document per campaign (`campaigns/{seed}`) holding sector edits + campaign data.
-// Presence stored at `campaigns/{seed}/presence/{userId}` — auto-updated, expires stale.
+// Multiplayer sync via PocketBase.
+// Replaces Firebase but keeps the same window.MP API surface.
+// One PocketBase record per campaign (collection: "campaigns", id: seed).
+// Presence stored as records in "presence" collection.
 
 (function () {
-  // Config — user-provided. API key is meant to be public; security lives in Firestore Rules.
-  const firebaseConfig = {
-    apiKey: "AIzaSyACBC8zvb6YNfCY9aQKi_nBWn2buk6C_Gw",
-    authDomain: "cradle-of-embers.firebaseapp.com",
-    projectId: "cradle-of-embers",
-    storageBucket: "cradle-of-embers.firebasestorage.app",
-    messagingSenderId: "614243565412",
-    appId: "1:614243565412:web:bb0c7b174d6bfc48748471",
-    measurementId: "G-PFGVZS049J",
-  };
+  const PB_URL = 'http://129.153.115.84:8090';
 
-  let app = null;
-  let db = null;
-  let auth = null;
+  let pb = null;
   let userId = null;
+  let unsubscribeFns = [];
 
-  // Wait for the Firebase compat scripts to load.
   function ready() {
-    return typeof firebase !== 'undefined' && firebase.firestore && firebase.auth;
+    return typeof PocketBase !== 'undefined';
   }
 
   async function init() {
-    if (app) return { app, db, auth, userId };
-    if (!ready()) throw new Error('Firebase SDK not loaded');
-    app = firebase.initializeApp(firebaseConfig);
-    db = firebase.firestore();
-    auth = firebase.auth();
-    // Anonymous auth so writes can be scoped per user. Falls back gracefully if disabled.
-    try {
-      const cred = await auth.signInAnonymously();
-      userId = cred.user.uid;
-    } catch (e) {
-      // Anonymous auth not enabled — generate a random local ID and proceed.
-      console.warn('[mp] anonymous auth unavailable, using local user id', e?.code);
-      userId = 'local-' + Math.random().toString(36).slice(2, 12);
+    if (pb) return { userId };
+    if (!ready()) throw new Error('PocketBase SDK not loaded');
+    pb = new PocketBase(PB_URL);
+    // Use stored anonymous identity or generate one
+    userId = localStorage.getItem('mp-user-id');
+    if (!userId) {
+      userId = 'u-' + Math.random().toString(36).slice(2, 12);
+      localStorage.setItem('mp-user-id', userId);
     }
-    return { app, db, auth, userId };
+    return { userId };
   }
 
-  // Subscribe to the campaign doc. Returns unsubscribe.
+  // Subscribe to campaign record changes. Returns unsubscribe fn.
   function subscribeCampaign(seed, onSnapshot) {
-    if (!db) return () => {};
-    return db.collection('campaigns').doc(seed).onSnapshot(
-      snap => {
-        if (snap.exists) onSnapshot(snap.data());
-        else onSnapshot(null);
-      },
-      err => console.warn('[mp] subscribe error', err?.code || err?.message)
-    );
+    if (!pb) return () => {};
+    const recordId = seedToId(seed);
+
+    // Fetch initial state
+    pb.collection('campaigns').getOne(recordId).then(rec => {
+      onSnapshot(rec.data);
+    }).catch(() => onSnapshot(null));
+
+    // Realtime updates
+    pb.collection('campaigns').subscribe(recordId, e => {
+      if (e.record) onSnapshot(e.record.data);
+    }).catch(err => console.warn('[mp] subscribe error', err));
+
+    return () => pb.collection('campaigns').unsubscribe(recordId);
   }
 
-  // Save campaign state (debounced by caller). Last-write-wins.
+  // Save campaign state. Last-write-wins via upsert.
   async function saveCampaign(seed, state, userName) {
-    if (!db) return;
+    if (!pb) return;
+    const recordId = seedToId(seed);
+    const payload = {
+      seed,
+      data: state,
+      lastUpdatedAt: new Date().toISOString(),
+      lastUpdatedBy: userName || userId || 'anon',
+    };
     try {
-      await db.collection('campaigns').doc(seed).set({
-        ...state,
-        lastUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-        lastUpdatedBy: userName || userId || 'anon',
-      }, { merge: true });
+      await pb.collection('campaigns').update(recordId, payload);
     } catch (e) {
-      console.warn('[mp] save error', e?.code || e?.message);
+      if (e?.status === 404) {
+        try {
+          await pb.collection('campaigns').create({ id: recordId, ...payload });
+        } catch (e2) {
+          console.warn('[mp] save error', e2);
+        }
+      } else {
+        console.warn('[mp] save error', e);
+      }
     }
   }
 
-  // Presence: heartbeat updates a doc; remote clients subscribe to the collection to see who's online.
+  // Presence heartbeat
   function startPresence(seed, name, color) {
-    if (!db || !userId) return () => {};
-    const ref = db.collection('campaigns').doc(seed).collection('presence').doc(userId);
-    const heartbeat = async () => {
-      try {
-        await ref.set({
-          name: name || 'Anonymous',
-          color: color || '#ff9457',
-          userId,
-          lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
-        });
-      } catch {}
+    if (!pb) return () => {};
+    const presenceId = seedToId(seed + '-' + userId);
+    const payload = {
+      seed,
+      userId,
+      name: name || 'Anonymous',
+      color: color || '#ff9457',
+      lastSeen: new Date().toISOString(),
     };
-    heartbeat();
-    const interval = setInterval(heartbeat, 15000);
-    // Remove on unload
-    const onUnload = () => { try { ref.delete(); } catch {} };
+
+    const upsert = async () => {
+      try {
+        await pb.collection('presence').update(presenceId, payload);
+      } catch (e) {
+        if (e?.status === 404) {
+          try { await pb.collection('presence').create({ id: presenceId, ...payload }); } catch {}
+        }
+      }
+    };
+
+    upsert();
+    const interval = setInterval(upsert, 15000);
+
+    const onUnload = () => {
+      try { pb.collection('presence').delete(presenceId); } catch {}
+    };
     window.addEventListener('beforeunload', onUnload);
+
     return () => {
       clearInterval(interval);
       window.removeEventListener('beforeunload', onUnload);
@@ -95,21 +108,33 @@
   }
 
   function subscribePresence(seed, onChange) {
-    if (!db) return () => {};
-    return db.collection('campaigns').doc(seed).collection('presence').onSnapshot(
-      snap => {
-        const now = Date.now();
-        const users = [];
-        snap.forEach(doc => {
-          const d = doc.data();
-          const lastSeen = d.lastSeen?.toMillis ? d.lastSeen.toMillis() : (d.lastSeen || 0);
-          // Filter stale (>2 min)
-          if (now - lastSeen < 120000 || !lastSeen) users.push(d);
-        });
-        onChange(users);
-      },
-      err => console.warn('[mp] presence subscribe error', err?.code || err?.message)
-    );
+    if (!pb) return () => {};
+    const now = () => Date.now();
+
+    const fetch = () => {
+      pb.collection('presence').getList(1, 50, { filter: `seed = "${seed}"` })
+        .then(res => {
+          const cutoff = now() - 120000;
+          const users = res.items.filter(r => new Date(r.lastSeen).getTime() > cutoff);
+          onChange(users);
+        }).catch(() => {});
+    };
+
+    fetch();
+    pb.collection('presence').subscribe('*', e => {
+      if (e.record?.seed === seed) fetch();
+    }).catch(() => {});
+
+    return () => pb.collection('presence').unsubscribe('*');
+  }
+
+  // PocketBase record IDs must be 15 chars alphanumeric. Hash the seed string.
+  function seedToId(seed) {
+    let h = 5381;
+    for (let i = 0; i < seed.length; i++) h = ((h << 5) + h) ^ seed.charCodeAt(i);
+    const abs = Math.abs(h).toString(36).padStart(7, '0');
+    // 15 char alphanumeric id
+    return ('pb' + abs + seed.replace(/[^a-z0-9]/gi, '').toLowerCase()).slice(0, 15).padEnd(15, '0');
   }
 
   window.MP = {
