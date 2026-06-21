@@ -344,23 +344,49 @@ function attrMod(a) {
   return 2;
 }
 
+// SWN XP thresholds (cumulative) per level.
+const XP_TABLE = [0, 0, 3, 6, 12, 18, 27, 39, 54, 72, 93];
+function levelFromXP(xp) {
+  let lvl = 1;
+  for (let i = 2; i < XP_TABLE.length; i++) if (xp >= XP_TABLE[i]) lvl = i;
+  if (xp >= 93) lvl = Math.max(10, lvl);
+  return lvl;
+}
+// SWN saves: 16 − level − best mod of the attribute pair. Lower is better; floor of 2.
+function computeSaves(level, attrs) {
+  const m = k => attrMod(attrs?.[k] ?? 10);
+  const clamp = v => Math.max(2, v);
+  return {
+    physical: clamp(16 - level - Math.max(m('STR'), m('CON'))),
+    evasion: clamp(16 - level - Math.max(m('DEX'), m('INT'))),
+    mental: clamp(16 - level - Math.max(m('WIS'), m('CHA'))),
+  };
+}
+
 function rollChar() {
   const r = () => Math.floor(Math.random() * 6) + 1;
   const roll3d6 = () => r() + r() + r();
   const SWN = window.SWN;
   const attrs = { STR: roll3d6(), DEX: roll3d6(), CON: roll3d6(), INT: roll3d6(), WIS: roll3d6(), CHA: roll3d6() };
   const level = 1;
-  const hp = Math.max(1, 6 + Math.max(0, attrMod(attrs.CON)));
+  const cls = CHAR_CLASSES[Math.floor(Math.random() * CHAR_CLASSES.length)];
+  const isWarrior = cls.startsWith('Warrior');
+  const hp = Math.max(1, r() + Math.max(0, attrMod(attrs.CON)) + (isWarrior ? 2 : 0));
   return {
     id: 'pc-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
     name: SWN.firstNames[Math.floor(Math.random() * SWN.firstNames.length)] + ' ' + SWN.lastNames[Math.floor(Math.random() * SWN.lastNames.length)],
-    class: CHAR_CLASSES[Math.floor(Math.random() * CHAR_CLASSES.length)],
+    class: cls,
     background: CHAR_BACKGROUNDS[Math.floor(Math.random() * CHAR_BACKGROUNDS.length)],
-    level, attrs, hp, maxHp: hp,
-    ac: 12,
-    ab: 0,
-    saves: { physical: 15, evasion: 14, mental: 14 },
+    species: 'Human',
+    level, xp: 0, attrs, hp, maxHp: hp,
+    bab: isWarrior ? 1 : 0,
+    armor: 'None',
+    ac: 10 + attrMod(attrs.DEX),
+    saves: computeSaves(level, attrs),
+    systemStrain: 0,
     skills: [],
+    foci: [],
+    weapons: [],
     gear: [],
     credits: 200,
     notes: '',
@@ -376,12 +402,40 @@ function CharacterSheetsView({ party = [], onSave, onDelete, onAddBlank }) {
     onSave({ ...sel, ...patch });
   }
   function updateAttr(key, value) {
-    update({ attrs: { ...sel.attrs, [key]: +value || 0 } });
+    const newAttrs = { ...sel.attrs, [key]: +value || 0 };
+    update({ attrs: newAttrs });
   }
   function addBlank() {
     const c = rollChar();
     onSave(c);
     setSelId(c.id);
+  }
+  const EQ = window.SWN_EQUIP;
+  const TT = window.Tooltip;
+  const bestMeleeMod = sel ? Math.max(attrMod(sel.attrs?.STR ?? 10), attrMod(sel.attrs?.DEX ?? 10)) : 0;
+  const dexMod = sel ? attrMod(sel.attrs?.DEX ?? 10) : 0;
+  function weaponHit(w) {
+    const isMelee = EQ.meleeWeapons.some(m => m.name === w.name);
+    const mod = isMelee ? bestMeleeMod : dexMod;
+    return (sel.bab || 0) + mod;
+  }
+  function addWeapon(name) {
+    if (!name) return;
+    const w = [...EQ.rangedWeapons, ...EQ.meleeWeapons, ...EQ.heavyWeapons].find(x => x.name === name);
+    if (w) update({ weapons: [...(sel.weapons || []), { name: w.name, dmg: w.dmg, range: w.range || '—', shock: w.shock || '' }] });
+  }
+  function setArmor(name) {
+    const a = EQ.armor.find(x => x.name === name);
+    if (!a) return;
+    const baseAc = typeof a.ac === 'number' ? a.ac : parseInt(a.ac, 10);
+    update({ armor: name, ac: baseAc + dexMod });
+  }
+  function addFocus(name) {
+    if (!name || (sel.foci || []).some(f => f.name === name)) return;
+    update({ foci: [...(sel.foci || []), { name, level: 1 }] });
+  }
+  function recomputeSaves() {
+    update({ saves: computeSaves(sel.level, sel.attrs) });
   }
 
   return React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '300px 1fr', height: '100%', overflow: 'hidden' } },
@@ -403,14 +457,16 @@ function CharacterSheetsView({ party = [], onSave, onDelete, onAddBlank }) {
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 18 } },
         React.createElement('div', { style: { flex: 1 } },
           React.createElement('input', { value: sel.name, onChange: e => update({ name: e.target.value }), style: { fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 600, background: 'transparent', border: 'none', color: 'var(--fg-0)', padding: 0 } }),
-          React.createElement('div', { style: { display: 'flex', gap: 8, marginTop: 4, alignItems: 'center' } },
+          React.createElement('div', { style: { display: 'flex', gap: 8, marginTop: 4, alignItems: 'center', flexWrap: 'wrap' } },
             React.createElement('select', { value: sel.class, onChange: e => update({ class: e.target.value }), style: { width: 'auto', padding: '2px 6px', fontSize: 12 } },
               CHAR_CLASSES.map(c => React.createElement('option', { key: c }, c))),
             React.createElement('span', { style: { color: 'var(--fg-3)', fontSize: 12 } }, '·'),
             React.createElement('select', { value: sel.background, onChange: e => update({ background: e.target.value }), style: { width: 'auto', padding: '2px 6px', fontSize: 12 } },
               CHAR_BACKGROUNDS.map(c => React.createElement('option', { key: c }, c))),
             React.createElement('span', { style: { color: 'var(--fg-3)', fontSize: 12 } }, '· Level'),
-            React.createElement('input', { type: 'number', value: sel.level, onChange: e => update({ level: +e.target.value || 1 }), style: { width: 60, padding: '2px 6px', fontSize: 12 } })
+            React.createElement('input', { type: 'number', value: sel.level, onChange: e => update({ level: +e.target.value || 1 }), style: { width: 50, padding: '2px 6px', fontSize: 12 } }),
+            React.createElement('span', { style: { color: 'var(--fg-3)', fontSize: 12 } }, '· XP'),
+            React.createElement('input', { type: 'number', value: sel.xp ?? 0, onChange: e => { const xp = +e.target.value || 0; update({ xp, level: levelFromXP(xp) }); }, style: { width: 60, padding: '2px 6px', fontSize: 12 }, title: 'Editing XP auto-sets level' })
           )
         ),
         React.createElement('button', { className: 'danger', onClick: () => { onDelete(sel.id); setSelId(party.filter(p => p.id !== sel.id)[0]?.id); } }, 'Delete PC')
@@ -448,32 +504,186 @@ function CharacterSheetsView({ party = [], onSave, onDelete, onAddBlank }) {
             React.createElement('div', null,
               React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } }, 'HP'),
               React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 4 } },
-                React.createElement('input', { type: 'number', value: sel.hp, onChange: e => update({ hp: +e.target.value || 0 }), style: { width: 60 } }),
+                React.createElement('input', { type: 'number', value: sel.hp, onChange: e => update({ hp: +e.target.value || 0 }), style: { width: 52 } }),
                 React.createElement('span', { style: { color: 'var(--fg-3)' } }, '/'),
-                React.createElement('input', { type: 'number', value: sel.maxHp, onChange: e => update({ maxHp: +e.target.value || 0 }), style: { width: 60 } })
+                React.createElement('input', { type: 'number', value: sel.maxHp, onChange: e => update({ maxHp: +e.target.value || 0 }), style: { width: 52 } })
               )
             ),
             React.createElement('div', null,
-              React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } }, 'AC'),
+              React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } },
+                TT ? React.createElement(TT, { content: React.createElement('div', null, React.createElement('strong', null, 'Armor Class'), React.createElement('div', { style: { marginTop: 4 } }, 'Armor base + Dexterity modifier. Foes roll d20 + AB ≥ your AC to hit.')) }, 'AC') : 'AC'),
               React.createElement('input', { type: 'number', value: sel.ac, onChange: e => update({ ac: +e.target.value || 10 }) })
             ),
             React.createElement('div', null,
-              React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } }, 'AB'),
-              React.createElement('input', { type: 'number', value: sel.ab, onChange: e => update({ ab: +e.target.value || 0 }) })
+              React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } },
+                TT ? React.createElement(TT, { content: React.createElement('div', null, React.createElement('strong', null, 'Base Attack Bonus'), React.createElement('div', { style: { marginTop: 4 } }, 'Warrior = +level. Partial-warrior = +1 at L1 & L5. Other = +(level÷2). Added to all attack rolls.')) }, 'BAB') : 'BAB'),
+              React.createElement('input', { type: 'number', value: sel.bab ?? 0, onChange: e => update({ bab: +e.target.value || 0 }) })
+            ),
+            React.createElement('div', null,
+              React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } },
+                TT ? React.createElement(TT, { content: React.createElement('div', null, React.createElement('strong', null, 'System Strain'), React.createElement('div', { style: { marginTop: 4 } }, 'Accumulated bodily stress from cyberware, drugs, and effort. Maximum equals Constitution score.')) }, 'Strain') : 'Strain'),
+              React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 4 } },
+                React.createElement('input', { type: 'number', value: sel.systemStrain ?? 0, onChange: e => update({ systemStrain: +e.target.value || 0 }), style: { width: 46 } }),
+                React.createElement('span', { style: { color: 'var(--fg-3)', fontSize: 12 } }, '/ ' + (sel.attrs?.CON ?? 10))
+              )
+            )
+          ),
+          // Armor + credits
+          React.createElement('div', { style: { marginTop: 12, display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 } },
+            React.createElement('div', null,
+              React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } }, 'Armor'),
+              React.createElement('select', { value: sel.armor || 'None', onChange: e => setArmor(e.target.value) },
+                EQ.armor.map(a => React.createElement('option', { key: a.name, value: a.name }, a.name + ' (AC ' + a.ac + ')')))
             ),
             React.createElement('div', null,
               React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } }, 'Credits'),
               React.createElement('input', { type: 'number', value: sel.credits, onChange: e => update({ credits: +e.target.value || 0 }) })
             )
           ),
-          React.createElement('div', { style: { marginTop: 12, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 } },
-            ['physical', 'evasion', 'mental'].map(s => React.createElement('div', { key: s },
-              React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } }, 'Save · ' + s),
-              React.createElement('input', { type: 'number', value: sel.saves?.[s] ?? 15, onChange: e => update({ saves: { ...sel.saves, [s]: +e.target.value || 15 } }) })
-            ))
+          // Saves
+          React.createElement('div', { style: { marginTop: 12 } },
+            React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 } },
+              React.createElement('span', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } },
+                TT ? React.createElement(TT, { content: React.createElement('div', null, React.createElement('strong', null, 'Saving Throws'), React.createElement('div', { style: { marginTop: 4 } }, '16 − level − best relevant attribute modifier. Roll d20 ≥ target to succeed. Lower is better.')) }, 'Saves') : 'Saves'),
+              React.createElement('button', { className: 'ghost', style: { fontSize: 10, padding: '2px 6px' }, onClick: recomputeSaves }, '↻ Auto')
+            ),
+            React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 } },
+              ['physical', 'evasion', 'mental'].map(s => React.createElement('div', { key: s },
+                React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'capitalize' } }, s),
+                React.createElement('div', { style: { display: 'flex', gap: 4 } },
+                  React.createElement('input', { type: 'number', value: sel.saves?.[s] ?? 15, onChange: e => update({ saves: { ...sel.saves, [s]: +e.target.value || 15 } }) }),
+                  React.createElement('button', { className: 'ghost', style: { fontSize: 11, padding: '0 8px', whiteSpace: 'nowrap' }, title: 'Roll d20 vs ' + s + ' save (success ≥ target)', onClick: () => window.rollDice && window.rollDice('1d20', sel.name + ' · ' + s + ' save (vs ' + (sel.saves?.[s] ?? 15) + ')') }, '⚂')
+                )
+              ))
+            )
+          ),
+          // Quick rolls
+          React.createElement('div', { style: { marginTop: 12, display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' } },
+            React.createElement('span', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } }, 'Quick'),
+            React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, title: 'Initiative: 1d8 + Dex mod', onClick: () => window.rollDice && window.rollDice('1d8', sel.name + ' · initiative', dexMod) }, '⚂ Initiative'),
+            React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, title: 'Skill check: 2d6 + attribute mod + skill level', onClick: () => window.rollDice && window.rollDice('2d6', sel.name + ' · skill check', 0) }, '⚂ Skill 2d6'),
+            React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, title: 'Hit Dice (heal/level): roll your hit die', onClick: () => window.rollDice && window.rollDice('1d6', sel.name + ' · hit die', Math.max(0, attrMod(sel.attrs?.CON ?? 10))) }, '⚂ Hit Die')
           )
         )
       ),
+
+      // Weapons
+      React.createElement('div', { className: 'panel', style: { marginBottom: 14 } },
+        React.createElement('div', { className: 'panel-title' }, 'Weapons',
+          React.createElement('select', { value: '', onChange: e => { addWeapon(e.target.value); e.target.value = ''; }, style: { marginLeft: 'auto', width: 'auto', fontSize: 11, padding: '2px 6px' } },
+            React.createElement('option', { value: '' }, '+ Add weapon…'),
+            React.createElement('optgroup', { label: 'Ranged' }, EQ.rangedWeapons.map(w => React.createElement('option', { key: w.name, value: w.name }, w.name))),
+            React.createElement('optgroup', { label: 'Melee' }, EQ.meleeWeapons.map(w => React.createElement('option', { key: w.name, value: w.name }, w.name))),
+            React.createElement('optgroup', { label: 'Heavy' }, EQ.heavyWeapons.map(w => React.createElement('option', { key: w.name, value: w.name }, w.name)))
+          )
+        ),
+        React.createElement('div', { className: 'panel-body' },
+          (sel.weapons || []).length === 0
+            ? React.createElement('div', { style: { color: 'var(--fg-3)', fontSize: 12 } }, 'No weapons. Add one from the menu above.')
+            : (sel.weapons || []).map((w, i) => React.createElement('div', { key: i, style: { display: 'flex', alignItems: 'center', gap: 10, padding: '6px 0', borderBottom: i < sel.weapons.length - 1 ? '1px solid var(--border-soft)' : 'none' } },
+              React.createElement('span', { style: { flex: 1, fontSize: 13, color: 'var(--fg-0)' } }, w.name),
+              React.createElement('button', { className: 'tag', style: { fontSize: 11, cursor: 'pointer', border: '1px solid var(--border-1)' }, title: 'Roll attack (d20 + hit)', onClick: () => window.rollDice && window.rollDice('1d20', sel.name + ' · ' + w.name + ' attack', weaponHit(w)) }, 'hit +' + weaponHit(w)),
+              React.createElement('button', { style: { fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--fg-1)', background: 'var(--bg-1)', border: '1px solid var(--border-soft)', borderRadius: 4, padding: '2px 7px', cursor: 'pointer' }, title: 'Roll damage', onClick: () => window.rollDice && window.rollDice(String(w.dmg).replace('*', '').replace('#', ''), sel.name + ' · ' + w.name + ' damage') }, '⚂ ' + w.dmg),
+              w.range && w.range !== '—' && React.createElement('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)' } }, w.range + 'm'),
+              React.createElement('button', { className: 'ghost danger', style: { fontSize: 11, padding: '2px 6px' }, onClick: () => update({ weapons: sel.weapons.filter((_, j) => j !== i) }) }, '×')
+            ))
+        )
+      ),
+
+      // Foci
+      React.createElement('div', { className: 'panel', style: { marginBottom: 14 } },
+        React.createElement('div', { className: 'panel-title' }, 'Foci',
+          React.createElement('select', { value: '', onChange: e => { addFocus(e.target.value); e.target.value = ''; }, style: { marginLeft: 'auto', width: 'auto', fontSize: 11, padding: '2px 6px' } },
+            React.createElement('option', { value: '' }, '+ Add focus…'),
+            EQ.foci.map(f => React.createElement('option', { key: f.name, value: f.name }, f.name))
+          )
+        ),
+        React.createElement('div', { className: 'panel-body' },
+          (sel.foci || []).length === 0
+            ? React.createElement('div', { style: { color: 'var(--fg-3)', fontSize: 12 } }, 'No foci yet. SWN PCs start with one or two.')
+            : React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 8 } },
+              (sel.foci || []).map((f, i) => {
+                const def = EQ.foci.find(x => x.name === f.name) || {};
+                return React.createElement('div', { key: i, style: { padding: 8, background: 'var(--bg-1)', border: '1px solid var(--border-soft)', borderRadius: 6 } },
+                  React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8 } },
+                    React.createElement('span', { style: { fontWeight: 600, fontSize: 13, color: 'var(--fg-0)' } }, f.name),
+                    def.skill && def.skill !== '—' && React.createElement('span', { className: 'tag', style: { fontSize: 10 } }, '+' + def.skill),
+                    React.createElement('span', { style: { marginLeft: 'auto', display: 'flex', gap: 4, alignItems: 'center' } },
+                      React.createElement('span', { style: { fontSize: 10, color: 'var(--fg-3)' } }, 'Lvl'),
+                      React.createElement('select', { value: f.level, onChange: e => update({ foci: sel.foci.map((x, j) => j === i ? { ...x, level: +e.target.value } : x) }), style: { width: 'auto', padding: '1px 4px', fontSize: 11 } },
+                        React.createElement('option', { value: 1 }, '1'), React.createElement('option', { value: 2 }, '2')),
+                      React.createElement('button', { className: 'ghost danger', style: { fontSize: 11, padding: '2px 6px' }, onClick: () => update({ foci: sel.foci.filter((_, j) => j !== i) }) }, '×')
+                    )
+                  ),
+                  React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', marginTop: 4 } }, f.level >= 2 && def.l2 ? def.l2 : def.l1)
+                );
+              })
+            )
+        )
+      ),
+
+      // Psionics — only for psychic classes
+      /Psychic/.test(sel.class || '') && (() => {
+        const PSI = window.SWN_PSI;
+        const discs = sel.disciplines || [];
+        const wisCon = Math.max(attrMod(sel.attrs?.WIS ?? 10), attrMod(sel.attrs?.CON ?? 10));
+        const highestLvl = discs.reduce((mx, d) => Math.max(mx, d.level || 1), 0);
+        const maxEffort = 1 + highestLvl + wisCon;
+        const committed = sel.effortCommitted || 0;
+        function addDisc(name) {
+          if (!name || discs.some(d => d.name === name)) return;
+          update({ disciplines: [...discs, { name, level: 1 }] });
+        }
+        return React.createElement('div', { className: 'panel', style: { marginBottom: 14, border: '1px solid rgba(192,132,252,0.3)' } },
+          React.createElement('div', { className: 'panel-title', style: { color: 'var(--accent-2)' } }, 'Psionics',
+            React.createElement('select', { value: '', onChange: e => { addDisc(e.target.value); e.target.value = ''; }, style: { marginLeft: 'auto', width: 'auto', fontSize: 11, padding: '2px 6px' } },
+              React.createElement('option', { value: '' }, '+ Discipline…'),
+              PSI.disciplines.map(d => React.createElement('option', { key: d.name, value: d.name }, d.name))
+            )
+          ),
+          React.createElement('div', { className: 'panel-body' },
+            // Effort tracker
+            React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12, padding: 10, background: 'rgba(192,132,252,0.06)', borderRadius: 6 } },
+              React.createElement('div', null,
+                React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } },
+                  TT ? React.createElement(TT, { content: React.createElement('div', null, React.createElement('strong', null, 'Effort'), React.createElement('div', { style: { marginTop: 4 } }, 'Max Effort = 1 + highest psychic skill level + best of WIS or CON modifier. Commit Effort to fuel techniques; reclaim it when they end.')) }, 'Effort') : 'Effort'),
+                React.createElement('div', { style: { fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, color: 'var(--accent-2)' } }, (maxEffort - committed) + ' / ' + maxEffort)
+              ),
+              React.createElement('div', { style: { display: 'flex', gap: 4, marginLeft: 'auto' } },
+                React.createElement('button', { className: 'ghost', style: { fontSize: 12 }, title: 'Commit 1 Effort', onClick: () => update({ effortCommitted: Math.min(maxEffort, committed + 1) }) }, 'Commit'),
+                React.createElement('button', { className: 'ghost', style: { fontSize: 12 }, title: 'Reclaim 1 Effort', onClick: () => update({ effortCommitted: Math.max(0, committed - 1) }) }, 'Reclaim')
+              )
+            ),
+            discs.length === 0
+              ? React.createElement('div', { style: { color: 'var(--fg-3)', fontSize: 12 } }, 'No disciplines. Add one from the menu above.')
+              : React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 10 } },
+                discs.map((d, i) => {
+                  const def = PSI.disciplines.find(x => x.name === d.name) || {};
+                  return React.createElement('div', { key: i, style: { padding: 10, background: 'var(--bg-1)', border: '1px solid var(--border-soft)', borderRadius: 6 } },
+                    React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8 } },
+                      React.createElement('span', { style: { fontWeight: 600, fontSize: 13, color: 'var(--accent-2)' } }, d.name),
+                      React.createElement('span', { className: 'tag', style: { fontSize: 10 } }, 'core: ' + def.core),
+                      React.createElement('span', { style: { marginLeft: 'auto', display: 'flex', gap: 4, alignItems: 'center' } },
+                        React.createElement('span', { style: { fontSize: 10, color: 'var(--fg-3)' } }, 'Lvl'),
+                        React.createElement('select', { value: d.level, onChange: e => update({ disciplines: discs.map((x, j) => j === i ? { ...x, level: +e.target.value } : x) }), style: { width: 'auto', padding: '1px 4px', fontSize: 11 } },
+                          [0, 1, 2, 3, 4].map(n => React.createElement('option', { key: n, value: n }, n))),
+                        React.createElement('button', { className: 'ghost danger', style: { fontSize: 11, padding: '2px 6px' }, onClick: () => update({ disciplines: discs.filter((_, j) => j !== i) }) }, '×')
+                      )
+                    ),
+                    React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', marginTop: 4 } }, def.desc),
+                    React.createElement('details', { style: { marginTop: 6 } },
+                      React.createElement('summary', { style: { cursor: 'pointer', fontSize: 11, color: 'var(--fg-3)' } }, 'Techniques'),
+                      React.createElement('ul', { style: { margin: '6px 0 0', paddingLeft: 18, fontSize: 12, color: 'var(--fg-1)' } },
+                        (def.techniques || []).map((t, ti) => React.createElement('li', { key: ti, style: { marginBottom: 3 } }, t))
+                      )
+                    )
+                  );
+                })
+              )
+          )
+        );
+      })(),
+
       // Gear & Notes
       React.createElement('div', { className: 'grid-2' },
         React.createElement('div', { className: 'panel' },

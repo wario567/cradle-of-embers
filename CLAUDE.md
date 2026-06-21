@@ -1,20 +1,25 @@
 # Cradle of Embers — Stars Without Number Campaign Hub
 
-A browser-based GM tool + player view for running Stars Without Number campaigns. Pure static HTML/JS — no build step. Works offline; multiplayer state syncs through Firebase Firestore.
+A browser-based GM tool + player view for running Stars Without Number campaigns. Pure static HTML/JS — no build step. Works offline; multiplayer state syncs through **PocketBase** (self-hosted).
 
 ## Architecture at a glance
 
-- **`index.html`** — the only page. Loads React 18, Three.js, Firebase, Babel (in-browser JSX), and all our scripts via `<script>` tags.
-- **`app.jsx`** — root React component. Owns `sector`, `party`, `missions`, `encounters`, `gmLog`. Hosts the sidebar nav, the view router, the breadcrumbs, search, tweaks panel, and the multiplayer panel.
+- **`index.html`** — the only page. Loads React 18, Three.js, the PocketBase SDK, Babel (in-browser JSX), and all our scripts via `<script>` tags.
+- **`app.jsx`** — root React component. Owns `sector`, `party`, `missions`, `encounters`, `gmLog`, the **role/intro gate**, and **GM mode**. Hosts the sidebar nav, the view router, the breadcrumbs, search, tweaks panel, the dice roller, and the multiplayer panel.
 - **`data/`** — pure-JS data layer:
-  - `swn-tables.js` — SWN tables (atmospheres, biospheres, world tags, faction names, NPC skills/gear, tooltip text).
-  - `sector-gen.js` — seeded procedural generation: systems, planets, factions, NPCs, hooks, timeline, trade routes.
+  - `swn-tables.js` — SWN tables (atmospheres, biospheres, world tags, faction names, NPC skills/gear, tooltip text). Exposed as `window.SWN`.
+  - `swn-equipment.js` — armor / weapons / foci (`window.SWN_EQUIP`); consumed by the character sheet.
+  - `swn-rules-data.js` — psionic disciplines/powers (`window.SWN_PSI`). **Loaded but not yet surfaced in any view** (WIP).
+  - `swn-ships.js` — ship stat blocks (`window.SWN_SHIPS`). **Loaded but not yet surfaced in any view** (WIP).
+  - `sector-gen.js` — seeded procedural generation: systems, planets, factions, NPCs, hooks, timeline, trade routes, `sectorLore`.
 - **`utils/`** — pure-JS helpers:
   - `rng.js` — seeded RNG (`mulberry32`); deterministic sectors per seed string.
   - `planet-texture.js` — value-noise + FBM texture generation for the 3D planets, per biome.
   - `claude.js` — `window.askClaude` / `window.askClaudeJSON` wrappers around `window.claude.complete`. Used for AI brainstorm / mission gen / encounter gen.
-  - `firebase.js` — `window.MP` namespace: `init()`, `saveCampaign()`, `subscribeCampaign()`, `startPresence()`, `subscribePresence()`. Uses Firebase compat builds via CDN.
+  - `firebase.js` — **(name kept for history; now PocketBase, not Firebase)** `window.MP` namespace: `init()`, `saveCampaign()`, `subscribeCampaign()`, `startPresence()`, `subscribePresence()`. Talks to a PocketBase server (`PB_URL` constant) with `campaigns` + `presence` collections.
 - **`components/`** — React components, all JSX loaded via Babel:
+  - `intro-screen.jsx` — cinematic landing / **role gate**. Drifting ember particles, sector lore, "Enter as Player" / "Enter as GM" CTAs. Calls `onEnter('player'|'gm')`.
+  - `dice-roller.jsx` — floating dice tool (`window.DiceRoller`) + `window.rollDice(expr, label, mod)` global used by the character sheet.
   - `starfield.jsx` — animated canvas backdrop with parallax stars + nebula blobs.
   - `sector-map.jsx` — pan/zoom hex grid of star systems with trade-route overlay.
   - `system-view.jsx` — orbit diagram for one system.
@@ -22,8 +27,8 @@ A browser-based GM tool + player view for running Stars Without Number campaigns
   - `lists-views.jsx` — Factions / NPCs / Hooks / Timeline / Routes.
   - `combat.jsx` — tactical grid (paint terrain, drag tokens, initiative tracker).
   - `gm-turn.jsx` — SWN faction-turn screen with AI brainstorm.
-  - `forge-views.jsx` — Mission Forge + Encounter Forge + Character Sheets (party).
-  - `multiplayer-panel.jsx` — Firestore connection UI, presence, room sharing.
+  - `forge-views.jsx` — Mission Forge + Encounter Forge + **full SWN Character Sheets** (attributes, AC/BAB/strain/saves, armor + weapons from `SWN_EQUIP`, inline dice rolls).
+  - `multiplayer-panel.jsx` — PocketBase connection UI, presence, room sharing.
   - `tooltip.jsx` — reusable `<Tooltip>` with portal-rendered floating content.
 - **`tweaks-panel.jsx`** — design-tool tweaks scaffold; safe to ignore or repurpose.
 - **`styles/theme.css`** — single stylesheet. Ember palette defined as CSS custom props (`--accent`, `--bg-0` … `--bg-4`, `--fg-0` … `--fg-4`).
@@ -45,9 +50,19 @@ For a single-file artifact (e.g. for archive or simple hosting), `cradle-of-embe
 ## State + persistence
 
 - **localStorage** per seed: `swn-edits-<seed>` (sector edits) and `swn-campaign-<seed>` (party, missions, encounters, gmLog).
-- **Firestore** doc per seed: `campaigns/<seed>` with the same shape, merged on remote updates. Presence subdocs at `campaigns/<seed>/presence/<userId>`.
+- **localStorage** global (not per-seed): `coe-role` (`player`|`gm`), `swn-gm-hash` (SHA-256 of the GM password), `coe-intro-seen`.
+- **PocketBase** record per seed: `campaigns/<seed>` (`data` JSON field) plus `presence` records. See `utils/firebase.js` (`PB_URL`). Record IDs are a 15-char hash of the seed (`seedToId`).
 - URL param `?seed=<id>` overrides the seed on load — invite links.
 - Export / Import (sidebar footer) round-trips the campaign to JSON.
+
+## Roles & GM mode
+
+The **intro screen** (`intro-screen.jsx`) is the entry point for everyone and gates by role:
+
+- **Enter as Player** → `role='player'`, GM Tools nav section is **not rendered** at all.
+- **Enter as GM** → prompts for the GM password (first GM ever sets it; SHA-256 stored in `swn-gm-hash`). On success `role='gm'`, `isGM=true`, and GM Tools (GM Turn / Mission Forge / Encounter Forge) appear.
+
+Role is remembered per browser and re-shown on load only if no role is stored. Replay the intro via the brand logo (top-left). The sidebar footer has a role control: GM sees "switch to Player" + a ⚙ change-password button; players see "Enter GM Mode". All GM logic lives in `app.jsx` (`role`, `isGM`, `submitGMPassword`, `onGMAuthSuccess`, `tryGMView`, `sha256`). A defense-in-depth `useEffect` also bounces a non-GM off any GM view. **This gating is client-side only** — see Multiplayer security.
 
 ## Adding a new view
 
@@ -62,7 +77,7 @@ For a single-file artifact (e.g. for archive or simple hosting), `cradle-of-embe
 
 ## Multiplayer security
 
-Currently using **Firestore test-mode rules** (open reads/writes for 30 days from creation). For production, lock down: only authenticated users can read/write `campaigns/<seed>` where they're listed in a `members` array, etc. The data path layout is forward-compatible — clients only touch `campaigns/<seed>` and its `presence` subcollection.
+PocketBase collections (`campaigns`, `presence`) are currently open for read/write — fine for a trusted table. **The Player/GM split is a UI gate only:** a player with the room link can't *see* GM tools, but GM data still syncs to their browser. For real enforcement you'd move GM-only fields to a separate collection / record with PocketBase API rules. Acceptable for now given the trusted-group use case.
 
 ## Known constraints / gotchas
 

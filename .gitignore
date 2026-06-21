@@ -2,3 +2,8 @@
 *.zip
 node_modules/
 .env
+*.pdf
+exports from design/
+screenshots/
+test-results/
+playwright-report/

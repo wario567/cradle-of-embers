@@ -57,13 +57,44 @@ function App() {
   // Multiplayer panel toggle
   const [mpOpen, setMpOpen] = useASt(false);
 
+  // Dice roller toggle — always-available floating tool.
+  const [diceOpen, setDiceOpen] = useASt(false);
+
+  // Role + intro. role: 'player' | 'gm' | null. Intro shows until a role is chosen.
+  const [role, setRole] = useASt(() => {
+    try { return localStorage.getItem('coe-role'); } catch { return null; }
+  });
+  const [showIntro, setShowIntro] = useASt(() => {
+    try { return !localStorage.getItem('coe-role'); } catch { return true; }
+  });
+
   // GM mode
-  const [isGM, setIsGM] = useASt(false);
+  const [isGM, setIsGM] = useASt(() => {
+    try { return localStorage.getItem('coe-role') === 'gm'; } catch { return false; }
+  });
   const [gmModal, setGmModal] = useASt(null); // null | 'unlock' | 'setup' | 'change'
   const [gmPw, setGmPw] = useASt('');
   const [gmPw2, setGmPw2] = useASt('');
   const [gmErr, setGmErr] = useASt('');
   const gmPendingView = useAR(null);
+  // When set, a successful GM auth dismisses the intro (vs. navigating to a view).
+  const gmAuthDismissesIntro = useAR(false);
+
+  function enterAsPlayer() {
+    setRole('player');
+    try { localStorage.setItem('coe-role', 'player'); } catch {}
+    setIsGM(false);
+    setShowIntro(false);
+  }
+  function enterAsGM() {
+    gmAuthDismissesIntro.current = true;
+    openGMModal();
+  }
+  function commitGMRole() {
+    setRole('gm');
+    try { localStorage.setItem('coe-role', 'gm'); } catch {}
+    setIsGM(true);
+  }
 
   // Re-generate when seed changes
   useAEf(() => {
@@ -104,7 +135,18 @@ function App() {
     const stored = localStorage.getItem('swn-gm-hash');
     setGmModal(stored ? 'unlock' : 'setup');
   }
-  function closeGmModal() { setGmModal(null); setGmPw(''); setGmPw2(''); setGmErr(''); }
+  function closeGmModal() {
+    setGmModal(null); setGmPw(''); setGmPw2(''); setGmErr('');
+    gmAuthDismissesIntro.current = false;
+  }
+  // Shared success path for setup/unlock: become GM, then either dismiss the
+  // intro (if auth was triggered from the splash) or navigate to a pending view.
+  function onGMAuthSuccess() {
+    commitGMRole();
+    if (gmAuthDismissesIntro.current) { setShowIntro(false); gmAuthDismissesIntro.current = false; }
+    if (gmPendingView.current) { setCurrentView(gmPendingView.current); gmPendingView.current = null; }
+    closeGmModal();
+  }
   async function submitGMPassword() {
     const GM_KEY = 'swn-gm-hash';
     const stored = localStorage.getItem(GM_KEY);
@@ -112,15 +154,11 @@ function App() {
       if (!gmPw) return setGmErr('Enter a password.');
       if (gmPw !== gmPw2) return setGmErr('Passwords do not match.');
       localStorage.setItem(GM_KEY, await sha256(gmPw));
-      setIsGM(true);
-      if (gmPendingView.current) { setCurrentView(gmPendingView.current); gmPendingView.current = null; }
-      closeGmModal();
+      onGMAuthSuccess();
     } else if (gmModal === 'unlock') {
       if (!gmPw) return setGmErr('Enter password.');
       if (await sha256(gmPw) === stored) {
-        setIsGM(true);
-        if (gmPendingView.current) { setCurrentView(gmPendingView.current); gmPendingView.current = null; }
-        closeGmModal();
+        onGMAuthSuccess();
       } else {
         setGmErr('Incorrect password.');
       }
@@ -343,10 +381,15 @@ function App() {
 
   return React.createElement('div', { className: 'app', 'data-screen-label': 'app' },
     React.createElement(window.Starfield, { viewKey: currentView + (selectedPlanetId || selectedSysHex || ''), intensity: 1, palette: tweaks.starfield }),
+    // Intro / role gate — entry point for both players and GM.
+    showIntro && window.IntroScreen && React.createElement(window.IntroScreen, {
+      sector, seed: tweaks.seed,
+      onEnter: r => r === 'gm' ? enterAsGM() : enterAsPlayer(),
+    }),
     // Sidebar
     React.createElement('aside', { className: 'sidebar' },
       React.createElement('div', { className: 'sidebar-header' },
-        React.createElement('div', { className: 'brand' },
+        React.createElement('div', { className: 'brand', onClick: () => setShowIntro(true), style: { cursor: 'pointer' }, title: 'Replay intro' },
           React.createElement('div', { className: 'brand-mark' },
             React.createElement('svg', { viewBox: '0 0 22 22', width: 22, height: 22 },
               React.createElement('polygon', { points: '11,1 21,7 21,15 11,21 1,15 1,7', fill: 'none', stroke: 'var(--accent)', strokeWidth: 1.5 }),
@@ -373,10 +416,11 @@ function App() {
           NavItem('hooks', currentView === 'hooks', 'Hooks', sector.hooks.length, () => setCurrentView('hooks')),
           NavItem('timeline', currentView === 'timeline', 'Timeline', sector.timeline.length, () => setCurrentView('timeline')),
         ),
-        React.createElement('div', { className: 'nav-section' },
+        // GM Tools — only rendered for the GM. Players never see this section.
+        isGM && React.createElement('div', { className: 'nav-section' },
           React.createElement('div', { className: 'nav-label', style: { display: 'flex', alignItems: 'center' } },
             'GM TOOLS',
-            React.createElement('span', { style: { marginLeft: 'auto', opacity: 0.55, fontSize: 10, letterSpacing: 0 } }, isGM ? '🔓' : '🔒')
+            React.createElement('span', { style: { marginLeft: 'auto', opacity: 0.55, fontSize: 10, letterSpacing: 0 } }, '🔓')
           ),
           NavItem('gmturn', currentView === 'gmturn', 'GM Turn', gmLog.length || null, () => tryGMView('gmturn')),
           NavItem('missions', currentView === 'missions', 'Mission Forge', missions.length || null, () => tryGMView('missions')),
@@ -441,18 +485,28 @@ function App() {
             style: { flex: 1, fontSize: 11 },
           }, '↑ Import')
         ),
-        // GM mode toggle
+        // Role control — GM sees a switch-to-player + change-password; players see an unlock.
         React.createElement('div', { style: { display: 'flex', gap: 6, width: '100%' } },
-          React.createElement('button', {
-            onClick: isGM ? () => setIsGM(false) : openGMModal,
-            style: { flex: 1, fontSize: 11, ...(isGM ? { borderColor: 'var(--accent)', color: 'var(--accent)' } : {}) },
-            title: isGM ? 'Click to lock GM mode' : 'Unlock GM-only views',
-          }, isGM ? '🔓 GM Mode: ON' : '🔒 GM Mode'),
-          isGM && React.createElement('button', {
-            onClick: () => { setGmPw(''); setGmPw2(''); setGmErr(''); setGmModal('change'); },
-            style: { fontSize: 11, padding: '6px 8px' },
-            title: 'Change GM password',
-          }, '⚙'),
+          isGM
+            ? [
+                React.createElement('button', {
+                  key: 'lock',
+                  onClick: enterAsPlayer,
+                  style: { flex: 1, fontSize: 11, borderColor: 'var(--accent)', color: 'var(--accent)' },
+                  title: 'Switch to player view (keeps your GM password)',
+                }, '🔓 GM · switch to Player'),
+                React.createElement('button', {
+                  key: 'chpw',
+                  onClick: () => { setGmPw(''); setGmPw2(''); setGmErr(''); setGmModal('change'); },
+                  style: { fontSize: 11, padding: '6px 8px' },
+                  title: 'Change GM password',
+                }, '⚙'),
+              ]
+            : React.createElement('button', {
+                onClick: enterAsGM,
+                style: { flex: 1, fontSize: 11 },
+                title: 'Enter GM mode (password required)',
+              }, '🔒 Enter GM Mode'),
         ),
         // Multiplayer (compact button or opens overlay)
         window.MultiplayerPanel && React.createElement(window.MultiplayerPanel, {
@@ -581,7 +635,10 @@ function App() {
           }, gmModal === 'setup' ? 'Set Password' : gmModal === 'change' ? 'Change Password' : 'Unlock GM Mode')
         )
       )
-    )
+    ),
+
+    // Dice roller — always-available floating tool for players and GM.
+    window.DiceRoller && React.createElement(window.DiceRoller, { open: diceOpen, setOpen: setDiceOpen })
   );
 }
 
