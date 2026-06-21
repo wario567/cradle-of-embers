@@ -504,7 +504,7 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
   }
 
   // ── small presentational helpers ──
-  const note = txt => React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-3)', lineHeight: 1.6, marginBottom: 12 } }, txt);
+  const note = txt => React.createElement('div', { className: 'cb-note' }, txt);
   const fieldLabel = t => React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 5 } }, t);
   function card(key, selected, onClick, titleEl, bodyEls, badge) {
     return React.createElement('div', {
@@ -535,20 +535,24 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
     );
   } else if (stepId === 'attrs') {
     body = React.createElement('div', null,
-      note('Six attributes set your raw potential. Assign the standard array (14, 12, 11, 10, 9, 7) however you like, or roll the dice. The “mod” is what you actually add to rolls.'),
-      React.createElement('div', { style: { display: 'flex', gap: 8, marginBottom: 14 } },
-        React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: setArray }, 'Standard Array'),
-        React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: rollAttrs }, '⚂ Roll 3d6')
+      note('Six attributes set your raw potential. Assign the standard array — 14, 12, 11, 10, 9, 7 — however you like, or roll the dice. The badge beside each score is its modifier: the bonus you actually add to rolls.'),
+      React.createElement('div', { className: 'cb-seg' },
+        React.createElement('button', { className: 'ghost', style: { fontSize: 12 }, onClick: setArray }, 'Standard Array'),
+        React.createElement('button', { className: 'ghost', style: { fontSize: 12 }, onClick: rollAttrs }, '⚂ Roll 3d6')
       ),
-      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 8 } },
-        CG.attributes.map(a => React.createElement('div', { key: a.key, style: { display: 'flex', alignItems: 'center', gap: 10 } },
-          React.createElement('div', { style: { width: 116 } },
-            React.createElement('div', { style: { fontWeight: 600, fontSize: 12, color: 'var(--fg-0)' } }, a.name),
-            React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', lineHeight: 1.3 } }, a.blurb)
-          ),
-          React.createElement('input', { type: 'number', value: attrs[a.key], onChange: e => setAttrs({ ...attrs, [a.key]: +e.target.value || 0 }), style: { width: 56, textAlign: 'center', fontFamily: 'JetBrains Mono', fontSize: 18, fontWeight: 600 } }),
-          React.createElement('div', { style: { width: 48, fontFamily: 'JetBrains Mono', fontSize: 12, color: 'var(--fg-2)' } }, 'mod ' + (attrMod(attrs[a.key]) >= 0 ? '+' : '') + attrMod(attrs[a.key]))
-        ))
+      React.createElement('div', { className: 'cb-attrs' },
+        CG.attributes.map(a => {
+          const m = attrMod(attrs[a.key]);
+          const modCls = 'cb-attr-mod' + (m > 0 ? ' pos' : m < 0 ? ' neg' : '');
+          return React.createElement('div', { key: a.key, className: 'cb-attr' },
+            React.createElement('input', { type: 'number', className: 'cb-attr-score', value: attrs[a.key], onChange: e => setAttrs({ ...attrs, [a.key]: +e.target.value || 0 }), 'aria-label': a.name + ' score' }),
+            React.createElement('div', { className: 'cb-attr-meta' },
+              React.createElement('div', { className: 'cb-attr-name' }, a.name),
+              React.createElement('div', { className: 'cb-attr-blurb' }, a.blurb)
+            ),
+            React.createElement('div', { className: modCls, title: 'Modifier — added to relevant rolls' }, (m >= 0 ? '+' : '') + m)
+          );
+        })
       )
     );
   } else if (stepId === 'background') {
@@ -698,14 +702,16 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
     onClick: e => e.target === e.currentTarget && onClose(),
   },
     React.createElement('div', { className: 'cb-modal' },
-      React.createElement('div', { style: { fontFamily: 'var(--font-display-alt)', fontWeight: 600, fontSize: 15, color: 'var(--fg-0)', letterSpacing: '0.06em', textTransform: 'uppercase' } }, '✦ Create your character'),
-      // Step indicator
-      React.createElement('div', { style: { display: 'flex', gap: 5, marginTop: 12 } },
-        steps.map((s, i) => React.createElement('div', { key: s.id, style: { flex: 1, textAlign: 'center' } },
-          React.createElement('div', { style: { height: 3, borderRadius: 2, background: i <= stepIdx ? 'var(--accent)' : 'var(--border-1)' } }),
-          React.createElement('div', { style: { fontSize: 8.5, marginTop: 4, color: i === stepIdx ? 'var(--accent)' : 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.03em' } }, s.label)
-        ))
+      React.createElement('div', { className: 'cb-head' },
+        React.createElement('div', { className: 'cb-head-title' }, '✦ Create your character'),
+        React.createElement('div', { className: 'cb-head-counter' },
+          React.createElement('b', null, String(stepIdx + 1).padStart(2, '0')), ' / ' + String(steps.length).padStart(2, '0'))
       ),
+      // Progress rail: filled = done, glowing = current, dim = ahead.
+      React.createElement('div', { className: 'cb-progress' },
+        steps.map((s, i) => React.createElement('div', { key: s.id, className: 'seg' + (i < stepIdx ? ' done' : i === stepIdx ? ' now' : '') }))
+      ),
+      React.createElement('div', { className: 'cb-stepname' }, (steps[stepIdx] || steps[0]).label),
       React.createElement('div', { className: 'cb-body' }, body),
       React.createElement('div', { style: { display: 'flex', gap: 8, paddingTop: 4 } },
         React.createElement('button', { style: { fontSize: 12 }, onClick: onClose }, 'Cancel'),

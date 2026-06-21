@@ -686,6 +686,85 @@ textarea { resize: vertical; min-height: 60px; font-family: var(--font-sans); }
 .cb-skillgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 @media (max-width: 560px) { .cb-skillgrid { grid-template-columns: repeat(2, 1fr); } }
 
+/* ── Builder as an enlistment dossier: a registration terminal for year-3200
+   starfarers. The boldness is spent on the attribute readout cards; the shell
+   stays quiet — a mono step-counter, one emphasized step name, ember-ruled copy. */
+.cb-modal { width: 600px; }            /* roomier than the original 560 so steps use the full width */
+.cb-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.cb-head-title {
+  font-family: var(--font-display-alt);
+  font-weight: 600; font-size: 15px;
+  color: var(--fg-0);
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.cb-head-counter {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.14em;
+  color: var(--fg-3); white-space: nowrap; padding-top: 4px;
+}
+.cb-head-counter b { color: var(--accent); font-weight: 600; }
+
+.cb-progress { display: flex; gap: 4px; margin-top: 14px; }
+.cb-progress .seg {
+  flex: 1; height: 3px; border-radius: 2px; background: var(--border-1);
+  transition: background 220ms ease, box-shadow 220ms ease;
+}
+.cb-progress .seg.done { background: var(--accent-soft); }
+.cb-progress .seg.now { background: var(--accent); box-shadow: 0 0 9px rgba(255, 148, 87, 0.65); }
+.cb-stepname {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--accent); margin-top: 9px;
+}
+
+/* Step intro copy — anchored by a thin ember rule rather than floating in gray. */
+.cb-note {
+  font-size: 12.5px; color: var(--fg-2); line-height: 1.65;
+  margin-bottom: 16px; padding-left: 13px;
+  border-left: 2px solid var(--accent-soft);
+}
+
+/* Segmented mode control (Standard Array / Roll). */
+.cb-seg { display: flex; gap: 6px; margin-bottom: 14px; }
+.cb-seg button { flex: 1; }
+
+/* Signature: attribute readout cards — score, identity, and a hero modifier badge. */
+.cb-attrs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+@media (max-width: 540px) { .cb-attrs { grid-template-columns: 1fr; } }
+.cb-attr {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px;
+  padding: 11px 13px;
+  border: 1px solid var(--border-1); border-radius: 10px;
+  background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+}
+.cb-attr-score {
+  width: 54px; text-align: center;
+  font-family: var(--font-mono); font-size: 22px; font-weight: 700; line-height: 1;
+  color: var(--fg-0); background: var(--bg-0);
+  border: 1px solid var(--border-1); border-radius: 8px;
+  padding: 8px 0; -moz-appearance: textfield;
+}
+.cb-attr-score::-webkit-outer-spin-button,
+.cb-attr-score::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.cb-attr-score:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255, 148, 87, 0.16); }
+.cb-attr-meta { min-width: 0; }
+.cb-attr-name {
+  font-family: var(--font-display-alt); font-weight: 600; font-size: 13px;
+  color: var(--fg-0); letter-spacing: 0.02em;
+}
+.cb-attr-blurb { font-size: 10.5px; color: var(--fg-3); line-height: 1.35; margin-top: 2px; }
+.cb-attr-mod {
+  font-family: var(--font-mono); font-size: 15px; font-weight: 700;
+  min-width: 46px; text-align: center; padding: 7px 4px;
+  border-radius: 8px; border: 1px solid var(--border-1);
+  background: var(--bg-3); color: var(--fg-3);
+}
+.cb-attr-mod.pos {
+  color: var(--accent); border-color: rgba(255, 148, 87, 0.45);
+  background: var(--accent-bg); box-shadow: 0 0 14px rgba(255, 148, 87, 0.14);
+}
+.cb-attr-mod.neg { color: var(--danger); border-color: rgba(239, 91, 91, 0.4); background: rgba(239, 91, 91, 0.08); }
+
 /* ───────────────────────── Responsive — narrow screens ─────────────────────────
    Desktop layout is unchanged; these rules only engage below the breakpoints, so
    the Playwright suite (Desktop Chrome, 1280px) sees identical structure. Card
