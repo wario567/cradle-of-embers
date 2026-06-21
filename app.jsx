@@ -7,6 +7,20 @@ async function sha256(str) {
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
+// Stable per-browser player identity for character ownership. Prefer the
+// multiplayer user id (shared with presence) so ownership lines up with who's
+// online; fall back to a locally-generated id so ownership works offline too.
+function getPlayerIdentity() {
+  let id;
+  try {
+    id = localStorage.getItem('mp-user-id') || localStorage.getItem('coe-player-id');
+    if (!id) { id = 'p-' + Math.random().toString(36).slice(2, 12); localStorage.setItem('coe-player-id', id); }
+  } catch { id = 'p-anon'; }
+  let name = '';
+  try { name = localStorage.getItem('mp-name') || ''; } catch {}
+  return { id, name };
+}
+
 const NAV_ICONS = {
   sector: '⬡',
   system: '◎',
@@ -43,6 +57,9 @@ function App() {
   const [tweaks, setTweak] = tweakHook(initialTweaks);
 
   const [sector, setSector] = useASt(() => window.generateSector(tweaks.seed));
+  // Player identity for character ownership. Recomputed when the player sets
+  // their name (mp-name) so freshly-created characters carry the right owner name.
+  const [me, setMe] = useASt(getPlayerIdentity);
   const [currentView, setCurrentView] = useASt('sector');
   const [selectedSysHex, setSelectedSysHex] = useASt(null);
   const [selectedPlanetId, setSelectedPlanetId] = useASt(null);
@@ -365,6 +382,11 @@ function App() {
   } else if (currentView === 'party') {
     viewEl = React.createElement(window.CharacterSheetsView, {
       party,
+      me, isGM,
+      onSetMyName: nm => {
+        try { localStorage.setItem('mp-name', nm); } catch {}
+        setMe(m => ({ ...m, name: nm }));
+      },
       onSave: c => saveCampaign({ party: party.find(p => p.id === c.id) ? party.map(p => p.id === c.id ? c : p) : [...party, c] }),
       onDelete: id => saveCampaign({ party: party.filter(p => p.id !== id) }),
     });

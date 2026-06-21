@@ -393,13 +393,161 @@ function rollChar() {
   };
 }
 
-function CharacterSheetsView({ party = [], onSave, onDelete, onAddBlank }) {
-  const [selId, setSelId] = useMGs(party[0]?.id || null);
+// Guided 4-step character builder. Reuses attrMod / computeSaves / CHAR_CLASSES /
+// CHAR_BACKGROUNDS / window.SWN_EQUIP from this module. Renders as a modal overlay.
+function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate, onClose }) {
+  const EQ = window.SWN_EQUIP;
+  const STD_ARRAY = { STR: 14, DEX: 13, CON: 12, INT: 12, WIS: 10, CHA: 10 };
+  const [step, setStep] = useMGs(1);
+  const [playerName, setPlayerName] = useMGs(me.name || '');
+  const [name, setName] = useMGs('');
+  const [cls, setCls] = useMGs(CHAR_CLASSES[0]);
+  const [background, setBackground] = useMGs(CHAR_BACKGROUNDS[0]);
+  const [attrs, setAttrs] = useMGs(STD_ARRAY);
+  const allWeapons = [...EQ.rangedWeapons, ...EQ.meleeWeapons, ...EQ.heavyWeapons];
+  const [weapon, setWeapon] = useMGs('');
+  const [armor, setArmor] = useMGs('None');
+  const [focus, setFocus] = useMGs('');
+
+  function rollAttrs() {
+    const r = () => Math.floor(Math.random() * 6) + 1;
+    const next = {};
+    ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'].forEach(k => next[k] = r() + r() + r());
+    setAttrs(next);
+  }
+
+  const steps = ['Name & class', 'Background', 'Attributes', 'Gear'];
+  const canNext = step === 1 ? name.trim().length > 0 : true;
+
+  function finish() {
+    const isWarrior = cls.startsWith('Warrior');
+    const r = () => Math.floor(Math.random() * 6) + 1;
+    const dexMod = attrMod(attrs.DEX);
+    const hp = Math.max(1, r() + Math.max(0, attrMod(attrs.CON)) + (isWarrior ? 2 : 0));
+    const armorDef = EQ.armor.find(a => a.name === armor) || { ac: 10 };
+    const baseAc = typeof armorDef.ac === 'number' ? armorDef.ac : (parseInt(armorDef.ac, 10) || 10);
+    const wdef = allWeapons.find(w => w.name === weapon);
+    if (playerName && playerName !== me.name && onSetMyName) onSetMyName(playerName);
+    onCreate({
+      id: 'pc-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
+      name: name.trim(), class: cls, background, species: 'Human',
+      level: 1, xp: 0, attrs, hp, maxHp: hp,
+      bab: isWarrior ? 1 : 0,
+      armor: armor || 'None', ac: baseAc + dexMod,
+      saves: computeSaves(1, attrs),
+      systemStrain: 0, skills: [],
+      foci: focus ? [{ name: focus, level: 1 }] : [],
+      weapons: wdef ? [{ name: wdef.name, dmg: wdef.dmg, range: wdef.range || '—', shock: wdef.shock || '' }] : [],
+      gear: [], credits: 200, notes: '',
+      ownerId: me.id, ownerName: (playerName || me.name || 'Player'),
+    });
+  }
+
+  const field = (label, el) => React.createElement('div', { style: { marginBottom: 14 } },
+    React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 5 } }, label), el);
+
+  let body = null;
+  if (step === 1) {
+    body = React.createElement('div', null,
+      field('Your player name', React.createElement('input', { value: playerName, onChange: e => setPlayerName(e.target.value), placeholder: 'e.g. Alex', style: { width: '100%' } })),
+      field('Character name', React.createElement('input', { value: name, onChange: e => setName(e.target.value), placeholder: 'Name your PC', autoFocus: true, style: { width: '100%' } })),
+      field('Class', React.createElement('select', { value: cls, onChange: e => setCls(e.target.value), style: { width: '100%' } }, CHAR_CLASSES.map(c => React.createElement('option', { key: c }, c))))
+    );
+  } else if (step === 2) {
+    body = React.createElement('div', null,
+      field('Background', React.createElement('select', { value: background, onChange: e => setBackground(e.target.value), style: { width: '100%' } }, CHAR_BACKGROUNDS.map(c => React.createElement('option', { key: c }, c)))),
+      React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-3)', lineHeight: 1.6 } }, 'Your background colors your skills and where you came from. You can refine skills on the sheet later.')
+    );
+  } else if (step === 3) {
+    body = React.createElement('div', null,
+      React.createElement('div', { style: { display: 'flex', gap: 8, marginBottom: 12 } },
+        React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: rollAttrs }, '⚂ Roll 3d6'),
+        React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: () => setAttrs(STD_ARRAY) }, 'Standard Array')
+      ),
+      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 } },
+        ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'].map(k => React.createElement('div', { key: k, style: { textAlign: 'center' } },
+          React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } }, k),
+          React.createElement('input', { type: 'number', value: attrs[k], onChange: e => setAttrs({ ...attrs, [k]: +e.target.value || 0 }), style: { textAlign: 'center', fontFamily: 'JetBrains Mono', fontSize: 18, fontWeight: 600, width: '100%' } }),
+          React.createElement('div', { style: { fontSize: 11, fontFamily: 'JetBrains Mono', color: 'var(--fg-3)' } }, 'mod ' + (attrMod(attrs[k]) >= 0 ? '+' : '') + attrMod(attrs[k]))
+        ))
+      )
+    );
+  } else {
+    body = React.createElement('div', null,
+      field('Starting weapon', React.createElement('select', { value: weapon, onChange: e => setWeapon(e.target.value), style: { width: '100%' } },
+        React.createElement('option', { value: '' }, 'None'),
+        React.createElement('optgroup', { label: 'Ranged' }, EQ.rangedWeapons.map(w => React.createElement('option', { key: w.name, value: w.name }, w.name + ' (' + w.dmg + ')'))),
+        React.createElement('optgroup', { label: 'Melee' }, EQ.meleeWeapons.map(w => React.createElement('option', { key: w.name, value: w.name }, w.name + ' (' + w.dmg + ')'))),
+        React.createElement('optgroup', { label: 'Heavy' }, EQ.heavyWeapons.map(w => React.createElement('option', { key: w.name, value: w.name }, w.name + ' (' + w.dmg + ')')))
+      )),
+      field('Armor', React.createElement('select', { value: armor, onChange: e => setArmor(e.target.value), style: { width: '100%' } },
+        EQ.armor.map(a => React.createElement('option', { key: a.name, value: a.name }, a.name + ' (AC ' + a.ac + ')')))),
+      field('Focus (optional)', React.createElement('select', { value: focus, onChange: e => setFocus(e.target.value), style: { width: '100%' } },
+        React.createElement('option', { value: '' }, 'None'),
+        EQ.foci.map(f => React.createElement('option', { key: f.name, value: f.name }, f.name))))
+    );
+  }
+
+  return React.createElement('div', {
+    style: { position: 'fixed', inset: 0, background: 'rgba(10,5,7,0.88)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' },
+    onClick: e => e.target === e.currentTarget && onClose(),
+  },
+    React.createElement('div', { style: { background: 'var(--bg-2)', border: '1px solid var(--border-1)', borderRadius: 10, padding: 26, width: 440, maxWidth: '92vw', display: 'flex', flexDirection: 'column', gap: 14 } },
+      React.createElement('div', { style: { fontFamily: 'var(--font-display-alt)', fontWeight: 600, fontSize: 15, color: 'var(--fg-0)', letterSpacing: '0.06em', textTransform: 'uppercase' } }, '✦ Create your character'),
+      // Step indicator
+      React.createElement('div', { style: { display: 'flex', gap: 6 } },
+        steps.map((s, i) => React.createElement('div', { key: s, style: { flex: 1, textAlign: 'center' } },
+          React.createElement('div', { style: { height: 3, borderRadius: 2, background: i + 1 <= step ? 'var(--accent)' : 'var(--border-1)' } }),
+          React.createElement('div', { style: { fontSize: 9, marginTop: 4, color: i + 1 === step ? 'var(--accent)' : 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.04em' } }, s)
+        ))
+      ),
+      React.createElement('div', { style: { minHeight: 150 } }, body),
+      React.createElement('div', { style: { display: 'flex', gap: 8 } },
+        React.createElement('button', { style: { fontSize: 12 }, onClick: onClose }, 'Cancel'),
+        step > 1 && React.createElement('button', { style: { fontSize: 12 }, onClick: () => setStep(step - 1) }, '← Back'),
+        React.createElement('div', { style: { flex: 1 } }),
+        step < 4
+          ? React.createElement('button', { className: 'primary', style: { fontSize: 12, opacity: canNext ? 1 : 0.5, cursor: canNext ? 'pointer' : 'not-allowed' }, onClick: () => canNext && setStep(step + 1) }, 'Next →')
+          : React.createElement('button', { className: 'primary', style: { fontSize: 12 }, onClick: finish }, '✦ Create character')
+      )
+    )
+  );
+}
+
+function CharacterSheetsView({ party = [], me = { id: 'anon', name: '' }, isGM = false, onSetMyName, onSave, onDelete }) {
+  const myFirst = party.find(c => c.ownerId === me.id);
+  const [selId, setSelId] = useMGs(myFirst?.id || party[0]?.id || null);
+  const [builderOpen, setBuilderOpen] = useMGs(false);
   const sel = party.find(c => c.id === selId);
+  // Players may edit only their own character; the GM may edit everyone's.
+  const canEdit = c => !!c && (isGM || c.ownerId === me.id);
+  const ro = sel ? !canEdit(sel) : false;
 
   function update(patch) {
-    if (!sel) return;
+    if (!sel || ro) return;
     onSave({ ...sel, ...patch });
+  }
+  function claim() {
+    if (!sel) return;
+    const c = { ...sel, ownerId: me.id, ownerName: me.name || 'Player' };
+    onSave(c);
+  }
+  function onBuilderCreate(c) {
+    onSave(c);
+    setSelId(c.id);
+    setBuilderOpen(false);
+  }
+  const mine = party.filter(c => c.ownerId === me.id);
+  const others = party.filter(c => c.ownerId !== me.id);
+  function rosterItem(p) {
+    const ownerMeta = p.ownerId === me.id ? 'you' : (p.ownerName || (p.ownerId ? 'player' : 'unclaimed'));
+    return React.createElement('div', { key: p.id, className: 'list-item' + (p.id === sel?.id ? ' active' : ''), onClick: () => setSelId(p.id) },
+      React.createElement('div', { className: 'title' }, p.name),
+      React.createElement('div', { className: 'meta' }, p.class + ' · L' + p.level + ' · HP ' + p.hp + '/' + p.maxHp + ' · ' + ownerMeta)
+    );
+  }
+  function groupLabel(t) {
+    return React.createElement('div', { key: 'gl-' + t, style: { fontFamily: 'JetBrains Mono', fontSize: 10, letterSpacing: '0.08em', color: 'var(--fg-3)', textTransform: 'uppercase', margin: '12px 0 6px' } }, t);
   }
   function updateAttr(key, value) {
     const newAttrs = { ...sel.attrs, [key]: +value || 0 };
@@ -441,19 +589,34 @@ function CharacterSheetsView({ party = [], onSave, onDelete, onAddBlank }) {
   return React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '300px 1fr', height: '100%', overflow: 'hidden' } },
     // Roster
     React.createElement('div', { style: { borderRight: '1px solid var(--border-soft)', overflowY: 'auto', padding: 16, background: 'rgba(10,5,7,0.6)' } },
-      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 } },
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10, gap: 6 } },
         React.createElement('div', { style: { fontFamily: 'JetBrains Mono', fontSize: 11, letterSpacing: '0.08em', color: 'var(--fg-3)', textTransform: 'uppercase' } }, party.length + ' PCs'),
-        React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: addBlank }, '+ ROLL PC')
+        React.createElement('div', { style: { display: 'flex', gap: 6 } },
+          React.createElement('button', { className: 'primary', style: { fontSize: 11 }, onClick: () => setBuilderOpen(true), title: 'Guided character creation' }, '+ Create' + (isGM ? ' PC' : ' my character')),
+          isGM && React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: addBlank, title: 'Roll a random PC' }, '⚂')
+        )
       ),
-      React.createElement('div', { className: 'list' },
-        party.map(p => React.createElement('div', { key: p.id, className: 'list-item' + (p.id === sel?.id ? ' active' : ''), onClick: () => setSelId(p.id) },
-          React.createElement('div', { className: 'title' }, p.name),
-          React.createElement('div', { className: 'meta' }, p.class + ' · L' + p.level + ' · HP ' + p.hp + '/' + p.maxHp)
-        ))
-      )
+      // Player view groups MY CHARACTER then OTHERS; GM sees one flat list.
+      isGM
+        ? React.createElement('div', { className: 'list' }, party.map(rosterItem))
+        : React.createElement('div', null,
+            groupLabel('My character'),
+            mine.length
+              ? React.createElement('div', { className: 'list' }, mine.map(rosterItem))
+              : React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-3)', padding: '4px 0 8px' } }, 'None yet — click “Create my character”.'),
+            others.length ? groupLabel('Others (read-only)') : null,
+            others.length ? React.createElement('div', { className: 'list' }, others.map(rosterItem)) : null
+          )
     ),
     // Sheet
     sel ? React.createElement('div', { style: { overflowY: 'auto', padding: 28 } },
+      // Read-only banner for characters you don't own (players only; GM can edit all).
+      ro && React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', marginBottom: 16, background: 'rgba(255,148,87,0.08)', border: '1px solid var(--border-1)', borderRadius: 8 } },
+        React.createElement('span', { style: { fontSize: 12, color: 'var(--fg-2)' } },
+          sel.ownerId ? ('🔒 Read-only — ' + (sel.ownerName || 'another player') + '’s character') : '🔒 Read-only — unclaimed character'),
+        !sel.ownerId && React.createElement('button', { className: 'primary', style: { marginLeft: 'auto', fontSize: 12 }, onClick: claim }, 'Claim as mine')
+      ),
+      React.createElement('div', { style: ro ? { pointerEvents: 'none', opacity: 0.9 } : null },
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 18 } },
         React.createElement('div', { style: { flex: 1 } },
           React.createElement('input', { value: sel.name, onChange: e => update({ name: e.target.value }), style: { fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 600, background: 'transparent', border: 'none', color: 'var(--fg-0)', padding: 0 } }),
@@ -699,10 +862,13 @@ function CharacterSheetsView({ party = [], onSave, onDelete, onAddBlank }) {
           )
         )
       )
+      ) // end read-only wrapper
     ) : React.createElement('div', { className: 'empty' },
-      React.createElement('div', null, 'No PCs yet.'),
-      React.createElement('button', { className: 'primary', style: { marginTop: 10 }, onClick: addBlank }, '⚂ Roll a Character')
-    )
+      React.createElement('div', null, isGM ? 'No PCs yet.' : 'You don’t have a character yet.'),
+      React.createElement('button', { className: 'primary', style: { marginTop: 10 }, onClick: () => setBuilderOpen(true) }, '✦ Create ' + (isGM ? 'a Character' : 'my character'))
+    ),
+    // Guided character builder modal
+    builderOpen && React.createElement(CharacterBuilder, { me, onSetMyName, onCreate: onBuilderCreate, onClose: () => setBuilderOpen(false) })
   );
 }
 

@@ -27,7 +27,7 @@ A browser-based GM tool + player view for running Stars Without Number campaigns
   - `lists-views.jsx` — Factions / NPCs / Hooks / Timeline / Routes.
   - `combat.jsx` — tactical grid (paint terrain, drag tokens, initiative tracker).
   - `gm-turn.jsx` — SWN faction-turn screen with AI brainstorm.
-  - `forge-views.jsx` — Mission Forge + Encounter Forge + **full SWN Character Sheets** (attributes, AC/BAB/strain/saves, armor + weapons from `SWN_EQUIP`, inline dice rolls).
+  - `forge-views.jsx` — Mission Forge + Encounter Forge + **full SWN Character Sheets** (attributes, AC/BAB/strain/saves, armor + weapons from `SWN_EQUIP`, psionics from `SWN_PSI` for psychic classes, inline dice rolls). Also holds the **guided 4-step `CharacterBuilder`** modal and **per-player ownership** logic (see below).
   - `multiplayer-panel.jsx` — PocketBase connection UI, presence, room sharing.
   - `tooltip.jsx` — reusable `<Tooltip>` with portal-rendered floating content.
 - **`tweaks-panel.jsx`** — design-tool tweaks scaffold; safe to ignore or repurpose.
@@ -63,6 +63,15 @@ The **intro screen** (`intro-screen.jsx`) is the entry point for everyone and ga
 - **Enter as GM** → prompts for the GM password (first GM ever sets it; SHA-256 stored in `swn-gm-hash`). On success `role='gm'`, `isGM=true`, and GM Tools (GM Turn / Mission Forge / Encounter Forge) appear.
 
 Role is remembered per browser and re-shown on load only if no role is stored. Replay the intro via the brand logo (top-left). The sidebar footer has a role control: GM sees "switch to Player" + a ⚙ change-password button; players see "Enter GM Mode". All GM logic lives in `app.jsx` (`role`, `isGM`, `submitGMPassword`, `onGMAuthSuccess`, `tryGMView`, `sha256`). A defense-in-depth `useEffect` also bounces a non-GM off any GM view. **This gating is client-side only** — see Multiplayer security.
+
+## Character ownership
+
+Each character in the shared `party` array carries an optional `ownerId` + `ownerName`. Identity comes from `getPlayerIdentity()` in `app.jsx` (`me = {id, name}`): the id is `mp-user-id` (shared with presence) or a persisted `coe-player-id` fallback; the name is `mp-name`.
+
+- **Players** can edit/delete only characters where `ownerId === me.id`; the **GM** edits everyone's (`canEdit()` in `forge-views.jsx`).
+- The Party roster splits into **MY CHARACTER** / **OTHERS (read-only)** for players; the GM sees one flat list. A non-owned sheet renders inside a `pointer-events:none` wrapper with a read-only banner; **unclaimed** legacy characters (no `ownerId`) show a **Claim as mine** button.
+- New characters are made via the **guided builder** (`CharacterBuilder`): name & class → background → attributes (Roll 3d6 / Standard Array) → starting gear, then derives hp/ac/bab/saves the same way as `rollChar()` and stamps `ownerId/ownerName`.
+- Ownership syncs for free — it's just fields inside `party`, already persisted to PocketBase. Like the role gate, enforcement is **client-side only**.
 
 ## Adding a new view
 
