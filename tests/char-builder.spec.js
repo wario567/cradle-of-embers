@@ -50,6 +50,7 @@ test('guided builder walks all steps and creates a rules-correct Warrior', async
 
   // Step: Skills (quick skills shown; Soldier has Any Combat -> choose Shoot)
   await expect(page.locator('text=recommended starting kit')).toBeVisible();
+  await page.locator('.cb-freeskill button', { hasText: 'Heal' }).click(); // step 9 free skill
   await page.screenshot({ path: 'screenshots/cb5-skills.png' });
   await next(page);
 
@@ -91,6 +92,7 @@ test('psychic path shows the psionics step', async ({ page }) => {
   await next(page);
   await page.locator('.cb-card', { hasText: 'Psychic' }).first().click();
   await next(page);
+  await page.locator('.cb-freeskill button', { hasText: 'Notice' }).click(); // step 9 free skill
   await next(page); // skills
   await page.locator('.cb-card').first().click(); // focus
   await next(page);

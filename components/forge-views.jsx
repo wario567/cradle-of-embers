@@ -421,6 +421,12 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
   // to 14" option (SWN p.4, step 1) can move freely between attributes.
   const [rolledAttrs, setRolledAttrs] = useMGs(null); // non-null = scores came from a roll
   const [swap14, setSwap14] = useMGs(null);           // which attribute was raised to 14
+  const [freeSkill2, setFreeSkill2] = useMGs('');     // step 9: one extra non-psychic skill of choice
+  // Step 7 bonus foci — a Warrior gets a free combat focus, an Expert a free
+  // non-combat one. Default to a valid focus (it's an automatic grant) and let
+  // the player re-pick; they may match the chosen focus to start it at level 2.
+  const [combatFocus, setCombatFocus] = useMGs(() => (CG.foci.find(f => f.type === 'combat') || {}).name || '');
+  const [noncombatFocus, setNoncombatFocus] = useMGs(() => (CG.foci.find(f => f.type === 'noncombat') || {}).name || '');
 
   const isWarrior = cls === 'Warrior' || (cls === 'Adventurer' && partials.includes('Warrior'));
   const isExpert = cls === 'Expert' || (cls === 'Adventurer' && partials.includes('Expert'));
@@ -444,10 +450,28 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
   // Editing a score by hand is full manual control — it leaves roll/swap mode.
   function editAttr(key, val) { setAttrs({ ...attrs, [key]: +val || 0 }); setRolledAttrs(null); setSwap14(null); }
 
-  // Resolve the final skill list (background quick skills, or custom picks), plus focus skill.
+  // Every focus the PC ends up with: the universal free pick, plus the Warrior's
+  // free combat focus and the Expert's free non-combat focus (step 7). A focus
+  // chosen twice stacks to level 2.
+  function chosenFoci() {
+    const list = [];
+    if (focus) list.push(focus);
+    if (isWarrior && combatFocus) list.push(combatFocus);
+    if (isExpert && noncombatFocus) list.push(noncombatFocus);
+    return list;
+  }
+  function fociWithLevels() {
+    const count = {};
+    chosenFoci().forEach(nm => { count[nm] = (count[nm] || 0) + 1; });
+    return Object.keys(count).map(nm => ({ name: nm, level: Math.min(2, count[nm]) }));
+  }
+
+  // Resolve the final skill list: background skills, the skills granted by each
+  // focus, the Specialist's chosen skill, and the step-9 free skill of choice.
   function resolveSkills() {
     const out = {};
     const add = nm => {
+      if (!nm) return;
       const real = nm === 'Any Combat' ? combatChoice : nm;
       out[real] = Math.min(1, (out[real] != null ? out[real] : -1) + 1);
     };
@@ -456,9 +480,12 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
       const list = customSkills && pickedSkills.length ? pickedSkills : bg.quickSkills;
       list.forEach(add);
     }
-    const f = CG.foci.find(x => x.name === focus);
-    if (f && f.grantsSkill) add(f.grantsSkill);
+    chosenFoci().forEach(nm => {
+      const f = CG.foci.find(x => x.name === nm);
+      if (f && f.grantsSkill) add(f.grantsSkill);
+    });
     if (focus === 'Specialist' && specialistSkill) add(specialistSkill);
+    add(freeSkill2);
     return Object.keys(out).map(k => ({ name: k, level: out[k] }));
   }
 
@@ -480,6 +507,7 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
     stepId === 'welcome' ? name.trim().length > 0 :
     stepId === 'background' ? !!background :
     stepId === 'class' ? (!!cls && (cls !== 'Adventurer' || partials.length === 2)) :
+    stepId === 'skills' ? !!freeSkill2 :
     stepId === 'focus' ? !!focus :
     stepId === 'psi' ? disciplines.length > 0 :
     stepId === 'gear' ? !!pkg :
@@ -507,7 +535,7 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
       saves: computeSaves(1, attrs),
       systemStrain: 0,
       skills: resolveSkills(),
-      foci: focus ? [{ name: focus, level: 1 }] : [],
+      foci: fociWithLevels(),
       disciplines: isPsychic ? disciplines.map(d => ({ name: d, level: 1 })) : [],
       effortCommitted: 0,
       weapons,
@@ -641,7 +669,7 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
           ['Shoot', 'Stab', 'Punch'].map(o => React.createElement('button', { key: o, className: combatChoice === o ? 'primary' : 'ghost', style: { fontSize: 12 }, onClick: () => setCombatChoice(o) }, o)))
       ),
       React.createElement('label', { style: { display: 'flex', alignItems: 'center', gap: 8, marginTop: 14, fontSize: 12, color: 'var(--fg-2)', cursor: 'pointer' } },
-        React.createElement('input', { type: 'checkbox', checked: customSkills, onChange: e => setCustomSkills(e.target.checked) }),
+        React.createElement('input', { type: 'checkbox', checked: customSkills, onChange: e => setCustomSkills(e.target.checked), style: { width: 'auto', flexShrink: 0 } }),
         'Let me pick my own two skills instead'
       ),
       customSkills && React.createElement('div', { style: { marginTop: 10 } },
@@ -655,6 +683,17 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
               onClick: () => setPickedSkills(on ? pickedSkills.filter(x => x !== s) : (pickedSkills.length < 2 ? [...pickedSkills, s] : pickedSkills)),
             }, s);
           }))
+      ),
+      // Step 9: one extra non-psychic skill of choice — a hobby or homeworld knack.
+      React.createElement('div', { style: { marginTop: 16, paddingTop: 14, borderTop: '1px solid var(--border-soft)' } },
+        fieldLabel('One more skill — your free pick'),
+        note('Every hero gets one extra skill of choice at level-0: a hobby, a homeworld knack, or personal training. Pick any one.'),
+        React.createElement('div', { className: 'cb-skillgrid cb-freeskill' },
+          Object.keys(CG.skills).filter(s => s !== 'Any Combat').map(s => React.createElement('button', {
+            key: s, title: CG.skills[s],
+            className: freeSkill2 === s ? 'primary' : 'ghost', style: { fontSize: 11 },
+            onClick: () => setFreeSkill2(freeSkill2 === s ? '' : s),
+          }, s)))
       )
     );
   } else if (stepId === 'focus') {
@@ -671,6 +710,20 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
         fieldLabel('Specialist in which skill?'),
         React.createElement('select', { value: specialistSkill, onChange: e => setSpecialistSkill(e.target.value), style: { width: '100%' } },
           Object.keys(CG.skills).filter(s => s !== 'Any Combat').map(s => React.createElement('option', { key: s }, s)))
+      ),
+      // Step 7 bonus foci: Warriors get a free combat focus, Experts a free
+      // non-combat one. Pick the same as above to start that focus at level 2.
+      isWarrior && React.createElement('div', { style: { marginTop: 14, paddingTop: 12, borderTop: '1px solid var(--border-soft)' } },
+        fieldLabel('Free combat focus (Warrior)'),
+        React.createElement('select', { id: 'cb-combat-focus', value: combatFocus, onChange: e => setCombatFocus(e.target.value), style: { width: '100%' } },
+          CG.foci.filter(f => f.type === 'combat').map(f => React.createElement('option', { key: f.name, value: f.name }, f.name))),
+        combatFocus === focus && React.createElement('div', { style: { fontSize: 11, color: 'var(--accent)', marginTop: 5 } }, 'Same as your chosen focus → starts at level 2.')
+      ),
+      isExpert && React.createElement('div', { style: { marginTop: 14, paddingTop: 12, borderTop: '1px solid var(--border-soft)' } },
+        fieldLabel('Free non-combat focus (Expert)'),
+        React.createElement('select', { id: 'cb-noncombat-focus', value: noncombatFocus, onChange: e => setNoncombatFocus(e.target.value), style: { width: '100%' } },
+          CG.foci.filter(f => f.type === 'noncombat').map(f => React.createElement('option', { key: f.name, value: f.name }, f.name))),
+        noncombatFocus === focus && React.createElement('div', { style: { fontSize: 11, color: 'var(--accent)', marginTop: 5 } }, 'Same as your chosen focus → starts at level 2.')
       )
     );
   } else if (stepId === 'psi') {
@@ -714,7 +767,8 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
         row('Attributes', ATTR_KEYS.map(k => k + ' ' + attrs[k]).join('  ')),
         row('AC', '' + ac),
         row('To-hit bonus', isWarrior ? '+1' : '+0'),
-        row('Focus', focus || '—'),
+        row(fociWithLevels().length > 1 ? 'Foci' : 'Focus',
+          fociWithLevels().map(f => f.name + (f.level > 1 ? ' (lvl ' + f.level + ')' : '')).join(', ') || '—'),
         isPsychic ? row('Disciplines', disciplines.join(', ') || '—') : null,
         row('Skills', skillNames || '—'),
         row('Kit', pkg || '—')

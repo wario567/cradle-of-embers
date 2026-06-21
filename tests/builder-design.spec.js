@@ -83,3 +83,46 @@ test('rolled attributes let you raise exactly one score to 14 (SWN p.4 step 1)',
   await expect(page.locator('.cb-attr.swapped')).toHaveCount(0);
   expect(errs, errs.join('\n')).toEqual([]);
 });
+
+test('Warrior gets a free combat focus (step 7) and a free skill (step 9)', async ({ page }) => {
+  const errs = []; trackErrors(page, errs);
+  await openBuilder(page);
+  await page.locator('input[placeholder="Name your hero"]').fill('Dax');
+  await next(page);                                          // attrs
+  await next(page);                                          // background
+  await page.locator('.cb-card', { hasText: 'Soldier' }).click();
+  await next(page);                                          // class
+  await page.locator('.cb-card', { hasText: 'Warrior' }).first().click();
+  await next(page);                                          // skills
+
+  // Step 9 free skill is required to advance.
+  await expect(page.locator('.cb-modal button', { hasText: 'Next' })).toHaveCount(1);
+  await page.locator('.cb-freeskill button', { hasText: 'Program' }).click();
+  await page.locator('.cb-modal').screenshot({ path: 'screenshots/design-06-freeskill.png' });
+  await next(page);                                          // focus
+
+  // Primary focus + the Warrior's free combat focus selector both present.
+  await page.locator('.cb-card', { hasText: 'Alert' }).click(); // primary = Alert (combat)
+  await expect(page.locator('#cb-combat-focus')).toBeVisible();
+  await page.locator('.cb-modal').screenshot({ path: 'screenshots/design-07-bonusfocus.png' });
+  await page.locator('#cb-combat-focus').selectOption('Sniper'); // free combat focus = Sniper
+  await next(page);                                          // gear
+  await page.locator('.cb-card', { hasText: 'Soldier' }).first().click();
+  await next(page);                                          // review
+
+  // Review lists both foci and the free skill, then create.
+  await expect(page.locator('.cb-modal')).toContainText('Alert');
+  await expect(page.locator('.cb-modal')).toContainText('Sniper');
+  await expect(page.locator('.cb-modal')).toContainText('Program');
+  await page.locator('.cb-modal button', { hasText: 'Create character' }).click();
+  await page.waitForTimeout(700);
+
+  // The created sheet carries both foci (Foci panel is far down — scroll to it).
+  await page.locator('.list-item .title', { hasText: 'Dax' }).click();
+  await page.waitForTimeout(300);
+  const fociPanel = page.locator('.panel', { has: page.locator('.panel-title', { hasText: 'Foci' }) });
+  await fociPanel.scrollIntoViewIfNeeded();
+  await expect(fociPanel).toContainText('Alert');
+  await expect(fociPanel).toContainText('Sniper');
+  expect(errs, errs.join('\n')).toEqual([]);
+});
