@@ -32,35 +32,28 @@ async function enterAs(page, role, { seedParty } = {}) {
   await page.waitForTimeout(600);
 }
 
-test('player builds an owned character via the 4-step builder', async ({ page }) => {
+test('a builder-created character is owned by and editable for its player', async ({ page }) => {
   const errs = []; trackErrors(page, errs);
   await enterAs(page, 'player');
-  // Open builder (empty state or roster button)
   await page.locator('button', { hasText: 'Create' }).first().click();
   await page.waitForTimeout(300);
-  await expect(page.locator('text=Create your character')).toBeVisible();
-  // Step 1
-  await page.locator('input[placeholder="e.g. Alex"]').fill('Alex');
-  await page.locator('input[placeholder="Name your PC"]').fill('Kira Voss');
-  await page.screenshot({ path: 'screenshots/o1-builder-step1.png' });
-  await page.locator('button', { hasText: 'Next' }).click();
-  // Step 2
-  await page.waitForTimeout(200);
-  await page.locator('button', { hasText: 'Next' }).click();
-  // Step 3
-  await page.waitForTimeout(200);
-  await page.locator('button', { hasText: 'Standard Array' }).click();
-  await page.screenshot({ path: 'screenshots/o2-builder-attrs.png' });
-  await page.locator('button', { hasText: 'Next' }).click();
-  // Step 4
-  await page.waitForTimeout(200);
-  await page.screenshot({ path: 'screenshots/o3-builder-gear.png' });
-  await page.locator('button', { hasText: 'Create character' }).click();
-  await page.waitForTimeout(600);
-  // Character should appear under MY CHARACTER and be editable (name input enabled)
+  const next = () => page.locator('.cb-modal button', { hasText: 'Next' }).click();
+  await page.locator('input[placeholder="Name your hero"]').fill('Kira Voss');
+  await next();                                                   // attrs
+  await next();                                                   // background
+  await page.locator('.cb-card', { hasText: 'Soldier' }).click();
+  await next();                                                   // class
+  await page.locator('.cb-card', { hasText: 'Warrior' }).first().click();
+  await next();                                                   // skills
+  await next();                                                   // focus
+  await page.locator('.cb-card', { hasText: 'Sniper' }).click();
+  await next();                                                   // gear
+  await page.locator('.cb-card', { hasText: 'Soldier' }).first().click();
+  await next();                                                   // review
+  await page.locator('.cb-modal button', { hasText: 'Create character' }).click();
+  await page.waitForTimeout(700);
   await expect(page.locator('.list-item .title', { hasText: 'Kira Voss' })).toBeVisible();
-  await expect(page.locator('text=Read-only')).toHaveCount(0);
-  await page.screenshot({ path: 'screenshots/o4-my-character.png' });
+  await expect(page.locator('text=🔒 Read-only')).toHaveCount(0);
   expect(errs, errs.join('\n')).toEqual([]);
 });
 

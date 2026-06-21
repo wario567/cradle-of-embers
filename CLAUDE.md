@@ -9,7 +9,8 @@ A browser-based GM tool + player view for running Stars Without Number campaigns
 - **`data/`** — pure-JS data layer:
   - `swn-tables.js` — SWN tables (atmospheres, biospheres, world tags, faction names, NPC skills/gear, tooltip text). Exposed as `window.SWN`.
   - `swn-equipment.js` — armor / weapons / foci (`window.SWN_EQUIP`); consumed by the character sheet.
-  - `swn-rules-data.js` — psionic disciplines/powers (`window.SWN_PSI`). **Loaded but not yet surfaced in any view** (WIP).
+  - `swn-character.js` — character-creation reference (`window.SWN_CHARGEN`): the 6 attributes, standard array, 4 classes, 20 official backgrounds (free/quick skills), the skill list, a curated focus set, and starting equipment packages. Mechanical facts follow the SWN Revised free edition; all blurbs are paraphrased in plain language. Drives the guided builder.
+  - `swn-rules-data.js` — psionic disciplines/powers (`window.SWN_PSI`). Used by the character sheet's psionics panel and the builder's psionics step.
   - `swn-ships.js` — ship stat blocks (`window.SWN_SHIPS`). **Loaded but not yet surfaced in any view** (WIP).
   - `sector-gen.js` — seeded procedural generation: systems, planets, factions, NPCs, hooks, timeline, trade routes, `sectorLore`.
 - **`utils/`** — pure-JS helpers:
@@ -70,7 +71,7 @@ Each character in the shared `party` array carries an optional `ownerId` + `owne
 
 - **Players** can edit/delete only characters where `ownerId === me.id`; the **GM** edits everyone's (`canEdit()` in `forge-views.jsx`).
 - The Party roster splits into **MY CHARACTER** / **OTHERS (read-only)** for players; the GM sees one flat list. A non-owned sheet renders inside a `pointer-events:none` wrapper with a read-only banner; **unclaimed** legacy characters (no `ownerId`) show a **Claim as mine** button.
-- New characters are made via the **guided builder** (`CharacterBuilder`): name & class → background → attributes (Roll 3d6 / Standard Array) → starting gear, then derives hp/ac/bab/saves the same way as `rollChar()` and stamps `ownerId/ownerName`.
+- New characters are made via the **guided educational builder** (`CharacterBuilder` in `forge-views.jsx`, reads `window.SWN_CHARGEN`): a card-based flow for first-timers — Start → Attributes → Background → Class → Skills → Focus → (Psionics if psychic) → Gear → Review. Each step explains the choice in plain language. Skills default to the background's Quick Skills (with optional customize); equipment uses starting packages. Derives hp/ac/bab/saves per the rules and stamps `ownerId/ownerName`.
 - Ownership syncs for free — it's just fields inside `party`, already persisted to PocketBase. Like the role gate, enforcement is **client-side only**.
 
 ## Adding a new view

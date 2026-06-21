@@ -393,121 +393,326 @@ function rollChar() {
   };
 }
 
-// Guided 4-step character builder. Reuses attrMod / computeSaves / CHAR_CLASSES /
-// CHAR_BACKGROUNDS / window.SWN_EQUIP from this module. Renders as a modal overlay.
+// Guided, educational character builder for players new to SWN. Reuses
+// attrMod / computeSaves from this module plus window.SWN_CHARGEN (chargen
+// reference data) and window.SWN_PSI (psychic disciplines). Modal overlay.
 function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate, onClose }) {
+  const CG = window.SWN_CHARGEN;
+  const PSI = window.SWN_PSI;
   const EQ = window.SWN_EQUIP;
-  const STD_ARRAY = { STR: 14, DEX: 13, CON: 12, INT: 12, WIS: 10, CHA: 10 };
-  const [step, setStep] = useMGs(1);
+  const ATTR_KEYS = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
+
+  const [stepIdx, setStepIdx] = useMGs(0);
   const [playerName, setPlayerName] = useMGs(me.name || '');
   const [name, setName] = useMGs('');
-  const [cls, setCls] = useMGs(CHAR_CLASSES[0]);
-  const [background, setBackground] = useMGs(CHAR_BACKGROUNDS[0]);
-  const [attrs, setAttrs] = useMGs(STD_ARRAY);
-  const allWeapons = [...EQ.rangedWeapons, ...EQ.meleeWeapons, ...EQ.heavyWeapons];
-  const [weapon, setWeapon] = useMGs('');
-  const [armor, setArmor] = useMGs('None');
-  const [focus, setFocus] = useMGs('');
+  const [goal, setGoal] = useMGs('');
+  const [attrs, setAttrs] = useMGs(() => ({ STR: 14, DEX: 12, CON: 11, INT: 10, WIS: 9, CHA: 7 }));
+  const [background, setBackground] = useMGs(null);
+  const [cls, setCls] = useMGs(null);
+  const [partials, setPartials] = useMGs([]); // for Adventurer
+  const [combatChoice, setCombatChoice] = useMGs('Shoot'); // resolves "Any Combat"
+  const [customSkills, setCustomSkills] = useMGs(false);
+  const [pickedSkills, setPickedSkills] = useMGs([]); // when customizing
+  const [focus, setFocus] = useMGs(null);
+  const [specialistSkill, setSpecialistSkill] = useMGs('Notice');
+  const [disciplines, setDisciplines] = useMGs([]);
+  const [pkg, setPkg] = useMGs(null);
+
+  const isWarrior = cls === 'Warrior' || (cls === 'Adventurer' && partials.includes('Warrior'));
+  const isExpert = cls === 'Expert' || (cls === 'Adventurer' && partials.includes('Expert'));
+  const isPsychic = cls === 'Psychic' || (cls === 'Adventurer' && partials.includes('Psychic'));
+  const bg = CG.backgrounds.find(b => b.name === background);
 
   function rollAttrs() {
     const r = () => Math.floor(Math.random() * 6) + 1;
     const next = {};
-    ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'].forEach(k => next[k] = r() + r() + r());
+    ATTR_KEYS.forEach(k => next[k] = r() + r() + r());
     setAttrs(next);
   }
+  function setArray() { setAttrs({ STR: 14, DEX: 12, CON: 11, INT: 10, WIS: 9, CHA: 7 }); }
 
-  const steps = ['Name & class', 'Background', 'Attributes', 'Gear'];
-  const canNext = step === 1 ? name.trim().length > 0 : true;
+  // Resolve the final skill list (background quick skills, or custom picks), plus focus skill.
+  function resolveSkills() {
+    const out = {};
+    const add = nm => {
+      const real = nm === 'Any Combat' ? combatChoice : nm;
+      out[real] = Math.min(1, (out[real] != null ? out[real] : -1) + 1);
+    };
+    if (bg) {
+      add(bg.freeSkill);
+      const list = customSkills && pickedSkills.length ? pickedSkills : bg.quickSkills;
+      list.forEach(add);
+    }
+    const f = CG.foci.find(x => x.name === focus);
+    if (f && f.grantsSkill) add(f.grantsSkill);
+    if (focus === 'Specialist' && specialistSkill) add(specialistSkill);
+    return Object.keys(out).map(k => ({ name: k, level: out[k] }));
+  }
+
+  // The dynamic step list (psionics only appears for psychics).
+  const steps = [
+    { id: 'welcome', label: 'Start' },
+    { id: 'attrs', label: 'Attributes' },
+    { id: 'background', label: 'Background' },
+    { id: 'class', label: 'Class' },
+    { id: 'skills', label: 'Skills' },
+    { id: 'focus', label: 'Focus' },
+    ...(isPsychic ? [{ id: 'psi', label: 'Psionics' }] : []),
+    { id: 'gear', label: 'Gear' },
+    { id: 'review', label: 'Review' },
+  ];
+  const stepId = (steps[stepIdx] || steps[0]).id;
+
+  const canNext = (
+    stepId === 'welcome' ? name.trim().length > 0 :
+    stepId === 'background' ? !!background :
+    stepId === 'class' ? (!!cls && (cls !== 'Adventurer' || partials.length === 2)) :
+    stepId === 'focus' ? !!focus :
+    stepId === 'psi' ? disciplines.length > 0 :
+    stepId === 'gear' ? !!pkg :
+    true
+  );
 
   function finish() {
-    const isWarrior = cls.startsWith('Warrior');
     const r = () => Math.floor(Math.random() * 6) + 1;
     const dexMod = attrMod(attrs.DEX);
     const hp = Math.max(1, r() + Math.max(0, attrMod(attrs.CON)) + (isWarrior ? 2 : 0));
-    const armorDef = EQ.armor.find(a => a.name === armor) || { ac: 10 };
-    const baseAc = typeof armorDef.ac === 'number' ? armorDef.ac : (parseInt(armorDef.ac, 10) || 10);
-    const wdef = allWeapons.find(w => w.name === weapon);
+    const p = CG.packages.find(x => x.name === pkg);
+    const baseAc = p ? p.ac : 10;
+    const weapons = p ? p.weapons.map(w => ({ name: w.name, dmg: w.dmg, range: w.range || '—', shock: '' })) : [];
+    const gearItems = p ? [...(p.items || []), ...(p.weapons.length ? [] : [])] : [];
+    const clsLabel = cls === 'Adventurer' ? 'Adventurer (' + partials.join('/') + ')' : cls;
     if (playerName && playerName !== me.name && onSetMyName) onSetMyName(playerName);
     onCreate({
       id: 'pc-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
-      name: name.trim(), class: cls, background, species: 'Human',
+      name: name.trim(), class: clsLabel, background, species: 'Human',
       level: 1, xp: 0, attrs, hp, maxHp: hp,
       bab: isWarrior ? 1 : 0,
-      armor: armor || 'None', ac: baseAc + dexMod,
+      armor: p ? p.armorName : 'None', ac: baseAc + dexMod,
       saves: computeSaves(1, attrs),
-      systemStrain: 0, skills: [],
+      systemStrain: 0,
+      skills: resolveSkills(),
       foci: focus ? [{ name: focus, level: 1 }] : [],
-      weapons: wdef ? [{ name: wdef.name, dmg: wdef.dmg, range: wdef.range || '—', shock: wdef.shock || '' }] : [],
-      gear: [], credits: 200, notes: '',
+      disciplines: isPsychic ? disciplines.map(d => ({ name: d, level: 1 })) : [],
+      effortCommitted: 0,
+      weapons,
+      gear: gearItems,
+      credits: p ? p.credits : 200,
+      notes: goal ? ('Goal: ' + goal) : '',
       ownerId: me.id, ownerName: (playerName || me.name || 'Player'),
     });
   }
 
-  const field = (label, el) => React.createElement('div', { style: { marginBottom: 14 } },
-    React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 5 } }, label), el);
-
-  let body = null;
-  if (step === 1) {
-    body = React.createElement('div', null,
-      field('Your player name', React.createElement('input', { value: playerName, onChange: e => setPlayerName(e.target.value), placeholder: 'e.g. Alex', style: { width: '100%' } })),
-      field('Character name', React.createElement('input', { value: name, onChange: e => setName(e.target.value), placeholder: 'Name your PC', autoFocus: true, style: { width: '100%' } })),
-      field('Class', React.createElement('select', { value: cls, onChange: e => setCls(e.target.value), style: { width: '100%' } }, CHAR_CLASSES.map(c => React.createElement('option', { key: c }, c))))
-    );
-  } else if (step === 2) {
-    body = React.createElement('div', null,
-      field('Background', React.createElement('select', { value: background, onChange: e => setBackground(e.target.value), style: { width: '100%' } }, CHAR_BACKGROUNDS.map(c => React.createElement('option', { key: c }, c)))),
-      React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-3)', lineHeight: 1.6 } }, 'Your background colors your skills and where you came from. You can refine skills on the sheet later.')
-    );
-  } else if (step === 3) {
-    body = React.createElement('div', null,
-      React.createElement('div', { style: { display: 'flex', gap: 8, marginBottom: 12 } },
-        React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: rollAttrs }, '⚂ Roll 3d6'),
-        React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: () => setAttrs(STD_ARRAY) }, 'Standard Array')
+  // ── small presentational helpers ──
+  const note = txt => React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-3)', lineHeight: 1.6, marginBottom: 12 } }, txt);
+  const fieldLabel = t => React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 5 } }, t);
+  function card(key, selected, onClick, titleEl, bodyEls, badge) {
+    return React.createElement('div', {
+      key, onClick,
+      className: 'cb-card' + (selected ? ' selected' : ''),
+    },
+      React.createElement('div', { style: { display: 'flex', alignItems: 'baseline', gap: 8 } },
+        React.createElement('div', { style: { fontWeight: 600, fontSize: 14, color: selected ? 'var(--accent)' : 'var(--fg-0)' } }, titleEl),
+        badge && React.createElement('span', { className: 'tag', style: { fontSize: 10, marginLeft: 'auto' } }, badge)
       ),
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 } },
-        ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'].map(k => React.createElement('div', { key: k, style: { textAlign: 'center' } },
-          React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } }, k),
-          React.createElement('input', { type: 'number', value: attrs[k], onChange: e => setAttrs({ ...attrs, [k]: +e.target.value || 0 }), style: { textAlign: 'center', fontFamily: 'JetBrains Mono', fontSize: 18, fontWeight: 600, width: '100%' } }),
-          React.createElement('div', { style: { fontSize: 11, fontFamily: 'JetBrains Mono', color: 'var(--fg-3)' } }, 'mod ' + (attrMod(attrs[k]) >= 0 ? '+' : '') + attrMod(attrs[k]))
+      bodyEls
+    );
+  }
+  const skillChip = nm => React.createElement('span', {
+    key: nm, className: 'tag', title: (CG.skills[nm] || ''),
+    style: { fontSize: 11, marginRight: 6, marginBottom: 6, display: 'inline-block' },
+  }, nm === 'Any Combat' ? 'Any Combat (' + combatChoice + ')' : nm);
+
+  // ── step bodies ──
+  let body = null;
+  if (stepId === 'welcome') {
+    body = React.createElement('div', null,
+      note("You're about to make an adventurer for the year 3200 — a starfarer chasing glory, riches, or revenge. This wizard walks you through every choice and explains what it means. You can change anything later on the sheet."),
+      React.createElement('div', { style: { marginBottom: 14 } }, fieldLabel('Your player name'),
+        React.createElement('input', { value: playerName, onChange: e => setPlayerName(e.target.value), placeholder: 'e.g. Alex', style: { width: '100%' } })),
+      React.createElement('div', null, fieldLabel('Character name'),
+        React.createElement('input', { value: name, onChange: e => setName(e.target.value), placeholder: 'Name your hero', autoFocus: true, style: { width: '100%' } }))
+    );
+  } else if (stepId === 'attrs') {
+    body = React.createElement('div', null,
+      note('Six attributes set your raw potential. Assign the standard array (14, 12, 11, 10, 9, 7) however you like, or roll the dice. The “mod” is what you actually add to rolls.'),
+      React.createElement('div', { style: { display: 'flex', gap: 8, marginBottom: 14 } },
+        React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: setArray }, 'Standard Array'),
+        React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: rollAttrs }, '⚂ Roll 3d6')
+      ),
+      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 8 } },
+        CG.attributes.map(a => React.createElement('div', { key: a.key, style: { display: 'flex', alignItems: 'center', gap: 10 } },
+          React.createElement('div', { style: { width: 116 } },
+            React.createElement('div', { style: { fontWeight: 600, fontSize: 12, color: 'var(--fg-0)' } }, a.name),
+            React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', lineHeight: 1.3 } }, a.blurb)
+          ),
+          React.createElement('input', { type: 'number', value: attrs[a.key], onChange: e => setAttrs({ ...attrs, [a.key]: +e.target.value || 0 }), style: { width: 56, textAlign: 'center', fontFamily: 'JetBrains Mono', fontSize: 18, fontWeight: 600 } }),
+          React.createElement('div', { style: { width: 48, fontFamily: 'JetBrains Mono', fontSize: 12, color: 'var(--fg-2)' } }, 'mod ' + (attrMod(attrs[a.key]) >= 0 ? '+' : '') + attrMod(attrs[a.key]))
         ))
       )
     );
-  } else {
+  } else if (stepId === 'background') {
     body = React.createElement('div', null,
-      field('Starting weapon', React.createElement('select', { value: weapon, onChange: e => setWeapon(e.target.value), style: { width: '100%' } },
-        React.createElement('option', { value: '' }, 'None'),
-        React.createElement('optgroup', { label: 'Ranged' }, EQ.rangedWeapons.map(w => React.createElement('option', { key: w.name, value: w.name }, w.name + ' (' + w.dmg + ')'))),
-        React.createElement('optgroup', { label: 'Melee' }, EQ.meleeWeapons.map(w => React.createElement('option', { key: w.name, value: w.name }, w.name + ' (' + w.dmg + ')'))),
-        React.createElement('optgroup', { label: 'Heavy' }, EQ.heavyWeapons.map(w => React.createElement('option', { key: w.name, value: w.name }, w.name + ' (' + w.dmg + ')')))
-      )),
-      field('Armor', React.createElement('select', { value: armor, onChange: e => setArmor(e.target.value), style: { width: '100%' } },
-        EQ.armor.map(a => React.createElement('option', { key: a.name, value: a.name }, a.name + ' (AC ' + a.ac + ')')))),
-      field('Focus (optional)', React.createElement('select', { value: focus, onChange: e => setFocus(e.target.value), style: { width: '100%' } },
-        React.createElement('option', { value: '' }, 'None'),
-        EQ.foci.map(f => React.createElement('option', { key: f.name, value: f.name }, f.name))))
+      note('Where did your hero come from? Background sets the skills you start with.'),
+      React.createElement('div', { className: 'cb-list' },
+        CG.backgrounds.map(b => card('bg-' + b.name, background === b.name, () => setBackground(b.name), b.name,
+          React.createElement('div', null,
+            React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', margin: '4px 0 6px', lineHeight: 1.5 } }, b.blurb),
+            React.createElement('div', null,
+              React.createElement('span', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginRight: 6 } }, "You'll start knowing:"),
+              [b.freeSkill, ...b.quickSkills.filter(s => s !== b.freeSkill)].map(skillChip)
+            )
+          )
+        ))
+      )
+    );
+  } else if (stepId === 'class') {
+    body = React.createElement('div', null,
+      note('Your class is what you’re best at as an adventurer. It doesn’t have to match your background.'),
+      React.createElement('div', { className: 'cb-list' },
+        CG.classes.map(c => card('cls-' + c.name, cls === c.name, () => { setCls(c.name); if (c.name !== 'Adventurer') setPartials([]); }, c.name,
+          React.createElement('div', null,
+            React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', margin: '4px 0 6px', lineHeight: 1.5 } }, c.blurb),
+            React.createElement('ul', { style: { margin: 0, paddingLeft: 16, fontSize: 11, color: 'var(--fg-3)' } },
+              c.perks.map((p, i) => React.createElement('li', { key: i, style: { marginBottom: 2 } }, p)))
+          ),
+          c.tagline
+        ))
+      ),
+      cls === 'Adventurer' && React.createElement('div', { style: { marginTop: 12 } },
+        fieldLabel('Pick exactly two to blend' + (partials.length === 2 ? '' : ' (' + partials.length + '/2)')),
+        React.createElement('div', { style: { display: 'flex', gap: 8, flexWrap: 'wrap' } },
+          ['Warrior', 'Expert', 'Psychic'].map(p => React.createElement('button', {
+            key: p,
+            className: partials.includes(p) ? 'primary' : 'ghost',
+            style: { fontSize: 12 },
+            onClick: () => setPartials(partials.includes(p) ? partials.filter(x => x !== p) : (partials.length < 2 ? [...partials, p] : partials)),
+          }, 'Partial ' + p))
+        )
+      )
+    );
+  } else if (stepId === 'skills') {
+    body = React.createElement('div', null,
+      note('Skills are what your hero can do. The set below is the recommended starting kit for a ' + (background || 'your background') + ' — perfect if you’re unsure.'),
+      bg && React.createElement('div', { style: { marginBottom: 12 } },
+        React.createElement('div', { style: { marginBottom: 8 } },
+          [bg.freeSkill, ...bg.quickSkills.filter(s => s !== bg.freeSkill)].map(skillChip)),
+        React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 4 } },
+          [bg.freeSkill, ...bg.quickSkills.filter(s => s !== bg.freeSkill)].map(s =>
+            React.createElement('div', { key: s, style: { fontSize: 11, color: 'var(--fg-3)' } },
+              React.createElement('span', { style: { color: 'var(--fg-1)', fontWeight: 600 } }, (s === 'Any Combat' ? 'Any Combat' : s) + ': '),
+              CG.skills[s] || ''))
+        )
+      ),
+      bg && bg.quickSkills.includes('Any Combat') && React.createElement('div', { style: { marginTop: 10 } },
+        fieldLabel('Your combat skill'),
+        React.createElement('div', { style: { display: 'flex', gap: 6 } },
+          ['Shoot', 'Stab', 'Punch'].map(o => React.createElement('button', { key: o, className: combatChoice === o ? 'primary' : 'ghost', style: { fontSize: 12 }, onClick: () => setCombatChoice(o) }, o)))
+      ),
+      React.createElement('label', { style: { display: 'flex', alignItems: 'center', gap: 8, marginTop: 14, fontSize: 12, color: 'var(--fg-2)', cursor: 'pointer' } },
+        React.createElement('input', { type: 'checkbox', checked: customSkills, onChange: e => setCustomSkills(e.target.checked) }),
+        'Let me pick my own two skills instead'
+      ),
+      customSkills && React.createElement('div', { style: { marginTop: 10 } },
+        fieldLabel('Pick up to 2 (each at level-0)'),
+        React.createElement('div', { className: 'cb-skillgrid' },
+          Object.keys(CG.skills).filter(s => s !== 'Any Combat').map(s => {
+            const on = pickedSkills.includes(s);
+            return React.createElement('button', {
+              key: s, title: CG.skills[s],
+              className: on ? 'primary' : 'ghost', style: { fontSize: 11 },
+              onClick: () => setPickedSkills(on ? pickedSkills.filter(x => x !== s) : (pickedSkills.length < 2 ? [...pickedSkills, s] : pickedSkills)),
+            }, s);
+          }))
+      )
+    );
+  } else if (stepId === 'focus') {
+    const recommend = isWarrior ? 'combat' : (isExpert ? 'noncombat' : null);
+    body = React.createElement('div', null,
+      note('A focus is your special knack — a talent that sets you apart.' + (recommend ? ' As a ' + (recommend === 'combat' ? 'fighter, a combat focus suits you.' : 'specialist, a non-combat focus suits you.') : '')),
+      React.createElement('div', { className: 'cb-list' },
+        CG.foci.map(f => card('foc-' + f.name, focus === f.name, () => setFocus(f.name), f.name,
+          React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', margin: '4px 0 0', lineHeight: 1.5 } }, f.blurb),
+          f.type === recommend ? 'suggested' : (f.type === 'combat' ? 'combat' : 'utility')
+        ))
+      ),
+      focus === 'Specialist' && React.createElement('div', { style: { marginTop: 10 } },
+        fieldLabel('Specialist in which skill?'),
+        React.createElement('select', { value: specialistSkill, onChange: e => setSpecialistSkill(e.target.value), style: { width: '100%' } },
+          Object.keys(CG.skills).filter(s => s !== 'Any Combat').map(s => React.createElement('option', { key: s }, s)))
+      )
+    );
+  } else if (stepId === 'psi') {
+    body = React.createElement('div', null,
+      note('Psychics train in disciplines. Pick ' + (cls === 'Psychic' ? 'two' : 'one') + ' to start. You can dig into individual techniques later on your sheet.'),
+      React.createElement('div', { className: 'cb-list' },
+        (PSI ? PSI.disciplines : []).map(d => {
+          const on = disciplines.includes(d.name);
+          const cap = cls === 'Psychic' ? 2 : 1;
+          return card('psi-' + d.name, on, () => setDisciplines(on ? disciplines.filter(x => x !== d.name) : (disciplines.length < cap ? [...disciplines, d.name] : disciplines)), d.name,
+            React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', margin: '4px 0 0', lineHeight: 1.5 } }, d.desc));
+        })
+      )
+    );
+  } else if (stepId === 'gear') {
+    const suggested = CG.packages.filter(p => p.suggestedFor.includes(cls) || (cls === 'Adventurer'));
+    const list = suggested.length ? suggested : CG.packages;
+    body = React.createElement('div', null,
+      note('Pick a starting kit. Each gives you weapons, armor, gear, and some credits. Suggested kits for your class are shown first.'),
+      React.createElement('div', { className: 'cb-list' },
+        [...list, ...CG.packages.filter(p => !list.includes(p))].map(p => card('pkg-' + p.name, pkg === p.name, () => setPkg(p.name), p.name,
+          React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', margin: '4px 0 0', lineHeight: 1.5 } },
+            (p.weapons.length ? p.weapons.map(w => w.name + ' (' + w.dmg + ')').join(', ') + ' · ' : '') + p.armorName + ' (AC ' + p.ac + ') · ' + p.credits + ' cr'),
+          p.suggestedFor.includes(cls) ? 'suggested' : null
+        ))
+      )
+    );
+  } else { // review
+    const dexMod = attrMod(attrs.DEX);
+    const p = CG.packages.find(x => x.name === pkg);
+    const ac = (p ? p.ac : 10) + dexMod;
+    const skillNames = resolveSkills().map(s => s.name + (s.level ? '-' + s.level : '')).join(', ');
+    const row = (k, v) => React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: 12, padding: '3px 0', borderBottom: '1px solid var(--border-soft)' } },
+      React.createElement('span', { style: { color: 'var(--fg-3)' } }, k), React.createElement('span', { style: { color: 'var(--fg-1)', textAlign: 'right' } }, v));
+    body = React.createElement('div', null,
+      note('Here’s your hero. Give them a goal — every adventurer needs a reason to be out there — then create.'),
+      React.createElement('div', { style: { marginBottom: 12 } },
+        row('Name', name || '—'),
+        row('Class', cls === 'Adventurer' ? 'Adventurer (' + partials.join('/') + ')' : (cls || '—')),
+        row('Background', background || '—'),
+        row('Attributes', ATTR_KEYS.map(k => k + ' ' + attrs[k]).join('  ')),
+        row('AC', '' + ac),
+        row('To-hit bonus', isWarrior ? '+1' : '+0'),
+        row('Focus', focus || '—'),
+        isPsychic ? row('Disciplines', disciplines.join(', ') || '—') : null,
+        row('Skills', skillNames || '—'),
+        row('Kit', pkg || '—')
+      ),
+      fieldLabel('Your goal'),
+      React.createElement('input', { value: goal, onChange: e => setGoal(e.target.value), placeholder: 'e.g. Become the best pilot in the sector', style: { width: '100%' } })
     );
   }
 
   return React.createElement('div', {
-    style: { position: 'fixed', inset: 0, background: 'rgba(10,5,7,0.88)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' },
+    style: { position: 'fixed', inset: 0, background: 'rgba(10,5,7,0.9)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 },
     onClick: e => e.target === e.currentTarget && onClose(),
   },
-    React.createElement('div', { style: { background: 'var(--bg-2)', border: '1px solid var(--border-1)', borderRadius: 10, padding: 26, width: 440, maxWidth: '92vw', display: 'flex', flexDirection: 'column', gap: 14 } },
+    React.createElement('div', { className: 'cb-modal' },
       React.createElement('div', { style: { fontFamily: 'var(--font-display-alt)', fontWeight: 600, fontSize: 15, color: 'var(--fg-0)', letterSpacing: '0.06em', textTransform: 'uppercase' } }, '✦ Create your character'),
       // Step indicator
-      React.createElement('div', { style: { display: 'flex', gap: 6 } },
-        steps.map((s, i) => React.createElement('div', { key: s, style: { flex: 1, textAlign: 'center' } },
-          React.createElement('div', { style: { height: 3, borderRadius: 2, background: i + 1 <= step ? 'var(--accent)' : 'var(--border-1)' } }),
-          React.createElement('div', { style: { fontSize: 9, marginTop: 4, color: i + 1 === step ? 'var(--accent)' : 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.04em' } }, s)
+      React.createElement('div', { style: { display: 'flex', gap: 5, marginTop: 12 } },
+        steps.map((s, i) => React.createElement('div', { key: s.id, style: { flex: 1, textAlign: 'center' } },
+          React.createElement('div', { style: { height: 3, borderRadius: 2, background: i <= stepIdx ? 'var(--accent)' : 'var(--border-1)' } }),
+          React.createElement('div', { style: { fontSize: 8.5, marginTop: 4, color: i === stepIdx ? 'var(--accent)' : 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.03em' } }, s.label)
         ))
       ),
-      React.createElement('div', { style: { minHeight: 150 } }, body),
-      React.createElement('div', { style: { display: 'flex', gap: 8 } },
+      React.createElement('div', { className: 'cb-body' }, body),
+      React.createElement('div', { style: { display: 'flex', gap: 8, paddingTop: 4 } },
         React.createElement('button', { style: { fontSize: 12 }, onClick: onClose }, 'Cancel'),
-        step > 1 && React.createElement('button', { style: { fontSize: 12 }, onClick: () => setStep(step - 1) }, '← Back'),
+        stepIdx > 0 && React.createElement('button', { style: { fontSize: 12 }, onClick: () => setStepIdx(stepIdx - 1) }, '← Back'),
         React.createElement('div', { style: { flex: 1 } }),
-        step < 4
-          ? React.createElement('button', { className: 'primary', style: { fontSize: 12, opacity: canNext ? 1 : 0.5, cursor: canNext ? 'pointer' : 'not-allowed' }, onClick: () => canNext && setStep(step + 1) }, 'Next →')
+        stepId !== 'review'
+          ? React.createElement('button', { className: 'primary', style: { fontSize: 12, opacity: canNext ? 1 : 0.5, cursor: canNext ? 'pointer' : 'not-allowed' }, onClick: () => canNext && setStepIdx(stepIdx + 1) }, 'Next →')
           : React.createElement('button', { className: 'primary', style: { fontSize: 12 }, onClick: finish }, '✦ Create character')
       )
     )
