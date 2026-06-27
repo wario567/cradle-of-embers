@@ -133,11 +133,12 @@
   }
 
   // Canonical lore factions — always present, stats reflect their description.
+  // SWN tag pairs drawn from the official faction tag list.
   const LORE_FACTIONS = [
     {
       id: 'fac-river-below',
       name: 'The River Below',
-      traits: ['Insurgent', 'Espionage-driven'],
+      tags: ['Fanatical', 'Mercenary Group'],
       hp: 10, maxHp: 10,
       cunning: 5, force: 2, wealth: 2,
       goal: 'Destroy a rival faction outright',
@@ -152,7 +153,7 @@
     {
       id: 'fac-pale-substrate',
       name: 'The Pale Substrate',
-      traits: ['AI-led', 'Cybernetic'],
+      tags: ['Plutocratic', 'Planetary Government'],
       hp: 20, maxHp: 20,
       cunning: 6, force: 4, wealth: 5,
       goal: 'Discover a long-buried secret',
@@ -168,7 +169,7 @@
     {
       id: 'fac-progenitor-combine',
       name: 'Progenitor Combine',
-      traits: ['Eugenicist', 'Mercantile'],
+      tags: ['Plutocratic', 'Mercenary Group'],
       hp: 18, maxHp: 18,
       cunning: 3, force: 2, wealth: 6,
       goal: 'Consolidate control of a single world',
@@ -183,7 +184,7 @@
     {
       id: 'fac-hollow-covenant',
       name: 'The Hollow Covenant',
-      traits: ['Crusading', 'Militant'],
+      tags: ['Fanatical', 'Warlike'],
       hp: 14, maxHp: 14,
       cunning: 3, force: 5, wealth: 3,
       goal: 'Restore an ancient regime',
@@ -194,6 +195,84 @@
       ],
       notes: 'Survivors of a collapsed civilization. Internally split: Remembrance vs Becoming factions.',
       loreId: 'hollow_covenant',
+    },
+    {
+      id: 'fac-aureole-synod',
+      name: 'The Aureole Synod',
+      tags: ['Theocratic', 'Secret Masters'],
+      hp: 14, maxHp: 14,
+      cunning: 5, force: 2, wealth: 4,
+      goal: 'Maintain current status and maximise intelligence gathered',
+      assets: [
+        { name: 'Informational Sucker', cost: 3, hp: 2 },
+        { name: 'Spynet', cost: 3, hp: 2 },
+        { name: 'Religious Brotherhood', cost: 2, hp: 3 },
+        { name: 'Demagogue', cost: 2, hp: 2 },
+      ],
+      notes: 'Pan-sector religious order secretly governed by an unbraked AI (AURIS). The congregation does not know. Confessional Archive gives leverage across all factions.',
+      loreId: 'aureole_synod',
+    },
+    {
+      id: 'fac-the-succession',
+      name: 'The Succession',
+      tags: ['Planetary Government', 'Imperialists'],
+      hp: 18, maxHp: 18,
+      cunning: 2, force: 5, wealth: 4,
+      goal: 'Restore a former interstellar government',
+      assets: [
+        { name: 'Pretech Manufactory', cost: 6, hp: 4 },
+        { name: 'Frigate Squadron', cost: 4, hp: 4 },
+        { name: 'Colonial Garrison', cost: 4, hp: 3 },
+        { name: 'Postech Industries', cost: 4, hp: 4 },
+      ],
+      notes: 'Mandate continuity government. Best technology in the sector. Legally considers clones property and PALE contracts invalid.',
+      loreId: 'the_succession',
+    },
+    {
+      id: 'fac-the-penumbra',
+      name: 'The Penumbra',
+      tags: ['Deep Rooted', 'Fanatical'],
+      hp: 10, maxHp: 10,
+      cunning: 5, force: 3, wealth: 2,
+      goal: 'Expose a terrible secret to widespread knowledge',
+      assets: [
+        { name: 'Informational Sucker', cost: 3, hp: 2 },
+        { name: 'Spynet', cost: 3, hp: 2 },
+        { name: 'Saboteurs', cost: 2, hp: 2 },
+      ],
+      notes: 'Post-Scream investigative network. Holds the sector\'s most dangerous secrets. Senior members develop "pattern sickness."',
+      loreId: 'the_penumbra',
+    },
+    {
+      id: 'fac-argent-compact',
+      name: 'The Argent Compact',
+      tags: ['Peaceful', 'Deep Rooted'],
+      hp: 12, maxHp: 12,
+      cunning: 4, force: 1, wealth: 3,
+      goal: 'Maintain the current status quo and peace',
+      assets: [
+        { name: 'Informational Sucker', cost: 3, hp: 2 },
+        { name: 'Broker', cost: 2, hp: 2 },
+        { name: 'Logistics Comet', cost: 3, hp: 3 },
+      ],
+      notes: 'Oldest library and sanctuary network in the sector. Neutral ground. Has Sub-Rosa archive of sector\'s most dangerous documents.',
+      loreId: 'argent_compact',
+    },
+    {
+      id: 'fac-driftborn',
+      name: 'The Driftborn',
+      tags: ['Mercenary Group', 'Exchange Consulate'],
+      hp: 10, maxHp: 10,
+      cunning: 3, force: 2, wealth: 4,
+      goal: 'Maintain the freedom of trade and movement',
+      assets: [
+        { name: 'Smuggler Ring', cost: 3, hp: 2 },
+        { name: 'Mercenary Squad', cost: 2, hp: 2 },
+        { name: 'Free Merchant Fleet', cost: 3, hp: 3 },
+        { name: 'Broker', cost: 2, hp: 2 },
+      ],
+      notes: 'Free trader and route-runner network. Sector\'s circulatory system. The Duskline (Session 1 escape ship) is Driftborn-affiliated.',
+      loreId: 'driftborn',
     },
   ];
 
@@ -384,23 +463,23 @@
 
     const allPlanets = systems.flatMap(s => s.planets);
 
-    // Always include the 4 lore factions, assign HQs to lore-appropriate planets.
+    // Always include all 9 lore factions, assign HQs to lore-appropriate planets.
     const factions = LORE_FACTIONS.map(f => ({ ...f }));
     const thessavar = allPlanets.find(p => p.id === 'thessavar-prime');
     const populated = allPlanets.filter(p => !['Failed Colony', 'Outpost'].includes(p.population.name));
 
-    // Covenant HQ on Thessavar (they're excavating here).
+    // Covenant HQ on Thessavar (they're excavating there).
     const covenant = factions.find(f => f.id === 'fac-hollow-covenant');
     if (covenant && thessavar) { covenant.hqPlanetId = thessavar.id; covenant.hqPlanetName = thessavar.name; }
 
-    // Substrate, Combine, River Below get random populated HQs.
+    // All other lore factions get random populated HQs.
     factions.filter(f => f.id !== 'fac-hollow-covenant').forEach((f, i) => {
       const hq = populated.length ? rng.pick(populated) : null;
       if (hq) { f.hqPlanetId = hq.id; f.hqPlanetName = hq.name; }
     });
 
-    // Add a few random minor factions on top.
-    const minorCount = rng.int(2, 3);
+    // Add 1-2 random minor factions on top.
+    const minorCount = rng.int(1, 2);
     for (let i = 0; i < minorCount; i++) {
       const f = makeFaction(rng.fork('fac-minor-' + i));
       const hq = populated.length ? rng.pick(populated) : null;
