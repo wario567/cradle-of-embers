@@ -2,6 +2,182 @@
 
 const { useState: useASt, useEffect: useAEf, useMemo: useAMem, useRef: useAR } = React;
 
+// ── GM NOTES VIEW ────────────────────────────────────────────────────────────
+function GMNotesView({ sector }) {
+  const lore = window.GM_LORE;
+  const [tab, setGMTab] = useASt('sector');
+  const [expandedFaction, setExpandedFaction] = useASt(null);
+  const [expandedTurn, setExpandedTurn] = useASt(null);
+
+  if (!lore) return React.createElement('div', { style: { padding: 24, color: 'var(--fg-3)' } }, 'GM_LORE not loaded.');
+
+  const tabStyle = active => ({
+    padding: '6px 14px', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase',
+    background: active ? 'var(--accent)' : 'var(--bg-3)',
+    color: active ? '#1a0d08' : 'var(--fg-2)',
+    border: '1px solid ' + (active ? 'var(--accent)' : 'var(--border-1)'),
+    borderRadius: 3, cursor: 'pointer', fontWeight: active ? 700 : 400,
+  });
+
+  const card = (children, extra) => React.createElement('div', {
+    style: { background: 'var(--bg-2)', border: '1px solid var(--border-1)', borderRadius: 6, padding: '14px 16px', marginBottom: 10, ...extra }
+  }, children);
+
+  const label = txt => React.createElement('div', { style: { fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 4 } }, txt);
+  const prose = txt => React.createElement('p', { style: { fontSize: 13, color: 'var(--fg-2)', lineHeight: 1.65, margin: '6px 0 0', whiteSpace: 'pre-wrap' } }, txt);
+  const bullet = txt => React.createElement('li', { style: { fontSize: 12, color: 'var(--fg-2)', lineHeight: 1.6, marginBottom: 2 } }, txt);
+
+  // SECTOR TAB
+  const sectorTab = React.createElement('div', null,
+    card([
+      React.createElement('h3', { style: { margin: '0 0 6px', color: 'var(--fg-0)', fontSize: 15 } }, lore.sector.name),
+      label('Overview'), prose(lore.sector.overview),
+      label('Theme'), prose(lore.sector.theme),
+    ]),
+    card([
+      label('Science: Stellar Nursery / Cradle'), prose(lore.sector.scienceTerm),
+    ]),
+    card([
+      label('Ignition Front'), prose(lore.sector.ignitionFrontNote),
+    ]),
+  );
+
+  // FACTIONS TAB
+  const factionsTab = React.createElement('div', null,
+    lore.factions.map(f => {
+      const open = expandedFaction === f.id;
+      const loreFac = sector.factions.find(sf => sf.loreId === f.id);
+      return React.createElement('div', { key: f.id, style: { marginBottom: 8 } },
+        React.createElement('div', {
+          onClick: () => setExpandedFaction(open ? null : f.id),
+          style: { display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: 'var(--bg-2)', border: '1px solid ' + (open ? 'var(--accent)' : 'var(--border-1)'), borderRadius: open ? '6px 6px 0 0' : 6, cursor: 'pointer' },
+        },
+          React.createElement('span', { style: { flex: 1, fontWeight: 600, fontSize: 13, color: 'var(--fg-0)' } }, f.name),
+          f.swnTags && React.createElement('span', { style: { fontSize: 10, color: 'var(--accent)', letterSpacing: '0.06em' } }, f.swnTags.join(' · ')),
+          f.stats && React.createElement('span', { style: { fontSize: 11, color: 'var(--fg-3)', marginLeft: 8 } },
+            `C${f.stats.cunning} F${f.stats.force} W${f.stats.wealth} HP${loreFac ? loreFac.hp : f.stats.hp}`),
+          React.createElement('span', { style: { color: 'var(--fg-4)', fontSize: 12 } }, open ? '▲' : '▼'),
+        ),
+        open && React.createElement('div', { style: { background: 'var(--bg-1)', border: '1px solid var(--accent)', borderTop: 'none', borderRadius: '0 0 6px 6px', padding: '14px 16px' } },
+          label('Tagline'), prose(f.tagline),
+          label('Name Origin'), prose(f.nameOrigin),
+          label('Science Term'), prose(f.scienceTerm),
+          label('GM Notes'), prose(f.gmNotes),
+          f.secrets && f.secrets.length && React.createElement('div', { style: { marginTop: 10 } },
+            label('Secrets'),
+            React.createElement('ul', { style: { margin: '4px 0 0', paddingLeft: 18 } }, f.secrets.map((s, i) => bullet(s))),
+          ),
+          f.npcs && f.npcs.length && React.createElement('div', { style: { marginTop: 10 } },
+            label('NPCs'),
+            f.npcs.map((n, i) => React.createElement('div', { key: i, style: { background: 'var(--bg-3)', borderRadius: 4, padding: '8px 10px', marginBottom: 6 } },
+              React.createElement('div', { style: { fontWeight: 600, fontSize: 12, color: 'var(--fg-0)' } }, n.name + (n.role ? ' — ' + n.role : '')),
+              n.trait && React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-2)', marginTop: 2 } }, n.trait),
+              n.quote && React.createElement('div', { style: { fontSize: 11, color: 'var(--accent)', fontStyle: 'italic', marginTop: 4 } }, n.quote),
+              n.secret && React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-3)', marginTop: 4 } }, '⚠ ' + n.secret),
+            )),
+          ),
+        ),
+      );
+    })
+  );
+
+  // FACTION TURNS TAB
+  const turnsTab = lore.factionTurns ? React.createElement('div', null,
+    lore.factionTurns.map(turn => {
+      const open = expandedTurn === turn.turn;
+      return React.createElement('div', { key: turn.turn, style: { marginBottom: 8 } },
+        React.createElement('div', {
+          onClick: () => setExpandedTurn(open ? null : turn.turn),
+          style: { display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: 'var(--bg-2)', border: '1px solid ' + (open ? 'var(--accent)' : 'var(--border-1)'), borderRadius: open ? '6px 6px 0 0' : 6, cursor: 'pointer' },
+        },
+          React.createElement('span', { style: { flex: 1, fontWeight: 600, fontSize: 13, color: 'var(--fg-0)' } }, 'Turn ' + turn.turn + ' — ' + turn.label),
+          React.createElement('span', { style: { fontSize: 11, color: 'var(--fg-3)', fontStyle: 'italic' } }, turn.worldState),
+          React.createElement('span', { style: { color: 'var(--fg-4)', fontSize: 12, marginLeft: 8 } }, open ? '▲' : '▼'),
+        ),
+        open && React.createElement('div', { style: { background: 'var(--bg-1)', border: '1px solid var(--accent)', borderTop: 'none', borderRadius: '0 0 6px 6px', padding: '14px 16px' } },
+          turn.actions.map((a, i) => {
+            const facName = (lore.factions.find(f => f.id === a.faction) || {}).name || a.faction;
+            return React.createElement('div', { key: i, style: { background: 'var(--bg-2)', borderRadius: 4, padding: '10px 12px', marginBottom: 8 } },
+              React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'baseline', marginBottom: 4 } },
+                React.createElement('span', { style: { fontWeight: 700, fontSize: 12, color: 'var(--accent)' } }, facName),
+                React.createElement('span', { style: { fontSize: 11, color: 'var(--fg-3)' } }, '— ' + a.action),
+              ),
+              React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', marginBottom: 4 } }, a.detail),
+              a.roll && React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-4)', fontFamily: 'var(--font-mono)', marginBottom: 4 } },
+                'Roll: ' + a.roll.attacker + ' vs ' + a.roll.defender + ' → ' + a.roll.result,
+              ),
+              a.statChange && React.createElement('div', { style: { fontSize: 11, color: '#e8a87c', marginBottom: 4 } }, a.statChange),
+              a.narrative && React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-3)', lineHeight: 1.6, borderTop: '1px solid var(--border-1)', paddingTop: 6, marginTop: 4 } }, a.narrative),
+            );
+          }),
+          React.createElement('div', { style: { marginTop: 10 } },
+            label('Timeline Events This Turn'),
+            React.createElement('ul', { style: { margin: '4px 0 0', paddingLeft: 18 } },
+              (turn.timelineEvents || []).map((e, i) => bullet(e))
+            ),
+          ),
+        ),
+      );
+    })
+  ) : React.createElement('div', { style: { color: 'var(--fg-3)', padding: 12 } }, 'No faction turns recorded yet.');
+
+  // PCs TAB
+  const pcsTab = React.createElement('div', null,
+    (lore.playerCharacters || []).map(pc => card([
+      React.createElement('h4', { style: { margin: '0 0 6px', color: 'var(--fg-0)' } }, pc.playerName),
+      label('Concept'), prose(pc.characterConcept),
+      label('GM Notes'), prose(pc.gmNotes),
+      pc.moralChallenges && pc.moralChallenges.length && React.createElement('div', { style: { marginTop: 8 } },
+        label('Moral Challenges'),
+        React.createElement('ul', { style: { margin: '4px 0 0', paddingLeft: 18 } }, pc.moralChallenges.map((c, i) => bullet(c))),
+      ),
+    ]))
+  );
+
+  // SESSION 1 TAB
+  const s1 = lore.session1;
+  const session1Tab = s1 ? React.createElement('div', null,
+    card([
+      React.createElement('h3', { style: { margin: '0 0 4px', color: 'var(--fg-0)' } }, s1.title),
+      React.createElement('div', { style: { fontSize: 11, color: 'var(--accent)', marginBottom: 8 } }, s1.world + ' · ' + s1.worldTags.join(', ')),
+      label('Premise'), prose(s1.premise),
+      label('World'), prose(s1.worldDescription),
+    ]),
+    card([
+      label('Player 1 Stakes'), prose(s1.characterStakes.player1),
+      React.createElement('div', { style: { height: 12 } }),
+      label('Player 2 Stakes'), prose(s1.characterStakes.player2),
+    ]),
+    card([
+      label('Hidden Truths (GM Only)'),
+      React.createElement('ul', { style: { margin: '4px 0 0', paddingLeft: 18 } }, s1.hiddenTruths.map((t, i) => bullet(t))),
+    ]),
+    React.createElement('div', { style: { marginBottom: 6 } }, label('Session Beats')),
+    (s1.beats || []).map(b => card([
+      React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'baseline', marginBottom: 6 } },
+        React.createElement('span', { style: { fontWeight: 700, fontSize: 13, color: 'var(--accent)' } }, 'Beat ' + b.beat),
+        React.createElement('span', { style: { fontWeight: 600, fontSize: 13, color: 'var(--fg-0)' } }, b.title),
+        React.createElement('span', { style: { fontSize: 11, color: 'var(--fg-4)' } }, b.type),
+      ),
+      b.gmNotes && prose(b.gmNotes),
+    ])),
+  ) : null;
+
+  const tabs = ['sector', 'factions', 'turns', 'pcs', 'session1'];
+  const tabLabels = { sector: 'Sector', factions: 'Factions', turns: 'S0 Turns', pcs: 'PCs', session1: 'Session 1' };
+
+  return React.createElement('div', { style: { padding: '20px 24px', maxWidth: 860, margin: '0 auto' } },
+    React.createElement('div', { style: { display: 'flex', gap: 4, flexWrap: 'wrap', marginBottom: 18 } },
+      tabs.map(t => React.createElement('button', { key: t, onClick: () => setGMTab(t), style: tabStyle(tab === t) }, tabLabels[t]))
+    ),
+    tab === 'sector'   && sectorTab,
+    tab === 'factions' && factionsTab,
+    tab === 'turns'    && turnsTab,
+    tab === 'pcs'      && pcsTab,
+    tab === 'session1' && session1Tab,
+  );
+}
+
 async function sha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str + '\0swn-gm'));
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
@@ -313,13 +489,15 @@ function App() {
     });
   } else if (currentView === 'combat') {
     viewEl = React.createElement(window.CombatView, null);
+  } else if (currentView === 'gm-notes' && isGM) {
+    viewEl = React.createElement(GMNotesView, { sector });
   }
 
   // Breadcrumb label for map mode
   const mapCrumbLabel = mapMode === 'planet' && selPlanet ? selPlanet.planet.name
     : mapMode === 'system' && selSystem ? (selSystem.planets[0]?.name || selSystem.starName) + ' System'
     : sector.sectorName;
-  const viewLabels = { map: mapCrumbLabel, factions: 'Factions', world: 'World', party: 'Party', combat: 'Combat' };
+  const viewLabels = { map: mapCrumbLabel, factions: 'Factions', world: 'World', party: 'Party', combat: 'Combat', 'gm-notes': 'GM Notes' };
 
   const TP = window.TweaksPanel;
   const TSec = window.TweakSection;
@@ -357,6 +535,7 @@ function App() {
         NavItem('world',    currentView === 'world',    'World',    null,                  () => setCurrentView('world')),
         NavItem('party',    currentView === 'party',    'Party',    party.length || null,  () => setCurrentView('party')),
         NavItem('combat',   currentView === 'combat',   'Combat',   null,                  () => setCurrentView('combat')),
+        isGM && NavItem('gm-notes', currentView === 'gm-notes', 'GM Notes', null, () => setCurrentView('gm-notes')),
       ),
 
       // Map sub-nav — only visible when on the map view
@@ -381,6 +560,15 @@ function App() {
       React.createElement('div', { className: 'sidebar-footer', style: { flexDirection: 'column', gap: 8 } },
         React.createElement('div', { style: { display: 'flex', gap: 6, width: '100%' } },
           React.createElement('button', { onClick: regenerate, style: { flex: 1, fontSize: 11 }, title: 'Generate a new sector' }, '↻ New'),
+          isGM && React.createElement('button', {
+            onClick: () => {
+              if (!confirm('Clear saved sector edits and reload? This resets to fresh generated state.')) return;
+              try { localStorage.removeItem('swn-edits-' + tweaks.seed); } catch {}
+              window.location.reload();
+            },
+            style: { flex: 1, fontSize: 11, color: 'var(--fg-3)' },
+            title: 'Clear cached sector and regenerate',
+          }, '⟳ Reset'),
           React.createElement('button', {
             onClick: () => {
               const data = { seed: tweaks.seed, sector: extractEdits(sector), party, missions, encounters, gmLog, exportedAt: new Date().toISOString(), app: 'Cradle of Embers' };
