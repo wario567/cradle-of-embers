@@ -276,6 +276,59 @@
     },
   ];
 
+  // Canonical timeline events from Session 0 faction turns.
+  // Year 3249 = campaign start year. Events are pre-session history.
+  // revealed: false = GM-only until disclosed in play.
+  const LORE_TIMELINE = [
+    // Turn 1 — 6 months before Session 1 (~month 1 of 3249)
+    { id: 'lt-01', year: 3249, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
+      text: 'PALE deploys a covert underwater survey team to Thessavar under commercial cover. Survey begins mapping pre-human ruins below the thermocline.' },
+    { id: 'lt-02', year: 3249, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
+      text: 'The Aureole Synod opens a chapel in Kaeldrift (Thessavar). Brother Cass assigned as warden. Confessional records begin accumulating.' },
+    { id: 'lt-03', year: 3249, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
+      text: 'River Below\'s Thessavar intelligence cell is destroyed when PALE detects their network intrusion. Operative Dosi disappears. Saint Maret burns the safe house and goes to ground.' },
+    { id: 'lt-04', year: 3249, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
+      text: 'Penumbra Archivist Lenne arrives in Kaeldrift under cover as a marine biology doctoral student to investigate the underwater ruins.' },
+    { id: 'lt-05', year: 3249, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
+      text: 'The Hollow Covenant deploys three frigates to Thessavar system as "honor escort" for Arbiter Senn\'s Concordance delegation.' },
+    { id: 'lt-06', year: 3249, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
+      text: 'Progenitor Combine announces the Kael-8 line. Kael-7 series listed as legacy stock. One unit remains active in field deployment.' },
+    { id: 'lt-07', year: 3249, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
+      text: 'The Succession files a notice of administrative observation over Thessavar and establishes a legal monitoring station in-system. The city council does not respond.' },
+
+    // Turn 2 — 3 months before Session 1 (~month 4 of 3249)
+    { id: 'lt-08', year: 3249, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
+      text: 'PALE burns Penumbra Archivist Lenne\'s cover and steals her research notes on the underwater ruins. She takes refuge in the Argent Compact sanctuary in Kaeldrift.' },
+    { id: 'lt-09', year: 3249, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
+      text: 'The Aureole Synod learns through an unwitting Concordance official that Arbiter Senn plans to sign a treaty granting the Hollow Covenant excavation rights to the Thessavar ruins.' },
+    { id: 'lt-10', year: 3249, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
+      text: 'Saint Maret accepts a contract to assassinate Arbiter Senn. She has no Wealth, no safe houses, no network. She begins scouting the Concordance alone.' },
+    { id: 'lt-11', year: 3249, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
+      text: 'Progenitor Combine legal pressure shuts down the River Below\'s Grade 0 clone liberation pipeline. One junior Saint is arrested.' },
+    { id: 'lt-12', year: 3249, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
+      text: 'Marshal Tran (Hollow Covenant, Remembrance faction) destroys a Succession observation post in an adjacent system without authorization. The Radiance is spreading through the Remembrance leadership.' },
+    { id: 'lt-13', year: 3249, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
+      text: 'Two Succession frigates arrive at Thessavar system flying Mandate-era registry codes. Three Covenant frigates are already in orbit. Neither side fires.' },
+
+    // Turn 3 — 2 weeks before Session 1 (~month 7 of 3249)
+    { id: 'lt-14', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+      text: 'PALE\'s survey team discovers the Thessavar ruins are an active transmission array of unknown origin — running continuously for at least four thousand years. The discovery is immediately classified.' },
+    { id: 'lt-15', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+      text: 'The Aureole Synod delays the Arbiter Senn excavation treaty signing by four days through procedural interference. The signing is rescheduled to the Concordance swan processional.' },
+    { id: 'lt-16', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+      text: 'River Below Saint Maret liquidates all remaining assets and arrives in Kaeldrift four days before the Concordance. She works the Still Gardens as groundskeeping staff for three days.' },
+    { id: 'lt-17', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+      text: 'The Penumbra loses its last Thessavar cell to a PALE trap. Archivist Lenne, alone in the Argent sanctuary, reconstructs her research from memory and writes: "The signal is not coming from the ruins. The ruins are the signal."' },
+    { id: 'lt-18', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+      text: 'Requisition Agent Tarek (Progenitor Combine) delivers a sealed message to Kael-7 and goes below the Kaeldrift platform to meet an unknown contact. He does not return.' },
+    { id: 'lt-19', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+      text: 'The Hollow Covenant\'s frigates are outmaneuvered by Succession Captain Solis and pulled back to orbit. Marshal Tran withdraws, humiliated. The Covenant\'s military position at Thessavar is neutralized the day before the Concordance.' },
+    { id: 'lt-20', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+      text: 'The Succession files a legal challenge to the excavation treaty on Mandate jurisdictional grounds. Arbiter Senn schedules the signing for the Concordance processional — publicly, to make it harder to stop.' },
+    { id: 'lt-21', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+      text: 'The Concordance begins. Every major faction has at least one asset in Kaeldrift or in Thessavar orbit. Nobody knows everyone else is here.' },
+  ];
+
   function makeFaction(rng) {
     const traits = rng.picks(SWN.factionTraits, 2);
     const assets = rng.picks(SWN.factionAssets, rng.int(3, 6));
@@ -505,19 +558,24 @@
 
     const routes = makeRoutes(rng.fork('routes'), systems);
 
-    // Timeline: 8–12 events spanning the last 50 years.
+    // Timeline: procedural historical events + canonical Session 0 events.
     const timeline = [];
-    const eventCount = rng.int(8, 12);
+    const eventCount = rng.int(6, 10);
     const baseYear = 3200;
     for (let i = 0; i < eventCount; i++) {
       timeline.push(makeTimelineEvent(
         rng.fork('evt-' + i),
-        baseYear - rng.int(0, 50),
+        baseYear - rng.int(1, 49),
         factions,
         allPlanets
       ));
     }
-    timeline.sort((a, b) => b.year - a.year);
+    // Inject lore timeline events (Session 0 faction turns).
+    LORE_TIMELINE.forEach(e => timeline.push({ ...e }));
+    timeline.sort((a, b) => {
+      if (a.year !== b.year) return b.year - a.year;
+      return (b.month || 0) - (a.month || 0);
+    });
 
     return {
       seed,

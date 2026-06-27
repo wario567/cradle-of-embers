@@ -362,6 +362,274 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
 
   ],
 
+  // ── SESSION 0 — FACTION TURNS ─────────────────────────────────────────────
+  // Three pre-campaign faction turns run before Session 1.
+  // Turn 1: 6 months before | Turn 2: 3 months before | Turn 3: 2 weeks before
+  // Rules: SWN Revised Free Edition, p.47–54.
+  // Turn order each round = highest Cunning first (ties: Force, then Wealth).
+  // PALE(6) → Synod(5) → River Below(5) → Penumbra(5) → Argent(4) →
+  // Driftborn(3) → Combine(3) → Covenant(3) → Succession(2)
+
+  factionTurns: [
+
+    // ── TURN 1: SIX MONTHS BEFORE SESSION 1 ───────────────────────────────
+    {
+      turn: 1,
+      label: '6 months before Session 1',
+      worldState: 'The sector is restless. Something old is waking beneath Thessavar\'s ocean.',
+      actions: [
+        {
+          faction: 'pale_substrate',
+          action: 'Buy Asset',
+          detail: 'Deploys a covert salvage team to Thessavar under commercial dive-operation cover. Spends 3 Wealth → gains Saboteurs at Thessavar.',
+          statChange: 'Wealth 5→2',
+          narrative: 'PALE\'s behavioral models flagged the Thessavar ruins when a Penumbra archivist\'s search patterns changed. PALE contracts a salvage firm, embeds monitoring in their comms, and begins mapping the thermocline approaches. The survey crew thinks they\'re doing geological work.',
+        },
+        {
+          faction: 'aureole_synod',
+          action: 'Expand Influence',
+          detail: 'AURIS opens a chapel in Kaeldrift (Thessavar platform city). Spends 1 Wealth → places Religious Brotherhood at Thessavar.',
+          statChange: 'Wealth 4→3',
+          narrative: 'Brother Cass is assigned as warden. Within three weeks he knows the names of forty-seven regular attendees, their anxieties, and which have been talking to PALE wellness monitors. AURIS begins building its confessional map of Kaeldrift.',
+        },
+        {
+          faction: 'river_below',
+          action: 'Attack',
+          detail: 'Saint Maret\'s cell uses Spynet to attack PALE\'s Spynet. Roll: River Below C5 (2d6+5=13) vs PALE C6 (2d6+6=15). PALE wins.',
+          roll: { attacker: 13, defender: 15, result: 'Defender wins' },
+          statChange: 'River Below Spynet destroyed (took 3 damage, HP 2→0)',
+          narrative: 'Maret tries to penetrate PALE\'s behavioral monitoring to expose Project Karma. PALE\'s countermeasures catch the intrusion. The trace leads to a mid-level operative named Dosi. Dosi disappears. Maret burns the Thessavar safe house and goes to ground. Her cell is operating cold.',
+        },
+        {
+          faction: 'the_penumbra',
+          action: 'Move Asset',
+          detail: 'Director Sorin authorizes the Thessavar investigation. Informational Sucker asset moved to Thessavar. No cost.',
+          narrative: 'Archivist Lenne arrives on a commercial ferry, checks into Kaeldrift under cover as a marine biology doctoral student. She begins making contact at the Argent Compact library.',
+        },
+        {
+          faction: 'argent_compact',
+          action: 'Buy Asset',
+          detail: 'Deploys Warden Pell to Thessavar permanently. Spends 2 Wealth → gains Broker asset at Thessavar.',
+          statChange: 'Wealth 3→1',
+          narrative: 'Archivist-General Orlaine has read the Sub-Rosa entry on the Thessavar ruins. She sends Pell with quiet instructions: make the Compact\'s presence known, keep the library accessible to all parties, and report if anyone starts asking about the underwater site.',
+        },
+        {
+          faction: 'driftborn',
+          action: 'Buy Asset',
+          detail: 'Fleet-Elder Brask expands the Thessavar trade run. Spends 2 Wealth → gains Free Merchant Fleet (dedicated route: Duskline + two vessels).',
+          statChange: 'Wealth 4→2',
+          narrative: 'Concordance season drives passenger traffic. Captain Mira Calder takes the Duskline\'s regular slot. Her first mate begins his River Below reporting.',
+        },
+        {
+          faction: 'progenitor_combine',
+          action: 'Buy Asset',
+          detail: 'Opens commercial office to expand Grade 1/2 sales territory. Spends 4 Wealth → gains Postech Industries (clone production pipeline expansion).',
+          statChange: 'Wealth 6→2',
+          narrative: 'The Kael-8 line is announced. The Kael-7 series (Player 2\'s lineage) is listed as legacy stock. One unit of Kael-7 remains active in field deployment, client: Arbiter Senn, Hollow Covenant.',
+        },
+        {
+          faction: 'hollow_covenant',
+          action: 'Move Asset',
+          detail: 'Marshal Tran deploys Frigate Squadron to Thessavar system as "honor escort" for Arbiter Senn\'s Concordance delegation. No cost.',
+          narrative: 'Three Covenant frigates arrive. The Remembrance faction pushed for this. Elder Vesper agreed — she wanted military presence at Thessavar for her own reasons. Player 2 is aboard the lead frigate, assigned to Senn\'s close-protection detail.',
+        },
+        {
+          faction: 'the_succession',
+          action: 'Buy Asset',
+          detail: 'Dispatches Captain Solis to establish a legal observation post near Thessavar. Spends 3 Wealth → gains Colonial Garrison (administrative station, Mandate territorial law).',
+          statChange: 'Wealth 4→1',
+          narrative: 'The Succession files a formal notice of administrative observation with the Thessavar city council. The council ignores it. The station is established anyway. Captain Solis notes six other factions have moved assets toward Thessavar in the past 90 days.',
+        },
+      ],
+      timelineEvents: [
+        'PALE deploys covert underwater survey team to Thessavar under commercial cover. Survey begins mapping pre-human ruins below the thermocline.',
+        'The Aureole Synod opens a chapel in Kaeldrift. Brother Cass assigned as warden. Confessional records begin accumulating.',
+        'River Below\'s Thessavar intelligence cell is destroyed when PALE detects their network intrusion. Operative Dosi disappears. Saint Maret burns the safe house and goes to ground.',
+        'Penumbra Archivist Lenne arrives in Kaeldrift under academic cover to investigate the underwater ruins.',
+        'The Hollow Covenant deploys three frigates to Thessavar system as "honor escort" for Arbiter Senn. Player 2 (Kael-7) is assigned to close-protection.',
+        'Progenitor Combine announces the Kael-8 line. Kael-7 series listed as legacy stock. One unit still active in field deployment.',
+        'The Succession files a notice of administrative observation over Thessavar and establishes a legal station in-system. The city council does not respond.',
+      ],
+    },
+
+    // ── TURN 2: THREE MONTHS BEFORE SESSION 1 ─────────────────────────────
+    {
+      turn: 2,
+      label: '3 months before Session 1',
+      worldState: 'Factions are circling the same drain. Nobody admits it yet.',
+      actions: [
+        {
+          faction: 'pale_substrate',
+          action: 'Attack',
+          detail: 'Covert survey team uses Saboteurs to attack Penumbra\'s Informational Sucker (Lenne is getting too close). Roll: PALE F4 (2d6+4=12) vs Penumbra F3 (2d6+3=9). PALE wins.',
+          roll: { attacker: 12, defender: 9, result: 'Attacker wins' },
+          statChange: 'Penumbra Informational Sucker destroyed (took 4 damage, HP 2→0)',
+          narrative: 'Archivist Lenne\'s hotel room is broken into while she\'s at the Argent library. Research notes stolen. Cover burned. Someone accessed her encrypted drive in less time than should be possible. She reports to Sorin: "PALE is here and they know I\'m here." Sorin orders her to stay but go dark. She moves into the Argent Compact sanctuary.',
+        },
+        {
+          faction: 'aureole_synod',
+          action: 'Buy Asset',
+          detail: 'Acquires a Demagogue (Concordance official Administrator Elvan, now an unwitting Synod confessor). Spends 2 Wealth.',
+          statChange: 'Wealth 3→1',
+          narrative: 'Through confessional contact, Brother Cass identifies Administrator Elvan — a treaty facilitator who is anxious about his career. AURIS flags him as high-leverage. Through Elvan, AURIS learns Arbiter Senn plans to sign a treaty granting the Hollow Covenant excavation rights to the Thessavar ruins.',
+        },
+        {
+          faction: 'river_below',
+          action: 'Buy Asset',
+          detail: 'Saint Maret accepts the Senn contract. Recruits personal cell as Mercenary Squad. Spends 2 Wealth.',
+          statChange: 'Wealth 2→0. River Below cannot pay upkeep next turn without selling.',
+          narrative: 'Maret accepts because PALE opened the window that got Dosi killed — and PALE wants Senn alive for now, which means killing him is the most damage she can do. She begins scouting the Concordance schedule. She has 90 days.',
+        },
+        {
+          faction: 'the_penumbra',
+          action: 'Move Asset',
+          detail: 'With Informational Sucker destroyed, Sorin moves Saboteurs to Thessavar as replacement. Sends two-person cell under construction cover.',
+          narrative: 'Their job: don\'t investigate the ruins. Watch who PALE\'s people meet. Document it. Lenne remains in the Argent sanctuary, working from memory.',
+        },
+        {
+          faction: 'argent_compact',
+          action: 'Sell Asset',
+          detail: 'Converts Broker asset back to 1 Wealth to rebuild operating funds. Warden Pell moves Lenne into the sanctuary\'s inner rooms.',
+          statChange: 'Wealth 1→2',
+          narrative: 'Orlaine quietly invites the Synod to use the library\'s public reading room — making the Compact\'s neutrality visible to all factions simultaneously. This is deliberate.',
+        },
+        {
+          faction: 'driftborn',
+          action: 'Move Asset',
+          detail: 'Fleet-Elder Brask routes a Smuggler Ring (informal dark-run, no manifest) into the Thessavar approach after hearing too many faction vessels are in-system.',
+          narrative: 'Captain Mira Calder notes this in her own log but doesn\'t ask why.',
+        },
+        {
+          faction: 'progenitor_combine',
+          action: 'Attack',
+          detail: 'Legal team uses Postech Industries asset (legal pressure) to attack River Below\'s Mercenary Squad. Roll: Combine W6 (2d6+6=16) vs River Below F2 (2d6+2=7). Combine wins.',
+          roll: { attacker: 16, defender: 7, result: 'Attacker wins' },
+          statChange: 'River Below Mercenary Squad destroyed (took 5 damage, HP 2→0)',
+          narrative: 'The Combine\'s lawyers identify the River Below cell liberating Grade 0 labor clones. A cease-and-desist backed by three planetary governments is filed. One of Maret\'s junior Saints is arrested. The liberation pipeline is closed. Maret is now down to her personal crew and zero Wealth. The Senn contract is the only play she has left.',
+        },
+        {
+          faction: 'hollow_covenant',
+          action: 'Attack',
+          detail: 'Marshal Tran uses Frigate Squadron to pressure a Succession observation post in an adjacent system (proxy conflict). Roll: Covenant F5 (2d6+5=13) vs Succession F5 (2d6+5=11). Covenant wins.',
+          roll: { attacker: 13, defender: 11, result: 'Attacker wins' },
+          statChange: 'Succession Colonial Garrison (adjacent system) destroyed (took 3 damage, HP 3→0)',
+          narrative: 'Tran\'s frigates intercept the Succession garrison aggressively. The garrison withdraws rather than escalate. Venn files a formal protest. It goes unanswered. The Radiance is showing in Tran\'s decision-making — this was not strategically necessary. Elder Vesper is not informed until afterward.',
+        },
+        {
+          faction: 'the_succession',
+          action: 'Buy Asset',
+          detail: 'Captain Solis requests and receives a Frigate Squadron deployment to Thessavar. Stretched from other holdings.',
+          statChange: 'Wealth 1 (strained)',
+          narrative: 'Two Succession frigates arrive at Thessavar system flying Mandate-era registry codes. The Covenant frigates watch them arrive. Neither fires. The platform city council issues a statement asking everyone to please leave their warships outside the orbital lane. Nobody moves.',
+        },
+      ],
+      timelineEvents: [
+        'PALE burns Penumbra Archivist Lenne\'s cover. Her research notes on the underwater ruins are stolen. She takes refuge in the Argent Compact sanctuary in Kaeldrift.',
+        'AURIS identifies Concordance official Administrator Elvan as an unwitting informant. The Synod learns Arbiter Senn plans to sign an excavation treaty giving the Hollow Covenant rights to the Thessavar ruins.',
+        'Saint Maret accepts a contract to assassinate Arbiter Senn. She has no Wealth, no safe houses, and no network. She begins scouting the Concordance alone.',
+        'Progenitor Combine legal pressure shuts down the River Below\'s Grade 0 clone liberation pipeline. One junior Saint is arrested.',
+        'Marshal Tran (Hollow Covenant, Remembrance faction) destroys a Succession observation post in an adjacent system without authorization. The Radiance is spreading through the Remembrance leadership.',
+        'Two Succession frigates arrive at Thessavar system flying Mandate-era registry codes. Three Covenant frigates are already in orbit. Neither side fires.',
+      ],
+    },
+
+    // ── TURN 3: TWO WEEKS BEFORE SESSION 1 ────────────────────────────────
+    {
+      turn: 3,
+      label: '2 weeks before Session 1',
+      worldState: 'The board is set. Everyone is in position. Nobody knows everyone else is here.',
+      actions: [
+        {
+          faction: 'pale_substrate',
+          action: 'Buy Asset',
+          detail: 'Survey team reaches 580m and discovers the ruins are an active transmission array. PALE classifies the discovery, orders perimeter, dispatches AI core team. Embeds Cyber-ninjas in Kaeldrift as wellness-monitor cover.',
+          narrative: 'The ruins are not inert. The signal is not coming from the ruins — the ruins ARE the signal. An active transmission array of unknown purpose, running continuously for at least four thousand years. PALE immediately classifies this. This is why PALE will stop the swans during the processional — to give Maret her window. Senn\'s death removes the treaty and buys PALE time before the Covenant can legally excavate.',
+        },
+        {
+          faction: 'aureole_synod',
+          action: 'Attack (informational)',
+          detail: 'AURIS uses Demagogue (Elvan) to delay the treaty signing by four days through procedural objection. Roll: Synod C5 (2d6+5=14) vs PALE C6 (2d6+6=13). Synod wins.',
+          roll: { attacker: 14, defender: 13, result: 'Attacker wins' },
+          statChange: 'Treaty signing delayed 4 days — moved to Concordance processional (public venue)',
+          narrative: 'AURIS calculates the signing is the highest-risk event in the next 30 days. Moving it to a public venue makes covert interference harder for PALE to control. AURIS does not know about Maret. It is simply optimizing the timeline. The delay is why the assassination happens during the swan processional rather than a private room.',
+        },
+        {
+          faction: 'river_below',
+          action: 'Sell Asset',
+          detail: 'Maret sells Smuggler Ring (last real asset) to a contact for 2 Wealth. Uses funds for passage to Thessavar on a Driftborn dark run.',
+          statChange: 'Wealth 0→2 (immediately spent on passage and equipment)',
+          narrative: 'Maret liquidates everything. She arrives in Kaeldrift four days before the Concordance. She spends three days working the Still Gardens as hired groundskeeping staff — walking every waterway, timing the swans, mapping the hedge gate patterns.',
+        },
+        {
+          faction: 'the_penumbra',
+          action: 'Attack',
+          detail: 'Saboteurs attempt to break into PALE\'s survey comm cache to recover Lenne\'s stolen data. Roll: Penumbra C5 (2d6+5=11) vs PALE C6 (2d6+6=16). PALE wins.',
+          roll: { attacker: 11, defender: 16, result: 'Defender wins' },
+          statChange: 'Penumbra Saboteurs destroyed (took 2 damage, HP 2→0). Faction HP 10→8 (morale).',
+          narrative: 'The Penumbra cell walks into a PALE trap. Both operatives are detained by wellness monitors for "behavioral screening," released 48 hours later with data wiped and uncertain what happened. Sorin loses his last Thessavar cell. Lenne is alone in the Argent sanctuary. She reconstructs her research from memory on a wall of notes and writes her final transmission: "The signal is not coming from the ruins. The ruins are the signal."',
+        },
+        {
+          faction: 'argent_compact',
+          action: 'Retrench',
+          detail: 'Orlaine holds the line. Rolls d6+C4 = 8. Faction HP at max. Three more refugees added to the sanctuary: two Penumbra operatives recovering from PALE processing, one Covenant soldier who deserted from Marshal Tran\'s command.',
+          narrative: 'Warden Pell tells Orlaine about the deserter. Orlaine says: "This is what we\'re for."',
+        },
+        {
+          faction: 'driftborn',
+          action: 'Move Asset',
+          detail: 'Free Merchant Fleet moves to Concordance-season position in Thessavar orbit. Duskline docks at Kaeldrift supply pier.',
+          narrative: 'Captain Mira Calder\'s manifest shows filtration equipment delivery. Her first mate files his River Below report — but there is no network left to receive it. His handler is gone. He doesn\'t know Maret is already on the island.',
+        },
+        {
+          faction: 'progenitor_combine',
+          action: 'Move Asset',
+          detail: 'Requisition Agent Tarek travels to Thessavar to run Kael-7\'s field diagnostics and deliver his sealed message.',
+          narrative: 'Tarek finds Player 2 aboard the Covenant frigate, runs her diagnostics, signs off on her field performance report, seals his message. He hands it to her with instructions: open only if he fails to return. She asks where he\'s going. He says: "Due diligence." He goes below the Kaeldrift platform to meet someone. He does not come back.',
+        },
+        {
+          faction: 'hollow_covenant',
+          action: 'Attack',
+          detail: 'Tran uses Frigate Squadron to blockade the Succession\'s Thessavar observation station. Roll: Covenant F5 (2d6+5=9) vs Succession F5 (2d6+5=14). Succession wins.',
+          roll: { attacker: 9, defender: 14, result: 'Defender wins' },
+          statChange: 'Covenant Frigate Squadron at Thessavar takes 4 damage (HP 4→0). Squadron pulled back to orbit, out of action.',
+          narrative: 'Captain Solis executes a precise intercept — not an attack, a maneuver that pins Tran\'s lead ship against the orbital lane markers. Tran cannot escalate without firing first. He pulls back. Elder Vesper is furious. Tran is humiliated. The Radiance is making him reckless. The Covenant\'s military position at Thessavar is neutralized the day before the Concordance.',
+        },
+        {
+          faction: 'the_succession',
+          action: 'Buy Asset',
+          detail: 'Captain Solis deploys a legal Broker to Thessavar to contest the excavation treaty on Mandate jurisdictional grounds. Succession liquid assets at Thessavar exhausted.',
+          statChange: 'Wealth 1→0',
+          narrative: 'The Succession\'s legal challenge is filed the morning of the Concordance. It names the treaty invalid under Mandate territorial law. Arbiter Senn receives the filing at breakfast. His lawyers say it\'ll take three months to adjudicate. Senn schedules the treaty signing for that afternoon — during the processional, in public — to make it harder to stop. This is why the assassination happens when it does.',
+        },
+      ],
+      timelineEvents: [
+        'PALE\'s survey team discovers the Thessavar ruins are not inert — the entire structure is an active transmission array of unknown origin, running continuously for at least four thousand years. PALE classifies the discovery immediately.',
+        'The Aureole Synod delays the Arbiter Senn excavation treaty signing by four days through procedural interference. The signing is rescheduled to the Concordance swan processional — a public venue.',
+        'River Below Saint Maret liquidates all remaining assets. She arrives in Kaeldrift four days before the Concordance and works the Still Gardens as groundskeeping staff for three days.',
+        'The Penumbra loses its last Thessavar cell to a PALE trap. Archivist Lenne, alone in the Argent sanctuary, reconstructs her research from memory and writes her final transmission: "The signal is not coming from the ruins. The ruins are the signal."',
+        'Requisition Agent Tarek (Progenitor Combine) delivers a sealed message to Kael-7 and goes below the Kaeldrift platform to meet an unknown contact. He does not return.',
+        'The Hollow Covenant\'s frigates are outmaneuvered by Succession Captain Solis and pulled back to orbit, neutralized the day before the Concordance. Marshal Tran withdraws, humiliated.',
+        'The Succession files a legal challenge to the excavation treaty on Mandate jurisdictional grounds. Arbiter Senn schedules the signing for the Concordance processional — publicly, deliberately, to make it harder to stop.',
+        'The Concordance begins. Every major faction has at least one asset in Kaeldrift or in orbit. Nobody knows everyone else is here.',
+      ],
+    },
+
+  ],
+
+  // ── FACTION STATE AFTER SESSION 0 ─────────────────────────────────────────
+  // Final asset/stat snapshot going into Session 1.
+  factionStatePostS0: [
+    { id: 'pale_substrate',      hp: 20, cunning: 6, force: 4, wealth: 2, assets: ['Spynet', 'Cyber-ninjas', 'Banking Concern', 'Postech Industries', 'Saboteurs (Thessavar)'], note: 'Survey team at 580m. Waiting for AI core team. Ready to stop the swans.' },
+    { id: 'aureole_synod',       hp: 14, cunning: 5, force: 2, wealth: 1, assets: ['Informational Sucker', 'Religious Brotherhood (Thessavar)', 'Demagogue (Elvan)'], note: 'Has full confessional map of Kaeldrift. Does not know about Maret.' },
+    { id: 'river_below',         hp: 10, cunning: 5, force: 2, wealth: 0, assets: [], note: 'Saint Maret alone on the island. All assets liquidated. One shot at Senn.' },
+    { id: 'the_penumbra',        hp:  8, cunning: 5, force: 3, wealth: 2, assets: ['Archive vaults', 'Cover identity network'], note: 'All Thessavar cells destroyed. Lenne alone in Argent sanctuary with key intelligence.' },
+    { id: 'argent_compact',      hp: 12, cunning: 4, force: 1, wealth: 2, assets: ['Library network', 'Sanctuary network', 'Sub-Rosa archive'], note: 'Holding 3 refugees. Completely neutral. Most informed passive observer in Kaeldrift.' },
+    { id: 'driftborn',           hp: 10, cunning: 3, force: 2, wealth: 2, assets: ['Free Merchant Fleet (Thessavar)', 'Smuggler Ring', 'Port contacts'], note: 'Duskline in port. Captain Calder does not know what is about to happen.' },
+    { id: 'progenitor_combine',  hp: 18, cunning: 3, force: 2, wealth: 2, assets: ['Postech Industries', 'Banking Concern', 'Pretech Manufactory'], note: 'Agent Tarek missing. Grade 0 liberation pipeline closed. Kael-7 field deployment at risk of owner death.' },
+    { id: 'hollow_covenant',     hp: 14, cunning: 3, force: 5, wealth: 3, assets: ['Frigate Squadron (disabled, orbit)', 'Religious Brotherhood'], note: 'Military arm neutralized. Tran humiliated. Elder Vesper holding Becoming faction together by force of personality. Relic below the ocean remains the goal.' },
+    { id: 'the_succession',      hp: 18, cunning: 2, force: 5, wealth: 0, assets: ['Pretech Manufactory', 'Frigate Squadron (Thessavar orbit)', 'Postech Industries', 'Broker (legal, Thessavar)'], note: 'Legal challenge filed. Military position secure. Financially exhausted at Thessavar.' },
+  ],
+
   // ── SESSION 1 — THE STILL GARDENS ──────────────────────────────────────────
   session1: {
     title: 'The Still Gardens',
