@@ -348,6 +348,96 @@
     };
   }
 
+  // Veth — Player 1's origin world. Quiet agricultural margin world, hex A02.
+  function makeVeth() {
+    return {
+      id: 'veth-prime',
+      name: 'Veth',
+      hexId: 'A02',
+      isPrimary: true,
+      atmosphere: { name: 'Breathable Mix', desc: 'Normal human-breathable atmosphere.', habitable: true },
+      temperature: { name: 'Temperate', desc: 'Earth-like climate ranges.' },
+      biosphere: { name: 'Human-Miscible', desc: 'Biosphere can support human metabolism.' },
+      population: { name: 'Settled', range: 'A few million', desc: 'A stable, lightly populated world.' },
+      techLevel: { tl: 'TL4', desc: 'Postech — interstellar baseline.' },
+      tags: [
+        { name: 'Agricultural World', desc: 'Farming and light manufacturing. Feeds nearby systems and stays out of faction politics.' },
+        { name: 'PALE-Adjacent', desc: 'PALE wellness monitors arrived within the last fifteen years. The sector is changing around Veth the way weather changes around a rock.' },
+      ],
+      biome: 'temperate',
+      radius: 5.9,
+      axialTilt: 14,
+      dayLength: 24.8,
+      yearLength: 412,
+      gravity: 0.91,
+      moons: [{ name: 'Veth Minor', radius: 0.4, distance: 2.8, biome: 'rocky', textureSeed: 33821 }],
+      textureSeed: 55102,
+      ringSystem: false,
+      notes: 'Player 1\'s origin world. He left in his twenties. His parents are long dead. Nobody there remembers who he was.',
+    };
+  }
+
+  // Karrath — orbital industrial platform above a resource-extraction moon, hex F07.
+  function makeKarrath() {
+    return {
+      id: 'karrath-platform',
+      name: 'Karrath',
+      hexId: 'F07',
+      isPrimary: true,
+      atmosphere: { name: 'Airless', desc: 'No breathable atmosphere. The platform is pressurized internally.', habitable: false },
+      temperature: { name: 'Variable', desc: 'Extreme day/night swing. Platform maintains internal climate control.' },
+      biosphere: { name: 'None', desc: 'No native biosphere.' },
+      population: { name: 'Outpost', range: 'Thousands', desc: 'Industrial workforce. Rotational contracts. High turnover.' },
+      techLevel: { tl: 'TL4', desc: 'Postech — interstellar baseline.' },
+      tags: [
+        { name: 'Orbital Industrial', desc: 'Primary habitation is an orbital platform above the extraction moon. The surface is automated.' },
+        { name: 'PALE Wellness Contract', desc: 'PALE has held reconstruction contracts with platform operators for twenty years. The work kills people regularly enough that the market is reliable.' },
+      ],
+      biome: 'rocky',
+      radius: 3.1,
+      axialTilt: 2,
+      dayLength: 18.4,
+      yearLength: 280,
+      gravity: 0.61,
+      moons: [],
+      textureSeed: 71445,
+      ringSystem: false,
+      notes: 'Site of Player 1\'s accident. Two jumps from Thessavar. PALE reconstructed him here from a three-week-old scan. The people he lost were not reconstructed.',
+    };
+  }
+
+  // Synthesis Prime — Progenitor Combine's founding world, hex H03.
+  function makeSynthesisPrime() {
+    return {
+      id: 'synthesis-prime',
+      name: 'Synthesis Prime',
+      hexId: 'H03',
+      isPrimary: true,
+      atmosphere: { name: 'Breathable Mix', desc: 'Human-breathable above the surface. Below Level 3, all environments are controlled and sealed.', habitable: true },
+      temperature: { name: 'Temperate', desc: 'Climate-controlled throughout habitation zones.' },
+      biosphere: { name: 'Engineered', desc: 'All surface biosphere is managed by the Combine. Nothing grows here that was not designed to.' },
+      population: { name: 'Millions', range: 'Tens of millions', desc: 'Workforce, management clone lineages, and active clone population.' },
+      techLevel: { tl: 'TL4+', desc: 'Postech with restricted pretech biotech. The Yards operates at the edge of what is permitted.' },
+      tags: [
+        { name: 'Cloning Facility', desc: 'The Progenitor Combine\'s founding world, built around the original cloning vaults. Player 2\'s homeworld.' },
+        { name: 'Sealed Vaults', desc: 'Below Level 7, old Grade 0 lineages that proved non-viable were sealed rather than destroyed. Nobody goes below Level 7 anymore.' },
+        { name: 'Corporate Controlled', desc: 'The Combine owns everything. There is no civilian government.' },
+      ],
+      biome: 'engineered',
+      radius: 6.4,
+      axialTilt: 4,
+      dayLength: 22.1,
+      yearLength: 445,
+      gravity: 1.08,
+      moons: [
+        { name: 'Vault Moon', radius: 0.5, distance: 1.9, biome: 'rocky', textureSeed: 29301 },
+      ],
+      textureSeed: 93847,
+      ringSystem: false,
+      notes: 'Player 2\'s homeworld. Conditioning halls on Level 4. Sealed vaults below Level 7 are not as empty as advertised.',
+    };
+  }
+
   // Thessavar — fixed oceanic world, always placed at hex D05.
   function makeThessavar(rng) {
     return {
@@ -499,34 +589,55 @@
       }
     }
 
-    // Inject Thessavar into hex D05 system.
+    // Inject fixed narrative worlds.
+    function injectFixedWorld(planet, col, row, starName, starClass) {
+      const existing = systems.find(s => s.hexId === planet.hexId);
+      if (existing) {
+        existing.planets = [planet, ...existing.planets.filter(p => !p.isPrimary)];
+      } else {
+        systems.push({
+          hexId: planet.hexId, col, row,
+          starName,
+          starType: SWN.starTypes.find(s => s.class === starClass) || SWN.starTypes[0],
+          planets: [planet],
+        });
+      }
+    }
+
+    // Thessavar — session 1 world, D05.
     const thessavarSystem = systems.find(s => s.hexId === 'D05');
     if (thessavarSystem) {
-      // Replace or prepend Thessavar as the primary planet.
       thessavarSystem.planets = [makeThessavar(rng.fork('thessavar')), ...thessavarSystem.planets.filter(p => !p.isPrimary)];
     } else {
-      // D05 was empty — add the system.
-      systems.push({
-        hexId: 'D05', col: 3, row: 4,
-        starName: 'Thessis',
-        starType: SWN.starTypes.find(s => s.class === 'G'),
-        planets: [makeThessavar(rng.fork('thessavar'))],
-      });
+      systems.push({ hexId: 'D05', col: 3, row: 4, starName: 'Thessis', starType: SWN.starTypes.find(s => s.class === 'G'), planets: [makeThessavar(rng.fork('thessavar'))] });
     }
+
+    // Veth — Player 1 origin world, outer margin, A02.
+    injectFixedWorld(makeVeth(), 0, 1, 'Vethis', 'K');
+
+    // Karrath — Player 1 accident site, two jumps from Thessavar, F07.
+    injectFixedWorld(makeKarrath(), 5, 6, 'Karrathis', 'M');
+
+    // Synthesis Prime — Progenitor Combine HQ, Player 2 homeworld, H03.
+    injectFixedWorld(makeSynthesisPrime(), 7, 2, 'Synthesis Star', 'G');
 
     const allPlanets = systems.flatMap(s => s.planets);
 
-    // Always include all 9 lore factions, assign HQs to lore-appropriate planets.
+    // Always include all 9 lore factions, assign HQs to pinned or random planets.
     const factions = LORE_FACTIONS.map(f => ({ ...f }));
     const thessavar = allPlanets.find(p => p.id === 'thessavar-prime');
-    const populated = allPlanets.filter(p => !['Failed Colony', 'Outpost'].includes(p.population.name));
+    const synthesisPrime = allPlanets.find(p => p.id === 'synthesis-prime');
+    const populated = allPlanets.filter(p => !['Failed Colony', 'Outpost', 'Airless'].includes(p.population.name));
 
-    // Covenant HQ on Thessavar (they're excavating there).
+    // Pin specific faction HQs to narrative worlds.
     const covenant = factions.find(f => f.id === 'fac-hollow-covenant');
     if (covenant && thessavar) { covenant.hqPlanetId = thessavar.id; covenant.hqPlanetName = thessavar.name; }
 
+    const combine = factions.find(f => f.id === 'fac-progenitor-combine');
+    if (combine && synthesisPrime) { combine.hqPlanetId = synthesisPrime.id; combine.hqPlanetName = synthesisPrime.name; }
+
     // All other lore factions get random populated HQs.
-    factions.filter(f => f.id !== 'fac-hollow-covenant').forEach((f, i) => {
+    factions.filter(f => !['fac-hollow-covenant', 'fac-progenitor-combine'].includes(f.id)).forEach((f, i) => {
       const hq = populated.length ? rng.pick(populated) : null;
       if (hq) { f.hqPlanetId = hq.id; f.hqPlanetName = hq.name; }
     });
