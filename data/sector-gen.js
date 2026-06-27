@@ -531,14 +531,7 @@
       if (hq) { f.hqPlanetId = hq.id; f.hqPlanetName = hq.name; }
     });
 
-    // Add 0-1 random minor factions on top (9 canonical already present).
-    const minorCount = rng.int(0, 1);
-    for (let i = 0; i < minorCount; i++) {
-      const f = makeFaction(rng.fork('fac-minor-' + i));
-      const hq = populated.length ? rng.pick(populated) : null;
-      if (hq) { f.hqPlanetId = hq.id; f.hqPlanetName = hq.name; }
-      factions.push(f);
-    }
+    // 9 canonical factions only — no random additions.
 
     const npcs = [];
     for (let i = 0; i < 12; i++) {

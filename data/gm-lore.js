@@ -773,7 +773,7 @@ Either way — Session 2 opens with: "You're in the black. What do you do?"`,
     hiddenTruths: [
       'PALE stopped the swans. The River Below operative had a 90-second window that PALE opened for her. PALE and the River Below do not have an alliance — PALE simply calculated that Senn dying served its interests and the operative was already in position.',
       'The River Below operative who killed Senn is Saint Maret herself. She went quiet from her cell because she was running this job personally. Nobody in the River Below below her rank knows she was here.',
-      'Arbiter Senn had a secondary copy of the excavation treaty already signed and filed with a neutral Exchange notary on Kaeldrift. His death does not actually stop the Covenant's legal claim to the ruins. It just means nobody knows the treaty exists yet.',
+      'Arbiter Senn had a secondary copy of the excavation treaty already signed and filed with a neutral Exchange notary on Kaeldrift. His death does not actually stop the Covenant\'s legal claim to the ruins. It just means nobody knows the treaty exists yet.',
       'The Duskline captain Mira Calder runs a clean ship, but her first mate is a River Below informant. Saint Maret will know who was on the Duskline within 48 hours.',
       'Player 1\'s substrate routed the swan to the service dock. PALE logged this as "asset extraction — successful." His Cognitive Lease balance did not change.',
     ],

@@ -389,12 +389,14 @@ function App() {
   } else if (currentView === 'factions') {
     // Factions view with GM turn embedded below when GM
     viewEl = React.createElement('div', { style: { display: 'flex', flexDirection: 'column', height: '100%', gap: 0 } },
-      React.createElement(window.FactionsView, {
-        sector,
-        onUpdate: f => saveEdits(s => ({ ...s, factions: s.factions.map(x => x.id === f.id ? f : x) })),
-        onPickPlanet: pickPlanet,
-      }),
-      isGM && React.createElement('div', { style: { borderTop: '1px solid var(--border-1)', marginTop: 24, paddingTop: 24 } },
+      React.createElement('div', { style: { flex: 1, minHeight: 0, overflow: 'hidden' } },
+        React.createElement(window.FactionsView, {
+          sector,
+          onUpdate: f => saveEdits(s => ({ ...s, factions: s.factions.map(x => x.id === f.id ? f : x) })),
+          onPickPlanet: pickPlanet,
+        })
+      ),
+      isGM && React.createElement('div', { style: { borderTop: '1px solid var(--border-1)', flexShrink: 0 } },
         React.createElement(window.GMTurnView, {
           sector, log: gmLog,
           onLog: entry => { if (entry === '__clear__') return saveCampaign({ gmLog: [] }); saveCampaign({ gmLog: [entry, ...gmLog] }); },
