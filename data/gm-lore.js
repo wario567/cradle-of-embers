@@ -532,6 +532,47 @@ The Duskline — the merchant freighter the players escape on in Session 1 — i
 
   ],
 
+  // ── NOTABLE WORLDS ─────────────────────────────────────────────────────────
+  // Worlds with narrative significance beyond the procedurally generated sector.
+  notableWorlds: [
+    {
+      id: 'veth',
+      name: 'Veth',
+      role: 'Player 1 origin world',
+      atmosphere: 'Breathable Mix',
+      temperature: 'Temperate',
+      population: 'Settled (a few million)',
+      techLevel: 'TL4',
+      tags: ['Agricultural', 'Politically Unremarkable', 'PALE-Adjacent (recent)'],
+      description: 'A quiet farming and light-manufacturing world on the outer margin of PALE-adjacent space. PALE wellness monitors arrived about fifteen years ago — the sector is changing around Veth the way weather changes around a rock. Player 1\'s parents still live here. They know about the accident. They do not know what the reconstruction means.',
+      gmNotes: 'Veth is the life Player 1 left. If the players ever go there, his parents are alive and present. The dramatic question: does he tell them the truth about what PALE did? Does the person who came back feel like their son to them?',
+    },
+    {
+      id: 'karrath_platform',
+      name: 'Karrath Platform',
+      role: 'Player 1 accident site',
+      atmosphere: 'Contained (orbital)',
+      temperature: 'Regulated',
+      population: 'Outpost (industrial workforce)',
+      techLevel: 'TL4',
+      tags: ['Orbital Industrial', 'PALE Wellness Contract', 'Resource Extraction'],
+      description: 'An orbital industrial platform above a resource-extraction moon. PALE has held wellness contracts with the platform\'s operators for twenty years — the work is dangerous enough that reconstruction demand is reliable. The accident that destroyed Player 1\'s brain happened here. PALE\'s scan of him was three weeks old.',
+      gmNotes: 'The records of who else died in the accident are in PALE\'s archive and accessible under Lease terms at 200 credits per query. Player 1 has never asked. If he ever does, PALE\'s response and what it costs him emotionally is a major character moment. The specifics of the accident (what the job was, who he lost) are left for the player to define.',
+    },
+    {
+      id: 'synthesis_prime',
+      name: 'Synthesis Prime',
+      role: 'Player 2 homeworld / Progenitor Combine HQ',
+      atmosphere: 'Breathable Mix (surface); controlled below Level 3)',
+      temperature: 'Regulated',
+      population: 'Millions (workforce + clone population)',
+      techLevel: 'TL4+',
+      tags: ['Corporate Controlled', 'Clone Facility', 'Sealed Vaults', 'Hollow Knight Undertones'],
+      description: 'The Progenitor Combine\'s founding world. Built around the original cloning vaults — clean and efficient above Level 7, sealed and unreported below it. Player 2 spent her first 12 months here in conditioning. Below Level 7, old Grade 0 lineages are sealed in vaults that the Yards describes as "historical infrastructure, not in current use."',
+      gmNotes: 'The lower vaults are not as empty as advertised. Something has been activating old Grade 0 units. The Yards is suppressing the reports. If the players ever return to Synthesis Prime, this is the ticking clock underneath the floor. Player 2\'s "I do not want to go back" is a hook — the wanting-not-to is itself a sign of something the design spec didn\'t intend.',
+    },
+  ],
+
   // ── PLAYER CHARACTERS ──────────────────────────────────────────────────────
   playerCharacters: [
 
@@ -580,8 +621,12 @@ Hooks to lean into:
           ],
         },
         {
-          title: 'Where You Came From',
-          body: `[BLANK — player to fill: where was he before the accident? What did he do? What world or station? Does he have anyone left from before?]\n\nWhatever he was before, the accident ended that life. The person who woke up three weeks behind is navigating the sector with the skills and contacts of a life he lived, accessed through memories that are someone else\'s problem now.`,
+          title: 'Origin World: Veth',
+          body: `Veth is a quiet world — breathable atmosphere, temperate seasons, settled population of a few million. It sits on the outer margin of what is now PALE-adjacent space; PALE wellness monitors appeared there about fifteen years ago, which was after you left and which your parents mention in letters you don\'t always read. The sector is changing around Veth the way weather changes around a rock: the rock doesn\'t move, but eventually the water gets in.\n\nThe economy is agricultural and light manufacturing. The politics are local and slow. Nobody from Veth ends up in faction reports. That was the point of being from there. You left in your twenties because you wanted something else, or had to, or couldn\'t stay — the reasons are yours.\n\nYour parents still live on Veth. They know you had an accident. They do not know what the reconstruction means. You haven\'t explained it. You don\'t know how to explain it in a way that wouldn\'t make them grieve someone who is still standing in front of them.`,
+        },
+        {
+          title: 'The Accident: Karrath Platform',
+          body: `Karrath Platform is an orbital industrial facility above a resource-extraction moon in a system two jumps from Thessavar. PALE has had wellness contracts with the platform\'s operators for twenty years — the work kills people regularly enough that the market for reconstruction services is reliable, and PALE\'s terms are competitive with burial.\n\nYou were on Karrath for [BLANK — what was the job? legitimate work? a contract?]. The people you lost in the accident: [BLANK — partner? someone you were protecting? a colleague? yours to decide].\n\nPALE had a scan of you on file from a routine wellness check-in three weeks before the incident. When the accident destroyed your brain, their responders were first on scene. You woke up in a PALE reconstruction facility on the platform. You were told the scan was clean. You were told continuity of identity was not a meaningful concern. You were handed the Lease paperwork.\n\nThe people who died with you were not reconstructed. Whether it\'s because they couldn\'t be scanned in time, or couldn\'t afford the Lease, or chose not to accept it — that is yours to decide. PALE\'s records on this are available to you under the Lease terms, but accessing them costs 200 credits per query and PALE has never volunteered the information unprompted.\n\nYou have not asked.`,
           blank: true,
         },
         {
@@ -638,8 +683,12 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
           ],
         },
         {
-          title: 'Where You Came From',
-          body: `Synthesis Prime. The Progenitor Combine\'s homeworld is built around the original cloning vaults — vast, echoing corridors, clean above Level 7, sealed and unspeakable below it. You lived there for twelve months and will not go back.\n\n[BLANK — does she go by Kael-7, or has she taken a name? Does the player feel pull toward Remembrance or Becoming, or is that still open?]`,
+          title: 'Homeworld: Synthesis Prime',
+          body: `Synthesis Prime is the Progenitor Combine\'s founding world — a planet built around the original cloning vaults, where the founding lineages first proved a human being could be manufactured to specification. The planet exists to produce. Everything on its surface serves that purpose.\n\nAbove Level 7, it is clean and well-lit. The conditioning halls where you spent your first twelve months are on Level 4: white floors, calibrated acoustics, sleep cycles timed to optimize consolidation, cafeteria food engineered for precise nutritional profiles. Your instructors were Grade 1 Domestic clones trained specifically to train Grade 2 Security series. They were warm. They were consistent. They told you that you were performing within Grade 2 variance, which you eventually understood was the highest praise available in that environment.\n\nYou asked more questions than the other Kael-7s in your cohort. The instructors flagged it. The Yards reviewed it and determined it was within acceptable variance. You have since come to believe that "within acceptable variance" is the most dangerous phrase in the Combine\'s vocabulary.\n\nBelow Level 7, the vaults are sealed. You asked once — not because you wanted to go down, but because the door was there and you wanted to understand what it was for. The answer you received: "Historical infrastructure. Not in current use." You have thought about that answer several times since. You have thought about what "not in current use" implies about what it used to be used for. You have thought about what is currently sealed inside it.\n\nYou do not want to go back to Synthesis Prime. This is notable because wanting things was not part of the design specification, and yet here the wanting is.`,
+        },
+        {
+          title: 'Open Questions',
+          body: `[BLANK — does she go by Kael-7, or has she taken or been given a name? Does the player feel any pull toward Remembrance or Becoming, or is that still open?]`,
           blank: true,
         },
         {

@@ -259,8 +259,32 @@ function GMNotesView({ sector }) {
     ])),
   ) : null;
 
-  const tabs = ['sector', 'factions', 'npcs', 'turns', 'pcs', 'session1'];
-  const tabLabels = { sector: 'Sector', factions: 'Factions', npcs: 'NPCs', turns: 'S0 Turns', pcs: 'PCs', session1: 'Session 1' };
+  // NOTABLE WORLDS TAB
+  const worldsTab = React.createElement('div', null,
+    !(lore.notableWorlds && lore.notableWorlds.length) && React.createElement('div', { style: { color: 'var(--fg-3)', padding: 12 } }, 'No notable worlds defined.'),
+    (lore.notableWorlds || []).map(w => card([
+      React.createElement('div', { style: { display: 'flex', gap: 12, alignItems: 'baseline', flexWrap: 'wrap', marginBottom: 8 } },
+        React.createElement('span', { style: { fontWeight: 700, fontSize: 15, color: 'var(--fg-0)' } }, w.name),
+        React.createElement('span', { style: { fontSize: 11, color: 'var(--accent)', letterSpacing: '0.06em' } }, w.role),
+      ),
+      React.createElement('div', { style: { display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 10 } },
+        [['Atmo', w.atmosphere], ['Temp', w.temperature], ['Pop', w.population], ['TL', w.techLevel]].map(([k, v]) =>
+          v && React.createElement('div', { key: k, style: { fontSize: 11, color: 'var(--fg-3)' } },
+            React.createElement('span', { style: { color: 'var(--fg-4)', marginRight: 4 } }, k),
+            React.createElement('span', { style: { color: 'var(--fg-2)' } }, v),
+          )
+        ),
+      ),
+      w.tags && w.tags.length && React.createElement('div', { style: { display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 10 } },
+        w.tags.map(t => React.createElement('span', { key: t, style: { fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase', background: 'var(--bg-3)', border: '1px solid var(--border-1)', borderRadius: 3, padding: '2px 7px', color: 'var(--fg-3)' } }, t))
+      ),
+      label('Description'), prose(w.description),
+      label('GM Notes'), prose(w.gmNotes),
+    ]))
+  );
+
+  const tabs = ['sector', 'factions', 'npcs', 'turns', 'pcs', 'worlds', 'session1'];
+  const tabLabels = { sector: 'Sector', factions: 'Factions', npcs: 'NPCs', turns: 'S0 Turns', pcs: 'PCs', worlds: 'Worlds', session1: 'Session 1' };
 
   return React.createElement('div', { style: { height: '100%', overflowY: 'auto' } },
     React.createElement('div', { style: { padding: '20px 24px', maxWidth: 860, margin: '0 auto' } },
@@ -272,6 +296,7 @@ function GMNotesView({ sector }) {
       tab === 'npcs'     && npcsTab,
       tab === 'turns'    && turnsTab,
       tab === 'pcs'      && pcsTab,
+      tab === 'worlds'   && worldsTab,
       tab === 'session1' && session1Tab,
     )
   );
