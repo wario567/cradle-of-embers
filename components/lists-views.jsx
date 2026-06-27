@@ -11,7 +11,7 @@ function FactionsView({ sector, onUpdate, onPickPlanet }) {
     onUpdate({ ...sel, ...patch });
   }
 
-  return React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '320px 1fr', height: '100%', overflow: 'hidden' } },
+  return React.createElement('div', { className: 'split-pane', style: { display: 'grid', gridTemplateColumns: '320px 1fr', height: '100%', overflow: 'hidden' } },
     // List
     React.createElement('div', { style: { borderRight: '1px solid var(--border-soft)', overflowY: 'auto', padding: 16, background: 'rgba(13,17,23,0.6)' } },
       React.createElement('div', { style: { fontFamily: 'Space Grotesk', fontSize: 11, letterSpacing: '0.1em', color: 'var(--fg-3)', textTransform: 'uppercase', marginBottom: 10 } }, `${sector.factions.length} Factions`),
@@ -136,7 +136,7 @@ function NPCsView({ sector, onUpdate, onAddNPC, onDeleteNPC, onPickPlanet }) {
     return 2;
   }
 
-  return React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '320px 1fr', height: '100%', overflow: 'hidden' } },
+  return React.createElement('div', { className: 'split-pane', style: { display: 'grid', gridTemplateColumns: '320px 1fr', height: '100%', overflow: 'hidden' } },
     React.createElement('div', { style: { borderRight: '1px solid var(--border-soft)', overflowY: 'auto', padding: 16, background: 'rgba(10,5,7,0.6)' } },
       React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 } },
         React.createElement('div', { style: { fontFamily: 'JetBrains Mono', fontSize: 11, letterSpacing: '0.08em', color: 'var(--fg-3)', textTransform: 'uppercase' } }, `${sector.npcs.length} NPCs`),
@@ -189,7 +189,7 @@ function NPCsView({ sector, onUpdate, onAddNPC, onDeleteNPC, onPickPlanet }) {
           React.createElement('button', { className: 'ghost', style: { marginLeft: 'auto', fontSize: 11 }, onClick: rollAttrs }, '⚂ Reroll 3d6')
         ),
         React.createElement('div', { className: 'panel-body' },
-          React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 10 } },
+          React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(76px, 1fr))', gap: 10 } },
             ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'].map(k => React.createElement('div', { key: k, style: { textAlign: 'center' } },
               React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } },
                 TT ? React.createElement(TT, { content: React.createElement('div', null,
@@ -209,7 +209,7 @@ function NPCsView({ sector, onUpdate, onAddNPC, onDeleteNPC, onPickPlanet }) {
       React.createElement('div', { className: 'panel', style: { marginBottom: 14 } },
         React.createElement('div', { className: 'panel-title' }, 'Combat'),
         React.createElement('div', { className: 'panel-body' },
-          React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 } },
+          React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))', gap: 10 } },
             React.createElement('div', null,
               React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } }, 'HP'),
               React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 4 } },
@@ -242,7 +242,7 @@ function NPCsView({ sector, onUpdate, onAddNPC, onDeleteNPC, onPickPlanet }) {
             React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase', marginBottom: 4 } },
               TT ? React.createElement(TT, { content: React.createElement('div', null, React.createElement('strong', null, 'Saving Throws'), React.createElement('div', { style: { marginTop: 4 } }, E.saves)) }, 'Saves') : 'Saves'
             ),
-            React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 } },
+            React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(96px, 1fr))', gap: 10 } },
               ['physical', 'evasion', 'mental'].map(s => React.createElement('div', { key: s },
                 React.createElement('div', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase' } }, s),
                 React.createElement('input', { type: 'number', value: sel.saves[s], onChange: e => update({ saves: { ...sel.saves, [s]: +e.target.value || 15 } }) })
@@ -328,7 +328,7 @@ function HooksView({ sector, onUpdate, onAdd, onPickPlanet }) {
       ),
       React.createElement('button', { onClick: onAdd }, '+ Generate Hook')
     ),
-    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: 16 } },
+    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(360px, 100%), 1fr))', gap: 16 } },
       sector.hooks.map(h => React.createElement('div', { key: h.id, className: 'panel' },
         React.createElement('div', { className: 'panel-title' },
           React.createElement('span', { style: { cursor: 'pointer', color: 'var(--accent)' }, onClick: () => {

@@ -1,0 +1,11 @@
+{
+  "name": "cradle-of-embers-tests",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "screenshot": "playwright test tests/screenshot.spec.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.45.0"
+  }
+}

@@ -100,7 +100,7 @@ Return JSON shaped exactly:
     setActionFor(null);
   }
 
-  return React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 380px', height: '100%', overflow: 'hidden' } },
+  return React.createElement('div', { className: 'split-pane', style: { display: 'grid', gridTemplateColumns: '1fr 380px', height: '100%', overflow: 'hidden' } },
     // Faction list / brainstorm pane
     React.createElement('div', { style: { overflowY: 'auto', padding: 24 } },
       React.createElement('div', { style: { marginBottom: 18 } },
@@ -156,7 +156,7 @@ Return JSON shaped exactly:
             // Manual action panel
             actionFor === f.id && React.createElement('div', { style: { marginTop: 14, padding: 12, background: 'var(--bg-1)', border: '1px solid var(--border-soft)', borderRadius: 8 } },
               React.createElement('div', { style: { fontFamily: 'JetBrains Mono', fontSize: 10, color: 'var(--fg-3)', letterSpacing: '0.1em', marginBottom: 8 } }, 'PICK AN ACTION'),
-              React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 6 } },
+              React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: 6 } },
                 FACTION_ACTIONS.map(a => React.createElement('button', {
                   key: a.name,
                   style: { fontSize: 11, justifyContent: 'flex-start', textAlign: 'left' },

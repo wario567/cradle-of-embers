@@ -50,12 +50,19 @@
 <script src="utils/planet-texture.js"></script>
 <script src="utils/claude.js"></script>
 <script src="utils/firebase.js"></script>
+<script src="utils/dice3d.js"></script>
 <script src="data/swn-tables.js"></script>
+<script src="data/swn-equipment.js"></script>
+<script src="data/swn-character.js"></script>
+<script src="data/swn-levelup.js"></script>
+<script src="data/swn-rules-data.js"></script>
+<script src="data/swn-ships.js"></script>
 <script src="data/sector-gen.js"></script>
 
 <!-- Components (Babel JSX) -->
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 <script type="text/babel" src="components/tooltip.jsx"></script>
+<script type="text/babel" src="components/intro-screen.jsx"></script>
 <script type="text/babel" src="components/starfield.jsx"></script>
 <script type="text/babel" src="components/sector-map.jsx"></script>
 <script type="text/babel" src="components/system-view.jsx"></script>
@@ -65,11 +72,12 @@
 <script type="text/babel" src="components/gm-turn.jsx"></script>
 <script type="text/babel" src="components/forge-views.jsx"></script>
 <script type="text/babel" src="components/multiplayer-panel.jsx"></script>
+<script type="text/babel" src="components/dice-roller.jsx"></script>
 <script type="text/babel" src="app.jsx"></script>
 
 <script type="text/babel">
   (function mount() {
-    if (!window.App || !window.Starfield || !window.SectorMap || !window.PlanetView || !window.SystemView || !window.FactionsView || !window.NPCsView || !window.CombatView || !window.GMTurnView || !window.MissionGeneratorView || !window.EncounterGeneratorView || !window.CharacterSheetsView || !window.Tooltip || !window.MultiplayerPanel) {
+    if (!window.App || !window.Starfield || !window.SectorMap || !window.PlanetView || !window.SystemView || !window.FactionsView || !window.NPCsView || !window.CombatView || !window.GMTurnView || !window.MissionGeneratorView || !window.EncounterGeneratorView || !window.CharacterSheetsView || !window.Tooltip || !window.MultiplayerPanel || !window.IntroScreen || !window.DiceRoller) {
       return setTimeout(mount, 50);
     }
     const root = ReactDOM.createRoot(document.getElementById('root'));
