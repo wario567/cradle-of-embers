@@ -14,7 +14,7 @@ function MissionGeneratorView({ sector, missions = [], onSaveMission, onDeleteMi
   async function generate() {
     setThinking(true);
     setDraft(null);
-    const factionsList = sector.factions.map(f => `${f.name} (${f.traits.join('/')}, goal: ${f.goal})`).join('\n');
+    const factionsList = sector.factions.map(f => `${f.name} (${(f.tags || f.traits || []).join('/')}, goal: ${f.goal})`).join('\n');
     const planetsList = sector.systems.flatMap(s => s.planets).slice(0, 14).map(p => `${p.name} (${p.biome}, tags: ${p.tags.map(t=>t.name).join(', ')})`).join('\n');
     const hooksList = sector.hooks.filter(h => h.status !== 'Resolved').slice(0, 6).map(h => `- ${h.planetName}: ${h.text}`).join('\n');
     const tyingPick = tying === 'Any faction' ? '(pick the most thematically appropriate)' : tying;

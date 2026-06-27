@@ -23,7 +23,7 @@ function GMTurnView({ sector, onLog, log = [], onUpdateFaction, onPickPlanet }) 
     setAiThinking(faction.id);
     setAiResult(null);
     const factionsContext = sector.factions.map(f =>
-      `- ${f.name} (HP ${f.hp}/${f.maxHp}, C:${f.cunning} F:${f.force} W:${f.wealth}, traits: ${f.traits.join('/')}, goal: ${f.goal}, HQ: ${f.hqPlanetName || 'unknown'})`
+      `- ${f.name} (HP ${f.hp}/${f.maxHp}, C:${f.cunning} F:${f.force} W:${f.wealth}, traits: ${( f.tags || f.traits || []).join('/')}, goal: ${f.goal}, HQ: ${f.hqPlanetName || 'unknown'})`
     ).join('\n');
     const recentLog = log.slice(0, 6).map(l => `- T${l.turn}: ${l.factionName} — ${l.action}: ${l.text}`).join('\n') || '(none)';
     const hooksContext = sector.hooks.filter(h => h.status !== 'Resolved').slice(0, 5).map(h => `- ${h.planetName}: ${h.text}`).join('\n') || '(none)';
@@ -32,7 +32,7 @@ function GMTurnView({ sector, onLog, log = [], onUpdateFaction, onPickPlanet }) 
 
 FACTION TAKING ACTION:
 ${faction.name}
-- Traits: ${faction.traits.join(', ')}
+- Traits: ${(faction.tags || faction.traits || []).join(', ')}
 - Goal: ${faction.goal}
 - Cunning ${faction.cunning} / Force ${faction.force} / Wealth ${faction.wealth}
 - HP ${faction.hp}/${faction.maxHp}
@@ -116,7 +116,7 @@ Return JSON shaped exactly:
               React.createElement('div', { style: { flex: 1 } },
                 React.createElement('div', { style: { fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 600, color: 'var(--fg-0)' } }, f.name),
                 React.createElement('div', { style: { fontFamily: 'JetBrains Mono', fontSize: 11, color: 'var(--fg-3)', marginTop: 2 } },
-                  f.traits.join(' · ') + ' · ' + (f.hqPlanetName ? 'HQ ' + f.hqPlanetName : 'no HQ')),
+                  ( f.tags || f.traits || []).join(' · ') + ' · ' + (f.hqPlanetName ? 'HQ ' + f.hqPlanetName : 'no HQ')),
                 React.createElement('div', { style: { fontSize: 12.5, color: 'var(--fg-1)', marginTop: 6, fontStyle: 'italic' } }, '“' + f.goal + '”'),
                 React.createElement('div', { style: { display: 'flex', gap: 16, marginTop: 10, fontFamily: 'JetBrains Mono', fontSize: 11 } },
                   React.createElement('span', null, React.createElement('span', { style: { color: 'var(--fg-3)' } }, 'C '), React.createElement('span', { style: { color: 'var(--fg-0)' } }, f.cunning)),
