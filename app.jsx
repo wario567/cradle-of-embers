@@ -193,16 +193,41 @@ function GMNotesView({ sector }) {
   ) : React.createElement('div', { style: { color: 'var(--fg-3)', padding: 12 } }, 'No faction turns recorded yet.');
 
   // PCs TAB
+  const [expandedPC, setExpandedPC] = useASt(null);
   const pcsTab = React.createElement('div', null,
-    (lore.playerCharacters || []).map(pc => card([
-      React.createElement('h4', { style: { margin: '0 0 6px', color: 'var(--fg-0)' } }, pc.playerName),
-      label('Concept'), prose(pc.characterConcept),
-      label('GM Notes'), prose(pc.gmNotes),
-      pc.moralChallenges && pc.moralChallenges.length && React.createElement('div', { style: { marginTop: 8 } },
-        label('Moral Challenges'),
-        React.createElement('ul', { style: { margin: '4px 0 0', paddingLeft: 18 } }, pc.moralChallenges.map((c, i) => bullet(c))),
-      ),
-    ]))
+    (lore.playerCharacters || []).map(pc => {
+      const pcOpen = expandedPC === pc.id;
+      return React.createElement('div', { key: pc.id, style: { marginBottom: 10 } },
+        React.createElement('div', {
+          onClick: () => setExpandedPC(pcOpen ? null : pc.id),
+          style: { display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px', background: 'var(--bg-2)', border: '1px solid ' + (pcOpen ? 'var(--accent)' : 'var(--border-1)'), borderRadius: pcOpen ? '6px 6px 0 0' : 6, cursor: 'pointer' },
+        },
+          React.createElement('span', { style: { flex: 1, fontWeight: 700, fontSize: 14, color: 'var(--fg-0)' } }, pc.playerName),
+          React.createElement('span', { style: { fontSize: 11, color: 'var(--fg-3)', fontStyle: 'italic', flex: 2 } }, pc.characterConcept.slice(0, 80) + (pc.characterConcept.length > 80 ? '…' : '')),
+          React.createElement('span', { style: { color: 'var(--fg-4)', fontSize: 12, flexShrink: 0 } }, pcOpen ? '▲' : '▼'),
+        ),
+        pcOpen && React.createElement('div', { style: { background: 'var(--bg-1)', border: '1px solid var(--accent)', borderTop: 'none', borderRadius: '0 0 6px 6px', padding: '16px 18px' } },
+          label('GM Concept'), prose(pc.characterConcept),
+          label('GM Notes'), prose(pc.gmNotes),
+          pc.moralChallenges && pc.moralChallenges.length && React.createElement('div', { style: { marginTop: 12 } },
+            label('Moral Challenges'),
+            React.createElement('ul', { style: { margin: '4px 0 0', paddingLeft: 18 } }, pc.moralChallenges.map((c, i) => bullet(c))),
+          ),
+          pc.briefingSections && pc.briefingSections.length && React.createElement('div', { style: { marginTop: 18, paddingTop: 16, borderTop: '1px solid var(--border-1)' } },
+            React.createElement('div', { style: { fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--fg-4)', marginBottom: 14 } }, 'Player Briefing'),
+            pc.briefingSections.map((sec, i) => React.createElement('div', { key: i, style: { marginBottom: 16 } },
+              React.createElement('div', { style: { fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: sec.blank ? '#c87c3c' : 'var(--accent)', marginBottom: 5, fontWeight: 600 } }, sec.title + (sec.blank ? ' — NEEDS PLAYER INPUT' : '')),
+              sec.body && React.createElement('div', {
+                style: { fontSize: 13, color: sec.blank ? 'var(--fg-3)' : 'var(--fg-2)', lineHeight: 1.7, whiteSpace: 'pre-wrap', background: sec.blank ? 'rgba(200,120,60,0.06)' : 'transparent', border: sec.blank ? '1px dashed rgba(200,120,60,0.3)' : 'none', borderRadius: sec.blank ? 4 : 0, padding: sec.blank ? '8px 10px' : 0 }
+              }, sec.body),
+              sec.bullets && sec.bullets.length && React.createElement('ul', { style: { margin: '6px 0 0', paddingLeft: 18 } },
+                sec.bullets.map((b, j) => React.createElement('li', { key: j, style: { fontSize: 12, color: 'var(--fg-2)', lineHeight: 1.65, marginBottom: 4 } }, b))
+              ),
+            )),
+          ),
+        ),
+      );
+    })
   );
 
   // SESSION 1 TAB

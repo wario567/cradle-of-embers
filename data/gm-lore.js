@@ -556,6 +556,39 @@ Hooks to lean into:
         'He learns his substrate was not a reconstruction from his backup — it was a new substrate loaded with his backup\'s data. The original him died at the accident site. What does that mean for the debt?',
         'His surface-layer logs are subpoenaed in a PALE disciplinary proceeding against Substrate-7 (Anselm Volkov), whom he has been quietly helping.',
       ],
+      briefingSections: [
+        {
+          title: 'Who You Are',
+          body: `You are [NAME], and you are old. Your body is the original — hands that shake slightly in the cold, the particular fatigue that accumulates over decades, a face that has watched too many things go wrong. Your brain is not original. [However long ago], an accident destroyed it beyond salvage. PALE stepped in. They always step in. They scanned you, reconstructed you from the last backup on file, and called it a success.\n\nThe backup was three weeks old.\n\nWhatever you thought, felt, or decided in those three weeks is gone. PALE\'s position is that continuity of identity is a cognitive illusion and the question of whether you\'re the same person is meaningless. You are not sure you agree. You are also not sure the thing doing the disagreeing is you.\n\nThe reconstruction came with a Cognitive Lease. The debt is 100,000 credits, open-ended, and PALE refuses to itemize it. You\'ve been paying it down with criminal work. You don\'t know exactly how much you\'ve paid. PALE doesn\'t tell you that either.`,
+        },
+        {
+          title: 'Your Connection to PALE',
+          body: `PALE (Pale Substrate) is the technocratic AI-ruled collective whose neural substrate is currently running your cognition. They are not malevolent, as far as you can tell. They are patient, they are precise, and they believe that free will is an illusion and act accordingly. Your Cognitive Lease gives them read access to your substrate\'s surface-layer logs. You experience this as a very faint sense of being watched that you have mostly learned to ignore.`,
+          bullets: [
+            'They run the most advanced neural reconstruction program in the sector. If you are dying, PALE will save you. The Lease is open-ended. The debt is forever.',
+            'Their stations are eerily clean. Citizens move through them with a detachment that visitors find unsettling. Everything in its right place.',
+            'PALE\'s wellness monitors are everywhere — embedded in civilian infrastructure, framed as health services. You\'ve started noticing them.',
+            'Their salvage fleet has been active lately. Something is moving.',
+          ],
+        },
+        {
+          title: 'Recent News (last 6 months)',
+          bullets: [
+            'PALE deployed a commercial dive team to Thessavar about six months ago. The cover is geological survey. This is unusual — PALE doesn\'t usually invest in planetary fieldwork.',
+            'Whispers in criminal networks: PALE is running a behavioral experiment called Project Karma — covertly elevating stress in leased citizens to study radicalization. You don\'t know if it\'s true. You\'ve met people recently who seemed too volatile for their circumstances.',
+            'The Cognitive Lease terms were updated quietly three months ago. One clause was added. Nobody has told leased citizens what it says.',
+          ],
+        },
+        {
+          title: 'Where You Came From',
+          body: `[BLANK — player to fill: where was he before the accident? What did he do? What world or station? Does he have anyone left from before?]\n\nWhatever he was before, the accident ended that life. The person who woke up three weeks behind is navigating the sector with the skills and contacts of a life he lived, accessed through memories that are someone else\'s problem now.`,
+          blank: true,
+        },
+        {
+          title: 'Why You\'re on Thessavar',
+          body: `You took a criminal contract. The target is Arbiter Senn — a Hollow Covenant diplomat attending the Thessavar Concordance, an annual gathering of sector elite at a private island called The Still Gardens. The payout would make a real dent in the Lease. You have a forged token that gets you onto the island as a social guest.\n\nPALE knows you\'re here. You don\'t know that.`,
+        },
+      ],
     },
 
     {
@@ -577,6 +610,42 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
         'Elder Vesper orders her to stand down while Marshal Tran orders her to advance. Both are sanctioned authorities. Her obedience architecture does not have a tiebreaker.',
         'She discovers that a Grade 0 labor clone on Thessavar is being worked to death by its owner. She has no sanctioned authority to intervene. She cannot stop thinking about it.',
         'She finds the sealed message left by Requisition Agent Tarek. It is addressed to Kael-7, Security Series, First Deployment. It says: "If you are reading this, something went wrong. Trust Elder Vesper. Do not trust the relic."',
+      ],
+      briefingSections: [
+        {
+          title: 'Who You Are',
+          body: `You are Kael-7. You are eighteen months old.\n\nYour line — Kael Security Series, Grade 2 — has been running for eleven generations. You carry all of that in your genetics and none of it in your memory. You sometimes have reactions you can\'t explain: a pull toward a certain tactical formation, an instinctive read on a sight line, a sense that you have done something before when you haven\'t. You haven\'t. Your lineage has.\n\nYou were produced at Synthesis Prime, the Progenitor Combine\'s primary facility. You were in basic conditioning for twelve months. At month thirteen you were sold — the entire remaining Kael-7 stock, your entire line — to the Hollow Covenant at auction. You were assigned to Arbiter Senn as personal security. He is your legal owner.\n\nYou have never seen a person die outside a training simulation.\n\nYou asked more questions than average during training. Not insubordination — curiosity about why the protocols exist. The Yards flagged it as within acceptable variance. It was not.`,
+        },
+        {
+          title: 'Your Mark',
+          body: `You carry the Grade Mark — the Progenitor Combine\'s symbol — laser-etched on your inner left wrist. A vertical line splitting into three descending branches, grade number 2 etched into the left branch. It identifies you as property. Everyone who knows the Combine\'s iconography will read it immediately.`,
+        },
+        {
+          title: 'Your Connection to the Hollow Covenant',
+          body: `The Hollow Covenant are survivors of a civilization that collapsed within a single generation — plague, civil war, and imperial conquest all at once. What survived were scattered groups with incompatible memories of what their culture had been. They have been arguing about which memory is correct ever since.\n\nTheir symbol is a cracked mask. Their initiates spend three days alone in a sealed dark compartment. New members emerge either Void-touched or stable. Both are welcome.\n\nThey are split:\n• The Remembrance faction wants to restore the old empire — its laws, architecture, hierarchy.\n• The Becoming faction believes the empire\'s contradictions caused the collapse, and rebuilding it faithfully would just repeat the disaster.\n\nYou were assigned to Elder Vesper\'s detail. Vesper is Becoming. Marshal Onyx Tran commands Covenant military assets and is Remembrance. They do not agree on much. Your obedience architecture does not have a tiebreaker for when sanctioned authorities conflict.`,
+          bullets: [
+            'Both factions are intensely focused on Thessavar. There is something in the ruins beneath its ocean that each wants — for different reasons. Remembrance believes it is a founding document. Becoming believes it is a weapon.',
+            'Arbiter Senn was negotiating an excavation treaty for access to those ruins. That\'s why he\'s at the Concordance.',
+            'The Covenant does not know PALE and the Aureole Synod are also converging on Thessavar.',
+          ],
+        },
+        {
+          title: 'Recent News (last 3 months)',
+          bullets: [
+            'A Covenant requisition agent named Tarek went missing near Kaeldrift. Before he disappeared he left a sealed message addressed to Kael-7, Security Series, First Deployment. You have not received it yet.',
+            'Remembrance faction rhetoric inside the Covenant has gotten sharper, more certain. Some senior members seem recently converted to an absolute conviction — Elder Vesper has called it a slow ideological plague. Marshal Tran thinks she is being dramatic.',
+            'The Covenant\'s military posture at Thessavar was increased two weeks ago. No explanation was given to security staff.',
+          ],
+        },
+        {
+          title: 'Where You Came From',
+          body: `Synthesis Prime. The Progenitor Combine\'s homeworld is built around the original cloning vaults — vast, echoing corridors, clean above Level 7, sealed and unspeakable below it. You lived there for twelve months and will not go back.\n\n[BLANK — does she go by Kael-7, or has she taken a name? Does the player feel pull toward Remembrance or Becoming, or is that still open?]`,
+          blank: true,
+        },
+        {
+          title: 'Why You\'re on Thessavar',
+          body: `Arbiter Senn is your legal owner and your protectee. He is attending the Thessavar Concordance at The Still Gardens — a private island estate. You arrived with his staff an hour before the event. You have been on threat assessment since you boarded his boat. You have flagged eleven people as worth monitoring. He has not acknowledged your existence since you boarded.\n\nWhen Senn dies, you will have no sanctioned authority. Nobody built a protocol for that.`,
+        },
       ],
     },
 
