@@ -132,6 +132,71 @@
     return (Math.abs(ac.x - bc.x) + Math.abs(ac.y - bc.y) + Math.abs(ac.z - bc.z)) / 2;
   }
 
+  // Canonical lore factions — always present, stats reflect their description.
+  const LORE_FACTIONS = [
+    {
+      id: 'fac-river-below',
+      name: 'The River Below',
+      traits: ['Insurgent', 'Espionage-driven'],
+      hp: 10, maxHp: 10,
+      cunning: 5, force: 2, wealth: 2,
+      goal: 'Destroy a rival faction outright',
+      assets: [
+        { name: 'Smuggler Ring', cost: 3, hp: 2 },
+        { name: 'Spynet', cost: 3, hp: 2 },
+        { name: 'Mercenary Squad', cost: 2, hp: 2 },
+      ],
+      notes: 'Anti-establishment punk gang. High cunning, low profile. Leaders are called Saints.',
+      loreId: 'river_below',
+    },
+    {
+      id: 'fac-pale-substrate',
+      name: 'The Pale Substrate',
+      traits: ['AI-led', 'Cybernetic'],
+      hp: 20, maxHp: 20,
+      cunning: 6, force: 4, wealth: 5,
+      goal: 'Discover a long-buried secret',
+      assets: [
+        { name: 'Spynet', cost: 3, hp: 2 },
+        { name: 'Cyber-ninjas', cost: 4, hp: 4 },
+        { name: 'Banking Concern', cost: 5, hp: 3 },
+        { name: 'Postech Industries', cost: 4, hp: 4 },
+      ],
+      notes: 'AI-governed technocracy. PALE holds Cognitive Leases on all citizens. Maximum cunning.',
+      loreId: 'pale_substrate',
+    },
+    {
+      id: 'fac-progenitor-combine',
+      name: 'Progenitor Combine',
+      traits: ['Eugenicist', 'Mercantile'],
+      hp: 18, maxHp: 18,
+      cunning: 3, force: 2, wealth: 6,
+      goal: 'Consolidate control of a single world',
+      assets: [
+        { name: 'Postech Industries', cost: 4, hp: 4 },
+        { name: 'Banking Concern', cost: 5, hp: 3 },
+        { name: 'Pretech Manufactory', cost: 6, hp: 4 },
+      ],
+      notes: 'Biotech clone cartel. Maximum wealth. Management are long-lived clone lineages.',
+      loreId: 'progenitor_combine',
+    },
+    {
+      id: 'fac-hollow-covenant',
+      name: 'The Hollow Covenant',
+      traits: ['Crusading', 'Militant'],
+      hp: 14, maxHp: 14,
+      cunning: 3, force: 5, wealth: 3,
+      goal: 'Restore an ancient regime',
+      assets: [
+        { name: 'Mercenary Squad', cost: 2, hp: 2 },
+        { name: 'Frigate Squadron', cost: 4, hp: 4 },
+        { name: 'Religious Brotherhood', cost: 2, hp: 3 },
+      ],
+      notes: 'Survivors of a collapsed civilization. Internally split: Remembrance vs Becoming factions.',
+      loreId: 'hollow_covenant',
+    },
+  ];
+
   function makeFaction(rng) {
     const traits = rng.picks(SWN.factionTraits, 2);
     const assets = rng.picks(SWN.factionAssets, rng.int(3, 6));
@@ -148,6 +213,37 @@
       goal: rng.pick(SWN.factionGoals),
       assets,
       notes: '',
+    };
+  }
+
+  // Thessavar — fixed oceanic world, always placed at hex D05.
+  function makeThessavar(rng) {
+    return {
+      id: 'thessavar-prime',
+      name: 'Thessavar',
+      hexId: 'D05',
+      isPrimary: true,
+      atmosphere: { name: 'Breathable Mix', desc: 'Normal human-breathable atmosphere.', habitable: true },
+      temperature: { name: 'Temperate', desc: 'Earth-like climate ranges.' },
+      biosphere: { name: 'Human-Miscible', desc: 'Biosphere can support human metabolism.' },
+      population: { name: 'Settled', range: 'Tens of millions', desc: 'A stable, well-populated world.' },
+      techLevel: { tl: 'TL4', desc: 'Postech — interstellar baseline. Limited spike drives.' },
+      tags: [
+        { name: 'Oceanic World', desc: 'Mostly or entirely covered in water.' },
+        { name: 'Alien Ruins', desc: 'Remnants of a precursor civilization scattered across the world — here, beneath the ocean.' },
+        { name: 'Seagoing Cities', desc: 'Population lives on floating or submerged platform cities.' },
+        { name: 'Sealed Menace', desc: 'Something is locked in the ruins below the thermocline.' },
+      ],
+      biome: 'ocean',
+      radius: 6.2,
+      axialTilt: 11,
+      dayLength: 27.4,
+      yearLength: 390,
+      gravity: 0.94,
+      moons: [{ name: 'Moon A', radius: 0.6, distance: 2.5, biome: 'rocky', textureSeed: 41271 }],
+      textureSeed: 88234,
+      ringSystem: false,
+      notes: 'Session 1 location. The Still Gardens is a private island estate south of the platform city Kaeldrift. Alien ruins below 400m — nobody goes past 600m voluntarily.',
     };
   }
 
@@ -271,26 +367,50 @@
       }
     }
 
-    const factions = [];
-    const factionCount = rng.int(4, 7);
-    for (let i = 0; i < factionCount; i++) {
-      const f = makeFaction(rng.fork('fac-' + i));
-      // Assign HQ to a populated planet.
-      const populated = systems.flatMap(s => s.planets).filter(p =>
-        !['Failed Colony', 'Outpost'].includes(p.population.name)
-      );
-      if (populated.length) {
-        const hq = rng.pick(populated);
-        f.hqPlanetId = hq.id;
-        f.hqPlanetName = hq.name;
-      }
+    // Inject Thessavar into hex D05 system.
+    const thessavarSystem = systems.find(s => s.hexId === 'D05');
+    if (thessavarSystem) {
+      // Replace or prepend Thessavar as the primary planet.
+      thessavarSystem.planets = [makeThessavar(rng.fork('thessavar')), ...thessavarSystem.planets.filter(p => !p.isPrimary)];
+    } else {
+      // D05 was empty — add the system.
+      systems.push({
+        hexId: 'D05', col: 3, row: 4,
+        starName: 'Thessis',
+        starType: SWN.starTypes.find(s => s.class === 'G'),
+        planets: [makeThessavar(rng.fork('thessavar'))],
+      });
+    }
+
+    const allPlanets = systems.flatMap(s => s.planets);
+
+    // Always include the 4 lore factions, assign HQs to lore-appropriate planets.
+    const factions = LORE_FACTIONS.map(f => ({ ...f }));
+    const thessavar = allPlanets.find(p => p.id === 'thessavar-prime');
+    const populated = allPlanets.filter(p => !['Failed Colony', 'Outpost'].includes(p.population.name));
+
+    // Covenant HQ on Thessavar (they're excavating here).
+    const covenant = factions.find(f => f.id === 'fac-hollow-covenant');
+    if (covenant && thessavar) { covenant.hqPlanetId = thessavar.id; covenant.hqPlanetName = thessavar.name; }
+
+    // Substrate, Combine, River Below get random populated HQs.
+    factions.filter(f => f.id !== 'fac-hollow-covenant').forEach((f, i) => {
+      const hq = populated.length ? rng.pick(populated) : null;
+      if (hq) { f.hqPlanetId = hq.id; f.hqPlanetName = hq.name; }
+    });
+
+    // Add a few random minor factions on top.
+    const minorCount = rng.int(2, 3);
+    for (let i = 0; i < minorCount; i++) {
+      const f = makeFaction(rng.fork('fac-minor-' + i));
+      const hq = populated.length ? rng.pick(populated) : null;
+      if (hq) { f.hqPlanetId = hq.id; f.hqPlanetName = hq.name; }
       factions.push(f);
     }
 
     const npcs = [];
     for (let i = 0; i < 12; i++) {
       const n = makeNPC(rng.fork('npc-' + i));
-      const allPlanets = systems.flatMap(s => s.planets);
       if (allPlanets.length) {
         const home = rng.pick(allPlanets);
         n.locationId = home.id;
@@ -299,7 +419,6 @@
       npcs.push(n);
     }
 
-    const allPlanets = systems.flatMap(s => s.planets);
     const hooks = [];
     for (let i = 0; i < 8; i++) {
       hooks.push(makeHook(rng.fork('hook-' + i), allPlanets));
