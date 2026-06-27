@@ -168,7 +168,7 @@ Hooks to lean into:
     {
       id: 'pc_clone',
       playerName: 'Player 2',
-      characterConcept: 'Grade 2 Security clone, Kael-7 lineage, eighteen months old. Newly synthesized, 18 months of basic training, first mission. Genetically obedient. Genuinely wants to do well.',
+      characterConcept: 'Grade 2 Security clone, Kael-7 lineage, eighteen months old. Newly synthesized, 18 months of basic training, first mission. Genetically obedient. Genuinely wants to do well. Her legal owner is Arbiter Senn — Hollow Covenant diplomat, Session 1 assassination target. When he dies she has no sanctioned authority. Her entire identity structure has no protocol for this.',
       factionTie: 'hollow_covenant',
       inspirations: ['Linkin Park', 'Hollow Knight', 'Avatar: The Last Airbender'],
       gmNotes: `Her obedience is real, not performed — she genuinely experiences following legitimate orders as correct and right. Countermanding them feels physically wrong, like trying to hold her breath. The moral design challenge: she is intelligent enough to notice when the orders are wrong. She just feels sick doing anything about it.
@@ -189,22 +189,174 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
 
   ],
 
-  // ── STARTING ADVENTURE — THESSAVAR ─────────────────────────────────────────
-  openingAdventure: {
+  // ── SESSION 1 — THE STILL GARDENS ──────────────────────────────────────────
+  session1: {
+    title: 'The Still Gardens',
     world: 'Thessavar',
     worldTags: ['Oceanic World', 'Alien Ruins', 'Seagoing Cities', 'Sealed Menace', 'Cold War'],
     atmosphere: 'Breathable Mix',
     temperature: 'Temperate',
-    description: `Thessavar is 94% ocean. Human habitation clings to floating platform cities and the exposed peaks of drowned mountain ranges. Below the thermocline — around 400 meters — is a pre-human ruin complex of unknown origin. Nobody goes past 600 meters voluntarily. The platform city of Kaeldrift is the main settlement, population ~80,000, built on six interlocked hexagonal platforms over a shallow shelf.`,
-    gmNotes: `All four factions have reason to be here simultaneously:
-• The Hollow Covenant sent a small team (including Player 2) to retrieve what they believe is a founding relic
-• The Pale Substrate sent a salvage team under cover as marine surveyors
-• The River Below is here for a Substrate shipment passing through Kaeldrift port — and Saint Maret has just gone quiet
-• Player 1 is here because PALE sent him to oversee the "survey team" and he knows it is not a survey
 
-The cold war between Covenant factions is playing out in the background — Remembrance and Becoming operatives are watching each other on Kaeldrift. Player 2 is caught in the middle.`,
-    coolScene: `[PLACEHOLDER — fill in the GM's cool scene idea here]`,
-    openingHook: `The party arrives on Kaeldrift separately. Within the first hour: a body is pulled from the water by the platform's maintenance drones. It is not human. It is not the alien species from the ruins. Nobody has seen its like before. The platform's harbormaster locks down incoming and outgoing traffic "pending investigation." Everyone who came to Thessavar for something is now stuck here together.`,
+    worldDescription: `Thessavar is 94% ocean. Human habitation clings to floating platform cities and the exposed peaks of drowned mountain ranges. Below the thermocline — around 400 meters — is a pre-human ruin complex of unknown origin. Nobody goes past 600 meters voluntarily. The main platform city of Kaeldrift (pop. ~80,000) sits over a shallow shelf to the north. The Still Gardens is a private island estate about 40 minutes by water to the south — a natural rock formation built over with centuries of engineered hedges, formal garden terraces, and a network of narrow waterways that connect the island's sections like a living maze.`,
+
+    premise: `Player 1 (the old cyborg, criminal) and Player 2 (the clone, security) both arrive at The Still Gardens for the Thessavar Concordance — an annual gathering of sector elite. They are there for opposite reasons. Their shared target, Arbiter Senn, is Player 2's legal owner and Player 1's assassination contract. A third party gets there first. What happens next forces them to work together and ultimately launches them both into space with nothing but each other and a stolen berth on a merchant freighter.`,
+
+    // ── CHARACTER STAKES ──
+    characterStakes: {
+      player1: `He was contracted (off-lease, criminal work) to assassinate Arbiter Senn. The payout would make a real dent in his PALE Cognitive Lease — 100k credits of open-ended debt that PALE refuses to itemize. He's been working criminal jobs to pay it down for years. He has no idea PALE knows he's here.`,
+      player2: `She was purchased by Arbiter Senn from Progenitor Combine as personal security. He is her legal owner. Her entire identity — who to obey, what her purpose is, what "right" feels like — is organized around him. She has never lost a protectee. She has never lost anything. She has been alive for eighteen months.
+
+When Senn dies, her ownership contract dies with him. Legally she reverts to Progenitor Combine as unclaimed property pending probate. Practically: her obedience architecture has no sanctioned authority to report to. She does not have protocol for this. Nobody built one in because nobody expected a Grade 2 to outlive her owner on her first deployment.`,
+    },
+
+    // ── THE SETTING — THE STILL GARDENS ──
+    stillGardens: {
+      overview: `The island is roughly 2km across, shaped like a crescent. The interior is a dense network of hedged waterways, formal garden terraces rising in tiers toward a central manor house, and narrow stone paths that connect them. The hedges are ancient and thick — walls, not decorations. You cannot see over them. You navigate by the colored gate markers, which only open for the right social token.`,
+      socialSystem: `Every Concordance guest receives a colored token upon arrival — ivory, amber, or onyx. The tokens were assigned by Senn's staff based on political standing. Nobody explains what the colors mean. Guests are expected to know. The players don't know:
+• Ivory: full access, all waterways and gates open
+• Amber: social guests, most areas open, inner sanctum gates closed
+• Onyx: staff, service corridors only
+
+Player 2 arrives with an onyx token (she is property, not a guest). Player 1 arrives with a forged amber token (the best his contact could get him).`,
+      swanBoats: `The island's waterways are navigated by gondola-style boats drawn by bioengineered swans — a Progenitor Combine luxury product. They are bred to be perfectly white, perfectly silent, and perfectly synchronized. They respond to the island's central control signal, not to passengers. You sit down, you go where the boat goes, on the swan's schedule. You cannot steer. You cannot stop. The swans never make a sound.
+
+PALE surveillance architecture is embedded behind the swans' eyes. Every waterway is watched. PALE has had access to this island's feed for eleven years through a contract with the estate's security firm — a fact the estate's current owners do not know.`,
+      tokenGates: `Hedged gates throughout the island open or lock based on the guest's token color. During lockdown, ALL gates seal regardless of token. The only passages that remain open are the service corridors (onyx access) that run beneath the island's garden level — maintenance tunnels, low-ceilinged, smelling of salt water, lit by dim amber strips.`,
+    },
+
+    // ── SESSION STRUCTURE ──
+    beats: [
+
+      {
+        beat: 1,
+        title: 'Cold Open — Two Vignettes',
+        type: 'railroaded',
+        gmNotes: `Run these back to back, 3-5 minutes each. Do not let players interact yet. Set the tone.`,
+        player1Vignette: `He arrives by water taxi from Kaeldrift, alone. The Still Gardens comes into view slowly — hedges rising from the water, white stone terraces, the main house behind it all. The swan boats are already moving in the inner waterways, visible through the iron gate at the island's public dock. A steward checks his forged token without looking at him and assigns him a boat. He sits. The swan moves. He does not know which way he's going.
+
+Ask the player: what does he notice first? What's he watching for?`,
+        player2Vignette: `She arrived an hour earlier with Arbiter Senn's staff. She has been stationed at the rear of Senn's gondola for the last hour — standing, watching, running threat assessment on every face they pass. She has flagged eleven people as worth monitoring. She has not relaxed once. Senn has not acknowledged her existence since they boarded.
+
+Ask the player: what does she notice about Senn? Does she feel anything about him, or is he just the assignment?`,
+      },
+
+      {
+        beat: 2,
+        title: 'The Concordance — Social Maze',
+        type: 'railroaded with player agency',
+        gmNotes: `The formal Concordance opening. All guests are loaded onto swan boats for the processional through the main waterway — a wide canal that bisects the island east to west, lined with guests standing on the garden banks watching. It's meant to be beautiful. Play it as beautiful. The swans move in absolute synchrony. Nobody steers. The hedges are immaculate. The guests on the banks wear the kind of clothing that costs more than most people make in a year.
+
+Let the players explore a little — maybe they spot each other, maybe they talk to NPCs. But the processional is happening whether they engage or not. They end up on boats. The boats move.
+
+Good NPCs to introduce here:
+• Administrator Rhae Mahler (PALE field liaison) — watching from the bank, perfectly still, dressed in pale grey
+• A Concordance guest who tries to explain the token system to Player 1 but gets the rules wrong
+• One of the swans that turns its head to look directly at Player 2 for three full seconds, then looks away`,
+      },
+
+      {
+        beat: 3,
+        title: 'THE SWAN SCENE — The Assassination',
+        type: 'scripted — do not let players prevent this',
+        gmNotes: `This is the centerpiece. Read it slowly. Let the silence land.
+
+The processional is in full motion. Senn's boat is near the front. Player 2 is standing at the rear of his gondola, watching the crowd. Player 1 is somewhere in the canal — his boat has drifted close enough that he can see Senn clearly. He's been watching the gap in the crowd timing, working out his moment.
+
+Then — all the swans stop.
+
+Every boat. The entire processional. Dead still on the water, simultaneously, without sound. No signal. No announcement. The guests on the banks go quiet. Nobody knows what's happening.
+
+A figure drops from the top of the hedge wall above Senn's boat — River Below, dressed in dark salvage-wear, fast and practiced. She lands clean. It's over in three seconds. Senn doesn't make a sound.
+
+The punk straightens up. She is unhurried. She looks at Player 2 — directly, for one full second. Then at the crowd. Then she says:`,
+        assassinMonologue: `"Try honesty. Nobody does anymore."`,
+        assassinEscape: `She grabs the gunwale and goes into the water. Gone. Clean.
+
+The swans begin moving again. Exactly as before. The processional resumes for approximately four seconds before someone on the bank screams.`,
+        aftermath: `Player 2: her owner is dead. She is standing next to the body. Her obedience architecture is firing in every direction and finding nothing to attach to. What does she do?
+
+Player 1: someone just did his job. He didn't get paid. He is on a boat in a canal full of witnesses at an assassination scene. What does he do?
+
+Note for GM: PALE paused the swans to give the operative a clean window. PALE wanted Senn dead because Senn was about to sign a treaty granting the Hollow Covenant excavation rights to the underwater ruins. PALE wants those ruins and has a salvage team already en route. The players do not know any of this yet.`,
+      },
+
+      {
+        beat: 4,
+        title: 'Lockdown',
+        type: 'railroaded — the situation closes around them',
+        gmNotes: `Within minutes of the assassination, the island's private security activates lockdown protocol. All token gates seal. All swan boats return to their dock stations and stop responding. The harbor gate closes. No one enters or leaves.
+
+Security begins collecting everyone who was near Senn's boat. Player 2 was on his boat. Player 1 was close enough to be flagged. They are both brought to the same holding room — a garden terrace with two security officers posted at the only gate.
+
+This is their first conversation. They are, on paper, adversaries. They are, practically, the only two people on this island who have any reason to get out fast.
+
+Let this scene breathe. Ask both players what they say. Let them figure out that they both wanted Senn dead for different reasons. The dramatic irony is that they're both off the hook — someone else did it — but neither of them is going to convince island security of that.`,
+        holdingRoomNPC: `The security officer in charge is named Voss — Concordance private staff, not affiliated with any faction, just doing his job. He is professional and genuinely trying to figure out what happened. He is not corrupt. He is not an obstacle to be fought. He is a complication that can be talked around, distracted, or avoided. He will call Kaeldrift authorities within the hour unless something delays him.`,
+      },
+
+      {
+        beat: 5,
+        title: 'The Way Out',
+        type: 'player-driven — let them solve it',
+        gmNotes: `The only way off the island before Kaeldrift authorities arrive is through the waterways. The swan boats won't move for unauthorized users. The harbor gate is sealed. The service tunnels beneath the garden level run to the north face of the island — a maintenance dock used for supply deliveries.
+
+The elegant solution: Player 1's PALE substrate can receive the island's swan control frequency — he's never tried to use it, but it's there. If he attempts to interface with the control signal, he can steer a swan boat. This is a moment to make weird and unsettling — he's using architecture in his own skull that PALE put there, and it works immediately and easily, which means PALE has always been able to do this through him.
+
+The swan takes them to the service dock on the north face. They did not choose this destination — the substrate routed them there automatically. PALE is done with this island and wants its asset (Player 1) extracted.
+
+At the service dock: a mid-sized merchant freighter called the DUSKLINE is offloading filtration equipment. The captain, Mira Calder, is a pragmatic woman who runs a clean ship and does not ask questions she doesn't want answers to. She will take passengers for 800 credits each, no manifest entry, departure in 40 minutes.`,
+        escapeVariants: `If players don't find the swan solution:
+• The service tunnels are findable with a Notice check — Player 2's security training makes her look for maintenance access automatically
+• A panicked Concordance guest tries to bribe his way onto a supply skiff and causes a distraction at the harbor gate — creates a brief window
+• Administrator Rhae Mahler approaches Player 1 quietly and tells him where the service dock is. She hands him a transit chip. She says nothing else and walks away. (PALE extracting its asset — let the player figure out what this implies)`,
+      },
+
+      {
+        beat: 6,
+        title: 'Launch — End of Session 1',
+        type: 'scripted closing image',
+        gmNotes: `The Duskline breaks atmosphere as Thessavar's ocean shrinks below them. The planet from space is blue-white and perfectly still-looking, nothing suggesting what just happened on one small island on its surface.
+
+End on one of these images depending on the tone of the session:
+
+If it went clean: the two of them in the Duskline's small passenger berth, not talking, the planet behind them.
+
+If it went messy: Voss's face on the ship's comm screen — "This is Concordance Security. Duskline, you are carrying persons of interest in a diplomatic homicide. Stand by for boarding." Mira cuts the channel. "That'll cost extra."
+
+Either way — Session 2 opens with: "You're in the black. What do you do?"`,
+      },
+
+    ],
+
+    // ── THINGS THE GM KNOWS THAT NOBODY ELSE DOES ──
+    hiddenTruths: [
+      'PALE stopped the swans. The River Below operative had a 90-second window that PALE opened for her. PALE and the River Below do not have an alliance — PALE simply calculated that Senn dying served its interests and the operative was already in position.',
+      'The River Below operative who killed Senn is Saint Maret herself. She went quiet from her cell because she was running this job personally. Nobody in the River Below below her rank knows she was here.',
+      'Arbiter Senn had a secondary copy of the excavation treaty already signed and filed with a neutral Exchange notary on Kaeldrift. His death does not actually stop the Covenant's legal claim to the ruins. It just means nobody knows the treaty exists yet.',
+      'The Duskline captain Mira Calder runs a clean ship, but her first mate is a River Below informant. Saint Maret will know who was on the Duskline within 48 hours.',
+      'Player 1\'s substrate routed the swan to the service dock. PALE logged this as "asset extraction — successful." His Cognitive Lease balance did not change.',
+    ],
+
+    // ── BOXED READ-ALOUD TEXTS ──
+    readAloud: {
+      arrivalIsland: `The Still Gardens rises from the water slowly as your boat approaches — first the hedges, dense and dark green against the sky, then the white stone terraces behind them stepping upward toward a manor house you can't fully see yet. The waterways cut through the island in channels barely wide enough for two boats to pass. Your swan moves into the first one without slowing. The hedge walls close in on both sides. You can't see what's ahead.`,
+
+      processionalOpening: `The main waterway is wider than the others — maybe fifteen meters across, lined on both sides by garden terraces where Concordance guests stand holding drinks, watching. The swan boats move in a slow procession, evenly spaced, perfectly synchronized. Nobody is steering. The swans don't look at the crowd. The crowd doesn't speak. It is very quiet for this many people in one place.`,
+
+      swansStop: `All the swans stop at the same time. Your boat. Every boat. The whole procession, dead still on the water. No signal. No announcement. No sound. The guests on the banks go quiet. A few look at each other. Nobody knows what's happening. The swans face forward. They are completely still.`,
+
+      assassinDrops: `She comes from above — over the hedge wall, dropping clean onto Senn's boat. Fast. Practiced. It is over before you finish processing that it started. She straightens up. She is unhurried. She looks at you — directly, for one full second. Then at the crowd.
+
+"Try honesty. Nobody does anymore."
+
+She goes into the water. Gone.
+
+The swans begin moving again. The processional resumes for approximately four seconds before someone on the bank starts screaming.`,
+
+      swanLaunch: `You sit down in the gondola. The swan moves. You didn't tell it to go anywhere — you just reached for the frequency, the way you'd reach for a memory, and it was there, immediate and familiar, like something that had always been part of you waiting to be used. The swan takes you north through service channels you didn't know existed. You don't choose the route. The route is chosen. You watch the hedges slide past in the dark and try not to think about what it means that this was easy.`,
+
+      launchFromThessavar: `The ocean falls away beneath you. From up here Thessavar is just blue — no islands, no cities, no waterways. Just blue and white and perfectly still. Whatever happened down there is already too small to see.`,
+    },
   },
 
 };
