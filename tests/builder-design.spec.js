@@ -91,14 +91,14 @@ test('Warrior gets a free combat focus (step 7) and a free skill (step 9)', asyn
   await next(page);                                          // attrs
   await next(page);                                          // background
   await page.locator('.cb-card', { hasText: 'Soldier' }).click();
-  await next(page);                                          // class
-  await page.locator('.cb-card', { hasText: 'Warrior' }).first().click();
   await next(page);                                          // skills
 
   // Step 9 free skill is required to advance.
   await expect(page.locator('.cb-modal button', { hasText: 'Next' })).toHaveCount(1);
   await page.locator('.cb-freeskill button', { hasText: 'Program' }).click();
   await page.locator('.cb-modal').screenshot({ path: 'screenshots/design-06-freeskill.png' });
+  await next(page);                                          // class
+  await page.locator('.cb-card', { hasText: 'Warrior' }).first().click();
   await next(page);                                          // focus
 
   // Primary focus + the Warrior's free combat focus selector both present.

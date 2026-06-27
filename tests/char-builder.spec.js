@@ -43,15 +43,16 @@ test('guided builder walks all steps and creates a rules-correct Warrior', async
   await page.screenshot({ path: 'screenshots/cb3-background.png' });
   await next(page);
 
+  // Step: Skills (quick skills shown; Soldier has Any Combat -> choose Shoot)
+  await expect(page.locator('.cb-stepname', { hasText: 'Skills' })).toBeVisible();
+  await expect(page.locator('.cb-freeskill')).toBeVisible();
+  await page.locator('.cb-freeskill button', { hasText: 'Heal' }).click(); // step 9 free skill
+  await page.screenshot({ path: 'screenshots/cb5-skills.png' });
+  await next(page);
+
   // Step: Class
   await page.locator('.cb-card', { hasText: 'Warrior' }).first().click();
   await page.screenshot({ path: 'screenshots/cb4-class.png' });
-  await next(page);
-
-  // Step: Skills (quick skills shown; Soldier has Any Combat -> choose Shoot)
-  await expect(page.locator('text=recommended starting kit')).toBeVisible();
-  await page.locator('.cb-freeskill button', { hasText: 'Heal' }).click(); // step 9 free skill
-  await page.screenshot({ path: 'screenshots/cb5-skills.png' });
   await next(page);
 
   // Step: Focus
@@ -90,10 +91,10 @@ test('psychic path shows the psionics step', async ({ page }) => {
   await next(page); // attrs
   await page.locator('.cb-card', { hasText: 'Scholar' }).click();
   await next(page);
-  await page.locator('.cb-card', { hasText: 'Psychic' }).first().click();
-  await next(page);
   await page.locator('.cb-freeskill button', { hasText: 'Notice' }).click(); // step 9 free skill
   await next(page); // skills
+  await page.locator('.cb-card', { hasText: 'Psychic' }).first().click();
+  await next(page); // class
   await page.locator('.cb-card').first().click(); // focus
   await next(page);
   // Now should be on Psionics step

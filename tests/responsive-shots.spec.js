@@ -44,11 +44,12 @@ test('narrow builder — screenshot every step', async ({ page }) => {
   await page.screenshot({ path: 'screenshots/narrow-03-background.png' });
   await next(page);
 
-  await page.locator('.cb-card', { hasText: 'Warrior' }).first().click();
-  await page.screenshot({ path: 'screenshots/narrow-04-class.png' });
+  await page.screenshot({ path: 'screenshots/narrow-05-skills.png' });
+  await page.locator('.cb-freeskill button', { hasText: 'Heal' }).click();
   await next(page);
 
-  await page.screenshot({ path: 'screenshots/narrow-05-skills.png' });
+  await page.locator('.cb-card', { hasText: 'Warrior' }).first().click();
+  await page.screenshot({ path: 'screenshots/narrow-04-class.png' });
   await next(page);
 
   await page.locator('.cb-card', { hasText: 'Sniper' }).click();

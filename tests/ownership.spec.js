@@ -42,10 +42,10 @@ test('a builder-created character is owned by and editable for its player', asyn
   await next();                                                   // attrs
   await next();                                                   // background
   await page.locator('.cb-card', { hasText: 'Soldier' }).click();
-  await next();                                                   // class
-  await page.locator('.cb-card', { hasText: 'Warrior' }).first().click();
   await next();                                                   // skills
   await page.locator('.cb-freeskill button', { hasText: 'Heal' }).click(); // step 9 free skill
+  await next();                                                   // class
+  await page.locator('.cb-card', { hasText: 'Warrior' }).first().click();
   await next();                                                   // focus
   await page.locator('.cb-card', { hasText: 'Sniper' }).click();
   await next();                                                   // gear

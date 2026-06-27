@@ -411,8 +411,10 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
   const [cls, setCls] = useMGs(null);
   const [partials, setPartials] = useMGs([]); // for Adventurer
   const [combatChoice, setCombatChoice] = useMGs('Shoot'); // resolves "Any Combat"
-  const [customSkills, setCustomSkills] = useMGs(false);
-  const [pickedSkills, setPickedSkills] = useMGs([]); // when customizing
+  const newRoll = () => ({ table: null, result: null, skillPick: null, stat: {} });
+  const [skillMode, setSkillMode] = useMGs('quick'); // 'quick' (recommended set) | 'pick' (Learning table) | 'roll' (Growth+Learning)
+  const [pickedSkills, setPickedSkills] = useMGs([]); // 'pick' mode: two picks from Learning (duplicates allowed → level-1)
+  const [rolls, setRolls] = useMGs(() => [newRoll(), newRoll(), newRoll()]); // 'roll' mode: three slots
   const [focus, setFocus] = useMGs(null);
   const [specialistSkill, setSpecialistSkill] = useMGs('Notice');
   const [disciplines, setDisciplines] = useMGs([]);
@@ -466,19 +468,73 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
     return Object.keys(count).map(nm => ({ name: nm, level: Math.min(2, count[nm]) }));
   }
 
+  // ── skill-roll helpers (the rules' "roll instead of pick" path) ──
+  function sumStat(o) { return Object.values(o || {}).reduce((a, b) => a + (b || 0), 0); }
+  function rollSlotSet(i, patch) { setRolls(rolls.map((r, j) => j === i ? { ...r, ...patch } : r)); }
+  function doRoll(i, table) {
+    if (!bg) return;
+    const tbl = table === 'growth' ? (bg.growth || []) : (bg.learning || []);
+    const die = table === 'growth' ? 6 : 8;
+    rollSlotSet(i, { table, result: tbl[Math.floor(Math.random() * die)], skillPick: null, stat: {} });
+  }
+  // Resolve the three rolls into granted skills + attribute boosts.
+  function rollResults() {
+    const skills = [], statDeltas = {};
+    if (skillMode !== 'roll') return { skills, statDeltas };
+    rolls.forEach(r => {
+      if (!r || !r.result) return;
+      const res = r.result;
+      if (/Any Stat|Physical|Mental/i.test(res)) {
+        Object.entries(r.stat || {}).forEach(([k, v]) => { if (v) statDeltas[k] = (statDeltas[k] || 0) + v; });
+      } else if (res === 'Any Skill' || res === 'Any Combat' || res === 'Stab or Shoot') {
+        if (r.skillPick) skills.push(r.skillPick);
+      } else { skills.push(res); }
+    });
+    return { skills, statDeltas };
+  }
+  // Final attributes = chosen scores + any rolled Growth boosts (capped at 18).
+  function getEffectiveAttrs() {
+    const d = rollResults().statDeltas;
+    const out = {};
+    ATTR_KEYS.forEach(k => out[k] = Math.min(18, (attrs[k] || 0) + (d[k] || 0)));
+    return out;
+  }
+  // Is the Skills step complete enough to advance?
+  function skillsStepReady() {
+    if (!freeSkill2) return false;
+    if (skillMode === 'quick') return true;
+    if (skillMode === 'pick') return pickedSkills.length === 2;
+    return rolls.length >= 3 && rolls.slice(0, 3).every(r => {
+      if (!r || !r.result) return false;
+      if (/Any Stat/i.test(r.result)) return sumStat(r.stat) === 1;
+      if (/Physical|Mental/i.test(r.result)) return sumStat(r.stat) === 2;
+      if (r.result === 'Any Skill' || r.result === 'Any Combat' || r.result === 'Stab or Shoot') return !!r.skillPick;
+      return true;
+    });
+  }
+
   // Resolve the final skill list: background skills, the skills granted by each
   // focus, the Specialist's chosen skill, and the step-9 free skill of choice.
   function resolveSkills() {
     const out = {};
     const add = nm => {
       if (!nm) return;
-      const real = nm === 'Any Combat' ? combatChoice : nm;
+      const real = nm === 'Any Combat' ? combatChoice
+        : nm === 'Stab or Shoot' ? (['Stab', 'Shoot'].includes(combatChoice) ? combatChoice : 'Shoot')
+        : nm;
       out[real] = Math.min(1, (out[real] != null ? out[real] : -1) + 1);
     };
     if (bg) {
-      add(bg.freeSkill);
-      const list = customSkills && pickedSkills.length ? pickedSkills : bg.quickSkills;
-      list.forEach(add);
+      if (skillMode === 'quick') {
+        // Quick Skills already include the background's free skill — all at level-0.
+        bg.quickSkills.forEach(add);
+      } else if (skillMode === 'pick') {
+        add(bg.freeSkill);
+        pickedSkills.forEach(add);
+      } else { // roll
+        add(bg.freeSkill);
+        rollResults().skills.forEach(add);
+      }
     }
     chosenFoci().forEach(nm => {
       const f = CG.foci.find(x => x.name === nm);
@@ -494,8 +550,8 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
     { id: 'welcome', label: 'Start' },
     { id: 'attrs', label: 'Attributes' },
     { id: 'background', label: 'Background' },
-    { id: 'class', label: 'Class' },
     { id: 'skills', label: 'Skills' },
+    { id: 'class', label: 'Class' },
     { id: 'focus', label: 'Focus' },
     ...(isPsychic ? [{ id: 'psi', label: 'Psionics' }] : []),
     { id: 'gear', label: 'Gear' },
@@ -507,7 +563,7 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
     stepId === 'welcome' ? name.trim().length > 0 :
     stepId === 'background' ? !!background :
     stepId === 'class' ? (!!cls && (cls !== 'Adventurer' || partials.length === 2)) :
-    stepId === 'skills' ? !!freeSkill2 :
+    stepId === 'skills' ? skillsStepReady() :
     stepId === 'focus' ? !!focus :
     stepId === 'psi' ? disciplines.length > 0 :
     stepId === 'gear' ? !!pkg :
@@ -516,10 +572,11 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
 
   function finish() {
     const r = () => Math.floor(Math.random() * 6) + 1;
-    const dexMod = attrMod(attrs.DEX);
+    const eff = getEffectiveAttrs(); // chosen scores + any rolled Growth boosts
+    const dexMod = attrMod(eff.DEX);
     // HP = 1d6 + Con modifier (+2 for Warriors/Partial Warriors). A Con penalty
     // applies, but total HP can never drop below 1 (SWN p.4, step 11).
-    const hp = Math.max(1, r() + attrMod(attrs.CON) + (isWarrior ? 2 : 0));
+    const hp = Math.max(1, r() + attrMod(eff.CON) + (isWarrior ? 2 : 0));
     const p = CG.packages.find(x => x.name === pkg);
     const baseAc = p ? p.ac : 10;
     const weapons = p ? p.weapons.map(w => ({ name: w.name, dmg: w.dmg, range: w.range || '—', shock: '' })) : [];
@@ -529,14 +586,14 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
     onCreate({
       id: 'pc-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
       name: name.trim(), class: clsLabel, background, species: 'Human',
-      level: 1, xp: 0, attrs, hp, maxHp: hp,
+      level: 1, xp: 0, attrs: eff, hp, maxHp: hp,
       bab: isWarrior ? 1 : 0,
       armor: p ? p.armorName : 'None', ac: baseAc + dexMod,
-      saves: computeSaves(1, attrs),
+      saves: computeSaves(1, eff),
       systemStrain: 0,
       skills: resolveSkills(),
       foci: fociWithLevels(),
-      disciplines: isPsychic ? disciplines.map(d => ({ name: d, level: 1 })) : [],
+      disciplines: isPsychic ? disciplines.map(d => ({ name: d, level: 0 })) : [],
       effortCommitted: 0,
       weapons,
       gear: gearItems,
@@ -554,11 +611,13 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
       key, onClick,
       className: 'cb-card' + (selected ? ' selected' : ''),
     },
-      React.createElement('div', { style: { display: 'flex', alignItems: 'baseline', gap: 8 } },
-        React.createElement('div', { style: { fontWeight: 600, fontSize: 14, color: selected ? 'var(--accent)' : 'var(--fg-0)' } }, titleEl),
-        badge && React.createElement('span', { className: 'tag', style: { fontSize: 10, marginLeft: 'auto' } }, badge)
-      ),
-      bodyEls
+      React.createElement('div', { style: { flex: 1, minWidth: 0 } },
+        React.createElement('div', { style: { display: 'flex', alignItems: 'baseline', gap: 8 } },
+          React.createElement('div', { style: { fontWeight: 600, fontSize: 14, color: selected ? 'var(--accent)' : 'var(--fg-0)' } }, titleEl),
+          badge && React.createElement('span', { className: 'tag', style: { fontSize: 10, marginLeft: 'auto' } }, badge)
+        ),
+        bodyEls
+      )
     );
   }
   const skillChip = nm => React.createElement('span', {
@@ -611,16 +670,47 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
       )
     );
   } else if (stepId === 'background') {
+    // Rulebook-style dossier table for the selected background: the same
+    // Free Skill / Growth (d6) / Learning (d8) layout the book uses, so the
+    // tables you'll Pick/Roll from on the next step are visible up front.
+    const dossier = (b) => {
+      const rows = [];
+      for (let i = 0; i < 8; i++) {
+        rows.push(React.createElement('div', { key: i, className: 'bg-trow' },
+          React.createElement('span', { className: 'bg-tn' }, i + 1),
+          React.createElement('span', { className: 'bg-tg' }, (b.growth && b.growth[i]) || '—'),
+          React.createElement('span', { className: 'bg-tn' }, i + 1),
+          React.createElement('span', { className: 'bg-tl' }, (b.learning && b.learning[i]) || '')
+        ));
+      }
+      return React.createElement('div', { className: 'bg-detail' },
+        React.createElement('div', { className: 'bg-detail-head' },
+          React.createElement('span', { className: 'bg-detail-name' }, b.name),
+          React.createElement('span', { className: 'bg-detail-sub' }, 'enlistment record')),
+        React.createElement('div', { className: 'bg-free' },
+          React.createElement('span', { className: 'bg-free-lbl' }, 'Free skill — granted automatically'),
+          React.createElement('span', { className: 'tag', style: { fontSize: 11 }, title: CG.skills[b.freeSkill] || '' }, b.freeSkill)),
+        React.createElement('div', { className: 'bg-thead' },
+          React.createElement('span', null, 'd6'),
+          React.createElement('span', null, 'Growth'),
+          React.createElement('span', null, 'd8'),
+          React.createElement('span', null, 'Learning')),
+        React.createElement('div', { className: 'bg-table' }, rows),
+        React.createElement('div', { className: 'bg-quick' },
+          React.createElement('span', { className: 'bg-free-lbl' }, 'Quick skills — the safe default set'),
+          React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 4 } },
+            b.quickSkills.map(s => React.createElement('span', { key: s, className: 'tag', style: { fontSize: 11 }, title: CG.skills[s] || '' }, s)))),
+        React.createElement('div', { className: 'bg-hint' }, 'Next step you’ll decide how to take your two extra skills: keep the Quick set, Pick two from Learning, or Roll on these tables.')
+      );
+    };
+    const selectedBg = CG.backgrounds.find(b => b.name === background);
     body = React.createElement('div', null,
-      note('Where did your hero come from? Background sets the skills you start with.'),
+      note('Where did your hero come from? Tap a card to choose — its skill tables open below.'),
       React.createElement('div', { className: 'cb-list' },
-        CG.backgrounds.map(b => card('bg-' + b.name, background === b.name, () => setBackground(b.name), b.name,
+        CG.backgrounds.map(b => card('bg-' + b.name, background === b.name, () => { setBackground(b.name); setPickedSkills([]); setRolls([newRoll(), newRoll(), newRoll()]); }, b.name,
           React.createElement('div', null,
-            React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', margin: '4px 0 6px', lineHeight: 1.5 } }, b.blurb),
-            React.createElement('div', null,
-              React.createElement('span', { style: { fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginRight: 6 } }, "You'll start knowing:"),
-              [b.freeSkill, ...b.quickSkills.filter(s => s !== b.freeSkill)].map(skillChip)
-            )
+            React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', marginTop: 4, lineHeight: 1.5 } }, b.blurb),
+            background === b.name && dossier(b)
           )
         ))
       )
@@ -651,39 +741,110 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
       )
     );
   } else if (stepId === 'skills') {
-    body = React.createElement('div', null,
-      note('Skills are what your hero can do. The set below is the recommended starting kit for a ' + (background || 'your background') + ' — perfect if you’re unsure.'),
-      bg && React.createElement('div', { style: { marginBottom: 12 } },
-        React.createElement('div', { style: { marginBottom: 8 } },
-          [bg.freeSkill, ...bg.quickSkills.filter(s => s !== bg.freeSkill)].map(skillChip)),
-        React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 4 } },
-          [bg.freeSkill, ...bg.quickSkills.filter(s => s !== bg.freeSkill)].map(s =>
-            React.createElement('div', { key: s, style: { fontSize: 11, color: 'var(--fg-3)' } },
-              React.createElement('span', { style: { color: 'var(--fg-1)', fontWeight: 600 } }, (s === 'Any Combat' ? 'Any Combat' : s) + ': '),
-              CG.skills[s] || ''))
+    // Combat-skill resolver, reused by quick & pick modes for "Any Combat" tokens.
+    const combatSel = React.createElement('div', { style: { marginTop: 12 } },
+      fieldLabel('Resolve “Any Combat” as'),
+      React.createElement('div', { style: { display: 'flex', gap: 6 } },
+        ['Shoot', 'Stab', 'Punch'].map(o => React.createElement('button', { key: o, className: combatChoice === o ? 'primary' : 'ghost', style: { fontSize: 12 }, onClick: () => setCombatChoice(o) }, o)))
+    );
+    const modeBtn = (id, label, desc) => React.createElement('button', {
+      key: id, className: 'cb-mode' + (skillMode === id ? ' on' : ''), onClick: () => setSkillMode(id),
+    },
+      React.createElement('div', { className: 'cb-mode-t' }, label),
+      React.createElement('div', { className: 'cb-mode-d' }, desc)
+    );
+    // One Growth/Learning roll slot.
+    function statAllocator(i, res) {
+      const cap = /Any Stat/i.test(res) ? 1 : 2;
+      const elig = /Physical/i.test(res) ? ['STR', 'DEX', 'CON'] : /Mental/i.test(res) ? ['INT', 'WIS', 'CHA'] : ATTR_KEYS;
+      const stat = rolls[i].stat || {};
+      const total = sumStat(stat);
+      return React.createElement('div', { style: { marginTop: 8 } },
+        React.createElement('div', { style: { fontSize: 11, color: total === cap ? 'var(--accent)' : 'var(--fg-3)', marginBottom: 6 } },
+          'Assign ' + cap + ' point' + (cap > 1 ? 's' : '') + (cap > 1 ? ' (one stat or split 1/1)' : '') + ' — ' + total + '/' + cap + ' placed'),
+        React.createElement('div', { style: { display: 'flex', gap: 6, flexWrap: 'wrap' } },
+          elig.map(k => {
+            const have = stat[k] || 0;
+            return React.createElement('button', { key: k, className: have ? 'primary' : 'ghost', style: { fontSize: 11, minWidth: 56 },
+              onClick: () => { if (total < cap) rollSlotSet(i, { stat: { ...stat, [k]: have + 1 } }); } }, k + (have ? ' +' + have : ''));
+          })),
+        total > 0 && React.createElement('button', { className: 'ghost', style: { fontSize: 10, marginTop: 6 }, onClick: () => rollSlotSet(i, { stat: {} }) }, 'Clear')
+      );
+    }
+    function rollSlot(i) {
+      const r = rolls[i] || {};
+      const res = r.result;
+      const needsSkillPick = res === 'Any Skill' || res === 'Any Combat' || res === 'Stab or Shoot';
+      const isStat = res && /Any Stat|Physical|Mental/i.test(res);
+      const pickOpts = res === 'Any Combat' ? ['Shoot', 'Stab', 'Punch'] : res === 'Stab or Shoot' ? ['Stab', 'Shoot'] : Object.keys(CG.skills).filter(s => s !== 'Any Combat');
+      return React.createElement('div', { key: i, className: 'cb-roll' },
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8 } },
+          React.createElement('span', { className: 'cb-roll-n' }, 'Roll ' + (i + 1)),
+          React.createElement('div', { style: { display: 'flex', gap: 6, marginLeft: 'auto' } },
+            React.createElement('button', { className: r.table === 'growth' ? 'primary' : 'ghost', style: { fontSize: 11 }, onClick: () => doRoll(i, 'growth') }, '⚂ Growth d6'),
+            React.createElement('button', { className: r.table === 'learning' ? 'primary' : 'ghost', style: { fontSize: 11 }, onClick: () => doRoll(i, 'learning') }, '⚂ Learning d8')
+          )
+        ),
+        res && React.createElement('div', { style: { marginTop: 8 } },
+          React.createElement('span', { style: { fontSize: 11, color: 'var(--fg-3)' } }, 'Result: '),
+          React.createElement('span', { style: { fontWeight: 600, color: 'var(--accent-2)', fontSize: 13 } }, res),
+          !isStat && !needsSkillPick && CG.skills[res] && React.createElement('span', { style: { fontSize: 11, color: 'var(--fg-3)', marginLeft: 6 } }, '— ' + CG.skills[res])
+        ),
+        isStat && statAllocator(i, res),
+        needsSkillPick && React.createElement('div', { style: { marginTop: 8 } },
+          fieldLabel(res === 'Any Skill' ? 'Pick any skill' : 'Pick a combat skill'),
+          React.createElement('select', { value: r.skillPick || '', onChange: e => rollSlotSet(i, { skillPick: e.target.value }), style: { width: '100%' } },
+            React.createElement('option', { value: '' }, 'Choose…'),
+            pickOpts.map(s => React.createElement('option', { key: s, value: s }, s)))
         )
-      ),
-      bg && bg.quickSkills.includes('Any Combat') && React.createElement('div', { style: { marginTop: 10 } },
-        fieldLabel('Your combat skill'),
-        React.createElement('div', { style: { display: 'flex', gap: 6 } },
-          ['Shoot', 'Stab', 'Punch'].map(o => React.createElement('button', { key: o, className: combatChoice === o ? 'primary' : 'ghost', style: { fontSize: 12 }, onClick: () => setCombatChoice(o) }, o)))
-      ),
-      React.createElement('label', { style: { display: 'flex', alignItems: 'center', gap: 8, marginTop: 14, fontSize: 12, color: 'var(--fg-2)', cursor: 'pointer' } },
-        React.createElement('input', { type: 'checkbox', checked: customSkills, onChange: e => setCustomSkills(e.target.checked), style: { width: 'auto', flexShrink: 0 } }),
-        'Let me pick my own two skills instead'
-      ),
-      customSkills && React.createElement('div', { style: { marginTop: 10 } },
-        fieldLabel('Pick up to 2 (each at level-0)'),
+      );
+    }
+
+    let modeBody = null;
+    if (skillMode === 'quick') {
+      modeBody = React.createElement('div', null,
+        React.createElement('div', { style: { marginBottom: 8 } }, bg && bg.quickSkills.map(skillChip)),
+        bg && React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 4 } },
+          bg.quickSkills.map((s, i) => React.createElement('div', { key: s + i, style: { fontSize: 11, color: 'var(--fg-3)' } },
+            React.createElement('span', { style: { color: 'var(--fg-1)', fontWeight: 600 } }, (s === 'Any Combat' ? 'Any Combat' : s) + ': '),
+            CG.skills[s] || ''))),
+        bg && bg.quickSkills.includes('Any Combat') && combatSel
+      );
+    } else if (skillMode === 'pick') {
+      const pickOptions = (bg ? bg.learning : []).filter(s => s !== 'Any Skill'); // RAW: "Any Skill" entries can't be picked
+      modeBody = React.createElement('div', null,
+        fieldLabel('Your two picks (' + pickedSkills.length + '/2)'),
+        React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: 6, minHeight: 24, marginBottom: 8 } },
+          pickedSkills.length ? pickedSkills.map((s, i) => React.createElement('span', {
+            key: i, className: 'tag', style: { fontSize: 11, cursor: 'pointer' }, title: 'Remove',
+            onClick: () => setPickedSkills(pickedSkills.filter((_, j) => j !== i)),
+          }, (s === 'Any Combat' ? 'Any Combat (' + combatChoice + ')' : s) + ' ✕'))
+            : React.createElement('span', { style: { fontSize: 11, color: 'var(--fg-3)' } }, 'No picks yet — choose two below. Pick the same skill twice for level-1.')),
         React.createElement('div', { className: 'cb-skillgrid' },
-          Object.keys(CG.skills).filter(s => s !== 'Any Combat').map(s => {
-            const on = pickedSkills.includes(s);
-            return React.createElement('button', {
-              key: s, title: CG.skills[s],
-              className: on ? 'primary' : 'ghost', style: { fontSize: 11 },
-              onClick: () => setPickedSkills(on ? pickedSkills.filter(x => x !== s) : (pickedSkills.length < 2 ? [...pickedSkills, s] : pickedSkills)),
-            }, s);
-          }))
-      ),
+          pickOptions.map((s, i) => React.createElement('button', {
+            key: s + i, title: CG.skills[s] || '',
+            className: 'ghost', style: { fontSize: 11, opacity: pickedSkills.length >= 2 ? 0.45 : 1 },
+            onClick: () => pickedSkills.length < 2 && setPickedSkills([...pickedSkills, s]),
+          }, s))),
+        pickedSkills.some(s => s === 'Any Combat' || s === 'Stab or Shoot') && combatSel
+      );
+    } else { // roll
+      modeBody = React.createElement('div', null,
+        React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 8 } }, [0, 1, 2].map(i => rollSlot(i)))
+      );
+    }
+
+    body = React.createElement('div', null,
+      note('Your free background skill comes automatically. For the two extra skills the rules give you a choice: take the safe set, pick your own from the Learning table, or roll for a wider spread.'),
+      bg && React.createElement('div', { className: 'cb-freenote' },
+        React.createElement('span', { style: { color: 'var(--fg-3)' } }, 'Automatic free skill:'),
+        React.createElement('span', { className: 'tag', style: { fontSize: 11 } }, bg.freeSkill),
+        React.createElement('span', { style: { fontSize: 11, color: 'var(--fg-3)' } }, CG.skills[bg.freeSkill] || '')),
+      React.createElement('div', { className: 'cb-modes' },
+        modeBtn('quick', 'Quick', 'Recommended set'),
+        modeBtn('pick', 'Pick', 'From Learning table'),
+        modeBtn('roll', 'Roll', '3× Growth / Learning')),
+      React.createElement('div', { style: { marginTop: 12 } }, modeBody),
       // Step 9: one extra non-psychic skill of choice — a hobby or homeworld knack.
       React.createElement('div', { style: { marginTop: 16, paddingTop: 14, borderTop: '1px solid var(--border-soft)' } },
         fieldLabel('One more skill — your free pick'),
@@ -752,7 +913,8 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
       )
     );
   } else { // review
-    const dexMod = attrMod(attrs.DEX);
+    const revAttrs = getEffectiveAttrs();
+    const dexMod = attrMod(revAttrs.DEX);
     const p = CG.packages.find(x => x.name === pkg);
     const ac = (p ? p.ac : 10) + dexMod;
     const skillNames = resolveSkills().map(s => s.name + (s.level ? '-' + s.level : '')).join(', ');
@@ -764,7 +926,7 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
         row('Name', name || '—'),
         row('Class', cls === 'Adventurer' ? 'Adventurer (' + partials.join('/') + ')' : (cls || '—')),
         row('Background', background || '—'),
-        row('Attributes', ATTR_KEYS.map(k => k + ' ' + attrs[k]).join('  ')),
+        row('Attributes', ATTR_KEYS.map(k => k + ' ' + revAttrs[k] + (revAttrs[k] !== attrs[k] ? '↑' : '')).join('  ')),
         row('AC', '' + ac),
         row('To-hit bonus', isWarrior ? '+1' : '+0'),
         row(fociWithLevels().length > 1 ? 'Foci' : 'Focus',
@@ -777,6 +939,51 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
       React.createElement('input', { value: goal, onChange: e => setGoal(e.target.value), placeholder: 'e.g. Become the best pilot in the sector', style: { width: '100%' } })
     );
   }
+
+  // ── live derived stats (preview of the sheet that will be created) ──
+  const effAttrs = getEffectiveAttrs(); // chosen scores + any rolled Growth boosts
+  const dvDexMod = attrMod(effAttrs.DEX);
+  const dvConMod = attrMod(effAttrs.CON);
+  const dvWisMod = attrMod(effAttrs.WIS);
+  const dvPkg = CG.packages.find(x => x.name === pkg);
+  const dvAc = (dvPkg ? dvPkg.ac : 10) + dvDexMod;
+  const dvHit = isWarrior ? 1 : 0;
+  const dvSaves = computeSaves(1, effAttrs);
+  const dvHpBonus = dvConMod + (isWarrior ? 2 : 0);
+  const dvHpMin = Math.max(1, 1 + dvHpBonus);
+  const dvHpMax = Math.max(1, 6 + dvHpBonus);
+  // Starting psychic skills are level-0, so highest psychic skill = 0 at creation.
+  const dvEffort = 1 + 0 + Math.max(dvWisMod, dvConMod);
+  const sumCell = (k, v, title, acc) => React.createElement('div', { className: 'cb-sum-cell', title: title || '' },
+    React.createElement('div', { className: 'cb-sum-k' }, k),
+    React.createElement('div', { className: 'cb-sum-v' + (acc ? ' acc' : '') }, v)
+  );
+  const summaryStrip = stepIdx >= 1 && React.createElement('div', { className: 'cb-summary' },
+    sumCell('AC', dvAc, 'Armor base ' + (dvPkg ? dvPkg.ac : 10) + ' + DEX mod ' + (dvDexMod >= 0 ? '+' : '') + dvDexMod),
+    sumCell('To-Hit', (dvHit >= 0 ? '+' : '') + dvHit, 'Base attack bonus (+1 for Warrior / Partial Warrior)'),
+    sumCell('HP', dvHpMin === dvHpMax ? String(dvHpMin) : dvHpMin + '–' + dvHpMax, 'Rolled 1d6 + CON mod' + (isWarrior ? ' + 2 (Warrior)' : '') + ' at creation'),
+    sumCell('Phys', dvSaves.physical, 'Physical save — roll d20, beat this. Best of STR/CON.'),
+    sumCell('Evade', dvSaves.evasion, 'Evasion save — best of DEX/INT.'),
+    sumCell('Mental', dvSaves.mental, 'Mental save — best of WIS/CHA.'),
+    isPsychic && sumCell('Effort', dvEffort, 'Max Effort = 1 + highest psychic skill (0 at start) + best of WIS/CON mod', true)
+  );
+  // What's blocking the Next button on this step (shown as a quiet hint).
+  const needMsg = (
+    stepId === 'welcome' && !name.trim() ? 'Name your character to continue' :
+    stepId === 'background' && !background ? 'Pick a background' :
+    stepId === 'class' && !cls ? 'Pick a class' :
+    stepId === 'class' && cls === 'Adventurer' && partials.length !== 2 ? 'Pick exactly two partials to blend' :
+    stepId === 'skills' && !skillsStepReady() ? (
+      skillMode === 'pick' && pickedSkills.length !== 2 ? 'Pick two skills from the Learning table' :
+      skillMode === 'roll' && !rolls.slice(0, 3).every(r => r && r.result) ? 'Make all three rolls' :
+      skillMode === 'roll' && !freeSkill2 ? 'Choose your one free skill (bottom of the step)' :
+      skillMode === 'roll' ? 'Finish assigning your rolled results' :
+      'Choose your one free skill (bottom of the step)'
+    ) :
+    stepId === 'focus' && !focus ? 'Pick a focus' :
+    stepId === 'psi' && !disciplines.length ? 'Pick at least one discipline' :
+    stepId === 'gear' && !pkg ? 'Pick a starting kit' : ''
+  );
 
   return React.createElement('div', {
     style: { position: 'fixed', inset: 0, background: 'rgba(10,5,7,0.9)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 },
@@ -794,6 +1001,8 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
       ),
       React.createElement('div', { className: 'cb-stepname' }, (steps[stepIdx] || steps[0]).label),
       React.createElement('div', { className: 'cb-body' }, body),
+      summaryStrip,
+      needMsg && React.createElement('div', { className: 'cb-need' }, '↑ ' + needMsg),
       React.createElement('div', { style: { display: 'flex', gap: 8, paddingTop: 4 } },
         React.createElement('button', { style: { fontSize: 12 }, onClick: onClose }, 'Cancel'),
         stepIdx > 0 && React.createElement('button', { style: { fontSize: 12 }, onClick: () => setStepIdx(stepIdx - 1) }, '← Back'),
@@ -806,10 +1015,299 @@ function CharacterBuilder({ me = { id: 'anon', name: '' }, onSetMyName, onCreate
   );
 }
 
+
+// ─── LEVEL UP ────────────────────────────────────────────────────────────────
+// Guided, faithful SWN level-up. Rolls HP (reroll-or-+1), recomputes attack bonus
+// and saves, hands out skill points to spend on skills / attributes / psionics, and
+// grants a focus level at levels 2/5/7/10. Reuses window.SWN_LEVELUP + attrMod +
+// computeSaves. Modal overlay; applies a single patched character on confirm.
+function LevelUpModal({ char, onApply, onClose }) {
+  const LU = window.SWN_LEVELUP;
+  const EQ = window.SWN_EQUIP;
+  const CGskills = (window.SWN_CHARGEN && window.SWN_CHARGEN.skills) || {};
+  const ATTRS = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
+  const newLevel = char.level + 1;
+  const spInfo = LU.skillPointsGained(char.class);
+  const k = LU.classKind(char.class);
+  const isPsychic = k.psychic || k.partialPsychic;
+  const fociDue = LU.fociDueAt(newLevel);
+
+  const [workAttrs, setWorkAttrs] = useMGs(() => ({ ...char.attrs }));
+  const [attrBoughtThis, setAttrBoughtThis] = useMGs(0);
+  const [workSkills, setWorkSkills] = useMGs(() => (char.skills || []).map(s => ({ ...s })));
+  const [workDiscs, setWorkDiscs] = useMGs(() => (char.disciplines || []).map(d => ({ ...d })));
+  const [hp, setHp] = useMGs(() => LU.rollHP(char.class, char.attrs.CON, newLevel, char.maxHp));
+  const [focusPick, setFocusPick] = useMGs(null); // { name, isNew }
+
+  const lifetimeBoosts = char.attrBoosts || 0;
+  const banked = char.skillPoints || 0;
+  const gain = spInfo.base + spInfo.expertBonus;
+
+  // Cumulative cost to climb a level track from `from` (−1 = unknown) up to `to`.
+  const seriesCost = (from, to) => { let c = 0; for (let L = from + 1; L <= to; L++) c += LU.skillCostTo(L); return c; };
+  const origSkillLevel = n => { const s = (char.skills || []).find(x => x.name === n); return s ? s.level : -1; };
+  const origDiscLevel = n => { const d = (char.disciplines || []).find(x => x.name === n); return d ? d.level : -1; };
+
+  const skillsCost = workSkills.reduce((sum, s) => sum + seriesCost(origSkillLevel(s.name), s.level), 0);
+  const discsCost = workDiscs.reduce((sum, d) => sum + seriesCost(origDiscLevel(d.name), d.level), 0);
+  let attrCost = 0; for (let n = 0; n < attrBoughtThis; n++) attrCost += LU.attrBoostCost(lifetimeBoosts + 1 + n);
+  const spent = skillsCost + discsCost + attrCost;
+  const remaining = gain + banked - spent;
+
+  const maxSk = LU.maxSkillLevel(newLevel);
+  const newBab = LU.babFor(char.class, newLevel);
+  const newSaves = computeSaves(newLevel, workAttrs);
+
+  function raiseSkill(name) {
+    const cur = workSkills.find(s => s.name === name);
+    const lvl = cur ? cur.level : -1;
+    const target = lvl + 1;
+    if (target > maxSk) return;
+    if (remaining < LU.skillCostTo(target)) return;
+    if (cur) setWorkSkills(workSkills.map(s => s.name === name ? { ...s, level: target } : s));
+    else setWorkSkills([...workSkills, { name, level: 0 }]);
+  }
+  function lowerSkill(name) {
+    const cur = workSkills.find(s => s.name === name);
+    if (!cur) return;
+    if (cur.level <= origSkillLevel(name)) return; // can't undo below what you had
+    if (cur.level === 0 && origSkillLevel(name) === -1) setWorkSkills(workSkills.filter(s => s.name !== name));
+    else setWorkSkills(workSkills.map(s => s.name === name ? { ...s, level: s.level - 1 } : s));
+  }
+  function raiseDisc(name) {
+    const cur = workDiscs.find(d => d.name === name);
+    const lvl = cur ? cur.level : -1;
+    const target = lvl + 1;
+    if (target > maxSk) return;
+    if (remaining < LU.skillCostTo(target)) return;
+    if (cur) setWorkDiscs(workDiscs.map(d => d.name === name ? { ...d, level: target } : d));
+    else setWorkDiscs([...workDiscs, { name, level: 0 }]);
+  }
+  function lowerDisc(name) {
+    const cur = workDiscs.find(d => d.name === name);
+    if (!cur || cur.level <= origDiscLevel(name)) return;
+    setWorkDiscs(workDiscs.map(d => d.name === name ? { ...d, level: d.level - 1 } : d));
+  }
+  function buyAttr(key) {
+    if (lifetimeBoosts + attrBoughtThis >= 5) return;
+    const nth = lifetimeBoosts + attrBoughtThis + 1;
+    if (newLevel < LU.attrBoostMinLevel(nth)) return;   // RAW: 3rd@L3, 4th@L6, 5th@L9
+    const cost = LU.attrBoostCost(nth);
+    if (remaining < cost) return;
+    if ((workAttrs[key] || 0) >= 18) return;
+    setWorkAttrs({ ...workAttrs, [key]: (workAttrs[key] || 0) + 1 });
+    setAttrBoughtThis(attrBoughtThis + 1);
+  }
+
+  const psiOK = !isPsychic || discsCost >= 1 || workDiscs.length === 0;
+  const canApply = remaining >= 0 && (!fociDue || !!focusPick) && psiOK;
+
+  function apply() {
+    if (!canApply) return;
+    const oldDexMod = attrMod(char.attrs.DEX);
+    const newDexMod = attrMod(workAttrs.DEX);
+    let foci = (char.foci || []).map(f => ({ ...f }));
+    let skills = workSkills.map(s => ({ ...s }));
+    if (focusPick) {
+      const existing = foci.find(f => f.name === focusPick.name);
+      if (existing) existing.level = Math.min(2, (existing.level || 1) + 1);
+      else {
+        foci.push({ name: focusPick.name, level: 1 });
+        const def = (EQ.foci || []).find(f => f.name === focusPick.name);
+        if (def && def.skill && def.skill !== '—') { // bonus skill = 3 SP ≈ up to level-1
+          const sk = skills.find(s => s.name === def.skill);
+          if (sk) sk.level = Math.max(sk.level, 1); else skills.push({ name: def.skill, level: 1 });
+        }
+      }
+    }
+    const hpDelta = hp.newMax - char.maxHp;
+    onApply({
+      ...char,
+      level: newLevel,
+      xp: Math.max(char.xp || 0, LU.xpForLevel(newLevel)),
+      attrs: workAttrs,
+      maxHp: hp.newMax,
+      hp: Math.min(hp.newMax, (char.hp || 0) + Math.max(0, hpDelta)),
+      bab: newBab,
+      ac: (char.ac || 10) + (newDexMod - oldDexMod),
+      saves: newSaves,
+      skills, disciplines: workDiscs, foci,
+      skillPoints: remaining,                       // bank leftover
+      attrBoosts: lifetimeBoosts + attrBoughtThis,
+    });
+  }
+
+  const lbl = (t, ...extra) => React.createElement('div', { className: 'lu-lbl' }, t, ...extra);
+  const stepBtns = (name, lvl, orig, onUp, onDown, cap, desc) => {
+    const atCap = lvl >= cap;
+    const canUp = !atCap && remaining >= LU.skillCostTo(lvl + 1);
+    const trueMax = lvl >= 4;                          // skills genuinely top out at level-4
+    const nextMin = LU.skillMinLevel(lvl + 1);         // char level needed for the next skill level
+    const capLabel = trueMax ? 'max' : 'needs L' + nextMin;
+    const capTitle = trueMax ? 'Skills cap at level-4' : 'Skill level ' + (lvl + 1) + ' requires character level ' + nextMin;
+    return React.createElement('div', { key: name, className: 'lu-row' },
+      React.createElement('div', { style: { flex: 1, minWidth: 0 } },
+        React.createElement('span', { style: { fontSize: 13, color: 'var(--fg-0)', fontWeight: 600 } }, name),
+        React.createElement('span', { className: 'lu-skl', style: { marginLeft: 8 } }, 'lvl ' + lvl),
+        lvl > orig && React.createElement('span', { className: 'lu-bumped' }, '↑ raised'),
+        desc && React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-3)', marginTop: 2 } }, desc)),
+      lvl > orig && React.createElement('button', { className: 'ghost', style: { fontSize: 13, padding: '2px 9px' }, onClick: onDown, title: 'Undo' }, '−'),
+      React.createElement('button', {
+        className: canUp ? 'primary' : 'ghost', disabled: !canUp,
+        style: { fontSize: 11, padding: '3px 9px', opacity: canUp ? 1 : 0.4, cursor: canUp ? 'pointer' : 'not-allowed' },
+        title: atCap ? capTitle : 'Cost ' + LU.skillCostTo(lvl + 1) + ' SP', onClick: canUp ? onUp : undefined,
+      }, atCap ? capLabel : '+' + LU.skillCostTo(lvl + 1) + ' SP →')
+    );
+  };
+
+  const knownSkillNames = workSkills.map(s => s.name);
+  const learnable = Object.keys(CGskills).filter(s => s !== 'Any Combat' && !knownSkillNames.includes(s));
+
+  // Smooth-scroll the modal body to a section (used by checklist chips + a blocked Confirm).
+  function scrollToSec(id) {
+    const body = document.getElementById('lu-body');
+    const el = document.getElementById(id);
+    if (body && el) body.scrollTo({ top: Math.max(0, el.offsetTop - 8), behavior: 'smooth' });
+  }
+  // The single thing still blocking confirmation (if any) — drives the button + auto-scroll.
+  const blocker = remaining < 0 ? { id: 'lu-skills', msg: 'Un-spend skill points' }
+    : !psiOK ? { id: 'lu-skills', msg: 'Spend a psionic point' }
+    : (fociDue && !focusPick) ? { id: 'lu-focus', msg: 'Choose a focus' }
+    : null;
+
+  // Checklist chips — every action you must or might take, status at a glance.
+  const chips = [];
+  chips.push({ status: 'done', label: 'HP → ' + hp.newMax, target: 'lu-auto' });
+  if (isPsychic && !psiOK) chips.push({ status: 'req', label: 'Psionic point', target: 'lu-skills' });
+  chips.push(remaining > 0
+    ? { status: 'todo', label: remaining + ' SP to spend', target: 'lu-skills' }
+    : { status: 'done', label: 'Skill points spent', target: 'lu-skills' });
+  if (fociDue) chips.push(focusPick
+    ? { status: 'done', label: 'Focus: ' + focusPick.name, target: 'lu-focus' }
+    : { status: 'req', label: 'Choose a focus', target: 'lu-focus' });
+  const chipIcon = s => s === 'done' ? '✓' : s === 'req' ? '!' : '•';
+
+  return React.createElement('div', {
+    style: { position: 'fixed', inset: 0, background: 'rgba(10,5,7,0.9)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 },
+    onClick: e => e.target === e.currentTarget && onClose(),
+  },
+    React.createElement('div', { className: 'cb-modal lu-modal' },
+      React.createElement('div', { className: 'cb-head' },
+        React.createElement('div', null,
+          React.createElement('div', { className: 'cb-head-title' }, '✦ Level up'),
+          React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', marginTop: 3 } }, char.name + ' · ' + char.class)),
+        React.createElement('div', { className: 'lu-leveljump' },
+          React.createElement('span', { className: 'lu-from' }, 'L' + char.level),
+          React.createElement('span', { style: { color: 'var(--accent)', margin: '0 6px' } }, '→'),
+          React.createElement('span', { className: 'lu-to' }, 'L' + newLevel))
+      ),
+      // Checklist — the actions for this level-up, impossible to miss. Click to jump.
+      React.createElement('div', { className: 'lu-checklist' },
+        chips.map((c, i) => React.createElement('button', { key: i, className: 'lu-chip ' + c.status, onClick: () => scrollToSec(c.target) },
+          React.createElement('span', { className: 'lu-chip-i' }, chipIcon(c.status)),
+          React.createElement('span', null, c.label)))
+      ),
+      React.createElement('div', { id: 'lu-body', className: 'cb-body', style: { minHeight: 0 } },
+        // Automatic gains — no input needed (HP is rerollable). Compact on purpose.
+        React.createElement('div', { id: 'lu-auto', className: 'lu-section' },
+          React.createElement('div', { className: 'lu-section-h' }, 'Automatic', React.createElement('span', { className: 'lu-auto-tag' }, 'no action needed')),
+          React.createElement('div', { className: 'lu-hp' },
+            React.createElement('div', { style: { display: 'flex', gap: 5, flexWrap: 'wrap', alignItems: 'center' } },
+              React.createElement('span', { className: 'lu-hp-lead' }, 'Hit points'),
+              hp.dice.map((d, i) => React.createElement('span', { key: i, className: 'lu-die', title: 'd6 rolled ' + d.raw + (hp.conMod ? ', CON ' + (hp.conMod >= 0 ? '+' : '') + hp.conMod : '') }, d.value)),
+              hp.warBonus > 0 && React.createElement('span', { className: 'lu-warbonus' }, '+' + hp.warBonus + ' warrior'),
+              React.createElement('span', { className: 'lu-hp-arrow' }, '→'),
+              React.createElement('span', { className: 'lu-hp-new' }, char.maxHp + ' → ' + hp.newMax),
+              React.createElement('span', { style: { fontSize: 10, color: 'var(--fg-3)', marginLeft: 'auto', letterSpacing: '0.04em', textTransform: 'uppercase' }, title: 'RAW: hit points are rolled once per level — no re-rolls.' }, 'single roll'))),
+          React.createElement('div', { className: 'lu-auto-line' },
+            React.createElement('span', null, React.createElement('span', { className: 'lu-auto-k' }, 'Attack bonus '), '+' + (char.bab || 0), ' → ', React.createElement('b', null, '+' + newBab)),
+            React.createElement('span', null, React.createElement('span', { className: 'lu-auto-k' }, 'Saves '), 'Phys ', React.createElement('b', null, newSaves.physical), ' · Eva ', React.createElement('b', null, newSaves.evasion), ' · Ment ', React.createElement('b', null, newSaves.mental)))
+        ),
+        // Skill points — the main interactive step.
+        React.createElement('div', { id: 'lu-skills', className: 'lu-section' },
+          React.createElement('div', { className: 'lu-section-h' }, 'Spend skill points',
+            React.createElement('span', { className: 'lu-pool' + (remaining > 0 ? ' has' : '') }, remaining + ' left'),
+            banked ? React.createElement('span', { className: 'lu-pool-meta' }, '(' + gain + ' new + ' + banked + ' banked)') : null),
+          isPsychic && React.createElement('div', { className: 'lu-warn' + (psiOK ? ' ok' : '') }, psiOK ? '✓ Psionic requirement met' : '! Spend at least 1 point on a psychic discipline below'),
+          React.createElement('div', { style: { marginTop: 4 } }, lbl('Raise a skill — cap lvl ' + maxSk + ' at this level')),
+          React.createElement('div', { className: 'lu-list' },
+            workSkills.length === 0 ? React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-3)' } }, 'No skills yet.') :
+              [...workSkills].sort((a, b) => a.name.localeCompare(b.name)).map(s =>
+                stepBtns(s.name, s.level, origSkillLevel(s.name), () => raiseSkill(s.name), () => lowerSkill(s.name), maxSk, CGskills[s.name]))),
+          isPsychic && workDiscs.length > 0 && React.createElement('div', { style: { marginTop: 12 } },
+            lbl('Psychic disciplines — raising one grants a technique of that level'),
+            React.createElement('div', { className: 'lu-list' },
+              workDiscs.map(d => stepBtns(d.name, d.level, origDiscLevel(d.name), () => raiseDisc(d.name), () => lowerDisc(d.name), maxSk)))),
+          // Improve an attribute — a core RAW step, given its own visible block (uses skill points).
+          (() => {
+            const used = lifetimeBoosts + attrBoughtThis;
+            const nth = used + 1;
+            const cost = LU.attrBoostCost(nth);
+            const minLvl = LU.attrBoostMinLevel(nth);
+            const maxed = used >= 5;
+            const levelLocked = !maxed && newLevel < minLvl;
+            const head = maxed ? '5 of 5 used — no more allowed'
+              : levelLocked ? (used + '/5 used · next boost unlocks at character L' + minLvl)
+              : (used + '/5 used · next costs ' + cost + ' SP');
+            return React.createElement('div', { className: 'lu-attr', style: { marginTop: 14, paddingTop: 12, borderTop: '1px solid var(--border-soft)' } },
+              lbl('Improve an attribute  ', React.createElement('span', { style: { fontWeight: 400, color: 'var(--fg-3)' } }, '— ' + head)),
+              React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-3)', margin: '2px 0 7px' } },
+                'Spends skill points. 1st & 2nd boost: 1 & 2 SP. 3rd needs L3, 4th needs L6, 5th needs L9. Five boosts ever, max score 18.'),
+              React.createElement('div', { style: { display: 'flex', gap: 6, flexWrap: 'wrap' } },
+                ATTRS.map(a => {
+                  const can = !maxed && !levelLocked && remaining >= cost && (workAttrs[a] || 0) < 18;
+                  const bumped = workAttrs[a] !== char.attrs[a];
+                  return React.createElement('button', { key: a, className: bumped ? 'primary' : 'ghost', disabled: !can,
+                    style: { fontSize: 11, opacity: can || bumped ? 1 : 0.4, cursor: can ? 'pointer' : 'not-allowed' },
+                    title: maxed ? 'All 5 boosts used' : levelLocked ? ('Boost #' + nth + ' requires character level ' + minLvl) : (workAttrs[a] >= 18 ? 'Already at 18 (max)' : 'Raise ' + a + ' by 1 for ' + cost + ' SP'),
+                    onClick: can ? () => buyAttr(a) : undefined },
+                    a + ' ' + (workAttrs[a] || 0) + (bumped ? ' ↑' : ''));
+                }))
+            );
+          })(),
+          React.createElement('details', { className: 'lu-more' },
+            React.createElement('summary', null, 'Learn a brand-new skill'),
+            React.createElement('div', { style: { marginTop: 8 } }, lbl('Learn a new skill (starts at level-0, 1 SP)')),
+            React.createElement('select', { value: '', onChange: e => { if (e.target.value) raiseSkill(e.target.value); e.target.value = ''; }, style: { width: '100%' } },
+              React.createElement('option', { value: '' }, remaining >= 1 ? '+ Learn a skill (1 SP)…' : 'Not enough SP to learn a new skill'),
+              learnable.map(s => React.createElement('option', { key: s, value: s }, s)))
+          )
+        ),
+        // Focus — required, when due. Flagged so it can't be missed.
+        fociDue && React.createElement('div', { id: 'lu-focus', className: 'lu-section' + (focusPick ? '' : ' lu-required') },
+          React.createElement('div', { className: 'lu-section-h' }, 'Choose a focus',
+            React.createElement('span', { className: focusPick ? 'lu-req-tag done' : 'lu-req-tag' }, focusPick ? '✓ chosen' : 'required')),
+          React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', marginBottom: 8 } }, 'Add a level to a focus you already have, or pick a new one.'),
+          (char.foci || []).some(f => (f.level || 1) < 2) && React.createElement('div', { style: { marginBottom: 8 } },
+            lbl('Raise an existing focus to level 2'),
+            React.createElement('div', { style: { display: 'flex', gap: 6, flexWrap: 'wrap' } },
+              (char.foci || []).filter(f => (f.level || 1) < 2).map(f =>
+                React.createElement('button', { key: f.name, className: focusPick && focusPick.name === f.name && !focusPick.isNew ? 'primary' : 'ghost', style: { fontSize: 11 }, onClick: () => setFocusPick({ name: f.name, isNew: false }) }, f.name + ' → 2')))),
+          lbl('…or take a new focus'),
+          React.createElement('select', { value: focusPick && focusPick.isNew ? focusPick.name : '', onChange: e => setFocusPick(e.target.value ? { name: e.target.value, isNew: true } : null), style: { width: '100%' } },
+            React.createElement('option', { value: '' }, 'Choose a new focus…'),
+            (EQ.foci || []).filter(f => !(char.foci || []).some(c => c.name === f.name)).map(f => React.createElement('option', { key: f.name, value: f.name }, f.name))),
+          focusPick && React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', marginTop: 8, padding: 8, background: 'var(--bg-1)', borderRadius: 6 } },
+            (() => { const def = (EQ.foci || []).find(f => f.name === focusPick.name) || {}; return focusPick.isNew ? (def.l1 || '') : (def.l2 || 'Advance to level 2.'); })())
+        )
+      ),
+      React.createElement('div', { style: { display: 'flex', gap: 8, paddingTop: 12, borderTop: '1px solid var(--border-soft)', marginTop: 4 } },
+        React.createElement('button', { style: { fontSize: 12 }, onClick: onClose }, 'Cancel'),
+        React.createElement('button', {
+          className: 'primary lu-confirm' + (blocker ? ' blocked' : ''),
+          style: { marginLeft: 'auto', fontSize: 13 },
+          onClick: blocker ? () => scrollToSec(blocker.id) : apply,
+        }, blocker ? (blocker.msg + ' ↓') : ('Confirm level ' + newLevel + ' →'))
+      )
+    )
+  );
+}
+
 function CharacterSheetsView({ party = [], me = { id: 'anon', name: '' }, isGM = false, onSetMyName, onSave, onDelete }) {
   const myFirst = party.find(c => c.ownerId === me.id);
   const [selId, setSelId] = useMGs(myFirst?.id || party[0]?.id || null);
   const [builderOpen, setBuilderOpen] = useMGs(false);
+  const [levelUpOpen, setLevelUpOpen] = useMGs(false);
   const sel = party.find(c => c.id === selId);
   // Players may edit only their own character; the GM may edit everyone's.
   const canEdit = c => !!c && (isGM || c.ownerId === me.id);
@@ -924,7 +1422,20 @@ function CharacterSheetsView({ party = [], me = { id: 'anon', name: '' }, isGM =
             React.createElement('input', { type: 'number', value: sel.xp ?? 0, onChange: e => { const xp = +e.target.value || 0; update({ xp, level: levelFromXP(xp) }); }, style: { width: 60, padding: '2px 6px', fontSize: 12 }, title: 'Editing XP auto-sets level' })
           )
         ),
-        React.createElement('button', { className: 'danger', onClick: () => { onDelete(sel.id); setSelId(party.filter(p => p.id !== sel.id)[0]?.id); } }, 'Delete PC')
+        React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'center' } },
+          (() => {
+            const LU = window.SWN_LEVELUP;
+            const eligible = LU && (sel.xp ?? 0) >= LU.xpForLevel((sel.level || 1) + 1) && (sel.level || 1) < 10;
+            const toNext = LU ? LU.xpForLevel((sel.level || 1) + 1) : 0;
+            return React.createElement('button', {
+              className: eligible ? 'primary' : 'ghost',
+              style: { fontSize: 12, position: 'relative', boxShadow: eligible ? '0 0 14px rgba(255,148,87,0.5)' : 'none' },
+              title: eligible ? 'You have enough XP — level up!' : 'Level up (needs ' + toNext + ' XP for L' + ((sel.level || 1) + 1) + '; GM can override)',
+              onClick: () => setLevelUpOpen(true),
+            }, eligible ? '✦ Level up!' : '✦ Level up');
+          })(),
+          React.createElement('button', { className: 'danger', onClick: () => { onDelete(sel.id); setSelId(party.filter(p => p.id !== sel.id)[0]?.id); } }, 'Delete PC')
+        )
       ),
 
       // Attributes
@@ -1022,6 +1533,30 @@ function CharacterSheetsView({ party = [], me = { id: 'anon', name: '' }, isGM =
         )
       ),
 
+      // Skills — roll 2d6 + attribute mod + skill level (the core SWN check)
+      React.createElement('div', { className: 'panel', style: { marginBottom: 14 } },
+        React.createElement('div', { className: 'panel-title' }, 'Skills',
+          React.createElement('select', { value: '', onChange: e => { const n = e.target.value; if (n && !(sel.skills || []).some(s => s.name === n)) update({ skills: [...(sel.skills || []), { name: n, level: 0 }] }); e.target.value = ''; }, style: { marginLeft: 'auto', width: 'auto', fontSize: 11, padding: '2px 6px' } },
+            React.createElement('option', { value: '' }, '+ Add skill…'),
+            Object.keys((window.SWN_CHARGEN && window.SWN_CHARGEN.skills) || {}).filter(s => s !== 'Any Combat' && !(sel.skills || []).some(x => x.name === s)).map(s => React.createElement('option', { key: s, value: s }, s))
+          )
+        ),
+        React.createElement('div', { className: 'panel-body' },
+          (sel.skills || []).length === 0
+            ? React.createElement('div', { style: { color: 'var(--fg-3)', fontSize: 12 } }, 'No skills yet. Add one, or create your character with the guided builder.')
+            : React.createElement('div', { className: 'skill-grid' },
+              [...(sel.skills || [])].sort((a, b) => a.name.localeCompare(b.name)).map((s, i) => {
+                const SK = (window.SWN_CHARGEN && window.SWN_CHARGEN.skills) || {};
+                return React.createElement('div', { key: s.name, className: 'skill-chip', title: SK[s.name] || '' },
+                  React.createElement('button', { className: 'skill-roll', title: 'Roll 2d6 + skill level ' + s.level + ' (add your attribute mod at the table)', onClick: () => window.rollDice && window.rollDice('2d6', sel.name + ' · ' + s.name + ' check', s.level) }, '⚂'),
+                  React.createElement('span', { className: 'skill-name' }, s.name),
+                  React.createElement('span', { className: 'skill-lvl' }, s.level),
+                  React.createElement('button', { className: 'skill-x', title: 'Remove', onClick: () => update({ skills: (sel.skills || []).filter(x => x.name !== s.name) }) }, '×')
+                );
+              }))
+        )
+      ),
+
       // Weapons
       React.createElement('div', { className: 'panel', style: { marginBottom: 14 } },
         React.createElement('div', { className: 'panel-title' }, 'Weapons',
@@ -1082,12 +1617,12 @@ function CharacterSheetsView({ party = [], me = { id: 'anon', name: '' }, isGM =
         const PSI = window.SWN_PSI;
         const discs = sel.disciplines || [];
         const wisCon = Math.max(attrMod(sel.attrs?.WIS ?? 10), attrMod(sel.attrs?.CON ?? 10));
-        const highestLvl = discs.reduce((mx, d) => Math.max(mx, d.level || 1), 0);
+        const highestLvl = discs.reduce((mx, d) => Math.max(mx, d.level ?? 0), 0);
         const maxEffort = 1 + highestLvl + wisCon;
         const committed = sel.effortCommitted || 0;
         function addDisc(name) {
           if (!name || discs.some(d => d.name === name)) return;
-          update({ disciplines: [...discs, { name, level: 1 }] });
+          update({ disciplines: [...discs, { name, level: 0 }] });
         }
         return React.createElement('div', { className: 'panel', style: { marginBottom: 14, border: '1px solid rgba(192,132,252,0.3)' } },
           React.createElement('div', { className: 'panel-title', style: { color: 'var(--accent-2)' } }, 'Psionics',
@@ -1142,7 +1677,7 @@ function CharacterSheetsView({ party = [], me = { id: 'anon', name: '' }, isGM =
       // Gear & Notes
       React.createElement('div', { className: 'grid-2' },
         React.createElement('div', { className: 'panel' },
-          React.createElement('div', { className: 'panel-title' }, 'Gear & Skills'),
+          React.createElement('div', { className: 'panel-title' }, 'Gear & Equipment'),
           React.createElement('div', { className: 'panel-body' },
             React.createElement('textarea', { value: (sel.gear || []).join('\n'), onChange: e => update({ gear: e.target.value.split('\n') }), rows: 6, placeholder: 'One item per line…' })
           )
@@ -1160,7 +1695,9 @@ function CharacterSheetsView({ party = [], me = { id: 'anon', name: '' }, isGM =
       React.createElement('button', { className: 'primary', style: { marginTop: 10 }, onClick: () => setBuilderOpen(true) }, '✦ Create ' + (isGM ? 'a Character' : 'my character'))
     ),
     // Guided character builder modal
-    builderOpen && React.createElement(CharacterBuilder, { me, onSetMyName, onCreate: onBuilderCreate, onClose: () => setBuilderOpen(false) })
+    builderOpen && React.createElement(CharacterBuilder, { me, onSetMyName, onCreate: onBuilderCreate, onClose: () => setBuilderOpen(false) }),
+    // Guided level-up modal
+    levelUpOpen && sel && React.createElement(LevelUpModal, { char: sel, onApply: (c) => { onSave(c); setLevelUpOpen(false); }, onClose: () => setLevelUpOpen(false) })
   );
 }
 
