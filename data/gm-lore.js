@@ -544,8 +544,8 @@ The Duskline — the merchant freighter the players escape on in Session 1 — i
       population: 'Settled (a few million)',
       techLevel: 'TL4',
       tags: ['Agricultural', 'Politically Unremarkable', 'PALE-Adjacent (recent)'],
-      description: 'A quiet farming and light-manufacturing world on the outer margin of PALE-adjacent space. PALE wellness monitors arrived about fifteen years ago — the sector is changing around Veth the way weather changes around a rock. Player 1\'s parents still live here. They know about the accident. They do not know what the reconstruction means.',
-      gmNotes: 'Veth is the life Player 1 left. If the players ever go there, his parents are alive and present. The dramatic question: does he tell them the truth about what PALE did? Does the person who came back feel like their son to them?',
+      description: 'A quiet farming and light-manufacturing world on the outer margin of PALE-adjacent space. Player 1 is 80. His parents and most people who knew him there are long dead. Veth is the world he came from, not a world he can return to — there is no one left who remembers who he was before any of this.',
+      gmNotes: 'Veth\'s power is in its absence: it\'s a place with no living connection back to him. If the players ever go there, there are no reunions waiting. Just a world that looks like where he started and has no idea who he became. The dramatic weight is in that emptiness — he is the only person alive who remembers being from there.',
     },
     {
       id: 'karrath_platform',
@@ -622,7 +622,7 @@ Hooks to lean into:
         },
         {
           title: 'Origin World: Veth',
-          body: `Veth is a quiet world — breathable atmosphere, temperate seasons, settled population of a few million. It sits on the outer margin of what is now PALE-adjacent space; PALE wellness monitors appeared there about fifteen years ago, which was after you left and which your parents mention in letters you don\'t always read. The sector is changing around Veth the way weather changes around a rock: the rock doesn\'t move, but eventually the water gets in.\n\nThe economy is agricultural and light manufacturing. The politics are local and slow. Nobody from Veth ends up in faction reports. That was the point of being from there. You left in your twenties because you wanted something else, or had to, or couldn\'t stay — the reasons are yours.\n\nYour parents still live on Veth. They know you had an accident. They do not know what the reconstruction means. You haven\'t explained it. You don\'t know how to explain it in a way that wouldn\'t make them grieve someone who is still standing in front of them.`,
+          body: `Veth is a quiet world — breathable atmosphere, temperate seasons, settled population of a few million. It sits on the outer margin of what is now PALE-adjacent space. The economy is agricultural and light manufacturing. The politics are local and slow. Nobody from Veth ends up in faction reports. That was the point of being from there.\n\nYou left in your twenties. Your parents are long dead. Most of the people who knew you when you were young are long dead. You are eighty years old and Veth is a place you came from, not a place you can go back to — there is no one there who remembers who you were before any of this. Whatever it meant to be from Veth is something you carry alone now.\n\nThe sector has changed around Veth the way weather changes around a rock. PALE wellness monitors are there now. The rock doesn\'t move, but eventually the water gets in.`,
         },
         {
           title: 'The Accident: Karrath Platform',
