@@ -1,5 +1,10 @@
 // GM-only campaign lore. Never displayed in player-facing views.
 // Loaded separately; access via window.GM_LORE.
+//
+// DESIGN NOTE: All NPCs, factions, missions, and hooks in this campaign are
+// derived from session 0 brainstorming. Nothing is purely random — every
+// procedurally generated element should be grounded in or replaced by content
+// from session 0 and the faction turn history below.
 
 window.GM_LORE = {
 
