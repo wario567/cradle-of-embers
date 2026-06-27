@@ -22,7 +22,7 @@ function FactionsView({ sector, onUpdate, onPickPlanet }) {
           onClick: () => setSelId(f.id),
         },
           React.createElement('div', { className: 'title' }, f.name),
-          React.createElement('div', { className: 'meta' }, f.traits.join(' · ')),
+          React.createElement('div', { className: 'meta' }, (f.tags || f.traits || []).join(' · ')),
           React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8, marginTop: 6 } },
             React.createElement('div', { className: 'hp-bar' + (f.hp / f.maxHp < 0.3 ? ' crit' : f.hp / f.maxHp < 0.6 ? ' low' : ''), style: { flex: 1 } },
               React.createElement('div', { style: { width: `${(f.hp / f.maxHp) * 100}%` } })
@@ -43,7 +43,7 @@ function FactionsView({ sector, onUpdate, onPickPlanet }) {
           } }, sel.hqPlanetName))
       ),
       React.createElement('div', { style: { display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 18 } },
-        sel.traits.map(t => React.createElement('span', { key: t, className: 'tag accent' }, t))
+        (sel.tags || sel.traits || []).map(t => React.createElement('span', { key: t, className: 'tag accent' }, t))
       ),
 
       // Stats grid

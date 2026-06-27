@@ -330,13 +330,13 @@
   ];
 
   function makeFaction(rng) {
-    const traits = rng.picks(SWN.factionTraits, 2);
+    const tags = rng.picks(SWN.factionTraits, 2);
     const assets = rng.picks(SWN.factionAssets, rng.int(3, 6));
     const themed = rng.pick(SWN.emberFactionNames);
     return {
       id: 'fac-' + rng.int(10000, 99999),
       name: themed,
-      traits,
+      tags,
       hp: rng.int(8, 24),
       maxHp: 24,
       cunning: rng.int(1, 6),
@@ -531,8 +531,8 @@
       if (hq) { f.hqPlanetId = hq.id; f.hqPlanetName = hq.name; }
     });
 
-    // Add 1-2 random minor factions on top.
-    const minorCount = rng.int(1, 2);
+    // Add 0-1 random minor factions on top (9 canonical already present).
+    const minorCount = rng.int(0, 1);
     for (let i = 0; i < minorCount; i++) {
       const f = makeFaction(rng.fork('fac-minor-' + i));
       const hq = populated.length ? rng.pick(populated) : null;
