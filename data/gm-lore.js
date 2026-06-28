@@ -1016,102 +1016,528 @@ PALE surveillance architecture is embedded behind the swans' eyes. Every waterwa
     // ── SESSION STRUCTURE ──
     beats: [
 
+      // ─────────────────────────────────────────────────────────────────────
       {
         beat: 1,
         title: 'Cold Open — Tarek at the Vault',
-        type: 'railroaded',
-        gmNotes: `Run before anything else. No character sheets out. The players do not know this man yet — they will, when Player 2 opens the package and recognizes the face. Show his face, not what he sees. ~3 minutes.`,
-        coldOpen: `Six hundred meters down, the water has no color. Tarek's dive-light is a small religion against all of it. He is not supposed to be here. In front of him: a wall that is not pre-Scream, not human, not anything the catalog has a word for — older than the ruins built on top of it the way a mountain is older than a footpath. And it is awake. He can feel it the way you feel someone reading over your shoulder.
+        type: 'railroaded · ~3 minutes · no character sheets',
+        gmNotes: `Run before anything else. No character sheets out. The players do not know this man yet — they will, when West opens the package in Beat 6 and recognizes the face on the seal. Your job: show what being indexed DOES to a man. Do not show what he sees. Keep it fast, cinematic, haunting.`,
+        sections: [
+          {
+            label: 'Scene — 600 Meters Down',
+            type: 'read-aloud',
+            text: `Six hundred meters down, the water has no color. [[NPC:Tarek]]'s dive-light is a small religion against all of it.
 
-He touches the lattice. He pulls his hand back like it burned. He is breathing too fast for someone standing still. He records a message — sealed, addressed to his unit, to Player 2's unit:
+He is not supposed to be here. The research sub idles behind him, its hull ticking against pressure. In front of him: a wall that is not pre-Scream, not human, not anything the catalog has a word for. It is older than the ruins built on top of it the way a mountain is older than a footpath.
 
-"If you're reading this, something went wrong. Trust Elder Vesper. Do not trust the relic."
+And it is awake. He can feel it the way you feel someone reading over your shoulder.`,
+          },
+          {
+            label: 'Scene — The Indexing',
+            type: 'read-aloud',
+            text: `Tarek touches the lattice.
 
-He seals it. He surfaces. Then — a sound in the dark behind him. A second engine in the water that should not be there. Cut to black.`,
+He pulls his hand back like it burned. He is breathing too fast for someone standing still. Something behind his eyes has changed — the kind of change you don't have words for because it happened before language could catch it.
+
+He records a message. Sealed packet, addressed to his unit. His voice is flat and deliberate. The voice of a man who has decided there isn't time to be afraid yet.`,
+          },
+          {
+            label: `Tarek's Recorded Message`,
+            type: 'dialogue',
+            text: `TAREK (into recorder, quiet and fast):
+"If you're reading this, something went wrong. Trust Elder Vesper. Do not trust the relic."`,
+          },
+          {
+            label: 'Scene — The Second Engine',
+            type: 'read-aloud',
+            text: `He seals it. He surfaces. He has one more thing to do before he disappears, and he will do it where the light is warm and the people are beautiful and not one of them knows what is under their feet.
+
+Then — a sound in the dark behind him. A second engine in the water that should not be there.
+
+Cut to black.`,
+          },
+          {
+            label: 'GM — Playback Notes',
+            type: 'gm',
+            text: `The second engine is [[NPC:"Red Flag"]], the [[FACTION:River Below]] diver. Do not name him. Do not explain him. It is just a sound in the dark — an omen the audience has before the characters do.
+
+When West opens the package in Beat 6, they will recognize Tarek's face on the message seal. Between now and then, he is just a man who disappeared.
+
+The Lattice indexing is not mind-control and not damage. Think of it as being read — completely, thoroughly, in a fraction of a second. The expression on Tarek's face is someone who just found out how small they are relative to what just looked at them.`,
+          },
+        ],
       },
 
+      // ─────────────────────────────────────────────────────────────────────
       {
         beat: 2,
-        title: 'The Before — Two Flashbacks',
-        type: 'playable — let the players act these, do not narrate at them',
-        gmNotes: `The character introductions. Each is one tight scene with one job and one planted echo that pays off tonight. Keep them short. Then snap to the present. Player 2's flashback is the emotional setup; Player 1's is the plot setup — if you're tight on time, run Player 1's fuller.`,
-        flashbackPlayer2: `SYNTHESIS PRIME, ~6 MONTHS AGO. Conditioning Level 9. White floors, calibrated acoustics. Let Player 2 play a final protectee drill — let them feel how GOOD obedience is, how it quiets the noise, how being for something is the closest thing to peace they were built to have. End on the instructor's echo: "When the principal is gone — dead, taken, doesn't matter — you don't freeze. You fall in. You find the next legitimate authority and you fall in. A Kael-7 alone is a malfunction. You always fall in."
+        title: 'Two Boats — Arrivals & the Pass',
+        type: 'railroaded with player agency · last peaceful moment of the night',
+        gmNotes: `Snap to the present. Run both arrivals as a hard intercut — keep the players apart, keep it moving. The goal is the image: two strangers, close enough to hand a cup of water between boats, who don't stop and don't speak. The eye contact is what this beat is for. Play the island as beautiful. After the pass — freeze. Cut to flashbacks. Snap back. Boats continue. See below.`,
+        sections: [
+          {
+            label: 'Scene — Thessavar from the Water',
+            type: 'read-aloud',
+            text: `Forty minutes south of Kaeldrift, across open ocean that goes on past every horizon, the Still Gardens rises — first the hedges, dense and green-black against the sky, then white stone terraces stepping up behind them toward a manor you can't quite see yet. The waterways cut through the island in channels barely wide enough for two boats to pass. Swan boats move in slow procession. Nobody is steering. The swans don't look at the crowd.
 
-Echo's job: in Beat 5, when Player 2 stands frozen with the package and chooses NOT to fall in, the table should hear this voice breaking. Optional: let them establish their bond with unit-mate "Nor" here, so the loss in Beat 5 costs something.`,
-        flashbackPlayer1: `KAELDRIFT, 5 DAYS BEFORE. A working-city bar that smells of brine and cheap stim-coffee. Player 1 plans the job with DARIUS — forged invitation, timing, the route off the island. Let the 20-year friendship breathe; let Darius needle him about PALE, miss the old Enkh, maybe mention the kid Div without meaning to. The bartender refilling their glasses is VERONIKA. Neither notices her. She notices them. (Dramatic irony — do not flag it.)
+This is the most important signature of the decade, and the island looks like it has been waiting a thousand years for exactly this.`,
+          },
+          {
+            label: `West — On the Water, On Duty`,
+            type: 'scene',
+            text: `You are in the lead boat of Arbiter Senn's procession — unit-mates Nor and Ost on either side, Senn ahead of you in white. She has not looked at you, or at either of your unit, since you boarded. This is correct. You are not for looking at. You are for the eleven faces you have already flagged in the crowds along the canal.
 
-End on Darius's echo: "Fifteen grand. Exactly fifteen, down to the credit. Same as your balance. Nobody pays your number by accident, Enkh. Somebody at PALE is dangling the exact figure to make sure you say yes. I'm not telling you not to. I'm telling you to notice." Echo's job: when the client goes dark tonight, this is the conversation that comes back.`,
+The eleventh just turned away too quickly.
+
+The obedience is comfortable right now. Playing it as PEACE, not a cage — Senn's silence reads as status: she is so far above you that not needing to look at you is its own kind of acknowledgment. Everything is orderly. Everything is simple. Everything is about to stay that way.
+
+ASK: What does Senn look like from behind, through the procession? What do Nor and Ost feel like beside you — familiar weight, synchronized breathing?`,
+          },
+          {
+            label: `Enkh — On the Water, Going the Other Way`,
+            type: 'scene',
+            text: `You arrive by hired swan boat, dressed like a man who retired last week — because that was the plan, before the accident, before [[FACTION:PALE]], before twenty years of paying for a brain you didn't ask for. Hawaiian shirt. Sandals. The forged token in your pocket says you belong here.
+
+You are casing, not feeling. Your flat affect is an asset in a room full of performance — you're the only one not acting. Darius's voice is in the back of your skull. So is the other thing in the back of your skull: the faint background weight you've learned to ignore. Mostly.
+
+ASK: What does Enkh see first — the stone terrace at the center, or the crowd? Where's the problem with Senn's position from here?`,
+          },
+          {
+            label: 'THE PASS — Eye Contact',
+            type: 'read-aloud',
+            text: `The canal narrows where two hedges lean together over the water. Both boats slow to pass each other — one heading up to the ceremony terrace, one crossing toward the estate. For three seconds you are close enough to pass a cup of water hand to hand.
+
+An old man in a loud shirt. Still in a way that has nothing to do with the motion of the boat.
+
+A security clone in grey. Already clocking the wrong faces — and your face just became one of them.
+
+Neither of you speaks. Maybe a half-second of eye contact.
+
+Then the canal begins to carry you apart.`,
+          },
+          {
+            label: 'GM — Freeze Frame → Cut to Flashbacks',
+            type: 'gm',
+            text: `Hold the moment here. Don't let the boats continue yet.
+
+Say something like: "The canal begins to carry you apart. But before it does — before this moment closes — I want to show you who these people are. Because this is the first time they've ever seen each other. And the last time they'll ever be strangers."
+
+Then cut to Beat 3 (the flashbacks). The eye contact is the frame — we go back to explain who both people are while time is frozen in the canal. When the flashbacks end, snap back to this exact second: the boats are finishing their pass. The moment is already over. They don't look back.
+
+Neither will ever be a stranger to the other again. Neither knows that yet.`,
+          },
+        ],
       },
 
+      // ─────────────────────────────────────────────────────────────────────
       {
         beat: 3,
-        title: 'Two Boats — Arrivals & the Pass',
-        type: 'railroaded with player agency',
-        gmNotes: `Snap to the present. Guests come down from Kaeldrift by water to the Still Gardens. Run the two arrivals as a hard intercut — keep the players apart. The point is the near-miss. Play the island as beautiful: garden canals, pale blossom, swan boats poled by hand, the weathered stone heart at the center. This is the last peaceful moment of the night.`,
-        player1Vignette: `He arrives by hired swan boat, dressed like a man who retired last week — Hawaiian shirt, the loud confidence of someone nobody reads as a threat. Forged token in his pocket. He is casing, not feeling: Senn's position, sightlines, the route out. Darius's voice is still in the back of his skull. So is the other thing in the back of his skull, the faint weight he's learned to ignore. Mostly. Ask: what's he watching for?`,
-        player2Vignette: `They are in the lead swan boat of Senn's procession, on threat assessment, unit-mate(s) beside them. Senn sits ahead in white and has not looked at them once — which reads to Player 2 as status, not coldness. The obedience is comfortable here; play it as peace, not a cage. Eleven faces flagged. Ask: what do they notice about Senn? About the unit?`,
-        thePass: `The canal narrows where two hedges lean together. Their two boats meet there — one going up to the ceremony, one crossing the estate — close enough to pass a cup of water hand to hand. An old man in a loud shirt. A security clone in grey. Neither knows the other. Name no names, exchange no words — maybe a half-second of eye contact, the clone clocking the old man's stillness, the old man clocking the detail. Then the canals carry them apart. The whole table should feel the door that just didn't open.`,
+        title: 'The Before — Two Flashbacks',
+        type: 'playable — let the players ACT these · do not narrate at them',
+        gmNotes: `We are inside the freeze-frame of the canal pass. Time has stopped in the waterway. The flashbacks explain who both players are before tonight — one tight scene each, one planted echo each. Let the players act them out; don't narrate at them. ~10 minutes each. Keep them from sprawling. Then snap back to the present: the boats have continued. The eye contact is over. It lasted a fraction of a second.`,
+        sections: [
+          {
+            label: 'Flashback A — West: Synthesis Prime (~6 months ago)',
+            type: 'scene',
+            text: `Caption: SYNTHESIS PRIME. LYRETH SYSTEM. CONDITIONING LEVEL 9.
+
+White floors. Calibrated acoustics that make your own breathing sound like a decision. You are not yet West. You are K7G2-87459, Grade 2, eleven weeks from deployment, and the world is very simple and very clean.
+
+Set West a final conditioning protectee drill with the INSTRUCTOR — consistent, professional, never cruel. The [[FACTION:Progenitor Combine]] is excellent at what it does. Let the player feel how GOOD obedience is: how it fits, how it quiets the noise, how being FOR something is the closest thing to peace they have ever been built to have.
+
+Optional: let West establish their bond with [[NPC:Nor]] here. A shared drill where the unit moves like one mind, a glance of recognition between two people who have trained together for months. Give the player something to care about. Beat 5 is going to take it.`,
+          },
+          {
+            label: 'Echo — The Instructor',
+            type: 'dialogue',
+            text: `INSTRUCTOR (packing up, almost offhand — this is a fact, not a warning):
+"Last thing. When the principal is gone — dead, taken, doesn't matter — you don't freeze. You fall in. You find the next legitimate authority and you fall in. A Kael-7 alone is a malfunction. You understand?"
+
+K7G2-87459: "I understand."
+
+INSTRUCTOR: "Good. You'll deploy clean."`,
+          },
+          {
+            label: 'GM — West Echo Note',
+            type: 'gm',
+            text: `Do not explain the echo now. Plant it and move on. The line "a Kael-7 alone is a malfunction — you always fall in" pays off in Beat 5 when the unit breaks and the surviving unit-mate says "fall in" and West doesn't. The player's recognition is the entire point. Do not signal it.
+
+This flashback is the emotional setup. Its job is to make the player feel how RIGHT and GOOD and SETTLED obedience is, so that when it becomes impossible tonight, the weight of that impossibility lands correctly.`,
+          },
+          {
+            label: `Flashback B — Enkh: Kaeldrift, Veronika's Bar (5 days ago)`,
+            type: 'scene',
+            text: `Caption: KAELDRIFT. FIVE DAYS BEFORE THE CONCORDANCE.
+
+A working-city bar that smells like brine and cheap stim-coffee. The kind of place where the furniture is bolted down but the drinks are honest. A bartender with steady hands keeps to herself and keeps the glasses full.
+
+Across the table: DARIUS. Mid-40s, broad through the shoulders, the kind of face that remembers what Enkh used to be. He has spread a flat map across the table. They have done this before — theft, smuggling, things that weren't this — and Darius knows the weight difference between the old jobs and this one.
+
+Let the player run the planning session: the forged invitation, the timing window, the route off the island after. Let Darius run logistics while needling Enkh about [[FACTION:PALE]], the old days, maybe the kid Div — not cruelly, the way a friend needles when they're actually worried. The 20-year friendship should breathe. Then the echo.`,
+          },
+          {
+            label: 'Echo — Darius',
+            type: 'dialogue',
+            text: `DARIUS (quiet, not looking up from the map):
+"Fifteen grand. Exactly fifteen, down to the credit. Same as your balance."
+
+(beat)
+
+"Enkh. Nobody pays your number by accident. Somebody at [[FACTION:PALE]] knows what you owe to the credit, and somebody's dangling the exact figure to make sure you say yes."
+
+(he finally looks up)
+
+"I'm not telling you not to go. I'm telling you to notice."`,
+          },
+          {
+            label: `GM — Enkh Echo Note`,
+            type: 'gm',
+            text: `The bartender refilling their glasses is [[NPC:Veronika "The Saint"]]. Neither of them notices her. She notices them.
+
+DO NOT flag this. It is pure dramatic irony for you alone. When Veronika offers them a hand from a boat in Beat 5, and Enkh (or the player) clocks her face as the woman from the bar — let that land on its own. Don't build it up. Don't foreshadow. Just hold the knowledge.
+
+This is the more plot-critical flashback. If time is tight, run this one fuller and West's leaner. "Nobody pays your number by accident" is the engine for Enkh's entire arc.`,
+          },
+          {
+            label: 'Snap Back — The Moment Ends',
+            type: 'gm',
+            text: `Say: "The boats have passed. That half-second of eye contact is over."
+
+The canal carries them apart. An old man in a loud shirt who is still in a way that has nothing to do with boats. A security clone in grey who filed the old man's face under 'noted' and moved on.
+
+Neither of them knows they just locked eyes with the person whose fate is now permanently tangled with theirs.
+
+THEREFORE — both boats arrive at the heart of the Still Gardens, where the Concordance has already begun.`,
+          },
+        ],
       },
 
+      // ─────────────────────────────────────────────────────────────────────
       {
         beat: 4,
         title: 'The Concordance — Social Maze & the Package',
-        type: 'railroaded with player agency',
-        gmNotes: `The party on the central terrace — the sector's money pretending it came for the flowers, the weathered stone rising at the center. Behind a temporary bar, VERONIKA pours drinks and listens, invisible on purpose. This is the calm before; make it gorgeous and make it tick.
+        type: 'railroaded with player agency · the calm before · make it gorgeous and make it tick',
+        gmNotes: `The party on the central terrace. The sector's money pretending it came for the flowers. Behind a temporary bar, [[NPC:Veronika "The Saint"]] pours drinks and listens, invisible on purpose — she came down from Kaeldrift to run [[FACTION:River Below]]'s surface operation. She is exactly as visible as a bartender at a party run by people who do not think about bartenders.
 
-Let the players work the room toward opposite goals: Player 1 cases Senn (and clocks that the third clone from the boat is one of her detail); Player 2 runs the detail. Good beats to drop:
-• A Covenant aide shows a flat case to select guests — "proof of what's beneath the waves." This is a DECOY; the real fragment is the sealed package Player 2 is about to be handed.
-• Tran's representative works the room against the treaty, too loud — the Covenant is not united.
-• Darius pings Player 1 over comms from Kaeldrift: thirty seconds of being someone's friend. He hates PALE and says so.`,
-        packageHandoff: `Tarek finds Player 2 at the edge of the detail — warm, too fast, somewhere to be. He presses a small sealed package into their hands, warm from his pocket: "Kael-7. Good. You'll do. This goes to Arbiter Senn. After the ceremony, not before — she can't be distracted now, and it's safer with you than with me. You don't open it. You don't scan it. You give it to her, after. Understood?" He is gone before Player 2 can flag him. The order is clean and legitimate, so it settles in like all orders do: a small, certain weight. Give this to Senn after the ceremony. Easy. Safe. (GM seed: there will be no after for Senn.)`,
+Let both players work the room toward opposite goals. Enkh cases Senn — and clocks that the third clone from the boat is on her detail (small island). West runs the detail. Use the optional beats as texture, not obligation.`,
+        sections: [
+          {
+            label: 'Scene — The Central Terrace',
+            type: 'read-aloud',
+            text: `The main terrace is a garden grown on the roof of the world — pale blossoms in black stone planters, light strung like captured stars, the entire sector's money in one place pretending it came for the flowers. The weathered stone formation rises at the center of the island, its high platform cleared for the ceremony. Servers move through the crowd. At the edge of the terrace, a temporary bar — and behind it, a woman with steady hands who refills glasses and listens to everything.`,
+          },
+          {
+            label: `West's Thread — Running the Detail`,
+            type: 'scene',
+            text: `Senn is across the terrace in conversation with three people West doesn't have names for yet. She has not acknowledged her clones since boarding. The detail runs on practiced instinct.
+
+Beats to give West:
+• The sight-line problem: the ceremonial platform puts Senn's back to the water. There's no coverage from that direction without breaking protocol.
+• A [[FACTION:Hollow Covenant]] aide who is too interested in the detail's assignment — polite, persistent, slightly wrong about the unit's rank.
+• Then Tarek.`,
+          },
+          {
+            label: 'Tarek Finds West — The Package',
+            type: 'dialogue',
+            text: `[[NPC:Tarek]] appears at West's shoulder — broad, warm, moving too fast. A man with somewhere urgent to be. He presses a sealed package into West's hands. Small, dense, warm from his pocket.
+
+TAREK: "Kael-7. Good. You'll do."
+
+(pressing the package into West's hands)
+
+"This goes to Arbiter Senn. After the ceremony, not before — she can't be distracted now, and it's safer with you than with me. You don't open it. You don't scan it. You give it to her, after. Understood?"
+
+(not waiting for confirmation)
+
+"Good."
+
+(already gone)`,
+          },
+          {
+            label: 'GM — The Package Seed',
+            type: 'gm',
+            text: `The order is clean and legitimate, so it settles into West like all orders do: a small, certain weight. Give this to Senn after the ceremony.
+
+Easy. Safe.
+
+Do not linger on it. The trap is the word "after." There will be no after for Senn.`,
+          },
+          {
+            label: `Enkh's Thread — Casing`,
+            type: 'scene',
+            text: `Senn is across the terrace and she is never alone. There is always a body — a handler, a delegation member, a clone — between her and any angle Enkh can work. The clean kill isn't here yet. He'll have to wait for the ceremony, when every eye is forward and Senn is the only figure standing up high and still.
+
+Beats to give Enkh:
+• The forged amber token nearly stalls at a gate — the guard looks at it one beat too long.
+• A [[FACTION:Hollow Covenant]] aide who is happy to talk about the treaty (useful intel, freely offered).
+• And then Darius, over comms.`,
+          },
+          {
+            label: 'Darius on Comms (Optional)',
+            type: 'dialogue',
+            text: `DARIUS (comm crackle, thirty seconds of being someone's friend from a city that suddenly feels very far away):
+
+"You're really there. [pause] That's — okay. Good."
+
+(beat)
+
+"I'm not going to say anything useful. I just wanted to. You know."
+
+(beat)
+
+"Hate [[FACTION:PALE]]. Just — on record."
+
+(click)`,
+          },
+          {
+            label: 'Optional — The Covenant Decoy',
+            type: 'gm',
+            text: `A [[FACTION:Hollow Covenant]] aide moves through the crowd showing select guests a flat case — "proof of what's beneath the waves." Inside: what looks like a recovered artifact from the deep ruins.
+
+This is a DECOY. The real fragment is the sealed package currently in West's hands. Let the players assume the case is the prize. It isn't.
+
+[[NPC:Marshal Tran]]'s representative is also working the room against the treaty — loudly, confidently, wrongly. Plants that the Covenant is not united (see the FACTIONS tab). This is useful texture; don't make it a scene.`,
+          },
+          {
+            label: 'THEREFORE — The Bell',
+            type: 'gm',
+            text: `A bell rings from the stone platform. A hush falls over the terrace. Everyone turns.
+
+Senn ascends the ceremonial steps.
+
+Six hundred meters down, in the dark [[NPC:Tarek]] surfaced from, a second engine has cut out. A young [[FACTION:River Below]] diver braces a shaped charge against a wall older than the human species — and does not hear [[NPC:Veronika "The Saint"]]'s voice in the back of their head saying wait.`,
+          },
+        ],
       },
 
+      // ─────────────────────────────────────────────────────────────────────
       {
         beat: 5,
         title: 'THE GEYSER — Senn\'s Death',
-        type: 'scripted — Senn dies, no ambiguity. Go fast and loud.',
-        gmNotes: `The hinge. Short sentences. Don't pause for rolls that don't matter — narrate the disaster and let the players react inside it. Six hundred meters down, the River Below diver ("Red Flag") braces a shaped charge against a wall older than the human species and does not hear Veronika's voice saying wait.`,
-        theGeyser: `Senn ascends the ceremonial terrace atop the old stone. She lifts the stylus; the treaty hangs in the air on a sheet of light. She begins to speak — and never finishes the sentence.
+        type: 'scripted · Senn dies, no ambiguity · go fast and go loud',
+        gmNotes: `THE HINGE. Short sentences. Do not pause for rolls that don't matter — narrate the disaster and let the players react inside it. Six hundred meters down, [[NPC:"Red Flag"]] does not hear [[NPC:Veronika "The Saint"]] saying wait. The cascade happens fast. Hit the emotional beats (Enkh's substrate going silent; West's choice) with space; hit everything else at speed.`,
+        sections: [
+          {
+            label: 'Scene — The Ceremony',
+            type: 'read-aloud',
+            text: `Senn lifts the stylus. The treaty hangs in the air on a projected sheet of light. She begins to speak — about partnership, about the future buried beneath the waves, about—`,
+          },
+          {
+            label: 'THE GEYSER',
+            type: 'read-aloud',
+            text: `She never finishes the sentence.
 
-The stone screams — not a sound, a pressure, felt in the teeth and the water. The sacred geometry under the terrace was never decoration. It was a seal, and the thing it sealed has just decided it is under attack. A pillar of water comes up through the heart of the stone with the force of an ocean held back for tens of thousands of years. The terrace does not collapse. It launches. Arbiter Senn goes up — stylus still in hand — past the lights, past the hedges, until she is a white mark against the dark and then not even that. The column holds her there one impossible second, then lets go. She comes down into the lagoon. No body. No question. Everyone saw it. Both players saw it.`,
-        cascade: `Hit these fast, any order, but/therefore the whole way down:
-1. THE DEFENSE SYSTEM DOESN'T STOP. It pulls the vault deeper to protect it; the rock the island stands on goes with it. The lagoon drains and surges. Terrace by terrace, the island begins to drown.
-2. THE EMP. A pulse rolls out from the stone. Comms die. PLAYER 1: your substrate stutters — for one second the back-of-the-skull weight of ten years goes SILENT. PALE is not watching. You didn't know how loud it was until it stopped. (Brief disorientation, no stat damage — the beat is emotional.)
-3. THE LOCKET WAKES. The sealed package in Player 2's hands grows warm — alive-warm. It keeps until they choose to open it.
-4. THE UNIT BREAKS. One unit-mate is gone — caught when the terrace launched; no grey shape comes up. The other is already herding the Covenant delegation to the boats, executing protocol on the nearest authority, and calls Player 2's designation once, expecting them to fall in (the instructor's voice from Beat 2, made flesh). BUT there is no principal, a package for a dead woman, and a warmth that feels like being SEEN — so for the first time the order and the want are not the same thing. PLAYER 2 HAS TO CHOOSE. Hold the silence. (Cruelest version: the dead one is the unit-mate they bonded with; flip it if the player would rather their friend live to walk away.)
-5. THE ELITE FLEE. The crush for the swan boats and private transports. Sacred ground is just sinking ground now. Neither player is getting out by the front canal.`,
-        aftermath: `Player 1: target dead, contract void, and he didn't do it — the fifteen thousand just walked off the edge of the world. Player 2: the person they exist to protect is gone in a way they could not have stopped. Both are now standing on an island that is going under. Then a hand: a flat-bottomed canal runner pulls alongside a flooding terrace, poled by the woman from the bar.`,
+The stone screams — not a sound, a pressure, felt in the teeth and the water and the centuries of stacked rock. The sacred geometry under the terrace was never decoration. It was a seal. And the thing it sealed has just decided it is under attack.
+
+A pillar of water comes up through the heart of the old stone with the force of an ocean held back for tens of thousands of years. The terrace does not collapse.
+
+It launches.
+
+Arbiter Senn goes up — stylus still in her hand — past the strung lights, past the hedges, until she is a white mark against the dark and then not even that. The column holds her there one impossible second.
+
+Then the water lets go.
+
+She comes down into the lagoon. There is no body. There is no question. Everyone saw it.
+
+Both of you saw it.`,
+          },
+          {
+            label: 'Impact — Deliver These Directly',
+            type: 'dialogue',
+            text: `To WEST:
+"The person you exist to protect just died in a way you could not have stopped, predicted, or prevented. Your eighteen months of existence have just run out of their only purpose."
+
+To ENKH:
+"Your target is dead. Your contract is void. You did not pull the trigger. Fifteen thousand credits just walked off the edge of the world without you."
+
+(Then, to both:)
+"You are standing on an island that is starting to go under."`,
+          },
+          {
+            label: 'Cascade 1 — The Island Starts to Drown',
+            type: 'gm',
+            text: `The defense system does not stop. It is pulling the vault deeper to protect it, and the rock the island stands on goes with it. The lagoon drains in some places and surges in others. The drowned mountain under the Still Gardens exhales. Terrace by terrace, the island begins to go under — centuries of stubborn garden finally losing its argument with the sea.`,
+          },
+          {
+            label: 'Cascade 2 — The EMP (Enkh)',
+            type: 'gm',
+            text: `A pulse rolls out from the stone. Comms die across the estate.
+
+For Enkh: his substrate stutters. For one second the weight in the back of his skull — the faint background hum of ten years of [[FACTION:PALE]] monitoring — goes SILENT. He didn't know how loud the watching was until it stopped. Then it flickers back, or doesn't yet — his call to sit with.
+
+No stat damage. The beat is emotional. Give him one sentence of space if he wants it. Then the cascade continues.`,
+          },
+          {
+            label: 'Cascade 3 — The Locket Wakes (West)',
+            type: 'gm',
+            text: `The sealed package in West's hands grows warm. Not body-warm — alive-warm. It feels like being looked at.
+
+It keeps until West chooses to open it. Do not force it. But a dead principal, an impossible order, and a warmth that feels like being seen is a lot to hold while the floor tilts.`,
+          },
+          {
+            label: 'Cascade 4 — The Unit Breaks (West)',
+            type: 'gm',
+            text: `One unit-mate is gone — caught when the terrace launched, or under the first slab of falling stone. No grey shape comes up out of the water.
+
+The other unit-mate is already moving — herding the [[FACTION:Hollow Covenant]] delegation toward the evac boats, executing the protection protocol on the nearest legitimate authority, because that is what you DO when the principal is dead and the procedure is still clear.
+
+They call West's designation once, flat and clear, expecting West to fall in.
+
+(This is the instructor's line from Beat 3, made flesh: "A Kael-7 alone is a malfunction. You always fall in.")
+
+BUT — there is no principal. There is a package addressed to a dead woman. There is a warmth in West's hands that feels like being SEEN for the first time.
+
+And for the first time in eighteen months of existence, the order and the want are not the same thing.
+
+Hold the silence. Let West choose. It is the most important second of their life so far.`,
+          },
+          {
+            label: 'GM — Which Clone Fate',
+            type: 'gm',
+            text: `Cruelest version: the dead one is [[NPC:Nor]] — the unit-mate West bonded with in the flashback. [[NPC:Ost]] is the one who says "fall in" and walks away with the delegation.
+
+Flip it if the player would rather their friend live to walk away and the stranger be the one who dies. Either choice works. What matters: one is dead, one is gone, and West is alone for the first time in their existence.`,
+          },
+          {
+            label: 'Cascade 5 — The Crush',
+            type: 'gm',
+            text: `Money does not die gracefully. The guests storm the swan boats and private transports; sacred ground is just sinking ground now, and the front canal is a terrified crush of very important people.
+
+Neither PC is getting out by the front route. Therefore — they need another way out. Therefore — a hand.`,
+          },
+        ],
       },
 
+      // ─────────────────────────────────────────────────────────────────────
       {
         beat: 6,
         title: 'The Escape — Veronika',
-        type: 'player-driven — the down-shift, and the threads open',
-        gmNotes: `Veronika is the only person on this drowning island who is not panicking. She came down from Kaeldrift to run River Below's surface op; her diver went rogue and broke everything, and she knows it. She runs the players out through the garden maze and the submerged ruins offshore, toward Kaeldrift's freight moorings — where the merchant freighter DUSKLINE (Captain Mira Calder, Driftborn) is loading to leave the planet. A berth can be bought, stolen, or talked onto. Calder asks no questions; Veronika is one of hers.
+        type: 'player-driven · the down-shift · threads open',
+        gmNotes: `[[NPC:Veronika "The Saint"]] is the only person on this drowning island who is not panicking. She runs them through the garden maze and the submerged ruins offshore toward Kaeldrift's freight moorings — where the Duskline (Captain [[NPC:Mira Calder]], [[FACTION:Driftborn Armada]]) is loading to leave a planet that just lost its sacred heart. This beat has two layers: the kinetic escape, and the quiet after — the package, the note, the locket, the first real conversation between three people who should not be in the same boat.`,
+        sections: [
+          {
+            label: `Veronika's Line`,
+            type: 'read-aloud',
+            text: `A boat you didn't book pulls alongside a flooding lower terrace — flat-bottomed, fast, ugly, perfect, poled by the woman you last saw refilling glasses at the bar. She is not panicking. She is the only person on this entire drowning island who is not panicking.
 
-If a player balks at the boat, the island obliges — a terrace gives way, the front canal becomes a deathtrap, the only hand still offered is hers. Three people who should be enemies leave Thessavar in one boat, owing each other their lives and trusting no one.`,
-        veronikaLine: `"You two. Loud shirt, grey suit. You can stand here and sink with the rich folks, or you can get in the boat. I know these channels — I can run us out through the garden maze and the old ruins while they're all fighting over the front canal. I didn't want this. Get in. Ask me later."`,
-        thePackage: `With Senn dead, the order "give this to her after the ceremony" has no path to completion — possibly Player 2's first impossible order, and the instructor's "you always fall in" has no one left to fall in behind. Likely they open it. Inside: the LOCKET FRAGMENT and TAREK'S NOTE. Let it detonate quietly.`,
-        tarekNote: `Senn —
+VERONIKA: "You two. Loud shirt, grey suit. You can stand here and sink with the rich folks, or you can get in the boat. I know these channels — I can run us out through the garden maze and the old ruins while they're all fighting over the front canal."
+
+(A breath. Something cracks under it — guilt she isn't going to name yet.)
+
+"I didn't want this. Get in. Ask me later."`,
+          },
+          {
+            label: 'GM — If a Player Balks',
+            type: 'gm',
+            text: `If either player hesitates, the island obliges — a terrace gives way behind them, the front canal becomes a visible deathtrap, another route collapses. The only hand still offered is Veronika's. Don't make it a false choice; make it the only choice. She is not asking for trust. She is providing an exit.`,
+          },
+          {
+            label: 'The Escape — Riding the Maze',
+            type: 'scene',
+            text: `Veronika knows every service channel on the island — the routes below the garden level, the salt-smelling waterways the guests never see. She runs them out through flooding corridors of black hedge and half-submerged stone, working around stuck gates (EMP killed all token controls) with a pry bar she had ready, while the front canal behind them sounds like the world ending.
+
+Let the players be active if they have ideas. Veronika does not explain herself during the escape. She says "left here," "duck," and "almost." Ask me later.`,
+          },
+          {
+            label: 'West — The Package',
+            type: 'gm',
+            text: `With Senn dead, the order "give this to her after the ceremony" has no path to completion. It is probably the first impossible order of West's existence.
+
+Let West open it when they're ready — during the escape if the table is quiet enough, on the Duskline if it's still kinetic. When they open it: inside is a LOCKET FRAGMENT and TAREK'S NOTE.`,
+          },
+          {
+            label: `Tarek's Note — Read Aloud or Hand the Physical Note`,
+            type: 'dialogue',
+            text: `Senn —
+
 The lattice is intact and it is not passive. It indexed me when I was near the primary node. I think it reached you too, through the fragment. It is looking for receivers and I do not think it has found enough of them.
-Becoming has to know before Remembrance does. If Tran gets there first he will treat it like an armory and he will be wrong in the worst possible way.
-Do not let the fragment be divided or copied. If the Combine understands what it carries they will attempt lineage mapping, and I have seen what they do with a key.
-PALE has read access to our channel. Do not answer the usual way. Come alone. Burn this.
-— T
 
-Why it lands on Player 2: the Combine made them, and the note says the Combine would weaponize the fragment ("lineage mapping"). "PALE has read access" — Player 2 doesn't know what PALE is; Player 1 does (first rope tying their backstories together). "Burn this" is one more impossible order for a clone who doesn't destroy things without authorization — and their authority is dead.`,
-        theLocket: `The fragment can SPLIT IN TWO — a paired Architect receiver, built for two minds. Optional, and the note explicitly warns against it. If each PC touches a half: Player 1 gets a thread of FEELING back (start small and unwelcome — grief, the kid Div's face, the loud shirt for a life he never got to live); Player 2 gets the GAP — the first awareness that what they want and what they're built to do are two different things. It can ride in a pocket, unused, forever. Make sure they know that.`,
+Becoming has to know before Remembrance does. If Tran gets there first he will treat it like an armory and he will be wrong in the worst possible way.
+
+Do not let the fragment be divided or copied. If the Combine understands what it carries they will attempt lineage mapping, and I have seen what they do with a key.
+
+[[FACTION:PALE]] has read access to our channel. Do not answer the usual way. Come alone. Burn this.
+
+— T`,
+          },
+          {
+            label: `GM — Why the Note Lands on West`,
+            type: 'gm',
+            text: `Every line is a thread. Don't explain them. Let the players read and react.
+
+"Trust Becoming before Remembrance" → [[FACTION:Hollow Covenant]] is fractured. [[NPC:Elder Vesper]] (Becoming) is trustworthy; [[NPC:Marshal Tran]] (Remembrance) is dangerous and wrong about what the vault is.
+
+"Do not let the fragment be divided" → dramatic irony: they are very likely about to divide it. The rulebook just told them not to do the thing that gives them their powers. Let them choose with eyes open.
+
+"The Combine will attempt lineage mapping" → West IS a [[FACTION:Progenitor Combine]] product. The thing in their hands is something their makers would weaponize.
+
+"[[FACTION:PALE]] has read access to our channel" → West does not know what PALE is. Enkh does. First rope tying both PCs' backstories into one knot.
+
+"Burn this" → one more impossible order for a clone who does not destroy things without authorization. Their authority is dead. Whose order do they follow now?`,
+          },
+          {
+            label: 'The Locket — The Split (Optional)',
+            type: 'gm',
+            text: `The fragment can split into two halves — a paired Architect receiver, built for two minds at once. The note explicitly warns against dividing it.
+
+If either or both players touch a half:
+
+For ENKH: a thread of FEELING starts coming back — small and unwelcome. Grief, maybe. The kid Div's face. The weight of the loud shirt he wore for a retirement he never got to live. Start small. Don't explain it. Let it be wrong and real.
+
+For WEST: the GAP. The first clear awareness that what they want and what they are built to do are two different things. Not a crisis. Just a distinction. The very beginning of something.
+
+Neither has to take a half. The locket can ride in a pocket, unused, indefinitely. Make sure they know that — and that the note explicitly told them not to divide it. Let them choose with full information.`,
+          },
+          {
+            label: `Who Is Veronika?`,
+            type: 'gm',
+            text: `She will give them her alias before her name. She owes them an explanation and she knows it; she's not ready for the whole truth yet.
+
+She knows: [[FACTION:River Below]] had someone at the Concordance. They weren't supposed to move. They moved. She doesn't know what was really under the island — she overheard [[NPC:Tarek]] and Senn talking about "ruins" and "something older" in a bar in Kaeldrift, and she thought it was worth disrupting the treaty for. She had no idea what "older" meant.
+
+If they push her: "My people caused this. I didn't order it. That's the only difference I get to keep." She isn't asking for forgiveness. She's not sure she deserves it.
+
+She is also the only person alive who knows all three of them were on that island and why.`,
+          },
+        ],
       },
 
+      // ─────────────────────────────────────────────────────────────────────
       {
         beat: 7,
         title: 'Launch — End of Session 1',
         type: 'scripted closing image',
-        gmNotes: `The Duskline breaks atmosphere; Thessavar's ocean shrinks to blue-white below — nothing up here suggests one island just lost its sacred heart. Three people who were never supposed to be in the same boat: one sent to kill her, one sent to save her, one whose people drowned her by accident reaching for something they didn't understand. The Arbiter is dead and not one of them did it on purpose. And whatever just happened on Thessavar, the rest of the sector is going to want to know who to blame.
+        gmNotes: `The Duskline breaks atmosphere. Thessavar's ocean shrinks to blue-white below — nothing up here suggests one island just lost its sacred heart. End on a question, not a resolution.`,
+        sections: [
+          {
+            label: 'Scene — Leaving Thessavar',
+            type: 'read-aloud',
+            text: `The ocean falls away beneath you. From up here Thessavar is just blue — no islands, no cities, no waterways. Just blue and white and perfectly still, the way an ocean looks when it has swallowed something and closed back over it like nothing happened.
 
-Suggested closing line — Veronika, not looking back at the water: "So. Where do people like us go, when there's nowhere on that rock left to stand?"
+Three of you in a stranger's berth. One sent to kill her. One sent to save her. One whose people drowned her by accident, reaching for something they didn't understand. The Arbiter is dead and not one of you did it on purpose. The island is gone. And whatever just happened down there, the rest of the sector is going to want to know who to blame.`,
+          },
+          {
+            label: 'Closing Line — Veronika',
+            type: 'dialogue',
+            text: `VERONIKA (not looking back at the water, quiet):
+"So. Where do people like us go, when there's nowhere on that rock left to stand?"`,
+          },
+          {
+            label: 'GM — Let It Sit. Roll Credits.',
+            type: 'gm',
+            text: `Don't answer the question. Don't give the players a chance to answer it tonight. End there.
 
-Session 2 opens with: "You're in the black. What do you do?"`,
+Session 2 opens: "You're in the black. What do you do?"
+
+The open threads — pull on whichever the table is hungriest for:
+• [[NPC:Tarek]]'s note: every line is a lead (Becoming, Remembrance, the fragment, [[FACTION:PALE]], the Combine)
+• Enkh's vanished client: who needed Senn dead badly enough to spend his exact debt balance as bait? ([[NPC:Darius]] can run this thread from Kaeldrift)
+• The locket: split or whole; Tarek said don't divide it and they may have divided it
+• Veronika and [[FACTION:River Below]]: a guilty leader, a martyr 600m down with no grave, a movement fracturing over what its own people did
+• [[NPC:Elder Vesper]]: Tarek said trust her; West reports to her; she may be the only leader who understands the Lattice
+• The broadcast: something on Thessavar just started transmitting. Someone with the right receivers heard it. Who knocks on the door first?`,
+          },
+        ],
       },
 
     ],

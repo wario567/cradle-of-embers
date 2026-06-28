@@ -30,6 +30,58 @@ function GMNotesView({ sector }) {
   const prose = txt => React.createElement('p', { style: { fontSize: 13, color: 'var(--fg-2)', lineHeight: 1.65, margin: '6px 0 0', whiteSpace: 'pre-wrap' } }, txt);
   const bullet = txt => React.createElement('li', { style: { fontSize: 12, color: 'var(--fg-2)', lineHeight: 1.6, marginBottom: 2 } }, txt);
 
+  // Rich text: parse [[NPC:Name]], [[FACTION:Name]], [[WORLD:Name]] into clickable nav links
+  const parseRichText = (text) => {
+    if (!text) return null;
+    const parts = text.split(/(\[\[(?:NPC|FACTION|WORLD):[^\]]+\]\])/g);
+    return parts.map((part, i) => {
+      const m = part.match(/^\[\[(NPC|FACTION|WORLD):([^\]]+)\]\]$/);
+      if (m) {
+        const tabMap = { NPC: 'npcs', FACTION: 'factions', WORLD: 'worlds' };
+        const targetTab = tabMap[m[1]];
+        return React.createElement('span', {
+          key: i,
+          onClick: () => {
+            setGMTab(targetTab);
+            if (m[1] === 'NPC') setNpcSearch(m[2]);
+          },
+          title: 'Go to ' + m[1].toLowerCase() + ': ' + m[2],
+          style: { color: 'var(--accent)', cursor: 'pointer', borderBottom: '1px dashed var(--accent)', paddingBottom: 1 }
+        }, m[2]);
+      }
+      return part;
+    });
+  };
+  const richProse = (txt) => React.createElement('p', {
+    style: { fontSize: 13, color: 'var(--fg-2)', lineHeight: 1.65, margin: '6px 0 0', whiteSpace: 'pre-wrap' }
+  }, parseRichText(txt));
+
+  // Render a beat sub-section with type-aware styling
+  const beatSection = (sec, si) => {
+    const isReadAloud = sec.type === 'read-aloud';
+    const isDialogue  = sec.type === 'dialogue';
+    const isGM       = sec.type === 'gm';
+    return React.createElement('div', { key: si, style: { marginTop: 12 } },
+      sec.label && React.createElement('div', {
+        style: {
+          fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4,
+          color: isReadAloud ? '#c8a96e' : isDialogue ? 'var(--fg-3)' : 'var(--fg-4)',
+        }
+      }, sec.label),
+      React.createElement('p', {
+        style: {
+          fontSize: 13, lineHeight: 1.68, margin: 0, whiteSpace: 'pre-wrap',
+          color: isReadAloud ? 'var(--fg-1)' : isDialogue ? 'var(--fg-1)' : 'var(--fg-2)',
+          fontStyle: isReadAloud ? 'italic' : 'normal',
+          background: isReadAloud ? 'rgba(200,169,110,0.07)' : isDialogue ? 'var(--bg-1)' : 'transparent',
+          borderLeft: isReadAloud ? '2px solid #c8a96e' : isDialogue ? '2px solid var(--fg-4)' : 'none',
+          padding: (isReadAloud || isDialogue) ? '8px 12px' : '0',
+          borderRadius: (isReadAloud || isDialogue) ? '0 4px 4px 0' : '0',
+        }
+      }, parseRichText(sec.text))
+    );
+  };
+
   // SECTOR TAB
   const sectorTab = React.createElement('div', null,
     card([
@@ -250,12 +302,13 @@ function GMNotesView({ sector }) {
     ]),
     React.createElement('div', { style: { marginBottom: 6 } }, label('Session Beats')),
     (s1.beats || []).map(b => card([
-      React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'baseline', marginBottom: 6 } },
+      React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'baseline', marginBottom: 8, flexWrap: 'wrap' } },
         React.createElement('span', { style: { fontWeight: 700, fontSize: 13, color: 'var(--accent)' } }, 'Beat ' + b.beat),
         React.createElement('span', { style: { fontWeight: 600, fontSize: 13, color: 'var(--fg-0)' } }, b.title),
-        React.createElement('span', { style: { fontSize: 11, color: 'var(--fg-4)' } }, b.type),
+        React.createElement('span', { style: { fontSize: 11, color: 'var(--fg-4)', fontStyle: 'italic' } }, b.type),
       ),
-      b.gmNotes && prose(b.gmNotes),
+      b.gmNotes && richProse(b.gmNotes),
+      (b.sections || []).map((sec, si) => beatSection(sec, si)),
     ])),
   ) : null;
 
