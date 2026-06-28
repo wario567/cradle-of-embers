@@ -23,7 +23,7 @@ function FactionsView({ sector, isGM, onUpdate, onPickPlanet }) {
         },
           React.createElement('div', { className: 'title' }, f.name),
           React.createElement('div', { className: 'meta' }, (f.tags || f.traits || []).join(' · ')),
-          isGM && React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8, marginTop: 6 } }, (Hide faction stats/assets/GM notes from player view; show name, traits, homeworld, and notes-as-description only)
+          isGM && React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8, marginTop: 6 } },
             React.createElement('div', { className: 'hp-bar' + (f.hp / f.maxHp < 0.3 ? ' crit' : f.hp / f.maxHp < 0.6 ? ' low' : ''), style: { flex: 1 } },
               React.createElement('div', { style: { width: `${(f.hp / f.maxHp) * 100}%` } })
             ),
