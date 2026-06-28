@@ -1,4 +1,4 @@
-// Main app — sidebar nav, view router, sector state.
+﻿// Main app — sidebar nav, view router, sector state.
 
 const { useState: useASt, useEffect: useAEf, useMemo: useAMem, useRef: useAR } = React;
 
@@ -582,6 +582,7 @@ function App() {
       React.createElement('div', { style: { flex: 1, minHeight: 0, overflow: 'hidden' } },
         React.createElement(window.FactionsView, {
           sector,
+          isGM,
           onUpdate: f => saveEdits(s => ({ ...s, factions: s.factions.map(x => x.id === f.id ? f : x) })),
           onPickPlanet: pickPlanet,
         })
@@ -636,6 +637,7 @@ function App() {
           const rng = window.makeRNG(tweaks.seed + '-newhook-' + Date.now());
           const planets = s.systems.flatMap(x => x.planets);
           const p = rng.pick(planets);
+ (Hide faction stats/assets/GM notes from player view; show name, traits, homeworld, and notes-as-description only)
           const SWN = window.SWN;
           return { ...s, hooks: [{ id: 'hook-' + Math.floor(Math.random()*99999), planetId: p.id, planetName: p.name, text: cap(rng.pick(SWN.hookActions)) + ' ' + rng.pick(SWN.hookObjects) + ' on ' + p.name + ', ' + rng.pick(SWN.hookComplications) + '.', status: 'Open' }, ...s.hooks] };
         }),
