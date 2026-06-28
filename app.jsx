@@ -279,7 +279,20 @@ function App() {
     } catch {}
   }, [storageKey, campaignKey]);
 
-  function openGMModal() { const stored = localStorage.getItem('swn-gm-hash'); setGmModal(stored ? 'unlock' : 'setup'); }
+  async function openGMModal() {
+    let stored = localStorage.getItem('swn-gm-hash');
+    // Try to pull the hash from PocketBase so it works cross-machine
+    if (window.MP?.isReady()) {
+      try {
+        const remote = await window.MP.loadGMHash();
+        if (remote) {
+          localStorage.setItem('swn-gm-hash', remote);
+          stored = remote;
+        }
+      } catch {}
+    }
+    setGmModal(stored ? 'unlock' : 'setup');
+  }
   function closeGmModal() { setGmModal(null); setGmPw(''); setGmPw2(''); setGmErr(''); gmAuthDismissesIntro.current = false; }
   function onGMAuthSuccess() {
     commitGMRole();
@@ -290,17 +303,23 @@ function App() {
   async function submitGMPassword() {
     const GM_KEY = 'swn-gm-hash';
     const stored = localStorage.getItem(GM_KEY);
+    async function persistHash(hash) {
+      localStorage.setItem(GM_KEY, hash);
+      if (window.MP?.isReady()) {
+        try { await window.MP.saveGMHash(hash); } catch {}
+      }
+    }
     if (gmModal === 'setup') {
       if (!gmPw) return setGmErr('Enter a password.');
       if (gmPw !== gmPw2) return setGmErr('Passwords do not match.');
-      localStorage.setItem(GM_KEY, await sha256(gmPw)); onGMAuthSuccess();
+      await persistHash(await sha256(gmPw)); onGMAuthSuccess();
     } else if (gmModal === 'unlock') {
       if (!gmPw) return setGmErr('Enter password.');
       if (await sha256(gmPw) === stored) { onGMAuthSuccess(); } else { setGmErr('Incorrect password.'); }
     } else if (gmModal === 'change') {
       if (!gmPw) return setGmErr('Enter new password.');
       if (gmPw !== gmPw2) return setGmErr('Passwords do not match.');
-      localStorage.setItem(GM_KEY, await sha256(gmPw)); closeGmModal();
+      await persistHash(await sha256(gmPw)); closeGmModal();
     }
   }
 

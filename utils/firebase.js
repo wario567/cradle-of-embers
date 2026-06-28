@@ -137,10 +137,34 @@
     return ('pb' + abs + seed.replace(/[^a-z0-9]/gi, '').toLowerCase()).slice(0, 15).padEnd(15, '0');
   }
 
+  const GM_CONFIG_ID = 'gmconfigglobal0'; // fixed 15-char alphanumeric PocketBase ID
+
+  async function saveGMHash(hash) {
+    if (!pb) return;
+    const payload = { seed: '__gm_config__', data: { gmHash: hash }, lastUpdatedAt: new Date().toISOString(), lastUpdatedBy: 'gm' };
+    try {
+      await pb.collection('campaigns').update(GM_CONFIG_ID, payload);
+    } catch (e) {
+      if (e?.status === 404) {
+        try { await pb.collection('campaigns').create({ id: GM_CONFIG_ID, ...payload }); } catch (e2) { console.warn('[mp] saveGMHash error', e2); }
+      } else { console.warn('[mp] saveGMHash error', e); }
+    }
+  }
+
+  async function loadGMHash() {
+    if (!pb) return null;
+    try {
+      const rec = await pb.collection('campaigns').getOne(GM_CONFIG_ID);
+      return rec?.data?.gmHash || null;
+    } catch { return null; }
+  }
+
   window.MP = {
     init,
     subscribeCampaign,
     saveCampaign,
+    saveGMHash,
+    loadGMHash,
     startPresence,
     subscribePresence,
     isReady: ready,
