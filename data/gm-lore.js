@@ -1042,6 +1042,15 @@ He pulls his hand back like it burned. He is breathing too fast for someone stan
 He records a message. Sealed packet, addressed to his unit. His voice is flat and deliberate. The voice of a man who has decided there isn't time to be afraid yet.`,
           },
           {
+            label: 'NPC — Tarek (first look)',
+            type: 'scene',
+            text: `Broad-shouldered. The kind of practical that reads as warmth — a face that has been in difficult rooms and learned to take up less space than it needs. Late 40s, weathered without being rough. Steady hands even now, even here, even breathing too fast.
+
+When the Lattice indexes him, his expression goes somewhere it was never built to go. Not pain. Not fear. Something closer to the feeling of receiving a message that rewrites every message you have ever received.
+
+Show his face. Don't show what he sees. Let the players wonder for the rest of the night.`,
+          },
+          {
             label: `Tarek's Recorded Message`,
             type: 'dialogue',
             text: `TAREK (into recorder, quiet and fast):
@@ -1094,6 +1103,20 @@ The obedience is comfortable right now. Playing it as PEACE, not a cage — Senn
 ASK: What does Senn look like from behind, through the procession? What do Nor and Ost feel like beside you — familiar weight, synchronized breathing?`,
           },
           {
+            label: 'NPC — Senn (from the procession)',
+            type: 'scene',
+            text: `White formal wear, perfectly draped — the kind that doesn't move wrong. Spine perfectly straight, not rigid, just settled: the posture of someone who has been the most important person in every room they've entered for twenty years and stopped thinking about it. She does not look at her detail. She does not look at the canal or the hedges or the crowd. She looks at whatever is directly ahead and lets the world arrange itself around her.
+
+She is in her 50s. Not softened by it. The treaty exists because she willed it to.`,
+          },
+          {
+            label: 'NPC — Nor (the unit-mate)',
+            type: 'scene',
+            text: `Slightly taller than West. Moves in the same trained patterns but carries them differently — where West's obedience reads as settled, Nor's reads as easy, like a song they know by heart. There is something between them the Combine didn't intend and didn't prevent: the habit of knowing where the other one is without looking.
+
+Tonight Nor is on West's left. Ost on the right. The unit feels complete.`,
+          },
+          {
             label: `Enkh — On the Water, Going the Other Way`,
             type: 'scene',
             text: `You arrive by hired swan boat, dressed like a man who retired last week — because that was the plan, before the accident, before [[FACTION:PALE]], before twenty years of paying for a brain you didn't ask for. Hawaiian shirt. Sandals. The forged token in your pocket says you belong here.
@@ -1101,6 +1124,28 @@ ASK: What does Senn look like from behind, through the procession? What do Nor a
 You are casing, not feeling. Your flat affect is an asset in a room full of performance — you're the only one not acting. Darius's voice is in the back of your skull. So is the other thing in the back of your skull: the faint background weight you've learned to ignore. Mostly.
 
 ASK: What does Enkh see first — the stone terrace at the center, or the crowd? Where's the problem with Senn's position from here?`,
+          },
+          {
+            label: 'NPC — Enkh (as West sees him in the pass)',
+            type: 'scene',
+            text: `To West (security assessment, immediate and automatic):
+
+Civilian. Male, 70s. Left arm prosthetic — civilian-grade, good work, not military. Right leg as well, same quality. Loud shirt, shorts, sandals — either retired money or a very good cover. The forged token reads amber if West is checking.
+
+What the training flags: he is completely still. Not nervous, not watching the crowd the way a guest watches a crowd. Watching the event the way someone watches a problem. His eyes moved to the detail before they moved anywhere else, and they moved to the detail before West moved to him.
+
+Filed under: noted. Not a threat yet. But still in a way that has nothing to do with boats.`,
+          },
+          {
+            label: 'NPC — West (as Enkh sees them in the pass)',
+            type: 'scene',
+            text: `To Enkh (professional assessment, barely a glance):
+
+Security grey. Progenitor Combine Grade 2 cut — he's seen the catalog somewhere, vaguely. Young: eighteen months of existence in a face that reads mid-twenties. The composure isn't performed — they're just occupying it, the way water occupies a shape.
+
+What the training flags differently than his does: they are already looking at things he isn't looking at. Eleven faces. His face is number twelve. Their eyes moved to him before his moved to them, and they've already looked away.
+
+Filed under: noted. Part of the detail. Small island.`,
           },
           {
             label: 'THE PASS — Eye Contact',
@@ -1148,6 +1193,13 @@ Set West a final conditioning protectee drill with the INSTRUCTOR — consistent
 Optional: let West establish their bond with [[NPC:Nor]] here. A shared drill where the unit moves like one mind, a glance of recognition between two people who have trained together for months. Give the player something to care about. Beat 5 is going to take it.`,
           },
           {
+            label: 'NPC — The Instructor',
+            type: 'scene',
+            text: `Precise and professional without being cold. The kind of person the [[FACTION:Progenitor Combine]] trusts to build soldiers: they project authority the way a well-calibrated instrument projects accuracy — not loudly, but undeniably. They are genuinely excellent at what they do. What they do is make obedience feel like belonging.
+
+They pack up after the drill the same way they ran it: efficiently, completely, without waste. This is the last thing they will say to K7G2-87459 before deployment.`,
+          },
+          {
             label: 'Echo — The Instructor',
             type: 'dialogue',
             text: `INSTRUCTOR (packing up, almost offhand — this is a fact, not a warning):
@@ -1176,6 +1228,15 @@ Across the table: DARIUS. Mid-40s, broad through the shoulders, the kind of face
 Let the player run the planning session: the forged invitation, the timing window, the route off the island after. Let Darius run logistics while needling Enkh about [[FACTION:PALE]], the old days, maybe the kid Div — not cruelly, the way a friend needles when they're actually worried. The 20-year friendship should breathe. Then the echo.`,
           },
           {
+            label: 'NPC — Darius',
+            type: 'scene',
+            text: `Mid-40s, the kind of solid that comes from decades of physical work that eventually stopped. His face reads older than his age — not from hardship but from attention. He has been paying attention to the world for a long time. He spreads a map across a table the way some people spread their hands in prayer: like the right arrangement of information can still save something.
+
+He knew Enkh before the accident. He knew the person before PALE got into the substrate. He misses that person in the specific, quiet way of someone who has accepted the grief without being finished with it.
+
+This is not a job briefing. This is a friend who showed up anyway.`,
+          },
+          {
             label: 'Echo — Darius',
             type: 'dialogue',
             text: `DARIUS (quiet, not looking up from the map):
@@ -1190,9 +1251,20 @@ Let the player run the planning session: the forged invitation, the timing windo
 "I'm not telling you not to go. I'm telling you to notice."`,
           },
           {
+            label: 'NPC — The Bartender (GM eyes only — do NOT describe her aloud)',
+            type: 'gm',
+            text: `The woman refilling their glasses is [[NPC:Veronika "The Saint"]].
+
+If Enkh's player asks about the bartender, give them this and nothing more: "She's got the ordinary competence of someone who's been doing this for years. Keeps the glasses full without asking. Stays out of the conversation. You don't clock her as anything other than part of the room."
+
+That's all she gets to be tonight. When she appears in Beat 5, the player recognition is the payoff. Don't earn it early.
+
+What she actually looks like (so you can describe her consistently in Beat 6): mid-30s, dark hair kept back with a practical clip, the hands of someone who has spent years in service work and means it. She looks at people the way someone looks at a person they're deciding whether to trust. She decided about Enkh and Darius in the first thirty seconds and did not revise her assessment.`,
+          },
+          {
             label: `GM — Enkh Echo Note`,
             type: 'gm',
-            text: `The bartender refilling their glasses is [[NPC:Veronika "The Saint"]]. Neither of them notices her. She notices them.
+            text: `Neither of them notices Veronika. She notices them.
 
 DO NOT flag this. It is pure dramatic irony for you alone. When Veronika offers them a hand from a boat in Beat 5, and Enkh (or the player) clocks her face as the woman from the bar — let that land on its own. Don't build it up. Don't foreshadow. Just hold the knowledge.
 
@@ -1237,6 +1309,15 @@ Beats to give West:
 • Then Tarek.`,
           },
           {
+            label: 'NPC — Tarek (in person)',
+            type: 'scene',
+            text: `Same broad shoulders as the dive footage, but the warmth is out now — a practiced ease that has taken years to look natural, the kind that usually means someone spent a long time in rooms where you couldn't afford to seem nervous. He is dressed correctly for the event and moving too fast for someone dressed correctly for the event.
+
+His eyes are doing something his expression isn't. He has already clocked West before he makes his approach. He clocks where Senn is. He clocks the exits. He is the most alert person on this terrace, which is interesting given that alertness is West's only job tonight.
+
+He moves like a man with one more thing to do before he disappears.`,
+          },
+          {
             label: 'Tarek Finds West — The Package',
             type: 'dialogue',
             text: `[[NPC:Tarek]] appears at West's shoulder — broad, warm, moving too fast. A man with somewhere urgent to be. He presses a sealed package into West's hands. Small, dense, warm from his pocket.
@@ -1261,6 +1342,17 @@ TAREK: "Kael-7. Good. You'll do."
 Easy. Safe.
 
 Do not linger on it. The trap is the word "after." There will be no after for Senn.`,
+          },
+          {
+            label: 'NPC — Senn (full, for Enkh)',
+            type: 'scene',
+            text: `Describe her to Enkh now that he has a clear angle across the terrace:
+
+In her 50s. The kind of elegance that was always about intelligence rather than softness — she doesn't occupy a room, she reorganizes it. She speaks with the cadence of someone who has never needed to raise their voice to be heard; people lean in without knowing they're doing it. Three people are currently leaning in.
+
+Her security detail is good. The two clones visible from Enkh's position are the ones from the boat. The third — the one who just received something from a broad-shouldered man and watched him vanish — is on the other side of the terrace.
+
+She is the most important person here, and the room knows it, and she is completely calm about it. She always has been.`,
           },
           {
             label: `Enkh's Thread — Casing`,
@@ -1425,6 +1517,17 @@ VERONIKA: "You two. Loud shirt, grey suit. You can stand here and sink with the 
 (A breath. Something cracks under it — guilt she isn't going to name yet.)
 
 "I didn't want this. Get in. Ask me later."`,
+          },
+          {
+            label: `NPC — Veronika "The Saint" (named, the rescuer)`,
+            type: 'scene',
+            text: `Same woman from the bar in Kaeldrift — Enkh may recognize her before she introduces herself, and if he does, let that land quietly. The ordinary competence is still there: it's structural, not a performance.
+
+She is canal-wet. There is a pry bar in the boat she already used on at least one stuck gate. She poles the flat-bottomed runner like she's done it before, which she has. She does not look back at the island behind her.
+
+She carries weight she is not going to put down yet. Something happened down there that was her movement's doing and not her order — and she knows it, and she is not going to pretend she doesn't know it, and she is also not ready for the whole truth yet. She will tell them what she owes them. She will hold back what she can't afford yet.
+
+She is the most competent person in this boat, and she is not going to make it a thing.`,
           },
           {
             label: 'GM — If a Player Balks',
