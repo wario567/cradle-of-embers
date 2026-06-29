@@ -1013,6 +1013,80 @@ PALE surveillance architecture is embedded behind the swans' eyes. Every waterwa
       tokenGates: `Hedged gates throughout the island open or lock based on the guest's token color. When the defense system fires, the EMP kills the gate controls — every gate fail-seals at once and the swan boats go dead in the water, so the panicking elite are funneled toward the few manual exits and the private transports in a crush. The only people moving freely are those who know the island below the garden level: the salt-smelling service channels and the flooding waterway maze. Veronika knows them. That is how she gets the players out while everyone with money fights over the front canal.`,
     },
 
+    // ── THE CONCORDANCE — TREATY DETAILS ──
+    concordance: {
+      overview: `The Thessavar Concordance is a multilateral settlement ending a Cold War over excavation rights to the pre-Scream human ruins beneath Thessavar's ocean floor. Multiple factions have held competing, unresolved claims for decades — the standoff has kept the ruins locked. Senn spent years brokering a compromise: the [[FACTION:Hollow Covenant]] gets primary excavation rights, research findings flow through the neutral [[FACTION:The Driftborn]] Exchange, and other signatories get tiered access. Everyone gives something; everyone gets something; the shooting war that has been threatening to break out for thirty years doesn't. The ceremony at the Still Gardens was supposed to be the signature that made it real.`,
+
+      greyArea: `The [[FACTION:Hollow Covenant]]'s Becoming wing has been running unauthorized research dives at the ~400m thermocline for years — that's how Senn and [[NPC:Tarek]] knew about the deeper zone, and how Becoming built the scientific case for the treaty. Pre-Scream ruins are technically unclaimed in post-Silence international law; nobody has clear authority to stop the dives but nobody has clear authority to sanction them either. The Concordance was going to end that ambiguity in the Covenant's favor. It still might — because Senn had a secondary copy.`,
+
+      secondaryCopy: `Senn filed a signed secondary copy of the treaty with a neutral Exchange notary on Kaeldrift before the ceremony. Legally, the Concordance is valid. The [[FACTION:Hollow Covenant]]'s excavation rights are real. Nobody knows this copy exists. When it surfaces — and it will — every faction that assumed the Cold War reset when Senn died will discover they're already bound by terms they thought were dead. The [[FACTION:The Succession]]'s legal challenge was filed against a ceremony that, legally speaking, already succeeded.`,
+
+      theLatticeComplication: `The treaty is about the pre-Scream human ruins at ~400m. Nobody at the table knew about the Lattice at ~600m. The Covenant now has legal title to an excavation zone sitting directly on top of an active alien consciousness archive — and they have no idea. The [[FACTION:Progenitor Combine]] suspects more than they admit. The Lattice is something nobody has a legal framework to claim. Yet.`,
+
+      parties: [
+        {
+          name: 'Hollow Covenant',
+          role: 'Primary signatory',
+          stake: `Excavation rights and legal title. Becoming has been doing unauthorized dives for years; the treaty legalizes what they've already been doing and gives them first-mover advantage on whatever the ruins contain. Tran's Remembrance wing is less interested in the treaty than in controlling the vault directly — a tension that was already fracturing the Covenant before Senn died.`,
+        },
+        {
+          name: 'The Succession',
+          role: 'Competing claimant',
+          stake: `Their claim is Mandate-era: pre-Scream excavation rights were administered by the Mandate government, and the Succession is the Mandate's legal successor. They filed a legal challenge to delay the signing and improve their negotiating position. They weren't trying to kill the treaty — they were trying to extract concessions. The treaty required them to stand down in exchange for tiered research access and economic provisions. They have a frigate in orbit and were financially exhausted by the legal fight before the ceremony even started.`,
+        },
+        {
+          name: 'Driftborn / The Exchange',
+          role: 'Neutral administrator',
+          stake: `Holds the secondary copy. Administers the research-sharing provisions. Enforces the treaty on all signatories — in theory. The Driftborn want stable trade above everything else, and the Cold War standoff has been bad for shipping. [[NPC:Mira Calder]]'s Duskline being in port at Thessavar is routine; the Exchange has had a notary on Kaeldrift for years.`,
+        },
+        {
+          name: 'Aureole Synod',
+          role: 'Ceremonial legitimacy',
+          stake: `The Still Gardens is sacred ground. The Synod's blessing was a condition of using it for the ceremony. [[NPC:AURIS]] scheduled the signing date — the 4-day delay it introduced inadvertently placed the ceremony directly over the vault access shaft. The Synod is not a legal party but their participation made the Concordance something more than a document signing. Without their sanction it would have been held on a platform city and nobody would have called it the Concordance.`,
+        },
+        {
+          name: 'Progenitor Combine',
+          role: 'Silent commercial stakeholder',
+          stake: `Not a formal signatory. Has a separate commercial arrangement running alongside the treaty — research-licensing rights to any consciousness-adjacent or biotech-relevant technology recovered from the ruins. The Combine manufactures identity; pre-Scream consciousness research is directly relevant to their core business. [[NPC:Tarek]] was on the ground both to deliver West's unit and to protect the Combine's commercial interests. His warning about "lineage mapping" implies the Combine would want exactly that access to the Lattice if they understood what it was.`,
+        },
+        {
+          name: 'PALE',
+          role: 'Spoiler — not a party to the treaty',
+          stake: `Has monitored the Still Gardens for 11 years through a surveillance contract the estate's current owners don't know about. Arranged Enkh's contract to stall the treaty because a [[FACTION:Hollow Covenant]] monopoly on pre-Scream ruins is [[FACTION:The Pale Substrate]]'s worst outcome — and now PALE knows something vastly older than ruins exists under Thessavar, which makes the stakes immeasurably higher. PALE did not cause the disaster. PALE was already working to prevent the treaty through legal, deniable means. The EMP cut PALE's substrate read on Enkh for one second. PALE noticed the gap and is currently running analysis on what produced it.`,
+        },
+      ],
+    },
+
+    // ── AFTER THESSAVAR — WHAT HAPPENS NEXT ──
+    aftermath: {
+      overview: `The Still Gardens is gone. The Lattice is awake and broadcasting. Thessavar doesn't empty — it fills. Everyone who cares about what's under that water sends someone to Kaeldrift, and the platform city of 80,000 becomes the most politically volatile port in the sector almost overnight.`,
+
+      whyTheyLeave: `The PCs have both push and pull forcing them off Thessavar:
+
+PUSH — staying becomes untenable fast:
+• The [[FACTION:The Succession]]'s frigate establishes a safety quarantine within hours. Detention as witnesses. Enkh was there under a forged invitation; West is legally "unclaimed Combine property pending probate" — the Succession's Mandate framework treats that as cargo to be inventoried.
+• The [[FACTION:Progenitor Combine]] will send someone to collect West. Senn's death terminated the ownership contract; West reverts to the Combine. Staying anywhere they can be found is a problem.
+• [[NPC:Veronika "The Saint"]] can't stay. [[FACTION:River Below]]'s fingerprints are on what happened. She needs to be gone before anyone starts connecting the movement to the disaster and tracing Thessavar cells.
+• Enkh has no money, no client, and a forged credential in a city going into lockdown.
+
+PULL — the note gives them somewhere to go:
+• "Come alone" implies [[NPC:Tarek]] is somewhere reachable. That phrase is an invitation, not a goodbye.
+• Elder [[NPC:Elder Vesper]] is off-planet. The only move the note authorizes is finding her — and that means leaving.
+• Staying means being absorbed into someone else's story. Leaving on the Duskline is the only move that keeps all three of them free agents with the information they have.`,
+
+      immediate: `The Still Gardens sinks — 600 years of garden architecture under the water. The vault pulls deeper; the surrounding geology becomes unstable. The active defense system makes the site inaccessible; anyone who dives near it risks triggering another event. Kaeldrift itself is unaffected physically — it's on a shallow shelf 40 minutes north. The news arrives there before the survivors do.`,
+
+      factionResponses: `• [[FACTION:The Succession]]: Frigate in orbit declares a safety quarantine around the Gardens site. Partly genuine, mostly territorial — staking a legal and military claim while the situation is confused. Their legal broker starts working the secondary-copy question without knowing the copy exists.
+• [[FACTION:The Pale Substrate]]: Noticed the 1-second EMP gap in substrate monitoring of Enkh. Running analysis. Not talking. The discovery that a pre-human AI exists and is now broadcasting is the most significant event in PALE's operational history. It is processing this very carefully and very privately.
+• [[FACTION:The Aureole Synod]]: AURIS is an unbraked AI. It may already be receiving fragments of the broadcast and misinterpreting them as divine signal. Not telling the Prelate everything.
+• [[FACTION:Hollow Covenant]]: Fractures visibly. Tran blames Becoming's soft diplomacy for the disaster. [[NPC:Elder Vesper]] goes quiet and careful — she knows more than she'll say. The Lattice is still the goal; they still believe it's their homeworld relic.
+• [[FACTION:River Below]]: Cells across the sector hear that their movement was at Thessavar and split. Some radicalize ("we woke a god, good"). Some recoil in horror. The movement is tearing itself apart over something none of them fully understand.`,
+
+      mediumTerm: `Factions with psionic receivers start logging the broadcast signal from Thessavar. None understand it. All want it. Kaeldrift becomes the de facto staging ground — intelligence operations, political maneuvering, expeditions that keep getting turned back by the defense system. Mining doesn't restart; nobody can safely dive near the vault. The treaty's secondary copy surfaces at the worst possible moment for whoever's currently in power. The [[FACTION:The Penumbra]] archivists, who have been saying "the ruins are the signal" for years, suddenly seem very prescient and start receiving a great deal of unwanted attention.`,
+
+      thePCs: `The PCs left on the Duskline. They are currently the only people who were on the island, survived, and are not in anyone's custody. Every faction that arrives at Thessavar and starts asking what happened will eventually realize there are witnesses — and start looking. West has the fragment and the note. Enkh has the EMP gap in his substrate — a second PALE couldn't see, which PALE will eventually decide it needs to understand. Veronika knows which waterways were dry enough to run. Three people with different pieces of what actually happened, none of whom have anyone to report to anymore.`,
+    },
+
     // ── SESSION STRUCTURE ──
     beats: [
 
