@@ -348,6 +348,10 @@ function GMNotesView({ sector }) {
     React.createElement('div', { style: { margin: '14px 0 6px' } }, label('Three Doors — each has a combat')),
     (s2.missions || []).map(m => card([
       React.createElement('h4', { style: { margin: '0 0 4px', color: 'var(--fg-0)', fontSize: 14 } }, m.title),
+      m.whyUs && React.createElement('div', { style: { fontSize: 11, background: 'rgba(120,180,120,0.08)', border: '1px solid rgba(120,180,120,0.3)', borderRadius: 4, padding: '7px 10px', margin: '4px 0 6px', color: 'var(--fg-2)' } },
+        React.createElement('b', { style: { color: '#9c9' } }, 'Why they say yes: '), m.whyUs),
+      m.mainArcPayoff && React.createElement('div', { style: { fontSize: 11, background: 'rgba(160,120,220,0.08)', border: '1px solid rgba(160,120,220,0.3)', borderRadius: 4, padding: '7px 10px', margin: '0 0 8px', color: 'var(--fg-2)' } },
+        React.createElement('b', { style: { color: '#b9f' } }, 'Main-arc payoff: '), m.mainArcPayoff),
       React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', fontStyle: 'italic', marginBottom: 8 } }, m.hook),
       React.createElement('ul', { style: { margin: '0 0 8px', paddingLeft: 18 } },
         (m.talkingPoints || []).map((tp, i) => bullet(tp))),
