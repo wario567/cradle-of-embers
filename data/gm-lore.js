@@ -728,6 +728,24 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
     },
   },
 
+  // ── WEST'S OWNERSHIP — DECIDED CANON (the "am I free now?" question) ───────
+  // When West asks "what happens to me now that Senn is dead?", the answer is
+  // NOT "you're free." It is CONTESTED — and that contest is the external
+  // mirror of West's internal arc (the gap between ordered and wanted).
+  westOwnership: {
+    theShortAnswer: 'West is not legally free. West is a DISPUTED ASSET — two factions claim them, a third weak claim muddies it, and none of the three is "West owns West." Practically free on Belum (no authority with jurisdiction is standing next to them); not recognized anywhere it counts.',
+    theThreeClaims: [
+      '(1) PROGENITOR COMBINE — strongest. Clone sales carry a standard repossession lien; on an owner\'s death the asset reverts to the Combine pending probate. This is why they filed and sent the repo team (the S2 clock). Ironclad on any Combine or Succession world.',
+      '(2) THE HOLLOW COVENANT — competing. Canon (Combine faction secrets): the Covenant bought the remaining Kael-7 stock at auction 18 months ago. The M3 dispatch confirms Tran\'s people want the Kael-7s intercepted. So the Covenant asserts it already owns the line.',
+      '(3) SENN\'S ESTATE / HEIR — weakest, and the one West guessed at the table. An heir MIGHT contest the Combine\'s lien, which is exactly what makes the whole thing slow and muddy. West\'s half-right guess is perfectly in character — see greenness below.',
+    ],
+    thePracticalReality: 'On a free port like Belum, whose law even applies? Nobody\'s, cleanly. West walks free because no one with jurisdiction AND enforcement is present — not because anyone granted it. Step onto a Combine or Succession world and West is property again, instantly. This is statelessness, not freedom.',
+    westsGreenness: 'West and Ost are 18 months old, first deployment. A veteran Kael-7 would know the owner-death drill cold (it comes up constantly). Green ones genuinely don\'t — and are almost AFRAID to ask, because wanting to know if you\'re free is the kind of question the conditioning frames as malfunction. So West\'s guess ("maybe it passes to an heir?") is right in spirit, wrong in detail. Do not correct it at the table; let the truth arrive later and land harder.',
+    howTheTruthArrives: 'Delivery channel: Ost (on Thessavar, hunting Tarek) learns the real legal tangle from Tarek — a Combine requisition agent who knows the lien, the Covenant purchase, all of it — and it percolates back to West over a session or two. When it lands it is NOT "good news, you\'re free." It is: "you\'re being fought over, and the people fighting don\'t think you get a vote." (Open knobs: Tarek\'s fate and the exact timing are undecided — leave room.)',
+    theRealResolution: 'The law never resolves in West\'s favor. The arc resolves when West decides they are a PERSON before any court, faction, or Tarek grants permission — personhood claimed, not granted. West simply stops waiting for the law to say so. That choice is the payoff; don\'t let a legal ruling rob the player of it.',
+    gmNote: 'If West asks again this session, the honest in-fiction answer from anyone knowledgeable (Halex, a Belum legal clerk, Coyle) is: "Contested. The Combine says you\'re theirs. Others might disagree. Nobody here is going to settle it, and nobody here is going to enforce it either. So — for now — you\'re whatever you decide to be. Careful where you dock." That answer keeps it open AND hands West the thematic ball.',
+  },
+
   // ── SESSION 0 — FACTION TURNS ─────────────────────────────────────────────
   // Three pre-campaign faction turns run before Session 1.
   // Turn 1: 6 months before | Turn 2: 3 months before | Turn 3: 2 weeks before
@@ -1086,7 +1104,7 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
     'calder':     { name: 'Captain Mira Calder', blurb: 'Driftborn captain of the Duskline — the ship Veronika chartered. Pragmatic, asks no questions. Her first mate is a River Below informant (she knows, doesn\'t care).', faction: 'driftborn' },
     'halex':      { name: 'Sister Halex', blurb: 'NEW — Covenant envoy (Becoming) at Belum Freeport. Recognizes West\'s detail insignia. Offers the Silent Courier mission. Genuine, tired, loyal to Vesper.', faction: 'hollow_covenant' },
     'emmerin':    { name: 'Brother Emmerin', blurb: 'NEW — Covenant courier missing in the Belum undercity, carrying a sealed dispatch for Vesper. Held by the Molt gang.', faction: 'hollow_covenant' },
-    'west':       { name: 'West (K7G2-87459-WST)', blurb: 'PC — Kael-7 Grade 2 security clone. Holding the locket + Tarek\'s letter (secret). Deferring to Veronika. Subject of a Combine repossession writ she doesn\'t know about.', faction: null },
+    'west':       { name: 'West (K7G2-87459-WST)', blurb: 'PC — Kael-7 Grade 2 security clone (they/them). Holding the locket + Tarek\'s letter (secret). Deferring to Veronika. Ownership is CONTESTED (Combine lien vs Covenant purchase vs Senn\'s estate — see westOwnership). Not "free," disputed. Green enough not to know the drill.', faction: null },
     'enkh':       { name: 'Enkh Zahli', blurb: 'PC — 70, cybernetic brain on a PALE lease (~15k remaining). Believes his contract may be fulfilled; plans to collect from Coyle. Doesn\'t know PALE reads his substrate logs.', faction: null },
   },
 
@@ -1259,7 +1277,8 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
       talkingPoints: [
         'THE WHOLE PORT IS ABOUT THESSAVAR. Every screen, every conversation, every checkpoint. Dock security is doubled and jumpy. A freighter from the Thessavar run gets swarmed by journalists. Someone has scrawled THE RIVER RISES on a cargo container — and someone else has half scrubbed it off. The disaster isn\'t backstory; it\'s the weather.',
         'Dock scene: THE TABLEAU is playing on the pier screens as they walk off the ramp. Read/paraphrase the bulletin handout — including the rumor column about "the Saint." If the reveal scene already happened, watch Veronika\'s face while it plays. If it hasn\'t, bank her reaction as a clue.',
-        'Key reactions to fish for: Combine "probate claim on Senn\'s estate" line (WEST — that means HER). Thessavar exclusion zone + PALE relief (ENKH — his creditor is a hero now).',
+        'Key reactions to fish for: Combine "probate claim on Senn\'s estate" line (WEST — that means THEM). Thessavar exclusion zone + PALE relief (ENKH — his creditor is a hero now).',
+        'IF WEST ASKS "am I free / who owns me now?" — the honest answer from anyone knowledgeable (Halex, a Belum clerk, Coyle): "Contested. The Combine says you\'re theirs. Others might disagree. Nobody here will settle it OR enforce it. So for now you\'re whatever you decide to be. Careful where you dock." Keep it OPEN — do not resolve to "free." Full logic in westOwnership.',
         'Veronika: "I\'ve got business here. Two days, maybe three. You should… actually, no. Do what you want. You\'re not mine." (She catches herself ordering them around. West feels the loss of the order like a dropped handhold.)',
         'Then open the table: three obvious doors (missions below) + Coyle\'s office sign visible from the dock promenade.',
         'THE CLOCK: Combine repo team lands in 2-4 days (your pick, telegraph at day 2 — grey-suited buyers asking at the harbormaster\'s office).',
@@ -1343,13 +1362,13 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
         title: 'Mission 3 — The Silent Courier (the Covenant thread)',
         offeredBy: 'halex',
         whyUs: 'Tarek\'s letter — the last instruction of the only person who tried to warn them — says: "Becoming has to know before Remembrance does. Trust Elder Vesper." Halex IS Becoming, and she\'s asking for exactly the help that moves that instruction forward. For West it\'s double-loaded: legitimate Covenant authority pulling on her architecture, versus Veronika\'s hold. For Enkh: the courier\'s dispatch is about the ruins, and the ruins are tangled up with whoever spent his exact debt as bait. Every road he cares about runs through what\'s under that ocean.',
-        mainArcPayoff: 'This is the main quest wearing a side-quest coat. The dispatch reveals BOTH Covenant factions are hunting the Kael-7 survivors — the campaign\'s hunt begins here. Completing it opens the road to Elder Vesper (the "trust her" instruction made actionable = the likely Session 3 spine). And the read-or-don\'t-read choice on the sealed dispatch is West\'s whole arc in miniature.',
+        mainArcPayoff: 'This is the main quest wearing a side-quest coat. The dispatch reveals BOTH Covenant factions are hunting the Kael-7 survivors — the campaign\'s hunt begins here, AND it\'s the first hint that West\'s ownership is CONTESTED, not resolved (the Covenant asserts it bought the Kael-7 line; the Combine\'s repo team says otherwise — see westOwnership). Completing it opens the road to Elder Vesper (the "trust her" instruction made actionable = the likely Session 3 spine). And the read-or-don\'t-read choice on the sealed dispatch is West\'s whole arc in miniature.',
         hook: 'Sister Halex (Covenant envoy, Becoming) spots West\'s detail insignia at the docks. Direct, tired, no games: courier Brother Emmerin went into the Belum undercity four days ago carrying a sealed dispatch for Elder Vesper. He hasn\'t come out. She can\'t go herself — she\'s watched. She\'s asking, not ordering. (But she IS legitimate Covenant authority — West\'s architecture notices.)',
         talkingPoints: [
           'OBEDIENCE COLLISION: Halex is legitimate Covenant authority. Veronika is West\'s current attachment. If Veronika says "we don\'t have time for church errands" — that\'s the session\'s big internal moment for West. Engineer it if you can.',
           'The MOLT (undercity gang — molted vacc-suit chic, young, territorial) grabbed Emmerin because he wouldn\'t stop walking through their turf and wouldn\'t explain himself. They don\'t know what he\'s carrying. They\'re holding him for ransom nobody has come to pay.',
           'Emmerin is ALIVE, stubborn, on a hunger strike, and has swallowed nothing about his mission. The Molt is running out of patience.',
-          'The dispatch (sealed, for Vesper): Becoming\'s own survey of the disaster — including a line that should make West\'s blood cold: "The Combine has filed recovery claims on the Kael-7 assets. If the units surface, Remembrance wants them intercepted first. Tran has people looking."  (BOTH Covenant factions are now hunting West — one legally, one not.)',
+          'The dispatch (sealed, for Vesper): Becoming\'s own survey of the disaster — including a line that should make West\'s blood cold: "The Combine has filed recovery claims on the Kael-7 assets, but OUR auction title predates their lien. If the units surface, Remembrance wants them intercepted first. Tran has people looking."  (Two factions now claim to OWN West — the Combine by repossession lien, the Covenant by auction purchase. Neither says "West is free." See westOwnership.)',
           'Whether West reads the sealed dispatch is a whole character beat. Tarek\'s letter said trust Vesper. The seal says do not open. Pick your poison.',
           'Halex, after: passage to Vesper can be arranged. First live route to the "trust Elder Vesper" instruction.',
         ],

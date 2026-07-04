@@ -143,7 +143,11 @@ after losing all conversation memory. The repo IS your memory. Read in this orde
 **Standing campaign facts** (stable across wipes; details in gm-lore.js):
 - Year 3200. PCs: Enkh Zahli (70, PALE-leased cybernetic brain, ~15k debt,
   failed assassin of Senn) and West / K7G2-87459-WST (Kael-7 Grade 2 clone,
-  18 months old, owner Senn is dead, subject of a Combine repossession writ).
+  they/them, 18 months old, owner Senn is dead). West's ownership is CONTESTED,
+  not free — Combine repossession lien vs Covenant auction purchase vs Senn's
+  weak estate claim; practically free only because no jurisdiction enforces at
+  a free port. West is green enough not to know the drill. The arc resolves by
+  West CLAIMING personhood, not by a court granting it. See `westOwnership`.
 - Veronika "The Saint" leads the River Below; her diver Red Flag caused the
   Still Gardens disaster trying to photograph the vault. The Lattice beneath
   Thessavar's ocean is an active alien transmission array, now broadcasting.
