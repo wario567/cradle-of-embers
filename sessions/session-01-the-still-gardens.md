@@ -391,3 +391,11 @@ Run this as the SWN faction turn (GM Turn screen). The throughline: **nobody who
 - Ost is on Thessavar, hunting Tarek, headed toward whatever "not safe" means.
 - Enkh's substrate: decide when PALE's hum returns (the moment it does is a scene).
 - Year discrepancy to resolve: this doc says 3231; gm-lore faction turns say 3249.
+
+## Player knowledge boundaries (confirmed post-session)
+
+- Players do NOT know the cold-open diver was Tarek, or that the second diver was Red Flag. Both are anonymous to them.
+- Players do NOT know Veronika is The Saint or what River Below is — but they HAVE seen her punky, tattooed, mostly-young crowd at the bar (River Below, unrecognized).
+- Players noticed Veronika was visibly upset about something but never asked. (Planned reveal next session: Red Flag disobeyed her, causing his death and Senn's.)
+- Players know full names: Enkh Zahli, Darius Epps, Nor, Ost, West's designation K7G2-87459-WST.
+- Tarek's fate and Ost's fate: deliberately undecided. Leave room.
