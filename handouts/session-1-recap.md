@@ -33,7 +33,7 @@ He never fires.
 
 An **explosion of water** erupts from beneath the stage where Senn is speaking. Sirens. The Still Gardens begin to **crumble and sink**, water flooding in from every side. Enkh and West both scramble onto what's left of the speaking platform — and both know, without needing a body, that **Arbiter Senn is dead**. No human survives that.
 
-One of West's unit-mates is killed by debris in the destruction. The other survives and stays at West's side.
+**Nor** — the unit-mate West is closest to — is killed by debris in the destruction. **Ost** survives and stays at West's side.
 
 The two strangers help survivors up onto the platform as the island goes down. Then **Veronika** arrives, trailing a line of swan boats, and evacuates the survivors of the Still Gardens.
 
@@ -51,7 +51,7 @@ While waiting at the bar:
 - West slips away from their surviving unit-mate and opens the package. Inside: a **locket**, and a **letter from Tarek to Senn** that makes no sense to them. The locket radiates warmth — and near it, West feels an uncanny sense of *rightness*, of completeness. West puts it away **without touching it**, and tells no one. Not even their unit-mate.
 - West questions Veronika about Tarek. She says she doesn't know him — but West can tell **she is lying**.
 - Asking around the bar, West learns that **Senn and Tarek met here several times**. They were known in this place.
-- The surviving unit-mate decides to go search for Tarek — their handler — and convinces West to stay behind: *if it matters that one of us survives, it should be you.*
+- Ost decides to go search for Tarek — their handler — and convinces West to stay behind: *if it matters that one of us survives, it should be you.*
 - A street urchin appears, wordlessly recognizing West as the person he was sent to find, and delivers a note: **"Found Tarek. Leave now. Not safe."**
 
 A messenger from Veronika arrives: it's time. At the shipyard, as they board, Veronika steps onto the dock, takes one last look at the fallen leaves of Kaeldrift, and says:
@@ -68,5 +68,5 @@ A messenger from Veronika arrives: it's time. At the shipyard, as they board, Ve
 - What destroyed the Still Gardens? Was Senn even the target?
 - Why is Veronika lying about knowing Tarek? And where is she taking you?
 - Who found Tarek — and why isn't it safe?
-- Will West's unit-mate make it off Thessavar?
+- Will Ost make it off Thessavar — or is Ost walking straight into whatever "not safe" means?
 - Enkh's client has gone dark, and the contract died with Senn. Who wanted her dead badly enough to hire him — and why exactly that price?

@@ -364,3 +364,30 @@ Run this as the SWN faction turn (GM Turn screen). The throughline: **nobody who
 - **Nor (K7G2-87512-NOR)** & **Ost (K7G2-87488-OST)** — West's two Kael-7 unit-mates. One dies in the collapse; one falls in with protocol and leaves with the Covenant delegation. *Faction: Progenitor Combine product / Hollow Covenant detail.*
 - **Darius Epps** — Enkh's friend of ~20 years (Kaeldrift). Skeptical of PALE, misses the old Enkh, knew the kid Div. Reachable by comm; the voice that warned him about the payout. *Unaffiliated.*
 - *(Referenced, offscreen:)* **Marshal Tran** — Hollow Covenant / Remembrance, reckless, thinks the vault is a weapon cache. **Elder Vesper** — Hollow Covenant / Becoming, the one Tarek said to trust; West's chain of command.
+
+---
+
+# POST-SESSION ADDENDUM — What Actually Happened (Canon)
+
+*Session played 2026-06-28. The plan above mostly held; these are the deviations and rulings that are now canon. The player-facing recap is `handouts/session-1-recap.md`.*
+
+## Deviations from plan
+
+1. **Red Flag was shown, not heard.** The cold open showed a second diver emerging from the shadows behind Tarek (not just an engine sound). Players know a *person* was down there.
+2. **Flashbacks ran as written** — the instructor's "you always fall in" line was delivered. Darius scene ran at Veronika's bar; Bronx-style accent for Darius is canon.
+3. **The unit:** **Nor died** (debris in the initial destruction). **Ost survived** — but instead of falling in with the Covenant delegation per the script, Ost stayed with West through the rescue, then in Kaeldrift chose to go search for Tarek (their handler), convincing West to stay behind ("if it matters that one of us survives, it should be you"). *The instructor's "fall in" payoff never fired — still in the bank for a later session.*
+4. **The rescue went public.** Veronika didn't extract just the two PCs in a canal runner — she arrived leading a convoy of swan boats and evacuated the survivors of the Still Gardens. She's now publicly associated with the rescue (hero optics, less deniability). Her "I didn't want this / ask me later" guilt confession did NOT happen — the PCs don't yet know River Below was involved.
+5. **EMP timing:** the EMP fired with a *secondary eruption* from the island's high point during the convoy ride back to Kaeldrift (not during the initial cascade). It silenced the noise in Enkh's head and cut his comm line to Darius. Enkh did NOT connect it to PALE. Ruling: his cybernetic limbs kept working.
+6. **Kaeldrift interlude (new, improvised):**
+   - West opened the package at the bar (away from Ost): read Tarek's note (didn't understand it), felt the locket's warmth and a sense of *rightness/completeness* near it, but **never touched the locket** and told no one — not even Ost.
+   - West questioned Veronika about Tarek; she denied knowing him; West won an opposed check and knows **she's lying**.
+   - Bar staff confirmed Senn and Tarek met at the bar several times and were known there.
+   - A street urchin delivered a note to West: **"Found Tarek. Leave now. Not safe."** *(GM: decide who sent this before Session 2 — it's not from the plan.)*
+7. **Departure:** they left on **Veronika's ship** from the shipyard (framed as hers — reconcile with the Duskline/Calder threads: simplest is that she booked/chartered berths on the Duskline). Session ended dockside, **before launch** — Veronika's last look at Kaeldrift's fallen leaves: *"It was fun while it lasted."* Beat 7 (launch, berth scene, the "where do people like us go" line) is unplayed and available as the Session 2 cold open.
+
+## Live state going into Session 2
+
+- Enkh has NOT seen the note or locket; Veronika doesn't know West has them. Locket unsplit, untouched. Tarek's "do not divide it" warning intact.
+- Ost is on Thessavar, hunting Tarek, headed toward whatever "not safe" means.
+- Enkh's substrate: decide when PALE's hum returns (the moment it does is a scene).
+- Year discrepancy to resolve: this doc says 3231; gm-lore faction turns say 3249.
