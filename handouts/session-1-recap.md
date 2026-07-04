@@ -14,12 +14,12 @@ The first diver was **Tarek**.
 
 ## Two Boats
 
-Present day. The Still Gardens — the private garden island south of Kaeldrift, hedged waterways like a living maze — hosts the **Thessavar Concordance**, where **Arbiter Senn** will speak. Two swan boats pass each other in a narrow canal: **West**, a Kael-7 security clone in grey, running threat assessment from Senn's procession; and **Enkh**, an old man in a loud shirt who is still in a way that has nothing to do with boats. Their eyes meet for half a second. Neither speaks. The canal carries them apart.
+Present day. The Still Gardens — the private garden island south of Kaeldrift, hedged waterways like a living maze — hosts the **Thessavar Concordance**, where **Arbiter Senn** will speak. Two swan boats pass each other in a narrow canal: **West** (K7G2-87459-WST), a Kael-7 security clone in grey, running threat assessment from Senn's procession; and **Enkh Zahli**, an old man in a loud shirt who is still in a way that has nothing to do with boats. Their eyes meet for half a second. Neither speaks. The canal carries them apart.
 
 ## The Before — Two Flashbacks
 
 - **West**, months ago, in training on the platform where the Kael-7 line is raised: reprimanded by their commander for breaking protocol. *A Kael-7 alone is a malfunction. When the principal is gone, you fall in.*
-- **Enkh**, five days ago, in **Veronika's bar** in Kaeldrift: planning the assassination of Arbiter Senn over a map with **Darius** — an old friend with a Bronx-thick accent and twenty years of history.
+- **Enkh**, five days ago, in **Veronika's bar** in Kaeldrift: planning the assassination of Arbiter Senn over a map with **Darius Epps** — an old friend with a Bronx-thick accent and twenty years of history.
 
 ## The Concordance
 
