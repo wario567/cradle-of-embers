@@ -710,6 +710,24 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
 
   ],
 
+  // ── ENKH'S CONTRACT — DECIDED CANON (post-Session 1) ──────────────────────
+  // Who hired Enkh, why the number was exact, and how the payment scene goes.
+  enkhContract: {
+    client: 'PALE (The Pale Substrate) — via a cutout broker. Enkh has never met or spoken to the real client and the broker claims not to know who it is either.',
+    whyExactNumber: `The 15,000-credit payout — Enkh's exact remaining Lease balance — was deliberate. PALE wanted Senn's treaty stalled and calculated that Enkh (already leased, already criminal, already counting his own balance) was the cheapest reliable instrument. The number wasn't generosity. It was bait engineered to be impossible to refuse. Darius saw it immediately: "Nobody pays your number by accident."`,
+    theTrap: `The contract has a proof-of-kill clause. And PALE has read access to Enkh's substrate surface logs — it knows, from inside his own head, that he never pulled the trigger. Senn is dead (objective achieved), but PALE will decline payment on the technicality: "Cause of death does not match the commissioned work." The deeper truth: PALE never intended to let the Lease clear. The contract was designed so the number would keep dangling whether he succeeded or not. The Lease is not a debt. It is a leash.`,
+    playerState: `As of end of Session 1: Enkh believes the contract may be FULFILLED — target dead, job arguably done. He expects to contact the broker and collect. The bad news has not been broken to him yet. Let him make contact expecting payment and discover the decline live at the table.`,
+    theScene: `The broker meeting: Coyle is polite, even sympathetic. Slides the declination across the table. "Client says the terms weren't fulfilled. Cause of death doesn't match the commissioned work." The hook to let dangle: HOW COULD THE CLIENT POSSIBLY KNOW? There was no body. No witnesses to what Enkh did or didn't do in that hedge. The only place the truth of that moment exists is inside Enkh's own cybernetic brain. If the player chews on that long enough, the implication lands like a train. Do not explain it for him.`,
+    broker: {
+      name: 'Marn Coyle',
+      role: 'Independent contract broker / fixer',
+      description: `Mid-50s, unhurried, professionally bland — the kind of person you forget while you're still looking at them. Runs a licensed pawn-and-assay office as a front; brokers quiet work through encrypted dead-drop channels. Enkh has used Coyle twice before for smuggling contracts; this was the first wet work Coyle ever offered him.`,
+      trait: 'Scrupulously neutral. Genuinely likes Enkh. Will not lie to him — but is contractually barred from naming clients and personally afraid of this one.',
+      secret: `Coyle doesn't know the client is PALE, but has guessed — the escrow account routing smelled like Substrate banking architecture, and the anonymity requirements were beyond anything a normal client demands. Coyle is quietly terrified. If pressed hard (and if Enkh has earned it), Coyle might say only: "I don't know who it is. I know I checked the routing twice and then stopped checking. You understand? I stopped checking."`,
+      location: 'Reachable by encrypted drop from anywhere; physical office wherever the party makes port next (Coyle franchises the front — assay offices in several Driftborn-served ports).',
+    },
+  },
+
   // ── SESSION 0 — FACTION TURNS ─────────────────────────────────────────────
   // Three pre-campaign faction turns run before Session 1.
   // Turn 1: 6 months before | Turn 2: 3 months before | Turn 3: 2 weeks before

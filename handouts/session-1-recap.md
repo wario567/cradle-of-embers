@@ -33,6 +33,7 @@ You don't know who either of them is.
 **Enkh** did his homework before taking the contract:
 
 - He confirmed the target: Arbiter Senn, Hollow Covenant, attending the Thessavar Concordance to close an excavation treaty. He learned the Covenant is an old, wounded faction — survivors of a collapsed civilization, part warrior, part monk, internally divided. Exactly the kind of client whose enemies pay well.
+- The contract came through **Marn Coyle** — a fixer Enkh has used twice before for smuggling work, unhurried and professionally bland, operating out of a licensed pawn-and-assay office. Coyle claims not to know who the end client is. This was the first wet work Coyle ever offered him.
 - The payout was **15,000 credits** — precisely the remaining balance on his PALE Cognitive Lease. Darius said it out loud so Enkh couldn't pretend he hadn't thought it: *"Enkh. Nobody pays your number by accident."*
 - Enkh and Darius both know things about **PALE** that PALE doesn't advertise. Twenty years of debt gives a man time to notice patterns — in the contracts, in the "wellness monitors," in which questions cost 200 credits to ask. Darius has been skeptical of PALE contracts since before the accident. Neither of them can prove anything. Both of them have stopped assuming the lease is just a lease.
 
@@ -100,4 +101,5 @@ A messenger from Veronika arrives: it's time. At the shipyard, as they board her
 - Why is Veronika lying about knowing Tarek? What's weighing on her — and where is she taking you?
 - Who found Tarek — and why isn't it safe? And why was the note in **West's own handwriting**?
 - Will Ost make it off Thessavar?
-- Enkh's contract died with Senn, and his client has gone silent. Who hired him — and are they still out there? And who pays a man's exact debt by accident?
+- Enkh's contract was to kill Senn. Senn is dead. Does that count? The 15,000 credits — the exact balance of his Lease — are waiting to be collected. All he has to do is contact his broker and claim the job. What could go wrong?
+- And underneath it all: who hired him in the first place — and who pays a man's exact debt by accident?

@@ -44,7 +44,7 @@
 
 - **Thessavar** — ocean world, 96% water. Human habitation clings to floating platform cities and the exposed peaks of drowned mountains.
 - **Kaeldrift** (pop. ~80,000) — the main platform city, on a shallow shelf to the north. The working city. **Veronika's bar is here**, off the Concordance circuit — where Tarek and Senn met to talk freely.
-- **The Still Gardens** — a private island estate ~40 minutes by water south of Kaeldrift. A natural rock formation built over with centuries of engineered hedges, formal garden terraces, and a maze of narrow waterways that connect the estate's sections like a living thing. Guests are ferried in and move between terraces by **swan boat** — long white craft poled by hand, because an engine is vulgar on water this old. At the estate's center: a weathered formation of stepped stone nobody can quite date, its high terrace the ceremonial summit. Nobody knows it's the cap of the access shaft.
+- **The Still Gardens** — a private island estate ~40 minutes by water south of Kaeldrift. Built on **centuries of ruins, city stacked on drowned city** — it looks like Venice slowly losing an argument with the sea, and it has been **sinking for generations** (as-played canon: the defense systems below have been adjusting the island's foundation; nobody up top knows the sinking has a *cause*). Hedge walls, formal garden terraces, and a maze of narrow waterways that were streets once, then canals, now something in between. Guests move between terraces by **swan boat** — and the swans are **biomechanical**: bloodshot eyes, eerie perfectly-still movements, and they **leave no wake** in the water. They respond to no passenger. At the estate's center: a weathered formation of stepped stone nobody can quite date, its high terrace the ceremonial summit. Nobody knows it's the cap of the access shaft.
 - **The depths** — pre-Scream ruins begin around the 400m thermocline; the sealed alien zone (the Lattice vault) lies past 600m, reachable only by submersible.
 
 ---
@@ -312,7 +312,7 @@ Run this as the SWN faction turn (GM Turn screen). The throughline: **nobody who
 # Open Threads → Session 2 Leads
 
 **Keep hidden (GM only):**
-- PALE *arranged* Enkh's contract to stall the treaty. (Let him chase the client for sessions; Darius's flashback line is the slow fuse.)
+- PALE *arranged* Enkh's contract to stall the treaty, via a cutout broker — **Marn Coyle**, a fixer Enkh has used twice before for smuggling work. **DECIDED (see gm-lore `enkhContract`):** the contract has a proof-of-kill clause, and PALE knows from Enkh's own substrate logs that he never fired. Payment will be declined: *"Cause of death doesn't match the commissioned work."* The Lease was never going to clear — the contract was a leash, not a job. Let Enkh contact Coyle expecting payment and hit the wall live. The unanswerable question to leave hanging: *how could the client possibly know he didn't do it?*
 - The full nature/scope of the Lattice broadcast and what it's *for.*
 - Tarek's exact fate — dead in the dark, fled, or taken by the vault. (You decide later; leave room.)
 
@@ -376,20 +376,26 @@ Run this as the SWN faction turn (GM Turn screen). The throughline: **nobody who
 1. **Red Flag was shown, not heard.** The cold open showed a second diver emerging from the shadows behind Tarek (not just an engine sound). Players know a *person* was down there.
 2. **Flashbacks ran as written** — the instructor's "you always fall in" line was delivered. Darius scene ran at Veronika's bar; Bronx-style accent for Darius is canon.
 3. **The unit:** **Nor died** (debris in the initial destruction). **Ost survived** — but instead of falling in with the Covenant delegation per the script, Ost stayed with West through the rescue, then in Kaeldrift chose to go search for Tarek (their handler), convincing West to stay behind ("if it matters that one of us survives, it should be you"). *The instructor's "fall in" payoff never fired — still in the bank for a later session.*
-4. **The rescue went public.** Veronika didn't extract just the two PCs in a canal runner — she arrived leading a convoy of swan boats and evacuated the survivors of the Still Gardens. She's now publicly associated with the rescue (hero optics, less deniability). Her "I didn't want this / ask me later" guilt confession did NOT happen — the PCs don't yet know River Below was involved.
+4. **The rescue went public.** Veronika didn't extract just the two PCs in a canal runner — she arrived leading a convoy of swan boats and evacuated the survivors of the Still Gardens. She's now publicly associated with the rescue (hero optics, less deniability). Her "I didn't want this / ask me later" guilt confession did NOT happen — the PCs don't yet know River Below was involved. **Critically: Veronika took charge with total authority — and West FELL IN.** With Senn dead and no chain of command, West's obedience architecture attached to the most confident legitimate-seeming authority present, exactly per the instructor's training. West now defers to Veronika without either of them fully understanding why. (The instructor's "you always fall in" line half-fired here — not as a broken order but as a live wire: West fell in with a *stranger*. The dramatic payoff of consciously choosing NOT to fall in is still banked.)
 5. **EMP timing:** the EMP fired with a *secondary eruption* from the island's high point during the convoy ride back to Kaeldrift (not during the initial cascade). It silenced the noise in Enkh's head and cut his comm line to Darius. Enkh did NOT connect it to PALE. Ruling: his cybernetic limbs kept working.
 6. **Kaeldrift interlude (new, improvised):**
    - West opened the package at the bar (away from Ost): read Tarek's note (didn't understand it), felt the locket's warmth and a sense of *rightness/completeness* near it, but **never touched the locket** and told no one — not even Ost.
    - West questioned Veronika about Tarek; she denied knowing him; West won an opposed check and knows **she's lying**.
    - Bar staff confirmed Senn and Tarek met at the bar several times and were known there.
-   - A street urchin delivered a note to West: **"Found Tarek. Leave now. Not safe."** *(GM: decide who sent this before Session 2 — it's not from the plan.)*
+   - A street urchin delivered a note to West: **"Found Tarek. Leave now. Not safe."** — and the note is in **West's own handwriting**. *(GM: decide who sent this before Session 2 — it's not from the plan. The handwriting opens three doors: another Kael-7 [same lineage, same conditioning, same hand — Ost? a stranger unit?], something copying West [the Combine's lineage mapping? Genesis-1?], or something stranger tied to the Lattice. Choose when it matters.)*
+   - **Darius was at the bar the whole time** — 12-13 beers deep by the time Enkh got back, a regular at Veronika's, familiar with her. (Ruling pending: his tolerance was never established; he was played functional. Canon: he's a heavy drinker and Veronika's is his bar.)
+   - **Tarek's parting line to West** when handing over the parcel: *"Aye — nobody pays your price by accident."* — the same warning Darius gave Enkh, word-for-shape. Neither PC knows the other heard it. (GM: this echo is now a table motif. Use it a third time when it will hurt.)
 7. **Departure:** they left on **Veronika's ship** from the shipyard (framed as hers — reconcile with the Duskline/Calder threads: simplest is that she booked/chartered berths on the Duskline). Session ended dockside, **before launch** — Veronika's last look at Kaeldrift's fallen leaves: *"It was fun while it lasted."* Beat 7 (launch, berth scene, the "where do people like us go" line) is unplayed and available as the Session 2 cold open.
 
 ## Live state going into Session 2
 
 - Enkh has NOT seen the note or locket; Veronika doesn't know West has them. Locket unsplit, untouched. Tarek's "do not divide it" warning intact.
+- **Enkh believes his contract may be FULFILLED** — target dead, job arguably done. He expects to contact the broker and collect his 15,000. The bad news (proof-of-kill clause, payment declined, "cause of death doesn't match the commissioned work") has NOT been broken to him. **Broker is decided: Marn Coyle** — see gm-lore `enkhContract` for the full thread and the payment-decline scene.
+- **West is deferring to Veronika** as de facto legitimate authority (fell in during the rescue). Neither PC knows she leads the River Below. West's obedience is currently pointed at the person whose movement caused everything.
 - Ost is on Thessavar, hunting Tarek, headed toward whatever "not safe" means.
+- The urchin's note is in West's own handwriting — sender undecided (see Deviations #6 for options).
 - Enkh's substrate: decide when PALE's hum returns (the moment it does is a scene).
+- Kaeldrift detail debt: falling leaves were seen at the dock but the city's greenery was never described. (Easy retrofit: platform cities grow engineered canopy trees for oxygen/food/morale — Kaeldrift's are shedding for the season. Or leave it as one of those beautiful unexplained things.)
 - Year discrepancy to resolve: this doc says 3231; gm-lore faction turns say 3249.
 
 ## Player knowledge boundaries (confirmed post-session)
