@@ -980,6 +980,83 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
       ],
     },
 
+    // ── TURN 4: BETWEEN SESSIONS 1 AND 2 (the Thessavar aftermath) ────────
+    {
+      turn: 4,
+      label: 'Between Sessions 1 & 2 (~1 month, aftermath of the Still Gardens)',
+      worldState: 'The island is gone. The signal has started. Everyone is pointing at everyone else.',
+      actions: [
+        {
+          faction: 'pale_substrate',
+          action: 'Expand Influence (Thessavar)',
+          detail: 'Roll 1d10+C6 = 15, uncontested. PALE lands a "Reconstruction & Wellness" contract with the Kaeldrift council. Wealth 2→1.',
+          roll: { attacker: 15, defender: 0, result: 'Success (uncontested)' },
+          narrative: 'Free trauma counseling, free substrate scans for the displaced. Under relief cover: a monitoring perimeter around the ruins exclusion zone. PALE is now the most visible benefactor on Thessavar.',
+        },
+        {
+          faction: 'aureole_synod',
+          action: 'Use Asset (Informational Sucker)',
+          detail: 'Synod receivers log an anomalous repeating signal on unknown frequencies. AURIS dedicates 11% of total processing to decoding it. It has not succeeded.',
+          narrative: 'This disturbs AURIS more than anything in 300 years — a signal it cannot read, from a source older than itself. Publicly: chapels open their doors to Concordance survivors.',
+        },
+        {
+          faction: 'river_below',
+          action: 'Retrench',
+          detail: 'd6+C5 = 9 recovered. The Saint is off-world; the cells hold.',
+          narrative: 'Rumors that River Below was AT the Still Gardens spread internally — half the movement is horrified, half electrified. Red Flag\'s name becomes a whispered argument: martyr or fool.',
+        },
+        {
+          faction: 'the_penumbra',
+          action: 'Use Asset (cover identities) — investigate the signal',
+          detail: 'Opposed: Penumbra 2d6+5=13 vs PALE 2d6+6=12. PENUMBRA WINS.',
+          roll: { attacker: 13, defender: 12, result: 'Attacker wins' },
+          narrative: 'Sorin\'s people intercept a fragment of PALE\'s classified survey data in transit — independent confirmation of Lenne\'s last message: the ruins are a transmission array. Sorin decides this one gets PUBLISHED. They begin preparing a release they can survive.',
+        },
+        {
+          faction: 'argent_compact',
+          action: 'Expand Influence (sanctuary network)',
+          detail: 'Roll 12, success. Kaeldrift sanctuary becomes the refugee center for displaced Concordance staff.',
+          narrative: 'Compact standing at an all-time high. Warden Pell now holds more eyewitness accounts of the disaster than any faction\'s intelligence service.',
+        },
+        {
+          faction: 'driftborn',
+          action: 'Buy Asset — expanded freight run',
+          detail: 'Thessavar\'s supply chain is broken; the Driftborn are the only ones flying. Rates triple; Brask caps rates for relief cargo.',
+          narrative: 'A PR masterstroke the Combine\'s accountants will never understand. The Duskline\'s charter (Veronika + the PCs) departs in this window.',
+        },
+        {
+          faction: 'progenitor_combine',
+          action: 'Use Asset (legal) — probate claim',
+          detail: 'Senn dead + Tarek missing → surviving Kael-7 units revert to Combine ownership as unclaimed property. Recovery team dispatched with a repossession writ. Locate roll: 11 — they traced the Duskline\'s manifest.',
+          roll: { attacker: 11, defender: 0, result: 'Assets located' },
+          narrative: 'THEY KNOW WHERE WEST WENT. The recovery team is 2-4 days behind the PCs. This is the Session 2 clock.',
+        },
+        {
+          faction: 'hollow_covenant',
+          action: 'Refit Asset — Frigate Squadron repaired',
+          detail: 'HP 0→4, cost 2 Wealth (3→1). Goal (excavation treaty) VOIDED — must select new goal next turn.',
+          narrative: 'Tran consolidates military command while Vesper\'s faction reels. Diplomats recalled sector-wide. Tran blames Becoming\'s "soft diplomacy" for Senn\'s exposure. The Radiance whispers: the relic is provably real now — the ocean itself defended it.',
+        },
+        {
+          faction: 'the_succession',
+          action: 'Expand Influence — emergency jurisdiction claim',
+          detail: 'Roll 1d10+2=5 vs Thessavar council 8. FAILS.',
+          roll: { attacker: 5, defender: 8, result: 'Defender wins' },
+          narrative: 'Solis\'s declaration of Mandate emergency administration over the disaster zone is publicly rebuffed. The frigates stay anyway. Venn does not accept "no" as a legal outcome — merely a delayed one.',
+        },
+      ],
+      timelineEvents: [
+        'PALE wins the Thessavar reconstruction contract — free counseling and substrate scans for the displaced. A monitoring perimeter goes up around the ruins under relief cover.',
+        'The Aureole Synod detects an anomalous repeating signal it cannot decode. AURIS is disturbed for the first time in 300 years.',
+        'The Penumbra intercepts PALE survey data confirming the Thessavar ruins are a transmission array — and begins preparing to publish.',
+        'The Argent Compact\'s Kaeldrift sanctuary becomes the refugee center for the Concordance displaced.',
+        'Driftborn freight rates triple; Fleet-Elder Brask caps relief cargo rates. The Driftborn are the only ones flying.',
+        'Progenitor Combine files a probate claim: surviving Kael-7 units revert to Combine ownership. A recovery team with a repossession writ traces the Duskline\'s departure manifest.',
+        'The Hollow Covenant recalls diplomats sector-wide and repairs its frigates. Marshal Tran consolidates military command.',
+        'The Succession\'s emergency jurisdiction claim over the disaster zone is publicly rebuffed by Kaeldrift\'s council. Its frigates remain in-system anyway.',
+      ],
+    },
+
   ],
 
   // ── FACTION STATE AFTER SESSION 0 ─────────────────────────────────────────
@@ -995,6 +1072,196 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
     { id: 'hollow_covenant',     hp: 14, cunning: 3, force: 5, wealth: 3, assets: ['Frigate Squadron (disabled, orbit)', 'Religious Brotherhood'], note: 'Military arm neutralized. Tran humiliated and showing Radiance. Elder Vesper holding Becoming faction together by force of personality. The Lattice below the ocean remains the goal — they still think it is their own homeworld relic.' },
     { id: 'the_succession',      hp: 18, cunning: 2, force: 5, wealth: 0, assets: ['Pretech Manufactory', 'Frigate Squadron (Thessavar orbit)', 'Postech Industries', 'Broker (legal, Thessavar)'], note: 'Legal challenge filed. Military position secure. Financially exhausted at Thessavar.' },
   ],
+
+  // ── CAST INDEX — hover blurbs for in-app links ─────────────────────────────
+  castIndex: {
+    'veronika':   { name: 'Veronika "The Saint"', blurb: 'Kaeldrift bartender; secretly head of the River Below. Rescued the PCs. West has fallen in under her authority. Guilty about Red Flag; PCs don\'t know any of it.', faction: 'river_below' },
+    'coyle':      { name: 'Marn Coyle', blurb: 'Enkh\'s contract broker. Mid-50s, professionally bland, scrupulously neutral. Doesn\'t know the client is PALE but has guessed — and stopped checking. Will decline the payment.', faction: 'pale_substrate' },
+    'darius':     { name: 'Darius Epps', blurb: 'Enkh\'s friend of 20 years. Heavy drinker, regular at Veronika\'s bar. Still on Thessavar. Skeptical of PALE. Knew Div.', faction: null },
+    'ost':        { name: 'Ost (K7G2-87488-OST)', blurb: 'West\'s surviving unit-mate. Stayed on Thessavar to hunt for Tarek. Status unknown. Subject to the same Combine repossession writ as West.', faction: 'progenitor_combine' },
+    'tarek':      { name: 'Requisition Agent Tarek', blurb: 'Combine agent who delivered West\'s unit; discovered what\'s in the vault; disappeared. Left the locket + letter. Fate deliberately undecided.', faction: 'progenitor_combine' },
+    'vesper':     { name: 'Elder Vesper', blurb: 'Hollow Covenant / Becoming faction leader. Tarek\'s note says trust her. West\'s nominal chain of command. Has not appeared on screen yet.', faction: 'hollow_covenant' },
+    'tran':       { name: 'Marshal Onyx Tran', blurb: 'Hollow Covenant / Remembrance military commander. Radiance-infected, increasingly reckless. Thinks the vault is a weapon cache. Offscreen so far.', faction: 'hollow_covenant' },
+    'senn':       { name: 'Arbiter Senn', blurb: 'Hollow Covenant diplomat, West\'s late owner, Enkh\'s late target. Killed by the defense-system geyser mid-treaty-signing. No body recovered.', faction: 'hollow_covenant' },
+    'calder':     { name: 'Captain Mira Calder', blurb: 'Driftborn captain of the Duskline — the ship Veronika chartered. Pragmatic, asks no questions. Her first mate is a River Below informant (she knows, doesn\'t care).', faction: 'driftborn' },
+    'halex':      { name: 'Sister Halex', blurb: 'NEW — Covenant envoy (Becoming) at Belum Freeport. Recognizes West\'s detail insignia. Offers the Silent Courier mission. Genuine, tired, loyal to Vesper.', faction: 'hollow_covenant' },
+    'emmerin':    { name: 'Brother Emmerin', blurb: 'NEW — Covenant courier missing in the Belum undercity, carrying a sealed dispatch for Vesper. Held by the Molt gang.', faction: 'hollow_covenant' },
+    'west':       { name: 'West (K7G2-87459-WST)', blurb: 'PC — Kael-7 Grade 2 security clone. Holding the locket + Tarek\'s letter (secret). Deferring to Veronika. Subject of a Combine repossession writ she doesn\'t know about.', faction: null },
+    'enkh':       { name: 'Enkh Zahli', blurb: 'PC — 70, cybernetic brain on a PALE lease (~15k remaining). Believes his contract may be fulfilled; plans to collect from Coyle. Doesn\'t know PALE reads his substrate logs.', faction: null },
+  },
+
+  // ── SESSION 2 — THE QUIET RUN (streamlined GM runbook) ────────────────────
+  session2: {
+    title: 'Session 2 — Where People Like Us Go',
+    world: 'The Duskline (transit) → Belum Freeport',
+    timeSkip: '~12 days in spike drill, Thessavar → Belum. GM Turn 4 covers this month.',
+
+    // The pre-session faction recap — one line per faction: what they did and why.
+    turnSummary: [
+      { faction: 'progenitor_combine', did: 'Filed probate: Kael-7 units revert to Combine. Recovery team traced the Duskline manifest.', why: 'Senn dead + Tarek missing = unclaimed property. THE SESSION CLOCK: repo team is 2-4 days behind the PCs.' },
+      { faction: 'pale_substrate', did: 'Won the Thessavar reconstruction contract; perimeter around the ruins under relief cover.', why: 'Wants the ruins; relief work is the perfect lock on the site. Also still holds Enkh\'s leash.' },
+      { faction: 'the_penumbra', did: 'Intercepted PALE survey data; preparing to PUBLISH that the ruins are a transmission array.', why: 'Sorin decided the sector deserves to know. When this breaks, every faction moves.' },
+      { faction: 'aureole_synod', did: 'Detected the Lattice signal; AURIS cannot decode it and is deeply disturbed.', why: 'An AI god just met something older than itself. Public face: chapels shelter survivors.' },
+      { faction: 'hollow_covenant', did: 'Repaired frigates; Tran consolidating military power; diplomats recalled.', why: 'Treaty is ash; Becoming is weakened by Senn\'s death; the Radiance says the relic is provably real now.' },
+      { faction: 'the_succession', did: 'Claimed emergency jurisdiction over the disaster zone — publicly rebuffed. Frigates stay.', why: 'Venn treats "no" as a delayed yes. Slow legal siege of Thessavar begins.' },
+      { faction: 'argent_compact', did: 'Kaeldrift sanctuary became THE refugee center.', why: 'This is what they\'re for. Pell now holds the best eyewitness archive of the disaster.' },
+      { faction: 'driftborn', did: 'Only ones flying to Thessavar; rates tripled; Brask capped relief cargo rates.', why: 'Crisis is the Driftborn\'s market. The Duskline (with the PCs) left in this window.' },
+      { faction: 'river_below', did: 'Went quiet and held together. Internal schism brewing over Red Flag.', why: 'The Saint is off-world (with the PCs!). Nobody outside knows RB was involved. Yet.' },
+    ],
+
+    coldOpen: {
+      title: 'Cold Open — the banked launch beat',
+      talkingPoints: [
+        'Pick up EXACTLY where S1 ended: dockside, "It was fun while it lasted," boarding the Duskline.',
+        'Launch. Thessavar shrinks — blue, still, nothing showing what happened.',
+        'The berth scene: an assassin, a bodyguard, a bartender. First time all three breathe.',
+        'Close on Veronika\'s line: "So. Where do people like us go, when there\'s nowhere on that rock left to stand?"',
+        'Let the players answer. Whatever they say, the ship is headed to Belum Freeport — Calder\'s next port. 12 days.',
+      ],
+      checks: [],
+      cast: ['veronika', 'calder', 'west', 'enkh'],
+    },
+
+    transit: {
+      title: 'Transit — 12 days on the Duskline (montage + 2-3 scenes MAX)',
+      talkingPoints: [
+        'Offer each player ONE ship scene. Don\'t run all of these — let them pick what they poke at.',
+        'ENKH: the hum returns. Mid-transit, in the dark of a sleeping berth — the back-of-skull weight comes back ON. He knows exactly what it is now that he heard the silence. (Pure roleplay beat, no roll.)',
+        'WEST: the locket rides in a pocket. Warm at odd hours — warmer when West is near ENKH. (Don\'t explain. Let the player notice the pattern or not.)',
+        'VERONIKA at cards / in the galley: she deflects questions with charm. If pressed hard about Tarek again, she gets QUIET, not defensive.',
+        'CALDER\'s first mate (unnamed so far): watches Veronika constantly. West\'s threat-assessment flags it. (He\'s her informant — reading as either devotion or surveillance.)',
+        'Optional overhear: Calder on comms — "…no, Thessavar\'s closed to everything but relief runs. Rates are triple if you can get a slot. Whole sector\'s talking about it."',
+      ],
+      checks: [
+        { when: 'West studies the first mate', skill: 'Notice', dc: 8, success: 'His tattoos match the bar crowd back in Kaeldrift — same punky style.', fail: 'Just a spacer with ink.' },
+        { when: 'Enkh asks Veronika about her plans', skill: 'Talk (or just RP)', dc: 10, success: 'A crack: "I had people counting on me back there. Had." She stops herself.', fail: 'Charm wall holds.' },
+        { when: 'Either PC researches Belum en route', skill: 'Know', dc: 8, success: 'Belum Freeport: Driftborn-served independent port. Neutral, busy, light law. Argent Compact reading room. Assay offices — including a Coyle franchise.', fail: 'Busy port, light law. That\'s all the file says.' },
+      ],
+      cast: ['veronika', 'calder', 'west', 'enkh'],
+    },
+
+    arrival: {
+      title: 'Arrival — Belum Freeport (the sandbox opens)',
+      talkingPoints: [
+        'Dock scene: THE TABLEAU is playing on the pier screens as they walk off the ramp. Read/paraphrase the bulletin handout — the news greets them.',
+        'Key reactions to fish for: Combine "probate claim on Senn\'s estate" line (WEST — that means HER). Thessavar exclusion zone + PALE relief (ENKH — his creditor is a hero now).',
+        'Veronika: "I\'ve got business here. Two days, maybe three. You should… actually, no. Do what you want. You\'re not mine." (She catches herself ordering them around. West feels the loss of the order like a dropped handhold.)',
+        'Then open the table: three obvious doors (missions below) + Coyle\'s office sign visible from the dock promenade.',
+        'THE CLOCK: Combine repo team lands in 2-4 days (your pick, telegraph at day 2 — grey-suited buyers asking at the harbormaster\'s office).',
+      ],
+      checks: [
+        { when: 'Reading the Tableau critically', skill: 'Know or Connect', dc: 10, success: 'The bulletin never says what CAUSED the disaster. Every other outlet speculates wildly; the Tableau, the "responsible" one, conspicuously doesn\'t.', fail: 'Solid, sober reporting.' },
+      ],
+      cast: ['veronika', 'coyle'],
+    },
+
+    missions: [
+      {
+        id: 'm1',
+        title: 'Mission 1 — The Quiet Run (Veronika\'s errand)',
+        offeredBy: 'veronika',
+        hook: 'Veronika asks the PCs to help move six sealed crates from the Duskline\'s hold to a warehouse on the outer moorage, night transfer, no questions. She\'s paying 400 each. "It\'s medicine. Mostly."',
+        talkingPoints: [
+          'It IS mostly medicine — relief meds and forged refugee IDs for Thessavar\'s displaced, River Below\'s real work. She\'s not lying, just editing.',
+          'The transfer is watched: the RUSTWATER CREW (dock pirates) tailed the Duskline\'s manifest and think the crates are pretech salvage from the disaster.',
+          'They hit at the warehouse airlock — mid-transfer, worst moment. They want the crates, not a massacre. Morale breaks fast.',
+          'AFTER: a crate cracks in the fight — meds and ID wafers spill. Veronika doesn\'t explain. "People need to be other people sometimes. You two know that better than most."',
+          'TRUST BEAT: this is the session\'s Veronika-bonding mission. If PCs fight well for her, she starts treating them like crew. West\'s attachment deepens (flag it privately).',
+        ],
+        checks: [
+          { when: 'Casing the moorage before transfer', skill: 'Notice', dc: 10, success: 'Two spotters on the gantry who aren\'t dockworkers — hands too clean.', fail: 'Ambush gets surprise round.' },
+          { when: 'Talking the pirates down (after first casualties)', skill: 'Talk', dc: 10, success: 'Rustwater takes their wounded and goes. Their leader marks the PCs: "Wrong crates. Our mistake." Possible future contact.', fail: 'Fight to morale break.' },
+          { when: 'Examining spilled wafers', skill: 'Know', dc: 8, success: 'Refugee identity documents — good forgeries. Whoever made these has real infrastructure.', fail: 'Some kind of data wafers.' },
+        ],
+        combat: {
+          setup: 'Warehouse airlock, night, crates as cover, narrow kill-zone at the lock door. 5 Rustwater pirates.',
+          enemies: [
+            { name: 'Rustwater pirate ×4', hp: 4, ac: 12, atk: '+1', dmg: '1d6 (shard pistol)', morale: 7 },
+            { name: 'Rustwater bosun (leader)', hp: 8, ac: 13, atk: '+2', dmg: '1d8 (shotgun)', morale: 8 },
+          ],
+          terrain: 'Crate stacks = cover (+2 AC). Airlock chokepoint. Gantry above (Exert DC 8 to climb, flanking shots).',
+          twist: 'Round 3: warehouse floodlights slam on — harbor patrol inbound in ~5 rounds. Everyone has a reason not to be found here.',
+        },
+        reward: '400 credits each + Veronika\'s trust (mechanically: she starts answering SOME questions honestly).',
+        leadsTo: 'Veronika opens up slightly → path to the River Below reveal when you\'re ready.',
+        cast: ['veronika', 'calder'],
+      },
+      {
+        id: 'm2',
+        title: 'Mission 2 — Small Money (Coyle\'s collection job)',
+        offeredBy: 'coyle',
+        hook: 'RUN THE PAYMENT DECLINE FIRST (see enkhContract.theScene — Coyle slides the declination: "Cause of death doesn\'t match the commissioned work.") Then, almost apologetic, Coyle offers local work: recover a pawned pretech gyroscope from a defaulting client. 2,000 credits. Small money.',
+        talkingPoints: [
+          'THE DECLINE IS THE SCENE. Play Coyle sympathetic, precise, and afraid of the client. Let Enkh push. Coyle\'s one crack if pressed hard: "I checked the routing twice and then stopped checking. You understand? I stopped checking."',
+          'Do NOT explain how the client knew Enkh didn\'t fire. Let it hang. If the player works it out — the only witness was inside his own skull — do not confirm or deny.',
+          'The collection job is real and small and a little sad: the defaulter is VESS OKARO, ex-Concordance catering director, ruined by the disaster, holed up in a rented shop unit with hired guns she can\'t afford either.',
+          'The guns are meaner than the job deserves — Okaro borrowed from worse people than Coyle, and those people posted "security" to make sure Coyle\'s repo doesn\'t beat THEIR repo.',
+          'MORAL TEXTURE: Okaro begs. She was at the Still Gardens; she describes the geyser, the swans stopping meaning nothing to her, Senn going up. The PCs were THERE. Let that land mid-standoff.',
+          'Enkh gets 2,000 credits against a 15,000 debt. Make sure he feels the arithmetic.',
+        ],
+        checks: [
+          { when: 'Approaching the shop quietly', skill: 'Sneak', dc: 10, success: 'PCs pick the moment; guards split (2 inside, 2 smoking out back).', fail: 'All 4 up front, alert.' },
+          { when: 'Reading Okaro\'s situation', skill: 'Notice or Talk', dc: 8, success: 'She\'s not defiant, she\'s TERRIFIED — and not of you. She owes someone worse.', fail: 'Reads as a hostile holdout.' },
+          { when: 'Negotiating a no-fight resolution', skill: 'Talk', dc: 12, success: 'Okaro surrenders the gyro if the PCs let her vanish before the OTHER creditors arrive. The hired guns still want their fee — reduced fight (2 enemies) or standoff.', fail: 'Guns earn their pay.' },
+        ],
+        combat: {
+          setup: 'Cramped shop unit — shelving rows, one back exit, civilians (Okaro + teenage nephew) in the crossfire zone.',
+          enemies: [
+            { name: 'Hired gun ×3', hp: 5, ac: 13, atk: '+2', dmg: '1d8 (heavy pistol)', morale: 8 },
+            { name: '"Contract supervisor" Rhax', hp: 10, ac: 14, atk: '+3', dmg: '1d8+1 (mag pistol)', morale: 9 },
+          ],
+          terrain: 'Shelving = cover, collapses if 5+ damage hits it (Exert save or prone). Civilians: any stray AoE/miss on 1 endangers them — West\'s protective instincts fire hard.',
+          twist: 'Rhax recognizes cyberware when he sees it: targets Enkh\'s cybernetic arm specifically, calls him "PALE-job" mid-fight. How does he know what a substrate case scar looks like?',
+        },
+        reward: '2,000 credits (Enkh). The gyro. Coyle owes a favor — and Coyle\'s favors are worth more than Coyle\'s money.',
+        leadsTo: 'Coyle relationship; the client question festers; Okaro (if spared) = future contact who SAW the disaster up close.',
+        cast: ['coyle', 'enkh'],
+      },
+      {
+        id: 'm3',
+        title: 'Mission 3 — The Silent Courier (the Covenant thread)',
+        offeredBy: 'halex',
+        hook: 'Sister Halex (Covenant envoy, Becoming) spots West\'s detail insignia at the docks. Direct, tired, no games: courier Brother Emmerin went into the Belum undercity four days ago carrying a sealed dispatch for Elder Vesper. He hasn\'t come out. She can\'t go herself — she\'s watched. She\'s asking, not ordering. (But she IS legitimate Covenant authority — West\'s architecture notices.)',
+        talkingPoints: [
+          'OBEDIENCE COLLISION: Halex is legitimate Covenant authority. Veronika is West\'s current attachment. If Veronika says "we don\'t have time for church errands" — that\'s the session\'s big internal moment for West. Engineer it if you can.',
+          'The MOLT (undercity gang — molted vacc-suit chic, young, territorial) grabbed Emmerin because he wouldn\'t stop walking through their turf and wouldn\'t explain himself. They don\'t know what he\'s carrying. They\'re holding him for ransom nobody has come to pay.',
+          'Emmerin is ALIVE, stubborn, on a hunger strike, and has swallowed nothing about his mission. The Molt is running out of patience.',
+          'The dispatch (sealed, for Vesper): Becoming\'s own survey of the disaster — including a line that should make West\'s blood cold: "The Combine has filed recovery claims on the Kael-7 assets. If the units surface, Remembrance wants them intercepted first. Tran has people looking."  (BOTH Covenant factions are now hunting West — one legally, one not.)',
+          'Whether West reads the sealed dispatch is a whole character beat. Tarek\'s letter said trust Vesper. The seal says do not open. Pick your poison.',
+          'Halex, after: passage to Vesper can be arranged. First live route to the "trust Elder Vesper" instruction.',
+        ],
+        checks: [
+          { when: 'Tracking Emmerin into the undercity', skill: 'Connect or Notice', dc: 10, success: 'A vendor saw the grey-robed man taken toward the Molt\'s den — old maintenance atrium, two levels down.', fail: 'Hours lost; the Molt knows someone\'s asking (defenses up, +1 enemy).' },
+          { when: 'Parley with the Molt', skill: 'Talk', dc: 10, success: 'They\'ll trade Emmerin for 500 credits OR a favor: run off the rival crew squatting their east tunnel (side-fight, same stats, different room).', fail: 'They get greedy, then twitchy. Combat likely.' },
+          { when: 'West assessing the den before entry', skill: 'Shoot/Punch (tactics) or Notice', dc: 8, success: 'Two exits, elevated catwalk, their "sentry" is asleep. West can plan the entry — surprise round.', fail: 'Standard approach.' },
+        ],
+        combat: {
+          setup: 'Maintenance atrium, two levels of catwalks, hostage (Emmerin) zip-tied to a pipe at the far end. 5 Molt gangers.',
+          enemies: [
+            { name: 'Molt ganger ×4', hp: 3, ac: 12, atk: '+1', dmg: '1d6 (scrap blades / zip pistols)', morale: 6 },
+            { name: 'Molt chief "Casque"', hp: 8, ac: 13, atk: '+2', dmg: '1d8 (bolt thrower)', morale: 8 },
+          ],
+          terrain: 'Catwalks (height advantage, Exert DC 8 to climb fast). Steam vents — 1/round, random 10\' zone, 1d4 + vision block. Hostage in the far kill-zone: stray fire risk.',
+          twist: 'Morale 6 means they BREAK EARLY — the fight\'s real challenge is Casque grabbing Emmerin as a shield when the gang folds. Talk, Shoot (called shot, -4), or let him back out a tunnel with the courier?',
+        },
+        reward: 'Emmerin + the dispatch. Halex\'s gratitude = arranged passage toward Vesper. West learns BOTH Covenant factions are hunting the Kael-7 survivors.',
+        leadsTo: 'The road to Elder Vesper — and the Session 3 premise if taken.',
+        cast: ['halex', 'emmerin', 'vesper', 'tran', 'west'],
+      },
+    ],
+
+    clocks: [
+      { name: 'Combine repo team', ticks: 'Lands at Belum day 2-4 (GM pick). Telegraph day 2: grey-suited "buyers" at the harbormaster asking about Duskline passengers. They have a legal writ for West. They prefer paperwork to violence — at first.', trigger: 'If the PCs are still on Belum at your chosen day, the confrontation happens. Ideal: it interrupts whatever else is running.' },
+      { name: 'The Penumbra publication', ticks: 'Breaks 1-2 weeks AFTER this session (your call).', trigger: 'When it breaks, every faction learns the ruins are a transmission array. Save it for the Session 3 Tableau.' },
+      { name: 'PALE\'s hum', ticks: 'Returns mid-transit (transit beat). PALE now has live surface-log access to Enkh again — including everything at Belum.', trigger: 'Whatever Enkh does at Belum, PALE watches through his own skull. No mechanical effect yet. Pure dread, deployed later.' },
+    ],
+
+    sessionCloseOptions: [
+      'Clean close: mission(s) done, Veronika\'s "business" concludes — she asks the PCs: "I\'m going somewhere that isn\'t safe. You could come. I wouldn\'t blame you if you didn\'t." (Her destination: back toward the River Below — reveal when ready.)',
+      'Hard close: the Combine repo team makes their approach — polite, legal, implacable — as the PCs return to the docks. End ON the writ being served. Session 3 opens in the standoff.',
+      'Quiet close: West alone, the locket warm, the sealed dispatch (if unread) in one pocket and Tarek\'s letter in the other. Three pieces of paper. Three authorities. "Whose order do you follow now?" Roll credits.',
+    ],
+  },
 
   // ── SESSION 1 — THE STILL GARDENS ──────────────────────────────────────────
   session1: {

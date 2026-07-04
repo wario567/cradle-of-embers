@@ -281,52 +281,99 @@
   // revealed: false = GM-only until disclosed in play.
   const LORE_TIMELINE = [
     // Turn 1 — 6 months before Session 1 (~month 1 of 3249)
-    { id: 'lt-01', year: 3249, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
+    { id: 'lt-01', year: 3200, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
       text: 'PALE deploys a covert underwater survey team to Thessavar under commercial cover. Survey begins mapping pre-human ruins below the thermocline.' },
-    { id: 'lt-02', year: 3249, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
+    { id: 'lt-02', year: 3200, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
       text: 'The Aureole Synod opens a chapel in Kaeldrift (Thessavar). Brother Cass assigned as warden. Confessional records begin accumulating.' },
-    { id: 'lt-03', year: 3249, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
+    { id: 'lt-03', year: 3200, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
       text: 'River Below\'s Thessavar intelligence cell is destroyed when PALE detects their network intrusion. Operative Dosi disappears. Saint Maret burns the safe house and goes to ground.' },
-    { id: 'lt-04', year: 3249, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
+    { id: 'lt-04', year: 3200, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
       text: 'Penumbra Archivist Lenne arrives in Kaeldrift under cover as a marine biology doctoral student to investigate the underwater ruins.' },
-    { id: 'lt-05', year: 3249, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
+    { id: 'lt-05', year: 3200, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
       text: 'The Hollow Covenant deploys three frigates to Thessavar system as "honor escort" for Arbiter Senn\'s Concordance delegation.' },
-    { id: 'lt-06', year: 3249, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
+    { id: 'lt-06', year: 3200, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
       text: 'Progenitor Combine announces the Kael-8 line. Kael-7 series listed as legacy stock. One unit remains active in field deployment.' },
-    { id: 'lt-07', year: 3249, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
+    { id: 'lt-07', year: 3200, month: 1, label: 'Turn 1 — 6 months out', revealed: false,
       text: 'The Succession files a notice of administrative observation over Thessavar and establishes a legal monitoring station in-system. The city council does not respond.' },
 
     // Turn 2 — 3 months before Session 1 (~month 4 of 3249)
-    { id: 'lt-08', year: 3249, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
+    { id: 'lt-08', year: 3200, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
       text: 'PALE burns Penumbra Archivist Lenne\'s cover and steals her research notes on the underwater ruins. She takes refuge in the Argent Compact sanctuary in Kaeldrift.' },
-    { id: 'lt-09', year: 3249, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
+    { id: 'lt-09', year: 3200, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
       text: 'The Aureole Synod learns through an unwitting Concordance official that Arbiter Senn plans to sign a treaty granting the Hollow Covenant excavation rights to the Thessavar ruins.' },
-    { id: 'lt-10', year: 3249, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
+    { id: 'lt-10', year: 3200, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
       text: 'Saint Maret accepts a contract to assassinate Arbiter Senn. She has no Wealth, no safe houses, no network. She begins scouting the Concordance alone.' },
-    { id: 'lt-11', year: 3249, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
+    { id: 'lt-11', year: 3200, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
       text: 'Progenitor Combine legal pressure shuts down the River Below\'s Grade 0 clone liberation pipeline. One junior Saint is arrested.' },
-    { id: 'lt-12', year: 3249, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
+    { id: 'lt-12', year: 3200, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
       text: 'Marshal Tran (Hollow Covenant, Remembrance faction) destroys a Succession observation post in an adjacent system without authorization. The Radiance is spreading through the Remembrance leadership.' },
-    { id: 'lt-13', year: 3249, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
+    { id: 'lt-13', year: 3200, month: 4, label: 'Turn 2 — 3 months out', revealed: false,
       text: 'Two Succession frigates arrive at Thessavar system flying Mandate-era registry codes. Three Covenant frigates are already in orbit. Neither side fires.' },
 
     // Turn 3 — 2 weeks before Session 1 (~month 7 of 3249)
-    { id: 'lt-14', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+    { id: 'lt-14', year: 3200, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
       text: 'PALE\'s survey team discovers the Thessavar ruins are an active transmission array of unknown origin — running continuously for at least four thousand years. The discovery is immediately classified.' },
-    { id: 'lt-15', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+    { id: 'lt-15', year: 3200, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
       text: 'The Aureole Synod delays the Arbiter Senn excavation treaty signing by four days through procedural interference. The signing is rescheduled to the Concordance swan processional.' },
-    { id: 'lt-16', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+    { id: 'lt-16', year: 3200, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
       text: 'River Below Saint Maret liquidates all remaining assets and arrives in Kaeldrift four days before the Concordance. She works the Still Gardens as groundskeeping staff for three days.' },
-    { id: 'lt-17', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+    { id: 'lt-17', year: 3200, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
       text: 'The Penumbra loses its last Thessavar cell to a PALE trap. Archivist Lenne, alone in the Argent sanctuary, reconstructs her research from memory and writes: "The signal is not coming from the ruins. The ruins are the signal."' },
-    { id: 'lt-18', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+    { id: 'lt-18', year: 3200, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
       text: 'Requisition Agent Tarek (Progenitor Combine) delivers a sealed message to Kael-7 and goes below the Kaeldrift platform to meet an unknown contact. He does not return.' },
-    { id: 'lt-19', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+    { id: 'lt-19', year: 3200, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
       text: 'The Hollow Covenant\'s frigates are outmaneuvered by Succession Captain Solis and pulled back to orbit. Marshal Tran withdraws, humiliated. The Covenant\'s military position at Thessavar is neutralized the day before the Concordance.' },
-    { id: 'lt-20', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+    { id: 'lt-20', year: 3200, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
       text: 'The Succession files a legal challenge to the excavation treaty on Mandate jurisdictional grounds. Arbiter Senn schedules the signing for the Concordance processional — publicly, to make it harder to stop.' },
-    { id: 'lt-21', year: 3249, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
+    { id: 'lt-21', year: 3200, month: 7, label: 'Turn 3 — 2 weeks out', revealed: false,
       text: 'The Concordance begins. Every major faction has at least one asset in Kaeldrift or in Thessavar orbit. Nobody knows everyone else is here.' },
+
+    // Session 1 (month 7) — public events, revealed
+    { id: 'lt-s1a', year: 3200, month: 7, label: 'Session 1', revealed: true,
+      text: 'THE STILL GARDENS DISASTER: the island estate collapses into the sea during the Concordance closing ceremony. Arbiter Senn and an estimated forty others are killed. Cause undetermined. Kaeldrift declares an exclusion zone.' },
+
+    // Turn 4 — between Sessions 1 and 2 (month 8). Public news revealed:true; secrets false.
+    { id: 'lt-22', year: 3200, month: 8, label: 'Turn 4 — aftermath', revealed: true,
+      text: 'PALE wins the Thessavar reconstruction contract — free counseling and substrate scans for the displaced.' },
+    { id: 'lt-23', year: 3200, month: 8, label: 'Turn 4 — aftermath', revealed: false,
+      text: 'Under relief cover, PALE establishes a monitoring perimeter around the ruins exclusion zone.' },
+    { id: 'lt-24', year: 3200, month: 8, label: 'Turn 4 — aftermath', revealed: false,
+      text: 'The Aureole Synod detects an anomalous repeating signal it cannot decode. AURIS is disturbed for the first time in 300 years.' },
+    { id: 'lt-25', year: 3200, month: 8, label: 'Turn 4 — aftermath', revealed: false,
+      text: 'The Penumbra intercepts PALE survey data confirming the ruins are a transmission array — and prepares to publish.' },
+    { id: 'lt-26', year: 3200, month: 8, label: 'Turn 4 — aftermath', revealed: true,
+      text: 'The Argent Compact\'s Kaeldrift sanctuary becomes the refugee center for the Concordance displaced.' },
+    { id: 'lt-27', year: 3200, month: 8, label: 'Turn 4 — aftermath', revealed: true,
+      text: 'Driftborn freight rates triple on Thessavar routes; Fleet-Elder Brask caps relief cargo rates.' },
+    { id: 'lt-28', year: 3200, month: 8, label: 'Turn 4 — aftermath', revealed: true,
+      text: 'Progenitor Combine files probate claims on the late Arbiter Senn\'s estate. Recovery agents dispatched to execute outstanding writs on manufactured assets.' },
+    { id: 'lt-29', year: 3200, month: 8, label: 'Turn 4 — aftermath', revealed: true,
+      text: 'The Hollow Covenant recalls diplomats sector-wide. Covenant naval patrols increase.' },
+    { id: 'lt-30', year: 3200, month: 8, label: 'Turn 4 — aftermath', revealed: true,
+      text: 'The Succession\'s emergency jurisdiction claim over the Thessavar disaster zone is publicly rebuffed. Its frigates remain in-system.' },
+  ];
+
+  // Campaign NPCs — the people who actually appeared or matter right now.
+  const LORE_NPCS = [
+    { id: 'npc-veronika', name: 'Veronika "The Saint"', role: 'Bartender, Kaeldrift / secret head of the River Below', trait: 'Takes charge like gravity; guilt under the charm', goal: 'Hold her movement together; protect the two strangers she saved', hp: 8, maxHp: 8, notes: 'Rescued the PCs. West has fallen in under her authority. PCs don\'t know her faction.', locationName: 'The Duskline (with the party)' },
+    { id: 'npc-coyle', name: 'Marn Coyle', role: 'Contract broker / fixer (pawn-and-assay front)', trait: 'Professionally bland; scrupulously neutral; afraid of one particular client', goal: 'Keep the books balanced and his name out of everything', hp: 4, maxHp: 4, notes: 'Enkh\'s broker. Will decline the 15k: "Cause of death doesn\'t match the commissioned work."', locationName: 'Belum Freeport' },
+    { id: 'npc-darius', name: 'Darius Epps', role: 'Enkh\'s oldest friend; laborer', trait: 'Heavy drinker, loyal, misses the old Enkh', goal: 'Get Enkh out of PALE\'s ledger alive', hp: 6, maxHp: 6, notes: 'Still on Thessavar. Regular at Veronika\'s bar. Knew Div.', locationName: 'Kaeldrift, Thessavar' },
+    { id: 'npc-ost', name: 'Ost (K7G2-87488-OST)', role: 'Kael-7 Grade 2 — West\'s surviving unit-mate', trait: 'Steady; chose the mission over survival', goal: 'Find Tarek', hp: 10, maxHp: 10, notes: 'On Thessavar, hunting Tarek. Subject to the same Combine repossession writ as West. Fate open.', locationName: 'Thessavar (last known)' },
+    { id: 'npc-tarek', name: 'Requisition Agent Tarek', role: 'Progenitor Combine field agent (missing)', trait: 'Warm in a practiced-but-real way', goal: 'Unknown — left a warning and vanished', hp: 6, maxHp: 6, notes: 'Went below the Kaeldrift platform and did not return. Left West the locket + letter. Fate deliberately undecided.', locationName: 'Unknown' },
+    { id: 'npc-vesper', name: 'Elder Vesper', role: 'Hollow Covenant — Becoming faction leader', trait: 'Warm, direct; joy as an act of defiance', goal: 'Become something the old world never had the courage to be', hp: 8, maxHp: 8, notes: 'Tarek\'s note says trust her. West\'s nominal chain of command. Not yet on screen.', locationName: 'Covenant territory' },
+    { id: 'npc-tran', name: 'Marshal Onyx Tran', role: 'Hollow Covenant — Remembrance military commander', trait: 'Stoic veteran; Radiance-infected, increasingly reckless', goal: 'Restore the old empire at any cost; seize the relic', hp: 14, maxHp: 14, notes: 'Consolidating military power post-Senn. Has people looking for the Kael-7 survivors.', locationName: 'Covenant fleet' },
+    { id: 'npc-calder', name: 'Captain Mira Calder', role: 'Driftborn captain of the Duskline', trait: 'Pragmatic; asks no questions she doesn\'t want answers to', goal: 'Run a clean ship in a dirty month', hp: 6, maxHp: 6, notes: 'Chartered by Veronika. First mate is a River Below informant (she knows; doesn\'t care).', locationName: 'The Duskline' },
+    { id: 'npc-halex', name: 'Sister Halex', role: 'Hollow Covenant envoy (Becoming), Belum Freeport', trait: 'Direct, tired, no games', goal: 'Get Emmerin\'s dispatch to Elder Vesper', hp: 6, maxHp: 6, notes: 'Offers the Silent Courier mission. Legitimate Covenant authority — West\'s architecture notices.', locationName: 'Belum Freeport' },
+  ];
+
+  // Campaign hooks — the live threads, replacing procedural filler.
+  const LORE_HOOKS = [
+    { id: 'hook-payment', planetName: 'Belum Freeport', text: 'Enkh believes his contract is fulfilled — Senn is dead. All he has to do is contact Marn Coyle and collect 15,000 credits. What could go wrong?', status: 'Open' },
+    { id: 'hook-locket', planetName: 'With West', text: 'The locket rides unsplit and untouched in West\'s pocket, warm at odd hours. Tarek\'s letter says: do not divide it. Do not trust it.', status: 'Open' },
+    { id: 'hook-repo', planetName: 'Belum Freeport', text: 'A Progenitor Combine recovery team with a repossession writ has traced the Duskline\'s manifest. They are 2-4 days behind the party.', status: 'Open' },
+    { id: 'hook-ost', planetName: 'Thessavar', text: 'Ost stayed behind to find Tarek. The urchin\'s note said: "Found Tarek. Leave now. Not safe." It was written in West\'s own handwriting.', status: 'Open' },
+    { id: 'hook-veronika', planetName: 'The Duskline', text: 'Veronika is lying about knowing Tarek, something is weighing on her, and she is taking the party somewhere she calls "not safe."', status: 'Open' },
+    { id: 'hook-vesper', planetName: 'Covenant territory', text: 'Tarek\'s letter: "Becoming has to know before Remembrance does. Trust Elder Vesper." Nobody has acted on it yet.', status: 'Open' },
   ];
 
   function makeFaction(rng) {
@@ -644,8 +691,9 @@
 
     // 9 canonical factions only — no random additions.
 
-    const npcs = [];
-    for (let i = 0; i < 12; i++) {
+    // Campaign NPCs first (canonical cast), then a few procedural background faces.
+    const npcs = LORE_NPCS.map(n => ({ ...n }));
+    for (let i = 0; i < 4; i++) {
       const n = makeNPC(rng.fork('npc-' + i));
       if (allPlanets.length) {
         const home = rng.pick(allPlanets);
@@ -655,16 +703,17 @@
       npcs.push(n);
     }
 
-    const hooks = [];
-    for (let i = 0; i < 8; i++) {
-      hooks.push(makeHook(rng.fork('hook-' + i), allPlanets));
-    }
+    // Campaign hooks only — the live threads. (Procedural filler removed;
+    // add new hooks in LORE_HOOKS or via the app.)
+    const hooks = LORE_HOOKS.map(h => ({ ...h }));
 
     const routes = makeRoutes(rng.fork('routes'), systems);
 
-    // Timeline: procedural historical events + canonical Session 0 events.
+    // Timeline: canonical campaign events only. (Procedural historical filler
+    // removed — it didn't align with campaign canon. Deep-history events can be
+    // re-enabled by bumping eventCount above 0.)
     const timeline = [];
-    const eventCount = rng.int(6, 10);
+    const eventCount = 0;
     const baseYear = 3200;
     for (let i = 0; i < eventCount; i++) {
       timeline.push(makeTimelineEvent(

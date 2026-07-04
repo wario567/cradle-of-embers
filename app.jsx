@@ -5,7 +5,7 @@ const { useState: useASt, useEffect: useAEf, useMemo: useAMem, useRef: useAR } =
 // ── GM NOTES VIEW ────────────────────────────────────────────────────────────
 function GMNotesView({ sector }) {
   const lore = window.GM_LORE;
-  const [tab, setGMTab] = useASt('sector');
+  const [tab, setGMTab] = useASt('session2');
   const [expandedFaction, setExpandedFaction] = useASt(null);
   const [expandedTurn, setExpandedTurn] = useASt(null);
   const [npcSearch, setNpcSearch] = useASt('');
@@ -282,6 +282,106 @@ function GMNotesView({ sector }) {
     })
   );
 
+  // ── Cast chip with hover blurb (native title tooltip) + click → faction tab
+  const CastChip = ({ refId }) => {
+    const c = (lore.castIndex || {})[refId];
+    if (!c) return null;
+    return React.createElement('span', {
+      title: c.blurb + (c.faction ? '\n\n[click → faction details]' : ''),
+      onClick: () => { if (c.faction) { setGMTab('factions'); setExpandedFaction(c.faction); } },
+      style: {
+        display: 'inline-block', fontSize: 10, padding: '2px 8px', margin: '2px 3px 2px 0',
+        background: 'var(--bg-3)', border: '1px solid var(--border-1)', borderRadius: 10,
+        color: 'var(--accent)', cursor: c.faction ? 'pointer' : 'help', letterSpacing: '0.04em',
+        borderBottom: '1px dotted var(--accent)',
+      },
+    }, c.name);
+  };
+
+  const CheckChip = ({ chk }) => React.createElement('div', {
+    title: 'Success: ' + (chk.success || '—') + '\nFail: ' + (chk.fail || '—'),
+    style: {
+      fontSize: 11, padding: '5px 10px', margin: '3px 0', background: 'rgba(230,160,80,0.07)',
+      border: '1px solid rgba(230,160,80,0.3)', borderRadius: 4, color: 'var(--fg-2)', cursor: 'help',
+    },
+  },
+    React.createElement('span', { style: { color: 'var(--accent)', fontWeight: 700 } }, '✎ ' + chk.skill + ' DC ' + chk.dc),
+    React.createElement('span', { style: { color: 'var(--fg-3)' } }, ' — ' + chk.when),
+  );
+
+  const SceneCard = ({ scene }) => card([
+    React.createElement('h4', { style: { margin: '0 0 8px', color: 'var(--fg-0)', fontSize: 14 } }, scene.title),
+    React.createElement('ul', { style: { margin: '0 0 8px', paddingLeft: 18 } },
+      (scene.talkingPoints || []).map((tp, i) => bullet(tp))),
+    (scene.checks || []).map((chk, i) => React.createElement(CheckChip, { key: i, chk })),
+    scene.cast && scene.cast.length ? React.createElement('div', { style: { marginTop: 8 } },
+      label('Cast'), scene.cast.map(r => React.createElement(CastChip, { key: r, refId: r }))) : null,
+  ]);
+
+  // SESSION 2 TAB — streamlined runbook
+  const s2 = lore.session2;
+  const session2Tab = s2 ? React.createElement('div', null,
+    card([
+      React.createElement('h3', { style: { margin: '0 0 4px', color: 'var(--fg-0)' } }, s2.title),
+      React.createElement('div', { style: { fontSize: 11, color: 'var(--accent)', marginBottom: 4 } }, s2.world),
+      React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-3)' } }, s2.timeSkip),
+    ]),
+    // Faction turn quick-scan
+    card([
+      label('Since Last Session — What Each Faction Did (30-second scan)'),
+      (s2.turnSummary || []).map((t, i) => {
+        const fac = lore.factions.find(f => f.id === t.faction);
+        return React.createElement('div', { key: i, style: { padding: '6px 0', borderBottom: i < s2.turnSummary.length - 1 ? '1px solid var(--border-1)' : 'none' } },
+          React.createElement('span', {
+            style: { fontWeight: 700, fontSize: 12, color: 'var(--accent)', cursor: 'pointer' },
+            onClick: () => { setGMTab('factions'); setExpandedFaction(t.faction); },
+            title: fac ? (fac.tagline || '') : '',
+          }, (fac ? fac.name : t.faction) + ' '),
+          React.createElement('span', { style: { fontSize: 12, color: 'var(--fg-2)' } }, '— ' + t.did),
+          React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-3)', marginTop: 2 } }, '↳ ' + t.why),
+        );
+      }),
+    ]),
+    s2.coldOpen && React.createElement(SceneCard, { scene: s2.coldOpen }),
+    s2.transit && React.createElement(SceneCard, { scene: s2.transit }),
+    s2.arrival && React.createElement(SceneCard, { scene: s2.arrival }),
+    React.createElement('div', { style: { margin: '14px 0 6px' } }, label('Three Doors — each has a combat')),
+    (s2.missions || []).map(m => card([
+      React.createElement('h4', { style: { margin: '0 0 4px', color: 'var(--fg-0)', fontSize: 14 } }, m.title),
+      React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', fontStyle: 'italic', marginBottom: 8 } }, m.hook),
+      React.createElement('ul', { style: { margin: '0 0 8px', paddingLeft: 18 } },
+        (m.talkingPoints || []).map((tp, i) => bullet(tp))),
+      (m.checks || []).map((chk, i) => React.createElement(CheckChip, { key: i, chk })),
+      m.combat && React.createElement('div', { style: { background: 'rgba(200,60,60,0.08)', border: '1px solid rgba(200,60,60,0.3)', borderRadius: 4, padding: '10px 12px', marginTop: 8 } },
+        React.createElement('div', { style: { fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#e07070', marginBottom: 4 } }, '⚔ Combat'),
+        React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', marginBottom: 6 } }, m.combat.setup),
+        (m.combat.enemies || []).map((e, i) => React.createElement('div', { key: i, style: { fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--fg-2)', padding: '2px 0' } },
+          `${e.name} · HP ${e.hp} · AC ${e.ac} · Atk ${e.atk} · ${e.dmg} · ML ${e.morale}`)),
+        React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-3)', marginTop: 6 } }, 'Terrain: ' + m.combat.terrain),
+        m.combat.twist && React.createElement('div', { style: { fontSize: 11, color: '#e8a87c', marginTop: 4 } }, 'Twist: ' + m.combat.twist),
+      ),
+      React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-2)', marginTop: 8 } },
+        React.createElement('b', null, 'Reward: '), m.reward),
+      React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-3)', marginTop: 2 } },
+        React.createElement('b', null, 'Leads to: '), m.leadsTo),
+      m.cast && m.cast.length ? React.createElement('div', { style: { marginTop: 8 } },
+        label('Cast'), m.cast.map(r => React.createElement(CastChip, { key: r, refId: r }))) : null,
+    ])),
+    card([
+      label('Clocks (running in the background)'),
+      (s2.clocks || []).map((c, i) => React.createElement('div', { key: i, style: { padding: '6px 0' } },
+        React.createElement('div', { style: { fontWeight: 700, fontSize: 12, color: 'var(--fg-0)' } }, '⏱ ' + c.name),
+        React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-2)', marginTop: 2 } }, c.ticks),
+        React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-3)', marginTop: 2 } }, 'Trigger: ' + c.trigger),
+      )),
+    ]),
+    card([
+      label('Session Close Options'),
+      React.createElement('ol', { style: { margin: '4px 0 0', paddingLeft: 18 } },
+        (s2.sessionCloseOptions || []).map((o, i) => bullet(o))),
+    ]),
+  ) : React.createElement('div', { style: { color: 'var(--fg-3)', padding: 12 } }, 'No Session 2 data.');
+
   // SESSION 1 TAB
   const s1 = lore.session1;
   const session1Tab = s1 ? React.createElement('div', null,
@@ -365,8 +465,8 @@ function GMNotesView({ sector }) {
     ]))
   );
 
-  const tabs = ['sector', 'factions', 'npcs', 'turns', 'pcs', 'worlds', 'session1'];
-  const tabLabels = { sector: 'Sector', factions: 'Factions', npcs: 'NPCs', turns: 'S0 Turns', pcs: 'PCs', worlds: 'Worlds', session1: 'Session 1' };
+  const tabs = ['session2', 'factions', 'npcs', 'turns', 'pcs', 'worlds', 'session1', 'sector'];
+  const tabLabels = { sector: 'Sector', factions: 'Factions', npcs: 'NPCs', turns: 'Turns', pcs: 'PCs', worlds: 'Worlds', session1: 'Session 1', session2: '▶ Session 2' };
 
   return React.createElement('div', { style: { height: '100%', overflowY: 'auto' } },
     React.createElement('div', { style: { padding: '20px 24px', maxWidth: 860, margin: '0 auto' } },
@@ -380,6 +480,7 @@ function GMNotesView({ sector }) {
       tab === 'pcs'      && pcsTab,
       tab === 'worlds'   && worldsTab,
       tab === 'session1' && session1Tab,
+      tab === 'session2' && session2Tab,
     )
   );
 }
