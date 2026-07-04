@@ -85,6 +85,17 @@ Each character in the shared `party` array carries an optional `ownerId` + `owne
 
 `data/swn-tables.js` is the single source of truth for in-game content (atmospheres, world tags, etc.) — extend it there, the rest of the app reads from `window.SWN`.
 
+## Git workflow (for Claude sessions)
+
+**Always work off up-to-date `main`.** Past Claude sessions were spawned on stale branches and couldn't find files that already existed on `main`. At the START of every session: `git fetch origin && git merge origin/main` into your working branch before doing anything else. At the END of every session (or whenever a piece of work is complete): push your branch AND merge it back into `main`, then push `main` — never leave finished work stranded on a session branch. The user has standing permission for this merge-to-main flow.
+
+## Campaign content — where things live
+
+- **`sessions/session-NN-*.md`** — full GM session docs (plan + post-session "as played" addendum recording deviations, now-canon rulings, and live state). One file per session. **This is the canonical campaign record.**
+- **`handouts/`** — player-facing docs: character backgrounds and spoiler-free session recaps (`session-N-recap.md`). Never put GM secrets here.
+- **`data/gm-lore.js`** — the campaign bible surfaced in the app's GM Notes view (factions, NPCs, timeline, session dashboards). Keep it in sync with the `sessions/` docs when canon changes.
+- The app's live campaign state (party, edits, gmLog) syncs to PocketBase and is NOT in the repo — if content referenced by the user is missing from the repo, ask them to paste it rather than assuming it doesn't exist.
+
 ## Multiplayer security
 
 PocketBase collections (`campaigns`, `presence`) are currently open for read/write — fine for a trusted table. **The Player/GM split is a UI gate only:** a player with the room link can't *see* GM tools, but GM data still syncs to their browser. For real enforcement you'd move GM-only fields to a separate collection / record with PocketBase API rules. Acceptable for now given the trusted-group use case.
