@@ -1110,13 +1110,13 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
     ],
 
     coldOpen: {
-      title: 'Cold Open — the banked launch beat',
+      title: 'Cold Open — launch (picks up AFTER the dockside moment)',
       talkingPoints: [
-        'Pick up EXACTLY where S1 ended: dockside, "It was fun while it lasted," boarding the Duskline.',
-        'Launch. Thessavar shrinks — blue, still, nothing showing what happened.',
-        'The berth scene: an assassin, a bodyguard, a bartender. First time all three breathe.',
-        'Close on Veronika\'s line: "So. Where do people like us go, when there\'s nowhere on that rock left to stand?"',
-        'Let the players answer. Whatever they say, the ship is headed to Belum Freeport — Calder\'s next port. 12 days.',
+        'S1 ended dockside — leaves at her feet, "It was fun while it lasted," ALREADY PLAYED. Do not replay it. Open on what comes next: ramp up, engines, gone.',
+        'Launch. Thessavar shrinks — blue, still, nothing showing what happened. First time either PC has seen it from space.',
+        'NEW SCENE — the berth: an assassin, a bodyguard, a bartender. First time all three breathe. Let them talk or let them pointedly not talk.',
+        'OPTIONAL new Veronika line if the scene needs a spark (never said in play — this is fresh dialogue): "So. Where do people like us go, when there\'s nowhere on that rock left to stand?" Or let the silence do the work.',
+        'However it plays, the ship is headed to Belum Freeport — Calder\'s next port. 12 days.',
       ],
       checks: [],
       cast: ['veronika', 'calder', 'west', 'enkh'],
