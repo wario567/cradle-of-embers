@@ -1102,7 +1102,7 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
       'The long game: the day a player realizes the news itself is a faction asset is a top-5 campaign moment. Never sell it cheap.',
     ],
     issues: [
-      { n: 1, file: 'handouts/tableau-issue-01.md', covers: 'GM Turn 4 — Thessavar aftermath. Rumor Ledger debuts the Saint rumors + "something is transmitting" leak.' },
+      { n: 1, file: 'handouts/tableau-issue-01.md', covers: 'GM Turn 4 — Thessavar aftermath. Rumor Ledger debuts the Saint rumors + "something is transmitting" leak. Background threads used: Kael-8 rollout, Succession census, Synod canonization.' },
     ],
   },
 

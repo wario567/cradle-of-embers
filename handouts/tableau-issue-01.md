@@ -35,6 +35,16 @@ The Argent Compact's Kaeldrift sanctuary has taken in several hundred displaced 
 
 ---
 
+**ALSO THIS CYCLE**
+
+*COMBINE OPENS KAEL-8 ORDER BOOK* — The Progenitor Combine has opened pre-orders on its Kael-8 security series, billed as "the most refined protective instrument ever grown." Early buyers report reassignment incentives for fleets still operating Kael-7 units, which move to legacy support status at year's end.
+
+*SUCCESSION CENSUS NOTICE, AGAIN* — The successor-state authority has issued its eleventh consecutive annual demand that sector worlds submit Mandate census registration. As in the previous ten years, no world has complied. The filing is seventeen thousand pages.
+
+*SYNOD OPENS CANONIZATION REVIEW* — The Aureole Synod has opened formal proceedings to recognize Amma Doss of Bellwether Station, credited with feeding four hundred neighbors through the famine winters, as a saint of the community. The review is expected to take two years. *"Sainthood is not a reward,"* a Synod spokesman noted. *"It is a record of what a person made possible for others."*
+
+---
+
 **THE RUMOR LEDGER** — *claims circulating in port districts this cycle, printed unverified as a public record of sentiment. The Tableau does not endorse them.*
 
 - That the Still Gardens disaster was no accident, and every faction knows exactly what caused it.
