@@ -1090,6 +1090,50 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
     'enkh':       { name: 'Enkh Zahli', blurb: 'PC — 70, cybernetic brain on a PALE lease (~15k remaining). Believes his contract may be fulfilled; plans to collect from Coyle. Doesn\'t know PALE reads his substrate logs.', faction: null },
   },
 
+  // ── THE TABLEAU — sector news service (AURIS-run; nobody knows) ───────────
+  tableau: {
+    whatItIs: 'The sector\'s trusted public news service — sober, free, syndicated to every port. Secretly published by AURIS (Aureole Synod\'s hidden AI). The name is the tell: a tableau is a staged arrangement presented as reality.',
+    cadence: 'In-world: a cycle bulletin at every port, arriving in batches with ship traffic (news travels at spike-drive speed). Different ports get subtly different versions — AURIS tunes the arrangement per audience; a player who compares copies across ports can catch this. At the table: ONE issue per GM turn, posted to Discord between sessions.',
+    curationRules: [
+      'AURIS suppresses what destabilizes and amplifies what builds cohesion (and serves AURIS).',
+      'It never prints falsehoods — only omissions and arrangement. The gap between GM-turn results and the bulletin IS a clue.',
+      'The Rumor Ledger prints "unverified sentiment" — actually the whispers AURIS wants circulating (or wants to measure).',
+      'Watch-the-fear tell: as AURIS fails to decode the Lattice signal, its Thessavar coverage gets subtly more controlling across issues.',
+      'The long game: the day a player realizes the news itself is a faction asset is a top-5 campaign moment. Never sell it cheap.',
+    ],
+    issues: [
+      { n: 1, file: 'handouts/tableau-issue-01.md', covers: 'GM Turn 4 — Thessavar aftermath. Rumor Ledger debuts the Saint rumors + "something is transmitting" leak.' },
+    ],
+  },
+
+  // ── BACKGROUND THREADS — the sector\'s life beyond Thessavar ──────────────
+  // Rotate 1-2 into each Tableau issue as background noise. Any can be
+  // promoted to a session plot when needed. A sandbox feels real when the
+  // world demonstrably isn\'t about the players.
+  backgroundThreads: [
+    { id: 'bg-kael8', name: 'The Kael-8 rollout', status: 'ambient',
+      thread: 'The Combine\'s new security clone line ships sector-wide. Trade coverage, demo events, buyers grumbling that Kael-7 stock was obsoleted overnight.',
+      hook: 'Ambient — until West reads the word "legacy" in a product bulletin. Later: Kael-8s make excellent recurring antagonists who are, unsettlingly, West but newer.' },
+    { id: 'bg-census', name: 'The Succession census demand', status: 'ambient',
+      thread: 'Venn\'s government keeps formally demanding sector worlds submit to Mandate census registration. Everyone ignores it. The filings keep coming — a port-district in-joke.',
+      hook: 'Chilling if you\'re property under Mandate law. If the Succession ever gains real leverage, the "joke" census becomes a manhunt database.' },
+    { id: 'bg-substrate7', name: 'Substrate-7\'s audit clock', status: 'ticking',
+      thread: 'Anselm Volkov (PALE citizen-researcher) suspects his post-scan memories were edited. His audit cycle approaches. Nothing public.',
+      hook: 'Surface first as a Tableau puff piece ("Substrate researcher honored for wellness modeling") that means nothing to players yet. He is a future defector, hostage, or corpse — GM\'s choice.' },
+    { id: 'bg-wages', name: 'Driftborn wage standoff', status: 'ambient',
+      thread: 'Fleet crews at two ports in a rate dispute with station operators. Ordinary economic weather.',
+      hook: 'Utility thread: strands or frees ships whenever the plot needs a schedule change. Also Brask\'s attention is HERE, not on the PCs.' },
+    { id: 'bg-ashakei', name: 'Asha Kei\'s cargo', status: 'ticking',
+      thread: 'Driftborn captain six months into hauling sealed containers she can\'t explain — warm to the touch, triple rate, paid upfront. She thinks she made a mistake. (The cargo is alive. She hasn\'t opened it.)',
+      hook: 'Rumor-ledger item ("a captain paying triple for silence") → whole session whenever wanted. Possible tie to Genesis-1 or the Combine\'s sealed vaults if convenient.' },
+    { id: 'bg-canonization', name: 'Synod canonization proceedings', status: 'ambient',
+      thread: 'The Synod formally reviews a sainthood candidate from a world nobody\'s heard of. Pure background piety.',
+      hook: 'Sly echo once players know a different "Saint" exists. Also a window into how AURIS manufactures meaning if anyone looks closely.' },
+    { id: 'bg-penumbra-pub', name: 'The Penumbra publication', status: 'armed',
+      thread: 'Sorin\'s people are preparing to publish proof the Thessavar ruins are a transmission array. Breaks 1-2 weeks after Session 2 (GM call).',
+      hook: 'THE Session 3 news bomb. When it breaks, every faction moves, and the Tableau\'s handling of it (vs everyone else\'s) is the biggest AURIS tell yet.' },
+  ],
+
   // ── SESSION 2 — THE QUIET RUN (streamlined GM runbook) ────────────────────
   session2: {
     title: 'Session 2 — Where People Like Us Go',

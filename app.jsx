@@ -95,6 +95,31 @@ function GMNotesView({ sector }) {
     card([
       label('Ignition Front'), prose(lore.sector.ignitionFrontNote),
     ]),
+    lore.tableau && card([
+      label('The Tableau — sector news (AURIS-run; nobody knows)'),
+      prose(lore.tableau.whatItIs),
+      label('Cadence'), prose(lore.tableau.cadence),
+      label('Curation Rules'),
+      React.createElement('ul', { style: { margin: '4px 0 0', paddingLeft: 18 } },
+        (lore.tableau.curationRules || []).map((r, i) => React.createElement('li', { key: i, style: { fontSize: 12, color: 'var(--fg-2)', lineHeight: 1.6, marginBottom: 2 } }, r))),
+      label('Issues'),
+      React.createElement('ul', { style: { margin: '4px 0 0', paddingLeft: 18 } },
+        (lore.tableau.issues || []).map((iss, i) => React.createElement('li', { key: i, style: { fontSize: 12, color: 'var(--fg-2)', lineHeight: 1.6 } }, `#${iss.n} — ${iss.file} — ${iss.covers}`))),
+    ]),
+    lore.backgroundThreads && card([
+      label('Background Threads — the sector beyond Thessavar (rotate 1-2 per Tableau issue)'),
+      (lore.backgroundThreads || []).map((t, i) => React.createElement('div', { key: t.id, style: { padding: '8px 0', borderBottom: i < lore.backgroundThreads.length - 1 ? '1px solid var(--border-1)' : 'none' } },
+        React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'baseline' } },
+          React.createElement('span', { style: { fontWeight: 700, fontSize: 12, color: 'var(--fg-0)' } }, t.name),
+          React.createElement('span', { style: { fontSize: 10, padding: '1px 7px', borderRadius: 8, letterSpacing: '0.05em', textTransform: 'uppercase',
+            background: t.status === 'armed' ? 'rgba(200,60,60,0.15)' : t.status === 'ticking' ? 'rgba(230,160,80,0.15)' : 'var(--bg-3)',
+            color: t.status === 'armed' ? '#e07070' : t.status === 'ticking' ? '#e8a87c' : 'var(--fg-3)',
+            border: '1px solid ' + (t.status === 'armed' ? 'rgba(200,60,60,0.4)' : t.status === 'ticking' ? 'rgba(230,160,80,0.4)' : 'var(--border-1)') } }, t.status),
+        ),
+        React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', marginTop: 3 } }, t.thread),
+        React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-3)', marginTop: 2 } }, '↳ ' + t.hook),
+      )),
+    ]),
   );
 
   // FACTIONS TAB

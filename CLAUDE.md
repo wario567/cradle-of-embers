@@ -92,9 +92,66 @@ Each character in the shared `party` array carries an optional `ownerId` + `owne
 ## Campaign content — where things live
 
 - **`sessions/session-NN-*.md`** — full GM session docs (plan + post-session "as played" addendum recording deviations, now-canon rulings, and live state). One file per session. **This is the canonical campaign record.**
-- **`handouts/`** — player-facing docs: character backgrounds and spoiler-free session recaps (`session-N-recap.md`). Never put GM secrets here.
+- **`handouts/`** — player-facing docs: character backgrounds, spoiler-free session recaps (`session-N-recap.md`), and Tableau news bulletins (`tableau-issue-NN.md`). Never put GM secrets here.
 - **`data/gm-lore.js`** — the campaign bible surfaced in the app's GM Notes view (factions, NPCs, timeline, session dashboards). Keep it in sync with the `sessions/` docs when canon changes.
 - The app's live campaign state (party, edits, gmLog) syncs to PocketBase and is NOT in the repo — if content referenced by the user is missing from the repo, ask them to paste it rather than assuming it doesn't exist.
+
+## Campaign continuity — READ THIS FIRST after a context wipe
+
+You (Claude) write all session prep, lore, and news for this campaign, usually
+after losing all conversation memory. The repo IS your memory. Read in this order:
+
+1. **`sessions/session-NN-*.md` (highest NN)** — the latest session doc. The
+   POST-SESSION ADDENDUM at the bottom is as-played canon and overrides the plan
+   above it. Its "Live state" section is the current board.
+2. **`data/gm-lore.js`** — the structured bible. Key sections: `factions` (9
+   canonical, with `swnTags` + `stats`), `factionTurns` (every GM turn ever run,
+   with rolls), `factionStatePostS0`, `enkhContract` (decided threads get their
+   own section like this), `castIndex` (NPC hover blurbs for the app),
+   `tableau` (news-service meta + issue log), `backgroundThreads` (non-Thessavar
+   sector noise), `sessionN` objects (in-app runbooks), `playerCharacters`.
+3. **`handouts/`** — what the players have been told. The recaps define the
+   player-knowledge boundary; never contradict them.
+
+**The session-prep loop** (repeat for each new session N):
+1. Run a GM faction turn (strict SWN Revised rules, dice honestly). Append it to
+   `factionTurns` in gm-lore.js AND add timeline events to `LORE_TIMELINE` in
+   sector-gen.js (public news `revealed: true`, secrets `false`).
+2. Write `handouts/tableau-issue-NN.md` from the turn results (AURIS-curated:
+   never false, only omission + arrangement; rotate in 1-2 `backgroundThreads`;
+   Rumor Ledger for whispers). Log it in `tableau.issues`.
+3. Write the `sessionN` runbook object in gm-lore.js (mirror the `session2`
+   schema: turnSummary, scenes with talkingPoints/checks/cast, missions with
+   whyUs + mainArcPayoff + full combat blocks, clocks, close options) and add
+   the tab to GMNotesView in app.jsx. Mirror it as `sessions/session-NN-*.md`
+   (streamlined talking-points format — the GM reads this AT the table).
+4. After the session is played: write the post-session addendum in the session
+   doc, update `castIndex`/hooks/threads, and write the player recap.
+
+**Design rules the user cares about** (learned across sessions):
+- Session docs must be STREAMLINED — talking points, not prose walls. The GM
+  can't read paragraphs while running the table.
+- Every mission needs `whyUs` (motivation pulled from a PC's own wants — never
+  job-board errands) and `mainArcPayoff` (what main-story secret it leaks).
+  Sandbox = "which pressure do you answer first," not "which errand."
+- Mark skill-check opportunities explicitly (skill, DC, success/fail outcomes).
+- Combats: every mission should offer one; include enemy statlines, terrain,
+  and a mid-fight twist.
+- NEVER replay beats that were already played — check the addendum first.
+- Player-facing text stays inside the knowledge boundary in the latest recap.
+
+**Standing campaign facts** (stable across wipes; details in gm-lore.js):
+- Year 3200. PCs: Enkh Zahli (70, PALE-leased cybernetic brain, ~15k debt,
+  failed assassin of Senn) and West / K7G2-87459-WST (Kael-7 Grade 2 clone,
+  18 months old, owner Senn is dead, subject of a Combine repossession writ).
+- Veronika "The Saint" leads the River Below; her diver Red Flag caused the
+  Still Gardens disaster trying to photograph the vault. The Lattice beneath
+  Thessavar's ocean is an active alien transmission array, now broadcasting.
+- The Tableau (sector news) is secretly run by AURIS, the Aureole Synod's
+  hidden AI. PALE reads Enkh's substrate logs and engineered his contract as
+  a leash (see `enkhContract`). Tarek is missing; the locket is unsplit; the
+  urchin's note was in West's own handwriting (sender undecided).
+- GM turn cadence: ~1 month of in-world time per turn, one turn per session gap.
 
 ## Multiplayer security
 
