@@ -1,4 +1,4 @@
-// Main app — sidebar nav, view router, sector state.
+﻿// Main app — sidebar nav, view router, sector state.
 
 const { useState: useASt, useEffect: useAEf, useMemo: useAMem, useRef: useAR } = React;
 
@@ -29,6 +29,58 @@ function GMNotesView({ sector }) {
   const label = txt => React.createElement('div', { style: { fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 4 } }, txt);
   const prose = txt => React.createElement('p', { style: { fontSize: 13, color: 'var(--fg-2)', lineHeight: 1.65, margin: '6px 0 0', whiteSpace: 'pre-wrap' } }, txt);
   const bullet = txt => React.createElement('li', { style: { fontSize: 12, color: 'var(--fg-2)', lineHeight: 1.6, marginBottom: 2 } }, txt);
+
+  // Rich text: parse [[NPC:Name]], [[FACTION:Name]], [[WORLD:Name]] into clickable nav links
+  const parseRichText = (text) => {
+    if (!text) return null;
+    const parts = text.split(/(\[\[(?:NPC|FACTION|WORLD):[^\]]+\]\])/g);
+    return parts.map((part, i) => {
+      const m = part.match(/^\[\[(NPC|FACTION|WORLD):([^\]]+)\]\]$/);
+      if (m) {
+        const tabMap = { NPC: 'npcs', FACTION: 'factions', WORLD: 'worlds' };
+        const targetTab = tabMap[m[1]];
+        return React.createElement('span', {
+          key: i,
+          onClick: () => {
+            setGMTab(targetTab);
+            if (m[1] === 'NPC') setNpcSearch(m[2]);
+          },
+          title: 'Go to ' + m[1].toLowerCase() + ': ' + m[2],
+          style: { color: 'var(--accent)', cursor: 'pointer', borderBottom: '1px dashed var(--accent)', paddingBottom: 1 }
+        }, m[2]);
+      }
+      return part;
+    });
+  };
+  const richProse = (txt) => React.createElement('p', {
+    style: { fontSize: 13, color: 'var(--fg-2)', lineHeight: 1.65, margin: '6px 0 0', whiteSpace: 'pre-wrap' }
+  }, parseRichText(txt));
+
+  // Render a beat sub-section with type-aware styling
+  const beatSection = (sec, si) => {
+    const isReadAloud = sec.type === 'read-aloud';
+    const isDialogue  = sec.type === 'dialogue';
+    const isGM       = sec.type === 'gm';
+    return React.createElement('div', { key: si, style: { marginTop: 12 } },
+      sec.label && React.createElement('div', {
+        style: {
+          fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4,
+          color: isReadAloud ? '#c8a96e' : isDialogue ? 'var(--fg-3)' : 'var(--fg-4)',
+        }
+      }, sec.label),
+      React.createElement('p', {
+        style: {
+          fontSize: 13, lineHeight: 1.68, margin: 0, whiteSpace: 'pre-wrap',
+          color: isReadAloud ? 'var(--fg-1)' : isDialogue ? 'var(--fg-1)' : 'var(--fg-2)',
+          fontStyle: isReadAloud ? 'italic' : 'normal',
+          background: isReadAloud ? 'rgba(200,169,110,0.07)' : isDialogue ? 'var(--bg-1)' : 'transparent',
+          borderLeft: isReadAloud ? '2px solid #c8a96e' : isDialogue ? '2px solid var(--fg-4)' : 'none',
+          padding: (isReadAloud || isDialogue) ? '8px 12px' : '0',
+          borderRadius: (isReadAloud || isDialogue) ? '0 4px 4px 0' : '0',
+        }
+      }, parseRichText(sec.text))
+    );
+  };
 
   // SECTOR TAB
   const sectorTab = React.createElement('div', null,
@@ -248,14 +300,44 @@ function GMNotesView({ sector }) {
       label('Hidden Truths (GM Only)'),
       React.createElement('ul', { style: { margin: '4px 0 0', paddingLeft: 18 } }, s1.hiddenTruths.map((t, i) => bullet(t))),
     ]),
+    s1.concordance && card([
+      label('The Concordance — Treaty Details'),
+      richProse(s1.concordance.overview),
+      s1.concordance.greyArea && [label('The Grey Area'), richProse(s1.concordance.greyArea)],
+      s1.concordance.secondaryCopy && [label('The Secondary Copy (GM Only)'), richProse(s1.concordance.secondaryCopy)],
+      s1.concordance.theLatticeComplication && [label('The Lattice Complication (GM Only)'), richProse(s1.concordance.theLatticeComplication)],
+      s1.concordance.parties && [
+        React.createElement('div', { style: { fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', marginTop: 12, marginBottom: 6 } }, 'Treaty Parties'),
+        (s1.concordance.parties || []).map((p, i) => React.createElement('div', {
+          key: i,
+          style: { borderLeft: '2px solid var(--border-1)', paddingLeft: 10, marginBottom: 10 },
+        },
+          React.createElement('div', { style: { display: 'flex', gap: 10, alignItems: 'baseline', marginBottom: 3 } },
+            React.createElement('span', { style: { fontSize: 12, fontWeight: 700, color: 'var(--fg-0)' } }, p.name),
+            React.createElement('span', { style: { fontSize: 10, color: 'var(--fg-4)', textTransform: 'uppercase', letterSpacing: '0.07em' } }, p.role),
+          ),
+          React.createElement('p', { style: { fontSize: 12, color: 'var(--fg-2)', lineHeight: 1.6, margin: 0, whiteSpace: 'pre-wrap' } }, parseRichText(p.stake)),
+        )),
+      ],
+    ]),
+    s1.aftermath && card([
+      label('After Thessavar — What Comes Next (GM Only)'),
+      richProse(s1.aftermath.overview),
+      s1.aftermath.whyTheyLeave && [label('Why They Leave'), richProse(s1.aftermath.whyTheyLeave)],
+      s1.aftermath.immediate && [label('Immediately'), richProse(s1.aftermath.immediate)],
+      s1.aftermath.factionResponses && [label('Faction Responses'), richProse(s1.aftermath.factionResponses)],
+      s1.aftermath.mediumTerm && [label('Medium Term'), richProse(s1.aftermath.mediumTerm)],
+      s1.aftermath.thePCs && [label('The PCs'), richProse(s1.aftermath.thePCs)],
+    ]),
     React.createElement('div', { style: { marginBottom: 6 } }, label('Session Beats')),
     (s1.beats || []).map(b => card([
-      React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'baseline', marginBottom: 6 } },
+      React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'baseline', marginBottom: 8, flexWrap: 'wrap' } },
         React.createElement('span', { style: { fontWeight: 700, fontSize: 13, color: 'var(--accent)' } }, 'Beat ' + b.beat),
         React.createElement('span', { style: { fontWeight: 600, fontSize: 13, color: 'var(--fg-0)' } }, b.title),
-        React.createElement('span', { style: { fontSize: 11, color: 'var(--fg-4)' } }, b.type),
+        React.createElement('span', { style: { fontSize: 11, color: 'var(--fg-4)', fontStyle: 'italic' } }, b.type),
       ),
-      b.gmNotes && prose(b.gmNotes),
+      b.gmNotes && richProse(b.gmNotes),
+      (b.sections || []).map((sec, si) => beatSection(sec, si)),
     ])),
   ) : null;
 
@@ -302,9 +384,56 @@ function GMNotesView({ sector }) {
   );
 }
 
-async function sha256(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str + '\0swn-gm'));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+// Pure-JS SHA-256 — works in any context (file://, HTTP, HTTPS).
+// crypto.subtle requires a secure context and fails silently on plain HTTP.
+function sha256(str) {
+  const K = [
+    0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2,
+  ];
+  const input = str + '\0swn-gm';
+  const bytes = [];
+  for (let i = 0; i < input.length; i++) {
+    const c = input.charCodeAt(i);
+    if (c < 0x80) { bytes.push(c); }
+    else if (c < 0x800) { bytes.push(0xc0 | (c >> 6), 0x80 | (c & 0x3f)); }
+    else { bytes.push(0xe0 | (c >> 12), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f)); }
+  }
+  const len = bytes.length;
+  bytes.push(0x80);
+  while ((bytes.length % 64) !== 56) bytes.push(0);
+  const bits = (len * 8) >>> 0;
+  bytes.push(0,0,0,0,(bits>>>24)&0xff,(bits>>>16)&0xff,(bits>>>8)&0xff,bits&0xff);
+  let h0=0x6a09e667,h1=0xbb67ae85,h2=0x3c6ef372,h3=0xa54ff53a,h4=0x510e527f,h5=0x9b05688c,h6=0x1f83d9ab,h7=0x5be0cd19;
+  const rotr = (x, n) => (x >>> n) | (x << (32 - n));
+  for (let i = 0; i < bytes.length; i += 64) {
+    const w = new Uint32Array(64);
+    for (let j = 0; j < 16; j++) w[j] = (bytes[i+j*4]<<24)|(bytes[i+j*4+1]<<16)|(bytes[i+j*4+2]<<8)|bytes[i+j*4+3];
+    for (let j = 16; j < 64; j++) {
+      const s0 = rotr(w[j-15],7)^rotr(w[j-15],18)^(w[j-15]>>>3);
+      const s1 = rotr(w[j-2],17)^rotr(w[j-2],19)^(w[j-2]>>>10);
+      w[j] = (w[j-16]+s0+w[j-7]+s1) >>> 0;
+    }
+    let [a,b,c,d,e,f,g,h] = [h0,h1,h2,h3,h4,h5,h6,h7];
+    for (let j = 0; j < 64; j++) {
+      const S1 = rotr(e,6)^rotr(e,11)^rotr(e,25);
+      const ch = (e&f)^(~e&g);
+      const temp1 = (h+S1+ch+K[j]+w[j]) >>> 0;
+      const S0 = rotr(a,2)^rotr(a,13)^rotr(a,22);
+      const maj = (a&b)^(a&c)^(b&c);
+      const temp2 = (S0+maj) >>> 0;
+      [h,g,f,e,d,c,b,a] = [g,f,e,(d+temp1)>>>0,c,b,a,(temp1+temp2)>>>0];
+    }
+    h0=(h0+a)>>>0;h1=(h1+b)>>>0;h2=(h2+c)>>>0;h3=(h3+d)>>>0;
+    h4=(h4+e)>>>0;h5=(h5+f)>>>0;h6=(h6+g)>>>0;h7=(h7+h)>>>0;
+  }
+  return [h0,h1,h2,h3,h4,h5,h6,h7].map(v=>v.toString(16).padStart(8,'0')).join('');
 }
 
 function getPlayerIdentity() {
@@ -535,6 +664,7 @@ function App() {
       React.createElement('div', { style: { flex: 1, minHeight: 0, overflow: 'hidden' } },
         React.createElement(window.FactionsView, {
           sector,
+          isGM,
           onUpdate: f => saveEdits(s => ({ ...s, factions: s.factions.map(x => x.id === f.id ? f : x) })),
           onPickPlanet: pickPlanet,
         })

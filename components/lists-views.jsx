@@ -1,9 +1,9 @@
-// Factions, NPCs, Timeline, Hooks — list+detail panels in similar style.
+﻿// Factions, NPCs, Timeline, Hooks — list+detail panels in similar style.
 
 const { useState: useStateLP } = React;
 
 // ---------------- FACTIONS ----------------
-function FactionsView({ sector, onUpdate, onPickPlanet }) {
+function FactionsView({ sector, isGM, onUpdate, onPickPlanet }) {
   const [selId, setSelId] = useStateLP(sector.factions[0]?.id || null);
   const sel = sector.factions.find(f => f.id === selId) || sector.factions[0];
 
@@ -23,7 +23,7 @@ function FactionsView({ sector, onUpdate, onPickPlanet }) {
         },
           React.createElement('div', { className: 'title' }, f.name),
           React.createElement('div', { className: 'meta' }, (f.tags || f.traits || []).join(' · ')),
-          React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8, marginTop: 6 } },
+          isGM && React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8, marginTop: 6 } },
             React.createElement('div', { className: 'hp-bar' + (f.hp / f.maxHp < 0.3 ? ' crit' : f.hp / f.maxHp < 0.6 ? ' low' : ''), style: { flex: 1 } },
               React.createElement('div', { style: { width: `${(f.hp / f.maxHp) * 100}%` } })
             ),
@@ -37,7 +37,7 @@ function FactionsView({ sector, onUpdate, onPickPlanet }) {
       React.createElement('div', { style: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 6 } },
         React.createElement('div', { style: { fontFamily: 'Space Grotesk', fontWeight: 600, fontSize: 28, color: 'var(--fg-0)' } }, sel.name),
         sel.hqPlanetName && React.createElement('div', { style: { fontFamily: 'JetBrains Mono', fontSize: 11, color: 'var(--fg-3)' } },
-          'HQ: ', React.createElement('span', { style: { color: 'var(--accent)', cursor: 'pointer' }, onClick: () => {
+          'Homeworld: ', React.createElement('span', { style: { color: 'var(--accent)', cursor: 'pointer' }, onClick: () => {
             const p = sector.systems.flatMap(s => s.planets).find(p => p.id === sel.hqPlanetId);
             if (p) onPickPlanet(p);
           } }, sel.hqPlanetName))
@@ -46,62 +46,71 @@ function FactionsView({ sector, onUpdate, onPickPlanet }) {
         (sel.tags || sel.traits || []).map(t => React.createElement('span', { key: t, className: 'tag accent' }, t))
       ),
 
-      // Stats grid
-      React.createElement('div', { className: 'grid-3', style: { marginBottom: 18 } },
-        React.createElement('div', { className: 'panel' },
-          React.createElement('div', { className: 'panel-title' }, 'Combat HP'),
-          React.createElement('div', { className: 'panel-body' },
-            React.createElement('div', { style: { display: 'flex', alignItems: 'baseline', gap: 8 } },
-              React.createElement('span', { style: { fontFamily: 'Space Grotesk', fontSize: 32, fontWeight: 600, color: 'var(--fg-0)' } }, sel.hp),
-              React.createElement('span', { style: { color: 'var(--fg-3)', fontSize: 12 } }, '/ ' + sel.maxHp)
-            ),
-            React.createElement('div', { className: 'hp-bar' + (sel.hp / sel.maxHp < 0.3 ? ' crit' : sel.hp / sel.maxHp < 0.6 ? ' low' : ''), style: { marginTop: 8 } },
-              React.createElement('div', { style: { width: `${(sel.hp / sel.maxHp) * 100}%` } })),
-            React.createElement('div', { style: { marginTop: 8, display: 'flex', gap: 4 } },
-              React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: () => updateSel({ hp: Math.max(0, sel.hp - 1) }) }, '−1'),
-              React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: () => updateSel({ hp: Math.min(sel.maxHp, sel.hp + 1) }) }, '+1')
+      isGM ? React.createElement(React.Fragment, null,
+        // Stats grid — GM only
+        React.createElement('div', { className: 'grid-3', style: { marginBottom: 18 } },
+          React.createElement('div', { className: 'panel' },
+            React.createElement('div', { className: 'panel-title' }, 'Combat HP'),
+            React.createElement('div', { className: 'panel-body' },
+              React.createElement('div', { style: { display: 'flex', alignItems: 'baseline', gap: 8 } },
+                React.createElement('span', { style: { fontFamily: 'Space Grotesk', fontSize: 32, fontWeight: 600, color: 'var(--fg-0)' } }, sel.hp),
+                React.createElement('span', { style: { color: 'var(--fg-3)', fontSize: 12 } }, '/ ' + sel.maxHp)
+              ),
+              React.createElement('div', { className: 'hp-bar' + (sel.hp / sel.maxHp < 0.3 ? ' crit' : sel.hp / sel.maxHp < 0.6 ? ' low' : ''), style: { marginTop: 8 } },
+                React.createElement('div', { style: { width: `${(sel.hp / sel.maxHp) * 100}%` } })),
+              React.createElement('div', { style: { marginTop: 8, display: 'flex', gap: 4 } },
+                React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: () => updateSel({ hp: Math.max(0, sel.hp - 1) }) }, '−1'),
+                React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: () => updateSel({ hp: Math.min(sel.maxHp, sel.hp + 1) }) }, '+1')
+              )
             )
+          ),
+          React.createElement('div', { className: 'panel' },
+            React.createElement('div', { className: 'panel-title' }, 'Attributes'),
+            React.createElement('div', { className: 'panel-body' },
+              React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', gap: 8 } },
+                ['cunning', 'force', 'wealth'].map(a => React.createElement('div', { key: a, style: { textAlign: 'center', flex: 1 } },
+                  React.createElement('div', { style: { fontSize: 10, textTransform: 'uppercase', color: 'var(--fg-3)', letterSpacing: '0.08em' } }, a),
+                  React.createElement('div', { style: { fontFamily: 'Space Grotesk', fontSize: 22, fontWeight: 600, color: 'var(--fg-0)' } }, sel[a])
+                ))
+              )
+            )
+          ),
+          React.createElement('div', { className: 'panel' },
+            React.createElement('div', { className: 'panel-title' }, 'Long-Term Goal'),
+            React.createElement('div', { className: 'panel-body', style: { fontSize: 13 } }, sel.goal)
           )
         ),
-        React.createElement('div', { className: 'panel' },
-          React.createElement('div', { className: 'panel-title' }, 'Attributes'),
+        // Assets — GM only
+        React.createElement('div', { className: 'panel', style: { marginBottom: 18 } },
+          React.createElement('div', { className: 'panel-title' }, `Assets (${sel.assets.length})`),
           React.createElement('div', { className: 'panel-body' },
-            React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', gap: 8 } },
-              ['cunning', 'force', 'wealth'].map(a => React.createElement('div', { key: a, style: { textAlign: 'center', flex: 1 } },
-                React.createElement('div', { style: { fontSize: 10, textTransform: 'uppercase', color: 'var(--fg-3)', letterSpacing: '0.08em' } }, a),
-                React.createElement('div', { style: { fontFamily: 'Space Grotesk', fontSize: 22, fontWeight: 600, color: 'var(--fg-0)' } }, sel[a])
+            React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: 8 } },
+              sel.assets.map((a, i) => React.createElement('div', { key: i, className: 'asset-pill' },
+                a.name,
+                React.createElement('span', { style: { color: 'var(--fg-3)' } }, `· ${a.cost}cr · HP ${a.hp}`)
               ))
             )
           )
         ),
+        // GM Notes — GM only
         React.createElement('div', { className: 'panel' },
-          React.createElement('div', { className: 'panel-title' }, 'Long-Term Goal'),
-          React.createElement('div', { className: 'panel-body', style: { fontSize: 13 } }, sel.goal)
-        )
-      ),
-
-      // Assets
-      React.createElement('div', { className: 'panel', style: { marginBottom: 18 } },
-        React.createElement('div', { className: 'panel-title' }, `Assets (${sel.assets.length})`),
-        React.createElement('div', { className: 'panel-body' },
-          React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: 8 } },
-            sel.assets.map((a, i) => React.createElement('div', { key: i, className: 'asset-pill' },
-              a.name,
-              React.createElement('span', { style: { color: 'var(--fg-3)' } }, `· ${a.cost}cr · HP ${a.hp}`)
-            ))
+          React.createElement('div', { className: 'panel-title' }, 'GM Notes'),
+          React.createElement('div', { className: 'panel-body' },
+            React.createElement('textarea', {
+              value: sel.notes || '',
+              placeholder: 'Schemes in motion, alliances, what the players know…',
+              onChange: e => updateSel({ notes: e.target.value }),
+              rows: 5,
+            })
           )
         )
-      ),
-      // Notes
-      React.createElement('div', { className: 'panel' },
-        React.createElement('div', { className: 'panel-title' }, 'GM Notes'),
-        React.createElement('div', { className: 'panel-body' },
-          React.createElement('textarea', {
-            value: sel.notes || '',
-            placeholder: 'Schemes in motion, alliances, what the players know…',
-            onChange: e => updateSel({ notes: e.target.value }),
-            rows: 5,
-          })
+      ) : React.createElement('div', { className: 'panel' },
+        // Player description — derived from GM notes if present, otherwise a flavour blurb
+        React.createElement('div', { className: 'panel-title' }, 'About'),
+        React.createElement('div', { className: 'panel-body', style: { fontSize: 13, lineHeight: 1.7, color: 'var(--fg-1)' } },
+          sel.notes
+            ? sel.notes
+            : React.createElement('em', { style: { color: 'var(--fg-3)' } }, 'No public information available.')
         )
       )
     ) : null
