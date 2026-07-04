@@ -4,6 +4,28 @@
 
 ---
 
+## ★ AT A GLANCE — read this first
+
+**Spine:** They ride the Duskline to Belum Freeport. Veronika breaks and reveals she's the Saint (THE scene). At Belum: 3 doors, each a combat, each pulling on a PC want. A Combine repo team is closing on West.
+
+**Run order:** ① Cold open (the berth) → ② Transit (one scene each) → ③ **The Reckoning** (Saint reveal — protect time for this) → ④ Arrival (Belum, Tableau on the screens) → ⑤ Three doors (they pick; combats test the rules) → ⑥ Close.
+
+- **⏱ The one clock:** Combine repo team lands Belum **day 2-4** (you pick). Day-2 telegraph: grey suits at the harbormaster asking about Duskline passengers. Legal writ for **West**. Use it to interrupt when energy dips.
+- **★ The one scene:** The Reckoning. If you nail one thing, nail this.
+- **Tone:** Brennan Lee Mulligan — beautiful, then it costs something. BUT / THEREFORE, never "and then."
+- **⚠ Do not replay:** S1's dockside line, boarding, launch — all played. Open in transit.
+
+### Places & names (glossary)
+- **Belum Freeport** — tonight's hub. Driftborn port, neutral, light law. Docks/promenade up top; **undercity** (the Molt's turf) below. Has a Coyle office + Argent reading room.
+- **The Duskline** — the freighter. Captain **Mira Calder**; her first mate is an RB informant.
+- **Rustwater Crew** — M1 pirates (bought the manifest). **Vess Okaro** — M2 debtor + teen nephew. **Rhax** — M2 boss ("PALE-job"). **Sister Halex** — M3 giver (Covenant/Becoming). **Brother Emmerin** — M3 objective (courier). **The Molt** / chief **Casque** — M3 gang. **Marn Coyle** — Enkh's broker.
+
+### PC cheat sheet — when to call for a roll (DC 8 easy / 10 normal / 12 hard)
+- **Enkh** — good at Notice (casing), Shoot, Sneak/Exert (cyber-limbs), cold transactional Talk. *Lean into:* reading angles/threats, forcing things physically. *Weak:* warmth/Connect.
+- **West** — good at Shoot/Punch, Notice (threat assessment is their JOB — free flags), Exert, tactics. *Lean into:* combat, protecting civilians, surprise rounds. *Weak:* lying under social pressure.
+
+---
+
 ## Pre-session: what the factions did (30-second scan)
 
 | Faction | Did | Why it matters tonight |
@@ -83,6 +105,13 @@ Courier Emmerin missing 4 days in the undercity with a sealed dispatch for Vespe
 1. **Clean:** Veronika — "I'm going somewhere that isn't safe. You could come."
 2. **Hard:** repo team serves the writ at the docks. Cut to black on the standoff.
 3. **Quiet:** West alone. Locket, letter, dispatch. Three papers, three authorities. *Whose order do you follow now?*
+
+## 🧭 If they go off-script (safety net)
+- **Skip all missions, just leave Belum:** the repo team lands anyway; Veronika's M1 is her whole reason for being here (she'll ask directly). Reckoning + repo confrontation alone = a full session.
+- **Run from the repo team:** it becomes a chase/heist, not a standoff. They're legal-first, not violent-first — West could even be served and have to *decide* whether to comply.
+- **Split up (Enkh→Coyle, West→Halex):** let them. Missions are independent. Intercut. This is ideal — reward it.
+- **Attack Veronika at the reveal:** she doesn't fight back. "You want to space me, space me. But my people didn't mean for this, and somebody has to answer. I'd rather it be me than them."
+- **Invent a fourth thing:** say yes, borrow the nearest statblock, pull the main-arc thread that fits. The three doors are examples of the sandbox, not its walls.
 
 ---
 *Tableau bulletin: `handouts/tableau-issue-01.md` (post to Discord). Full cast blurbs + hover links: app → GM Notes → Session 2.*

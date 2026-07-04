@@ -1140,6 +1140,55 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
     world: 'The Duskline (transit) → Belum Freeport',
     timeSkip: '~12 days in spike drill, Thessavar → Belum. GM Turn 4 covers this month.',
 
+    // ── AT-A-GLANCE — read THIS first, glance back all night ─────────────
+    quickRef: {
+      spine: 'They ride the Duskline to Belum Freeport. Veronika breaks and reveals she is the Saint (THE scene). At Belum: 3 doors, each a combat, each pulling on a PC want. A Combine repo team is closing on West.',
+      runOrder: [
+        '1. COLD OPEN — a few hours into the black. The berth. Let them breathe.',
+        '2. TRANSIT — offer each PC one ship scene (Enkh: the hum returns · West: the warm locket). 12 days.',
+        '3. THE RECKONING — Veronika\'s anger → the Saint reveal. Default trigger: when a PC pushes her, OR the moment they read the Tableau. This is the emotional center — protect time for it.',
+        '4. ARRIVAL — Belum, sector in turmoil, Tableau on the pier screens. Open the sandbox.',
+        '5. THREE DOORS — they pick; the others keep ticking. Each has a combat (test the rules).',
+        '6. CLOSE — pick a close option by clock + energy.',
+      ],
+      theOneClock: 'COMBINE REPO TEAM: lands Belum day 2-4 (you pick). Day-2 telegraph: grey suits at the harbormaster asking about Duskline passengers. They have a legal writ for WEST. Paperwork first, force later. Use it to interrupt whatever\'s running when energy dips.',
+      theOneScene: 'The Reckoning (Veronika = the Saint). If you only nail one thing tonight, nail this.',
+      toneTouchstone: 'Brennan Lee Mulligan: beautiful, then it costs something. Every beat earns the next with a BUT (complication) or THEREFORE (consequence) — never "and then."',
+      doNotReplay: 'S1\'s dockside line, boarding, and launch are ALL played. Open in transit.',
+    },
+
+    // ── PLACES & NAMES — the glossary you keep forgetting ────────────────
+    glossary: [
+      { term: 'Belum Freeport', what: 'This session\'s hub. Driftborn-served independent port. Neutral, busy, light law. Has an Argent Compact reading room and a Coyle assay office. Two levels: the docks/promenade (up top) and the undercity (maintenance warrens, the Molt\'s turf).' },
+      { term: 'The Duskline', what: 'The Driftborn freighter carrying them, chartered by Veronika. Captain: Mira Calder. Her first mate is a River Below informant.' },
+      { term: 'Kaeldrift', what: 'The Thessavar platform city they LEFT (last session). Veronika\'s bar is there. Referenced, not visited.' },
+      { term: 'Rustwater Crew', what: 'M1 dock pirates. Bought the Duskline manifest; think the crates are salvage. Leader: the bosun.' },
+      { term: 'Vess Okaro', what: 'M2. Ruined ex-Concordance catering director, in debt, hiding with hired guns. A witness being reeled in. Has a teenage nephew with her.' },
+      { term: 'Rhax', what: 'M2 boss enemy. "Contract supervisor" for the debt syndicate. IDs Enkh\'s cyberware as "PALE-job."' },
+      { term: 'Sister Halex', what: 'M3 quest-giver. Covenant envoy (Becoming). Recognizes West\'s insignia. Tired, direct, genuine.' },
+      { term: 'Brother Emmerin', what: 'M3 objective. Covenant courier held by the Molt, carrying a sealed dispatch for Vesper.' },
+      { term: 'The Molt', what: 'M3 undercity gang. Molted-vacc-suit chic, young, territorial. Chief: Casque. Break early (morale 6).' },
+      { term: 'Marn Coyle', what: 'Enkh\'s broker. Declines the 15k payment. Offers M2. Sympathetic, precise, afraid of the client.' },
+    ],
+
+    // ── PC CHEAT SHEET — so you know when to CALL for a roll ──────────────
+    // (You flagged under-using checks. When a PC leans into one of these,
+    //  that's your cue to ask for the roll. Default DC 8 easy / 10 normal /
+    //  12 hard. Attribute mods matter more than skill at low levels.)
+    playerCheatSheet: [
+      { pc: 'enkh', likelyGood: 'Notice (a lifetime of casing rooms), Shoot, Sneak/Exert (criminal work), Talk when cold and transactional. Fix/Program if the substrate helps.', leanInto: 'His flat affect makes him the best liar in a room of performers. Reward Notice for reading angles and threats. His cyber-arm/leg = Exert (Str) advantage — let him force doors, climb, punch above his age.', avoid: 'Warmth. He\'s bad at Connect that requires charm. That\'s a feature — Darius did the people work.' },
+      { pc: 'west', likelyGood: 'Shoot/Punch (combat-optimized), Notice (threat assessment is literally their job), Exert (clone-strong), tactics reads. Weak at Talk that requires guile.', leanInto: 'Threat assessment = free Notice checks; let West "flag" people (they flagged 11 at the Concordance). Combat is where West shines — surprise rounds, called shots, protecting civilians. The obedience architecture is a ROLEPLAY engine, not a stat.', avoid: 'Deception and improvisation under social pressure. West is earnest; lying is hard and interesting for them.' },
+    ],
+
+    // ── IF THEY GO OFF-SCRIPT — the sandbox safety net ───────────────────
+    offScript: [
+      'They skip all three missions and just want to leave Belum: fine. The repo team lands anyway (the clock doesn\'t care), and Veronika\'s "business" (M1) is her reason for being here — she\'ll ask for help directly. Worst case, run only the Reckoning + repo-team confrontation and you still have a full session.',
+      'They try to run from the Combine repo team entirely: great, that\'s a chase/heist instead of a standoff. The team is legal, not violent-first — West could even be "served" and have to decide whether to comply. Belum has light law; nobody will fight the Combine\'s paperwork FOR them.',
+      'They split up (Enkh to Coyle, West to Halex): let them. Missions are independent. Intercut. This is IDEAL sandbox play — reward it.',
+      'They confront Veronika violently at the reveal: she doesn\'t fight back. "You want to space me, space me. But my people didn\'t mean for any of this, and somebody has to answer for it. I\'d rather it be me than them." Let the choice be real.',
+      'They invent a fourth thing you didn\'t plan: say yes, borrow the nearest combat statblock, and pull the main-arc thread that fits. The three doors are examples of the sandbox, not its walls.',
+    ],
+
     // The pre-session faction recap — one line per faction: what they did and why.
     turnSummary: [
       { faction: 'progenitor_combine', did: 'Filed probate: Kael-7 units revert to Combine. Recovery team traced the Duskline manifest.', why: 'Senn dead + Tarek missing = unclaimed property. THE SESSION CLOCK: repo team is 2-4 days behind the PCs.' },

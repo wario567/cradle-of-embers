@@ -345,11 +345,48 @@ function GMNotesView({ sector }) {
 
   // SESSION 2 TAB — streamlined runbook
   const s2 = lore.session2;
+  const qr = s2 && s2.quickRef;
   const session2Tab = s2 ? React.createElement('div', null,
     card([
       React.createElement('h3', { style: { margin: '0 0 4px', color: 'var(--fg-0)' } }, s2.title),
       React.createElement('div', { style: { fontSize: 11, color: 'var(--accent)', marginBottom: 4 } }, s2.world),
       React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-3)' } }, s2.timeSkip),
+    ]),
+    // AT-A-GLANCE — the page you open the session on
+    qr && React.createElement('div', { style: { background: 'rgba(230,160,80,0.08)', border: '1px solid var(--accent)', borderRadius: 6, padding: '14px 16px', marginBottom: 10 } },
+      React.createElement('div', { style: { fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 8, fontWeight: 700 } }, '★ At a Glance — read this first'),
+      React.createElement('div', { style: { fontSize: 13, color: 'var(--fg-1)', lineHeight: 1.6, marginBottom: 10 } }, qr.spine),
+      React.createElement('div', { style: { display: 'grid', gap: 8 } },
+        [['Run order', qr.runOrder], ].map(([lab, arr], i) => React.createElement('div', { key: i },
+          React.createElement('div', { style: { fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--fg-3)', marginBottom: 3 } }, lab),
+          React.createElement('ul', { style: { margin: 0, paddingLeft: 16 } }, (arr || []).map((x, j) => React.createElement('li', { key: j, style: { fontSize: 12, color: 'var(--fg-2)', lineHeight: 1.5 } }, x))),
+        )),
+        [['⏱ The one clock', qr.theOneClock], ['★ The one scene', qr.theOneScene], ['Tone', qr.toneTouchstone], ['⚠ Do not replay', qr.doNotReplay]].map(([lab, txt], i) => React.createElement('div', { key: 'kv' + i },
+          React.createElement('span', { style: { fontSize: 11, fontWeight: 700, color: 'var(--accent)' } }, lab + ': '),
+          React.createElement('span', { style: { fontSize: 12, color: 'var(--fg-2)' } }, txt),
+        )),
+      ),
+    ),
+    // Glossary — places & names
+    s2.glossary && card([
+      label('Places & Names (the glossary)'),
+      (s2.glossary || []).map((g, i) => React.createElement('div', { key: i, style: { padding: '4px 0', borderBottom: i < s2.glossary.length - 1 ? '1px solid var(--border-1)' : 'none' } },
+        React.createElement('span', { style: { fontWeight: 700, fontSize: 12, color: 'var(--fg-0)' } }, g.term + ' — '),
+        React.createElement('span', { style: { fontSize: 12, color: 'var(--fg-2)' } }, g.what),
+      )),
+    ]),
+    // PC cheat sheet — when to call for a roll
+    s2.playerCheatSheet && card([
+      label('PC Cheat Sheet — when to call for a roll'),
+      (s2.playerCheatSheet || []).map((p, i) => {
+        const c = (lore.castIndex || {})[p.pc];
+        return React.createElement('div', { key: i, style: { padding: '8px 0', borderBottom: i < s2.playerCheatSheet.length - 1 ? '1px solid var(--border-1)' : 'none' } },
+          React.createElement('div', { style: { fontWeight: 700, fontSize: 13, color: 'var(--accent)', marginBottom: 3 } }, c ? c.name : p.pc),
+          React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', marginBottom: 2 } }, React.createElement('b', null, 'Likely good: '), p.likelyGood),
+          React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', marginBottom: 2 } }, React.createElement('b', { style: { color: '#9c9' } }, 'Lean into: '), p.leanInto),
+          React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-3)' } }, React.createElement('b', null, 'Weak at: '), p.avoid),
+        );
+      }),
     ]),
     // Faction turn quick-scan
     card([
@@ -410,6 +447,11 @@ function GMNotesView({ sector }) {
       React.createElement('ol', { style: { margin: '4px 0 0', paddingLeft: 18 } },
         (s2.sessionCloseOptions || []).map((o, i) => bullet(o))),
     ]),
+    s2.offScript && React.createElement('div', { style: { background: 'rgba(120,140,200,0.08)', border: '1px solid rgba(120,140,200,0.35)', borderRadius: 6, padding: '14px 16px', marginBottom: 10 } },
+      React.createElement('div', { style: { fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#9ab', marginBottom: 8, fontWeight: 700 } }, '🧭 If they go off-script (safety net)'),
+      React.createElement('ul', { style: { margin: 0, paddingLeft: 18 } },
+        (s2.offScript || []).map((o, i) => React.createElement('li', { key: i, style: { fontSize: 12, color: 'var(--fg-2)', lineHeight: 1.6, marginBottom: 5 } }, o))),
+    ),
   ) : React.createElement('div', { style: { color: 'var(--fg-3)', padding: 12 } }, 'No Session 2 data.');
 
   // SESSION 1 TAB
