@@ -82,7 +82,7 @@ While waiting:
 - Veronika's bar draws a particular crowd: young, punky, tattooed — mostly young men, some young women. They seem to know her well.
 - Something is clearly weighing on Veronika. Nobody asks her what.
 - Ost decides to go search for Tarek — their handler — and convinces West to stay behind: *if it matters that one of us survives, it should be you.*
-- A street urchin finds West, wordlessly, and delivers a note: **"Found Tarek. Leave now. Not safe."**
+- A street urchin finds West, wordlessly, and delivers a note: **"Found Tarek. Leave now. Not safe."** The note is written in **West's own handwriting**.
 
 A messenger from Veronika arrives: it's time. At the shipyard, as they board her ship, Veronika steps out onto the dock and pauses. Leaves drift down and gather at her feet. She sighs, takes one last look at Kaeldrift, and says:
 
@@ -98,6 +98,6 @@ A messenger from Veronika arrives: it's time. At the shipyard, as they board her
 - What destroyed the Still Gardens? Was Senn even the target?
 - Why was Tarek — a Combine requisition agent — still on Thessavar months after delivery, and what business did he have with Senn?
 - Why is Veronika lying about knowing Tarek? What's weighing on her — and where is she taking you?
-- Who found Tarek — and why isn't it safe?
+- Who found Tarek — and why isn't it safe? And why was the note in **West's own handwriting**?
 - Will Ost make it off Thessavar?
 - Enkh's contract died with Senn, and his client has gone silent. Who hired him — and are they still out there? And who pays a man's exact debt by accident?
