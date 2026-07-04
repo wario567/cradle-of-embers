@@ -18,10 +18,10 @@
 | **Driftborn** | Only ones flying; rates capped for relief | Duskline left in this window |
 | **River Below** | Went quiet; schism brewing over Red Flag | The Saint is on your ship |
 
-## Cold open — launch (picks up AFTER the dockside moment)
-- "It was fun while it lasted" was S1's closing beat — **already played, don't replay it.** Open on the ramp, the engines, gone.
-- Launch: Thessavar from space — blue, still, nothing showing what happened.
-- **NEW scene:** the berth. Assassin, bodyguard, bartender — first breath. Let them talk, or pointedly not.
+## Cold open — in the black (S1 ended with the launch)
+- Dockside line, boarding, AND launch — **all played in S1. Don't replay any of it.**
+- Open a few hours out. Engine hum. First quiet since the island went under. *"You're in the black. What do you do?"*
+- **First new scene:** the berth. Assassin, bodyguard, bartender — first breath. Let them talk, or pointedly not.
 - *Optional fresh Veronika line* (never said in play): "Where do people like us go, when there's nowhere on that rock left to stand?" Or let silence work.
 - Either way: Belum Freeport, 12 days.
 

@@ -1110,12 +1110,12 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
     ],
 
     coldOpen: {
-      title: 'Cold Open — launch (picks up AFTER the dockside moment)',
+      title: 'Cold Open — in the black (S1 ended with the launch)',
       talkingPoints: [
-        'S1 ended dockside — leaves at her feet, "It was fun while it lasted," ALREADY PLAYED. Do not replay it. Open on what comes next: ramp up, engines, gone.',
-        'Launch. Thessavar shrinks — blue, still, nothing showing what happened. First time either PC has seen it from space.',
-        'NEW SCENE — the berth: an assassin, a bodyguard, a bartender. First time all three breathe. Let them talk or let them pointedly not talk.',
-        'OPTIONAL new Veronika line if the scene needs a spark (never said in play — this is fresh dialogue): "So. Where do people like us go, when there\'s nowhere on that rock left to stand?" Or let the silence do the work.',
+        'S1 ended with the crew launching into the black — dockside line, boarding, AND launch all played. Don\'t replay any of it.',
+        'Open a few hours out. Engine hum. The first quiet anyone has had since the island went under. "You\'re in the black. What do you do?"',
+        'FIRST NEW SCENE — the berth: an assassin, a bodyguard, a bartender. First time all three breathe. Let them talk or let them pointedly not talk.',
+        'OPTIONAL Veronika line if the scene needs a spark (fresh dialogue, never said in play): "So. Where do people like us go, when there\'s nowhere on that rock left to stand?" Or let the silence do the work.',
         'However it plays, the ship is headed to Belum Freeport — Calder\'s next port. 12 days.',
       ],
       checks: [],
