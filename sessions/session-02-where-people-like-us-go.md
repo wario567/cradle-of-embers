@@ -32,8 +32,19 @@
 - ✎ **Notice DC 8** (West, re: first mate): tattoos match the Kaeldrift bar crowd.
 - ✎ **Know DC 8** (Belum research): freeport, light law, Argent reading room, Coyle franchise office.
 
-## Arrival — Belum Freeport (sandbox opens)
-- **The Tableau plays on the pier screens** — read the handout (`handouts/tableau-issue-01.md`). The news greets them.
+## THE RECKONING — Veronika breaks (scene of the session)
+- **Trigger** (pick): newsfeed casualty lists reach the ship · a PC pushes past her charm · after M1's ID wafers.
+- Starts as **anger**, not tears. "I told him to WAIT." → Red Flag was 22, died believing what she taught him, no grave. → "Senn is dead — WORSE than dead. The Gardens are gone. And every port is grinding its teeth over who did it."
+- **The reveal:** *"They call me the Saint. The River Below is mine. The boy who died down there was mine too."*
+- **Her motives = RB's stakes:** (1) if RB gets blamed, the movement is exterminated; (2) half her cells whisper "we woke a god" like it's a victory — she must define Red Flag's death before the radicals do; (3) she has to know what's really down there. Belum = her cell hears about Red Flag from HER.
+- **West:** the authority she fell in behind just confessed her movement killed Senn. "She's looking at you. What do you do?" Don't resolve it.
+- **Enkh:** her people did his job for free and cost him 15k. If he says it — let it detonate.
+- ✎ Notice DC 8 (none of it is performance) · Talk DC 10 (what was Red Flag doing? → "He wasn't trying to wake anything. He was trying to take a PICTURE.")
+- After: no apology, no loyalty ask. *"You know what I am now. What you do with it is yours."*
+
+## Arrival — Belum Freeport (sandbox opens — the sector is in turmoil)
+- **The whole port is about Thessavar.** Doubled security, journalist swarms, THE RIVER RISES scrawled on a container (half scrubbed off). The disaster is the weather, not backstory.
+- **The Tableau plays on the pier screens** — read the handout (`handouts/tableau-issue-01.md`), including the **Rumor Ledger**: whispers of "the Saint," an unidentified woman marshaling swan boats, a shuttered Kaeldrift bar, and salvage crews saying something down there is *transmitting*. If the Reckoning already happened, watch Veronika while it plays; if not, bank her reaction as a clue.
 - Fish for: Combine probate line (West: *that means her*). PALE-as-hero (Enkh: *his creditor*).
 - Veronika catches herself giving them orders — "…do what you want. You're not mine." West feels the dropped handhold.
 - ✎ **Know/Connect DC 10:** the Tableau never speculates on the CAUSE. Every other outlet does. Odd.

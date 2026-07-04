@@ -35,6 +35,16 @@ The Argent Compact's Kaeldrift sanctuary has taken in several hundred displaced 
 
 ---
 
+**THE RUMOR LEDGER** — *claims circulating in port districts this cycle, printed unverified as a public record of sentiment. The Tableau does not endorse them.*
+
+- That the Still Gardens disaster was no accident, and every faction knows exactly what caused it.
+- That graffiti reading THE RIVER RISES has appeared in relief camps on Thessavar and in three port districts sector-wide, alongside invocations of a figure called **"the Saint"** — a name spacers attach to everything from a smugglers' guardian spirit to the supposed leader of a dockside movement. Harbor authorities consider the Saint a folk story.
+- That the evacuation of the Still Gardens was marshaled not by estate security but by a single unidentified woman commanding a line of swan boats — survivors' accounts agree on her existence and on nothing else. Estate records list no such staff member.
+- That a well-liked Kaeldrift dockside bar has stood shuttered since the disaster, its regulars keeping an odd, quiet vigil outside. Asked when the owner returns, one answered only: *"When the river's ready."*
+- That something under Thessavar's ocean is *transmitting*. (Attributed to salvage crews; dismissed by the reconstruction authority as sensor artifacts from debris settling.)
+
+---
+
 *Notices: The Aureole Synod extends open chapel hours at all locations for those grieving the Thessavar losses. Services are free. All are welcome. You are not alone.*
 
 *— The Tableau. Plainly told.*

@@ -1075,7 +1075,7 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
 
   // ── CAST INDEX — hover blurbs for in-app links ─────────────────────────────
   castIndex: {
-    'veronika':   { name: 'Veronika "The Saint"', blurb: 'Kaeldrift bartender; secretly head of the River Below. Rescued the PCs. West has fallen in under her authority. Guilty about Red Flag; PCs don\'t know any of it.', faction: 'river_below' },
+    'veronika':   { name: 'Veronika "The Saint"', blurb: 'Kaeldrift bartender; head of the River Below. Rescued the PCs; West has fallen in under her authority. Carrying Red Flag\'s death, Senn\'s death, and a movement about to tear itself apart. Reveals she is the Saint in the S2 RECKONING scene.', faction: 'river_below' },
     'coyle':      { name: 'Marn Coyle', blurb: 'Enkh\'s contract broker. Mid-50s, professionally bland, scrupulously neutral. Doesn\'t know the client is PALE but has guessed — and stopped checking. Will decline the payment.', faction: 'pale_substrate' },
     'darius':     { name: 'Darius Epps', blurb: 'Enkh\'s friend of 20 years. Heavy drinker, regular at Veronika\'s bar. Still on Thessavar. Skeptical of PALE. Knew Div.', faction: null },
     'ost':        { name: 'Ost (K7G2-87488-OST)', blurb: 'West\'s surviving unit-mate. Stayed on Thessavar to hunt for Tarek. Status unknown. Subject to the same Combine repossession writ as West.', faction: 'progenitor_combine' },
@@ -1140,10 +1140,32 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
       cast: ['veronika', 'calder', 'west', 'enkh'],
     },
 
-    arrival: {
-      title: 'Arrival — Belum Freeport (the sandbox opens)',
+    // THE SCENE OF THE SESSION — Veronika breaks. Grief, rage, and the reveal.
+    reveal: {
+      title: 'THE RECKONING — Veronika breaks (the Saint reveal)',
       talkingPoints: [
-        'Dock scene: THE TABLEAU is playing on the pier screens as they walk off the ramp. Read/paraphrase the bulletin handout — the news greets them.',
+        'WHEN: your call — best triggers: (a) a sector newsfeed reaches the ship mid-transit with disaster casualty lists scrolling, (b) a PC finally pushes past her charm about Tarek/the bar/what\'s weighing on her, or (c) after M1, when the PCs have seen the ID wafers and half-know already.',
+        'HOW IT STARTS: not tears — ANGER. Something small sets her off (a glass, a card game, the newsfeed saying "cause undetermined"). She goes cold-quiet, then it comes out in a controlled burn that keeps slipping the leash.',
+        'THE CONFESSION, in beats — let each one land before the next: "I told him to WAIT. I told him we watch, we listen, we do not touch ANYTHING until we understand it." (beat) "He was twenty-two. He took a submersible down there because he believed the things I taught him to believe — that the powerful were about to carve up something that belonged to everyone." (beat) "And now he\'s dead at the bottom of an ocean with no grave I can visit. Senn is dead — WORSE than dead, she went up in front of the whole sector. The Gardens are gone. Four hundred years of that island, gone. And every port from here to the core is grinding its teeth over WHO DID IT."',
+        'THE REVEAL: "They call me the Saint. The River Below is mine. The boy who died down there was mine too. So when you ask me what\'s weighing on me —" (she stops. steadies.) "Everything is. Everything is mine to carry now."',
+        'WHY SHE\'S TELLING THEM: she needs them to hear it from her before they hear it from a newsfeed or a bounty notice. And they\'re the only two people alive who were there and owe nothing to any faction. That makes them the only people she CAN tell.',
+        'HER MOTIVES = RIVER BELOW\'S STAKES, said plainly: (1) If the sector learns RB caused the disaster, the movement gets exterminated — every cell, every kid with a tattoo. (2) Half her cells are already whispering "we woke a god" like it\'s a VICTORY — she has to get to them before the radicals define what Red Flag\'s death meant. (3) She has to know what\'s actually down there — because her people died reaching for it, and because whoever controls that answer controls what happens next. Belum is stop one: her cell here needs to hear about Red Flag from HER.',
+        'WEST\'S ARCHITECTURE MOMENT: the authority West fell in behind just confessed her movement caused Senn\'s death. Senn — West\'s principal. Does the attachment hold? Don\'t resolve it for the player. Ask: "West — she\'s looking at you. What do you do?"',
+        'ENKH\'S ANGLE: her people accidentally did his job for free and cost him 15,000 credits. If he says THAT out loud in this scene — let it detonate. It\'s the worst possible thing to say and the most Enkh thing to say.',
+        'AFTER: she doesn\'t apologize and doesn\'t ask for loyalty. "You know what I am now. The ship docks in four days. What you do with it is yours." (Her respect for their choice IS the loyalty play — and it\'s genuine.)',
+      ],
+      checks: [
+        { when: 'West reads her during the confession (is any of it performance?)', skill: 'Notice', dc: 8, success: 'None of it is performance. This is the first fully unguarded thing she has ever shown them. The grief for Red Flag is the grief of a parent.', fail: 'She\'s hard to read — the charm never fully drops.' },
+        { when: 'Either PC asks what Red Flag was actually TRYING to do down there', skill: 'Talk', dc: 10, success: 'She answers straight: RB believed the Concordance treaty would hand "the find" to the Covenant and the elites. Red Flag went down to document it — proof to broadcast to the sector. The charge was for a sealed hatch. "He wasn\'t trying to wake anything. He was trying to take a PICTURE."', fail: '"Does it matter now?" — she\'s done for tonight.' },
+      ],
+      cast: ['veronika', 'west', 'enkh'],
+    },
+
+    arrival: {
+      title: 'Arrival — Belum Freeport (the sandbox opens, and the sector is in turmoil)',
+      talkingPoints: [
+        'THE WHOLE PORT IS ABOUT THESSAVAR. Every screen, every conversation, every checkpoint. Dock security is doubled and jumpy. A freighter from the Thessavar run gets swarmed by journalists. Someone has scrawled THE RIVER RISES on a cargo container — and someone else has half scrubbed it off. The disaster isn\'t backstory; it\'s the weather.',
+        'Dock scene: THE TABLEAU is playing on the pier screens as they walk off the ramp. Read/paraphrase the bulletin handout — including the rumor column about "the Saint." If the reveal scene already happened, watch Veronika\'s face while it plays. If it hasn\'t, bank her reaction as a clue.',
         'Key reactions to fish for: Combine "probate claim on Senn\'s estate" line (WEST — that means HER). Thessavar exclusion zone + PALE relief (ENKH — his creditor is a hero now).',
         'Veronika: "I\'ve got business here. Two days, maybe three. You should… actually, no. Do what you want. You\'re not mine." (She catches herself ordering them around. West feels the loss of the order like a dropped handhold.)',
         'Then open the table: three obvious doors (missions below) + Coyle\'s office sign visible from the dock promenade.',

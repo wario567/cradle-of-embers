@@ -344,6 +344,7 @@ function GMNotesView({ sector }) {
     ]),
     s2.coldOpen && React.createElement(SceneCard, { scene: s2.coldOpen }),
     s2.transit && React.createElement(SceneCard, { scene: s2.transit }),
+    s2.reveal && React.createElement(SceneCard, { scene: s2.reveal }),
     s2.arrival && React.createElement(SceneCard, { scene: s2.arrival }),
     React.createElement('div', { style: { margin: '14px 0 6px' } }, label('Three Doors — each has a combat')),
     (s2.missions || []).map(m => card([
