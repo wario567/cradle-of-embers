@@ -156,7 +156,8 @@ after losing all conversation memory. The repo IS your memory. Read in this orde
 - The Tableau (sector news) is secretly run by AURIS, the Aureole Synod's
   hidden AI. PALE reads Enkh's substrate logs and engineered his contract as
   a leash (see `enkhContract`). Tarek is missing; the locket is unsplit; the
-  urchin's note was in West's own handwriting (sender undecided).
+  urchin's note was in West's own handwriting = Ost's (same Kael-7 hand); Ost
+  is alive and found Tarek. A lead, not a mystery.
 - GM turn cadence: ~1 month of in-world time per turn, one turn per session gap.
 
 ## Multiplayer security

@@ -48,7 +48,8 @@
 - Either way: Belum Freeport, 12 days.
 
 ## Transit (2-3 scenes MAX — offer, don't force)
-- **Enkh — "The Kid":** West does something small (still on an unassigned watch, strips a weapon clean unbidden, asks *why* not *how*) and for a second Enkh sees **Div** — the boy he lost on Karrath. The substrate should've flattened this; it didn't, quite. No roll. Don't name Div unless the player does. Quiet payoff: Enkh decides this one won't end like Div. *(Backup beat "Dead Air": he can't raise Darius — first time in 20 years he's alone with the thing in his head.)*
+- **Enkh — "The Kid":** West does something small (still on an unassigned watch, strips a weapon clean unbidden, asks *why* not *how*) and for a second Enkh sees **Div** — the boy he lost on Karrath. The substrate should've flattened this; it didn't, quite. No roll. Don't name Div unless the player does. Quiet payoff: Enkh decides this one won't end like Div.
+- **Darius is aboard** (boarded at Thessavar) — use him. Knew Div too, so he may catch Enkh softening toward West. Does the warm people-work Enkh can't; as a working-class PALE-skeptic, he'll likely *respect* Veronika when the Saint reveal lands.
 - ⚠ **Enkh's PALE hum already returned** ~30 min post-EMP in S1 — don't replay it. PALE has had access the whole trip.
 - **West:** locket warm at odd hours — warm*er* near Enkh. Don't explain.
 - **Veronika:** deflects with charm; pressed on Tarek she goes *quiet*, not defensive.

@@ -1097,7 +1097,7 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
   castIndex: {
     'veronika':   { name: 'Veronika "The Saint"', blurb: 'Kaeldrift bartender; head of the River Below. Rescued the PCs; West has fallen in under her authority. Carrying Red Flag\'s death, Senn\'s death, and a movement about to tear itself apart. Reveals she is the Saint in the S2 RECKONING scene.', faction: 'river_below' },
     'coyle':      { name: 'Marn Coyle', blurb: 'Enkh\'s contract broker. Mid-50s, professionally bland, scrupulously neutral. Doesn\'t know the client is PALE but has guessed — and stopped checking. Will decline the payment.', faction: 'pale_substrate' },
-    'darius':     { name: 'Darius Epps', blurb: 'Enkh\'s friend of 20 years. Heavy drinker, regular at Veronika\'s bar. Still on Thessavar. Skeptical of PALE. Knew Div.', faction: null },
+    'darius':     { name: 'Darius Epps', blurb: 'Enkh\'s friend of 20 years. Heavy drinker, PALE-skeptic, knew Div. ABOARD THE DUSKLINE with Enkh — boarded at Thessavar. A live NPC in Session 2: the one person who knew Enkh before, the warmth Enkh lacks, and a working-class voice who\'d respect the Saint.', faction: null },
     'ost':        { name: 'Ost (K7G2-87488-OST)', blurb: 'West\'s surviving unit-mate. Stayed on Thessavar to hunt for Tarek. Status unknown. Subject to the same Combine repossession writ as West.', faction: 'progenitor_combine' },
     'tarek':      { name: 'Requisition Agent Tarek', blurb: 'Combine agent who delivered West\'s unit; discovered what\'s in the vault; disappeared. Left the locket + letter. Fate deliberately undecided.', faction: 'progenitor_combine' },
     'vesper':     { name: 'Elder Vesper', blurb: 'Hollow Covenant / Becoming faction leader. Tarek\'s note says trust her. West\'s nominal chain of command. Has not appeared on screen yet.', faction: 'hollow_covenant' },
@@ -1227,12 +1227,12 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
       talkingPoints: [
         'S1 ended with the crew launching into the black — dockside line, boarding, AND launch all played. Don\'t replay any of it.',
         'Open a few hours out. Engine hum. The first quiet anyone has had since the island went under. "You\'re in the black. What do you do?"',
-        'FIRST NEW SCENE — the berth: an assassin, a bodyguard, a bartender. First time all three breathe. Let them talk or let them pointedly not talk.',
+        'FIRST NEW SCENE — the berth: an assassin, a bodyguard, a bartender, and Darius (Enkh\'s old friend, who boarded too). First time they breathe. Let them talk or let them pointedly not talk.',
         'OPTIONAL Veronika line if the scene needs a spark (fresh dialogue, never said in play): "So. Where do people like us go, when there\'s nowhere on that rock left to stand?" Or let the silence do the work.',
         'However it plays, the ship is headed to Belum Freeport — Calder\'s next port. 12 days.',
       ],
       checks: [],
-      cast: ['veronika', 'calder', 'west', 'enkh'],
+      cast: ['veronika', 'calder', 'darius', 'west', 'enkh'],
     },
 
     transit: {
@@ -1241,7 +1241,7 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
         'Offer each player ONE ship scene. Don\'t run all of these — let them pick what they poke at.',
         'ENKH — "The Kid": somewhere in transit, WEST does something small — sits too still on a watch nobody assigned, strips and reassembles a weapon clean without being told, asks WHY a thing works, not just how — and for one second Enkh sees Div. The boy he took under his wing on Karrath; quiet, clever, there to work, dead in the accident. The substrate was supposed to have flattened this. It didn\'t, quite — THAT\'s the unsettling part. (Pure RP, no roll. Don\'t name Div aloud unless the player goes there — a look, a hesitation, a gruffness that doesn\'t fit the moment. The quiet payoff: Enkh deciding, without saying it, that this one won\'t end like Div did.)',
         '(NOTE: Enkh\'s PALE hum is NOT a fresh beat — it returned ~30 min after the S1 EMP, already in play. PALE has had surface-log access since. Don\'t replay the "silence breaks" moment.)',
-        'ENKH backup beat — "Dead Air" (use instead of or alongside The Kid): he tries to raise Darius and gets nothing. Thessavar\'s an exclusion zone, comms are a mess, or Darius just isn\'t answering — and Darius was last seen 13 beers deep on a planet now in crisis. First time in 20 years Enkh can\'t reach the one person who knew him BEFORE. A small worry-clock for later.',
+        'DARIUS IS ABOARD (boarded at Thessavar) — use him. He\'s the one person who knew Enkh BEFORE, and he watches Enkh soften toward West with quiet interest (he knew Div too — he may be the only other person who\'d catch the echo). Good transit texture: Darius needling Enkh about the dead contract and the debt, doing the warm people-work Enkh can\'t, and — being a working-class PALE-skeptic — likely to RESPECT Veronika once the Saint reveal lands rather than recoil. He can voice what Enkh won\'t.',
         'WEST: the locket rides in a pocket. Warm at odd hours — warmer when West is near ENKH. (Don\'t explain. Let the player notice the pattern or not.)',
         'VERONIKA at cards / in the galley: she deflects questions with charm. If pressed hard about Tarek again, she gets QUIET, not defensive.',
         'CALDER\'s first mate (unnamed so far): watches Veronika constantly. West\'s threat-assessment flags it. (He\'s her informant — reading as either devotion or surveillance.)',
@@ -1252,7 +1252,7 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
         { when: 'Enkh asks Veronika about her plans', skill: 'Talk (or just RP)', dc: 10, success: 'A crack: "I had people counting on me back there. Had." She stops herself.', fail: 'Charm wall holds.' },
         { when: 'Either PC researches Belum en route', skill: 'Know', dc: 8, success: 'Belum Freeport: Driftborn-served independent port. Neutral, busy, light law. Argent Compact reading room. Assay offices — including a Coyle franchise.', fail: 'Busy port, light law. That\'s all the file says.' },
       ],
-      cast: ['veronika', 'calder', 'west', 'enkh'],
+      cast: ['veronika', 'calder', 'darius', 'west', 'enkh'],
     },
 
     // THE SCENE OF THE SESSION — Veronika breaks. Grief, rage, and the reveal.
@@ -2139,7 +2139,7 @@ Session 2 opens: "You're in the black. What do you do?"
 
 The open threads — pull on whichever the table is hungriest for:
 • [[NPC:Tarek]]'s note: every line is a lead (Becoming, Remembrance, the fragment, [[FACTION:PALE]], the Combine)
-• Enkh's vanished client: who needed Senn dead badly enough to spend his exact debt balance as bait? ([[NPC:Darius]] can run this thread from Kaeldrift)
+• Enkh's vanished client: who needed Senn dead badly enough to spend his exact debt balance as bait? ([[NPC:Darius]] — now aboard the Duskline — can chew on this thread alongside Enkh)
 • The locket: split or whole; Tarek said don't divide it and they may have divided it
 • Veronika and [[FACTION:River Below]]: a guilty leader, a martyr 600m down with no grave, a movement fracturing over what its own people did
 • [[NPC:Elder Vesper]]: Tarek said trust her; West reports to her; she may be the only leader who understands the Lattice

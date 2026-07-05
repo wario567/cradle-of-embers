@@ -319,7 +319,7 @@ Run this as the SWN faction turn (GM Turn screen). The throughline: **nobody who
 **Seeded tonight, pull-able next session:**
 - **The note's instructions** — Becoming before Remembrance; don't divide the fragment; don't trust the Combine; PALE is listening; *come alone, burn this.* Every line is a lead.
 - **The fragment itself** — split or whole, used or pocketed; its pull on both PCs.
-- **Enkh's missing client** — was the job ever real, and who needed Senn delayed badly enough to spend his exact debt as bait? (Darius can chase this from Kaeldrift.)
+- **Enkh's missing client** — was the job ever real, and who needed Senn delayed badly enough to spend his exact debt as bait? (Darius boarded the Duskline with Enkh and can chew on this alongside him.)
 - **Veronika / River Below** — a guilty leader, a martyr ("Red Flag") with no grave 600m down, a movement tearing itself apart over what its own people did.
 - **Vesper** — Tarek said trust her; West reports to her; she may be the one who understands the Lattice. First obvious destination.
 - **The broadcast** — someone, somewhere, already heard it. Who knocks on the door first?
@@ -382,7 +382,7 @@ Run this as the SWN faction turn (GM Turn screen). The throughline: **nobody who
    - West opened the package at the bar (away from Ost): read Tarek's note (didn't understand it), felt the locket's warmth and a sense of *rightness/completeness* near it, but **never touched the locket** and told no one — not even Ost.
    - West questioned Veronika about Tarek; she denied knowing him; West won an opposed check and knows **she's lying**.
    - Bar staff confirmed Senn and Tarek met at the bar several times and were known there.
-   - A street urchin delivered a note to West: **"Found Tarek. Leave now. Not safe."** — and the note is in **West's own handwriting**. *(GM: decide who sent this before Session 2 — it's not from the plan. The handwriting opens three doors: another Kael-7 [same lineage, same conditioning, same hand — Ost? a stranger unit?], something copying West [the Combine's lineage mapping? Genesis-1?], or something stranger tied to the Lattice. Choose when it matters.)*
+   - A street urchin delivered a note to West: **"Found Tarek. Leave now. Not safe."** — in **West's own handwriting** (every Kael-7 writes the same hand). *(Grounded reading, per GM: this is Ost — alive, found Tarek, warning West. A lead, not a mystery. The only beat is West's half-second startle at seeing "their" writing before realizing it's a unit-mate's.)*
    - **Darius was at the bar the whole time** — 12-13 beers deep by the time Enkh got back, a regular at Veronika's, familiar with her. (Ruling pending: his tolerance was never established; he was played functional. Canon: he's a heavy drinker and Veronika's is his bar.)
    - **Tarek's parting line to West** when handing over the parcel: *"Aye — nobody pays your price by accident."* — the same warning Darius gave Enkh, word-for-shape. Neither PC knows the other heard it. (GM: this echo is now a table motif. Use it a third time when it will hurt.)
 7. **Departure:** they left on **Veronika's ship** from the shipyard (framed as hers — reconcile with the Duskline/Calder threads: simplest is that she booked/chartered berths on the Duskline). Dockside, Veronika's last look at Kaeldrift's fallen leaves: *"It was fun while it lasted."* Then boarding, **launch — the session ended with the crew in the black.** The berth scene and any Veronika ship dialogue are unplayed; Session 2 opens in transit.
@@ -393,7 +393,7 @@ Run this as the SWN faction turn (GM Turn screen). The throughline: **nobody who
 - **Enkh believes his contract may be FULFILLED** — target dead, job arguably done. He expects to contact the broker and collect his 15,000. The bad news (proof-of-kill clause, payment declined, "cause of death doesn't match the commissioned work") has NOT been broken to him. **Broker is decided: Marn Coyle** — see gm-lore `enkhContract` for the full thread and the payment-decline scene.
 - **West is deferring to Veronika** as de facto legitimate authority (fell in during the rescue). Neither PC knows she leads the River Below. West's obedience is currently pointed at the person whose movement caused everything.
 - Ost is on Thessavar, hunting Tarek, headed toward whatever "not safe" means.
-- The urchin's note is in West's own handwriting — sender undecided (see Deviations #6 for options).
+- The urchin's note is in West's own handwriting = Ost's hand (same Kael-7 lineage). Ost is alive, found Tarek, and warned West. Live lead into the Tarek/Ost thread.
 - Enkh's substrate: PALE's hum RETURNED ~30 min after the EMP (played in S1). PALE has had surface-log access ever since — including all of Session 2. (The "silence breaks" beat is spent; don't replay it.)
 - Kaeldrift detail debt: falling leaves were seen at the dock but the city's greenery was never described. (Easy retrofit: platform cities grow engineered canopy trees for oxygen/food/morale — Kaeldrift's are shedding for the season. Or leave it as one of those beautiful unexplained things.)
 - Year discrepancy to resolve: this doc says 3231; gm-lore faction turns say 3249.

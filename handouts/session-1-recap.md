@@ -99,7 +99,7 @@ A messenger from Veronika arrives: it's time. At the shipyard, as they board her
 - What destroyed the Still Gardens? Was Senn even the target?
 - Why was Tarek — a Combine requisition agent — still on Thessavar months after delivery, and what business did he have with Senn?
 - Why is Veronika lying about knowing Tarek? What's weighing on her — and where is she taking you?
-- Who found Tarek — and why isn't it safe? And why was the note in **West's own handwriting**?
+- The note was in **West's own handwriting** — the way every Kael-7 writes. Is it Ost? Did they find Tarek? Are they still alive out there?
 - Will Ost make it off Thessavar?
 - Enkh's contract was to kill Senn. Senn is dead. Does that count? The 15,000 credits — the exact balance of his Lease — are waiting to be collected. All he has to do is contact his broker and claim the job. What could go wrong?
 - And underneath it all: who hired him in the first place — and who pays a man's exact debt by accident?

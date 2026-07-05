@@ -14,10 +14,10 @@ There are only a few things you truly must remember. Everything else hangs off t
 1. **The leash.** Enkh owes a machine called PALE a debt shaped like his own mind, and the machine can read his thoughts.
 2. **The clone with no master.** West was built to obey, their owner just died, and nobody — including West — is sure who owns them now.
 3. **The Saint.** The woman who saved them, Veronika, is secretly the leader of a resistance movement, and her people caused the disaster by accident.
-4. **The handwriting.** A note reached West that was written in West's own hand, and no one knows how.
+4. **The locket.** West is carrying a warm alien relic that resonates between them and Enkh — and a dead man's warning not to divide it or trust it.
 5. **The signal.** Something ancient under the ocean woke up and started transmitting, and the whole sector is about to start fighting over it.
 
-Say those five back to yourself before you go on. Leash. Clone. Saint. Handwriting. Signal. That is the spine of the entire campaign.
+Say those five back to yourself before you go on. Leash. Clone. Saint. Locket. Signal. That is the spine of the entire campaign.
 
 ---
 
@@ -129,13 +129,13 @@ Enkh never fired a shot. His target was dead, his contract void, and he had done
 
 The island began to drown. One of West's unit-mates, **Nor**, was killed by debris. The other, **Ost**, survived. And out of the chaos came a boat, and a woman who was not panicking — a Kaeldrift bartender named **Veronika**. She took charge with total authority, marshaled a convoy of swan boats, and pulled the survivors out of the water. With Senn dead and no chain of command left, West *fell in* behind her — the way a Kael-7 does. **Remember this: West is now, instinctively, taking orders from Veronika, and neither of them fully understands why.**
 
-Back in Kaeldrift, in the crush of the aftermath, small strange things happened. A second eruption sent out an electromagnetic pulse that, for thirty long minutes, silenced the constant faint watching in Enkh's head — the first silence he'd had in ten years — before it switched back on. Enkh's old friend Darius was already at Veronika's bar, thirteen beers deep, waiting for a job that had clearly gone wrong. West quietly opened Tarek's package, found the letter and the locket, felt an uncanny sense of *rightness* near the locket — and told no one, not even Ost. Tarek's letter read: *"If you are reading this, something went wrong. Trust Elder Vesper. Do not trust the relic."*
+Back in Kaeldrift, in the crush of the aftermath, small strange things happened. A second eruption sent out an electromagnetic pulse that, for thirty long minutes, silenced the constant faint watching in Enkh's head — the first silence he'd had in ten years — before it switched back on. Enkh's old friend Darius was already at Veronika's bar, thirteen beers deep, waiting for a job that had clearly gone wrong — and when Enkh left, Darius left with him. **Remember this: Darius boarded the ship too. He is aboard the Duskline now, the one person alive who knew Enkh before.** West quietly opened Tarek's package, found the letter and the locket, felt an uncanny sense of *rightness* near the locket — and told no one, not even Ost. Tarek's letter read: *"If you are reading this, something went wrong. Trust Elder Vesper. Do not trust the relic."*
 
-And then the strangest thing of all. A street urchin pressed a note into West's hand: *"Found Tarek. Leave now. Not safe."* **Remember this: the note was written in West's own handwriting. Nobody knows how.**
+And one more thing. A street urchin pressed a note into West's hand: *"Found Tarek. Leave now. Not safe."* It was in West's own handwriting — which startled them for a second, until the obvious truth landed: every Kael-7 writes the same hand. **Remember this: this is almost certainly Ost — alive, having found Tarek, warning West. It is a lead, not a mystery.**
 
 Ost chose to stay behind on Thessavar to hunt for Tarek, insisting West be the one to get out. Veronika offered the two of them passage off-world. At the dock, leaves drifting at her feet, she looked back at the city one last time and said, *"It was fun while it lasted."* And they launched into the black.
 
-**So far:** an accident killed the diplomat both heroes came for. A resistance leader saved them and West now obeys her. Enkh's payday and his freedom evaporated. West is carrying a warm locket, a dead man's warning, and a note in their own hand. Ost is behind them, hunting a missing man. And under the ocean, something that had slept for tens of thousands of years is now awake — and beginning to call out across the stars.
+**So far:** an accident killed the diplomat both heroes came for. A resistance leader saved them and West now obeys her. Enkh's payday and his freedom evaporated. West is carrying a warm locket and a dead man's warning. Ost is behind them, hunting Tarek — and has already gotten word out. And under the ocean, something that had slept for tens of thousands of years is now awake, and beginning to call out across the stars.
 
 ---
 
@@ -165,7 +165,8 @@ Before the next session begins, hold the current board in your mind. Here is the
 - **West** is deferring to Veronika without understanding it, carrying a locket they've never dared touch again and a dispatch — and does not know that not one but *two* factions now claim to own them.
 - **Veronika** is the Saint, grieving a boy who died disobeying her, terrified her movement will be blamed and destroyed, and about to break in front of the two strangers she saved.
 - **The locket** rides in West's pocket, unsplit and untouched. Tarek's warning: do not divide it, do not trust it.
-- **Ost** is back on Thessavar, hunting the missing Tarek, walking toward whatever "not safe" means.
+- **Darius** — Enkh's oldest friend — is aboard the Duskline too, the one warm voice from Enkh's past, watching the old man he misses maybe start to thaw.
+- **Ost** is back on Thessavar, found Tarek, and got a warning out to West; whatever they found, it isn't safe.
 - **The Combine repo team** is two to four days behind the Duskline, carrying a legal writ for West.
 - **The Penumbra's publication** is a bomb with the fuse already lit — it will go off soon, and when it does, every faction moves.
 - **Under the ocean**, the signal keeps broadcasting, and nobody who can hear it understands it yet.
@@ -178,7 +179,7 @@ Before the next session begins, hold the current board in your mind. Here is the
 
 *(This is Session Two, told as a story — the shape of the night, not the mechanics. The nuts and bolts, the dice and the stat blocks, are waiting for you at the very back, in the GM's Toolkit, kept separate on purpose so the story stays a story.)*
 
-The session opens in the black, a few hours out from Thessavar — the first quiet anyone has had since the island went under. Three people who were never meant to share a boat: an assassin, a bodyguard, and the woman whose movement drowned the diplomat both were sent to decide the fate of. Let them breathe. The ship is bound for a free port called **Belum**, twelve days away.
+The session opens in the black, a few hours out from Thessavar — the first quiet anyone has had since the island went under. People who were never meant to share a boat: an assassin, a bodyguard, the woman whose movement drowned the diplomat both were sent to decide the fate of, and Enkh's old friend Darius, who wouldn't let him leave alone. Let them breathe. The ship is bound for a free port called **Belum**, twelve days away.
 
 On the voyage, two quiet things surface. Enkh, watching West — the way they sit too still on a watch nobody assigned, the way they take a weapon apart clean and unbidden, the way they ask *why* a thing works and not just *how* — sees, for one second, the boy Div. The feeling was supposed to have been flattened out of him. It wasn't, quite. That is the crack of the old man beginning to care again. And West notices the locket grows warm at odd hours — warmest, strangely, when Enkh is near.
 
@@ -260,7 +261,7 @@ Do not answer "you're free." The honest answer, from anyone who knows (Halex, a 
 
 - **Veronika "the Saint"** — Kaeldrift bartender, secret leader of the River Below; saved the heroes; West obeys her; grieving Red Flag.
 - **Marn Coyle** — Enkh's broker; declines the payment; afraid of the client (probably PALE).
-- **Darius Epps** — Enkh's oldest friend, heavy drinker, still on Thessavar; knew Div.
+- **Darius Epps** — Enkh's oldest friend, heavy drinker, PALE-skeptic; knew Div; aboard the Duskline with the party.
 - **Ost** — West's surviving unit-mate, hunting Tarek on Thessavar; also wanted by the Combine.
 - **Tarek** — the Combine agent who vanished; left the locket and the warning; fate unknown.
 - **Elder Vesper** — Becoming faction leader; the one Tarek said to trust; West's chain of command.
