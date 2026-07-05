@@ -142,8 +142,10 @@ after losing all conversation memory. The repo IS your memory. Read in this orde
 
 **Standing campaign facts** (stable across wipes; details in gm-lore.js):
 - Year 3200. PCs: Enkh Zahli (70, PALE-leased cybernetic brain, ~15k debt,
-  failed assassin of Senn) and West / K7G2-87459-WST (Kael-7 Grade 2 clone,
-  they/them, 18 months old, owner Senn is dead). West's ownership is CONTESTED,
+  failed assassin of Senn; played by **Daniel**) and West / K7G2-87459-WST
+  (Kael-7 Grade 2 clone, they/them, 18 months old, owner Senn is dead; played
+  by **Kisa**). Real submitted backgrounds live in `handouts/enkh-daniel-
+  background.md` and `handouts/west-kisa-background.md` — treat as canon. West's ownership is CONTESTED,
   not free — Combine repossession lien vs Covenant auction purchase vs Senn's
   weak estate claim; practically free only because no jurisdiction enforces at
   a free port. West is green enough not to know the drill. The arc resolves by

@@ -588,7 +588,8 @@ The Duskline — the merchant freighter the players escape on in Session 1 — i
 
     {
       id: 'pc_leased',
-      playerName: 'Player 1',
+      playerName: 'Daniel (plays Enkh Zahli)',
+      name: 'Enkh Zahli',
       characterConcept: 'Aging cyborg on a Cognitive Lease — his biological brain was destroyed in an accident and replaced by a PALE neural substrate. The rest of his body is original. He is old, and his debt to PALE compounds with every year he cannot pay it off.',
       factionTie: 'pale_substrate',
       inspirations: ['Sam Harris', 'Robert Sapolsky', 'Radiohead'],
@@ -648,7 +649,8 @@ Hooks to lean into:
 
     {
       id: 'pc_clone',
-      playerName: 'Player 2',
+      playerName: 'Kisa (plays West / K7G2-87459-WST)',
+      name: 'West (K7G2-87459-WST)',
       characterConcept: 'Grade 2 Security clone, Kael-7 lineage, eighteen months old. Newly synthesized, 18 months of basic training, first mission. Genetically obedient. Genuinely wants to do well. Their legal owner is Arbiter Senn — Hollow Covenant diplomat who dies at the Concordance in Session 1 (by accident, not by anyone\'s hand). When Senn dies they have no sanctioned authority. Their entire identity structure has no protocol for this. (Player 2 / "West" is written they/them; Senn is she/her.)',
       factionTie: 'hollow_covenant',
       inspirations: ['Linkin Park', 'Hollow Knight', 'Avatar: The Last Airbender'],
@@ -1104,8 +1106,8 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
     'calder':     { name: 'Captain Mira Calder', blurb: 'Driftborn captain of the Duskline — the ship Veronika chartered. Pragmatic, asks no questions. Her first mate is a River Below informant (she knows, doesn\'t care).', faction: 'driftborn' },
     'halex':      { name: 'Sister Halex', blurb: 'NEW — Covenant envoy (Becoming) at Belum Freeport. Recognizes West\'s detail insignia. Offers the Silent Courier mission. Genuine, tired, loyal to Vesper.', faction: 'hollow_covenant' },
     'emmerin':    { name: 'Brother Emmerin', blurb: 'NEW — Covenant courier missing in the Belum undercity, carrying a sealed dispatch for Vesper. Held by the Molt gang.', faction: 'hollow_covenant' },
-    'west':       { name: 'West (K7G2-87459-WST)', blurb: 'PC — Kael-7 Grade 2 security clone (they/them). Holding the locket + Tarek\'s letter (secret). Deferring to Veronika. Ownership is CONTESTED (Combine lien vs Covenant purchase vs Senn\'s estate — see westOwnership). Not "free," disputed. Green enough not to know the drill.', faction: null },
-    'enkh':       { name: 'Enkh Zahli', blurb: 'PC — 70, cybernetic brain on a PALE lease (~15k remaining). Believes his contract may be fulfilled; plans to collect from Coyle. Doesn\'t know PALE reads his substrate logs.', faction: null },
+    'west':       { name: 'West / K7G2-87459-WST (played by Kisa)', blurb: 'PC — Kael-7 Grade 2 security clone (they/them), 18 months old. Holding the locket + Tarek\'s letter (secret). Deferring to Veronika. Ownership is CONTESTED (Combine lien vs Covenant purchase vs Senn\'s estate — see westOwnership). Not "free," disputed. Green enough not to know the drill. Unit-mate Ost survives (hunting Tarek on Thessavar); Nor died.', faction: null },
+    'enkh':       { name: 'Enkh Zahli (played by Daniel)', blurb: 'PC — 70, cybernetic brain on a PALE lease (~15k remaining). Right leg + left arm also cybernetic (stronger than his real limbs). Believes his contract may be fulfilled; plans to collect from Coyle. Doesn\'t know PALE reads his substrate logs. Lost the kid Div on Karrath; oldest friend is Darius.', faction: null },
   },
 
   // ── THE TABLEAU — sector news service (AURIS-run; nobody knows) ───────────
