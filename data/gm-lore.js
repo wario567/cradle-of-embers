@@ -1163,7 +1163,7 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
       spine: 'They ride the Duskline to Belum Freeport. Veronika breaks and reveals she is the Saint (THE scene). At Belum: 3 doors, each a combat, each pulling on a PC want. A Combine repo team is closing on West.',
       runOrder: [
         '1. COLD OPEN — a few hours into the black. The berth. Let them breathe.',
-        '2. TRANSIT — offer each PC one ship scene (Enkh: the hum returns · West: the warm locket). 12 days.',
+        '2. TRANSIT — offer each PC one ship scene (Enkh: "The Kid" — West echoes Div · West: the warm locket). 12 days.',
         '3. THE RECKONING — Veronika\'s anger → the Saint reveal. Default trigger: when a PC pushes her, OR the moment they read the Tableau. This is the emotional center — protect time for it.',
         '4. ARRIVAL — Belum, sector in turmoil, Tableau on the pier screens. Open the sandbox.',
         '5. THREE DOORS — they pick; the others keep ticking. Each has a combat (test the rules).',
@@ -1237,7 +1237,9 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
       title: 'Transit — 12 days on the Duskline (montage + 2-3 scenes MAX)',
       talkingPoints: [
         'Offer each player ONE ship scene. Don\'t run all of these — let them pick what they poke at.',
-        'ENKH: the hum returns. Mid-transit, in the dark of a sleeping berth — the back-of-skull weight comes back ON. He knows exactly what it is now that he heard the silence. (Pure roleplay beat, no roll.)',
+        'ENKH — "The Kid": somewhere in transit, WEST does something small — sits too still on a watch nobody assigned, strips and reassembles a weapon clean without being told, asks WHY a thing works, not just how — and for one second Enkh sees Div. The boy he took under his wing on Karrath; quiet, clever, there to work, dead in the accident. The substrate was supposed to have flattened this. It didn\'t, quite — THAT\'s the unsettling part. (Pure RP, no roll. Don\'t name Div aloud unless the player goes there — a look, a hesitation, a gruffness that doesn\'t fit the moment. The quiet payoff: Enkh deciding, without saying it, that this one won\'t end like Div did.)',
+        '(NOTE: Enkh\'s PALE hum is NOT a fresh beat — it returned ~30 min after the S1 EMP, already in play. PALE has had surface-log access since. Don\'t replay the "silence breaks" moment.)',
+        'ENKH backup beat — "Dead Air" (use instead of or alongside The Kid): he tries to raise Darius and gets nothing. Thessavar\'s an exclusion zone, comms are a mess, or Darius just isn\'t answering — and Darius was last seen 13 beers deep on a planet now in crisis. First time in 20 years Enkh can\'t reach the one person who knew him BEFORE. A small worry-clock for later.',
         'WEST: the locket rides in a pocket. Warm at odd hours — warmer when West is near ENKH. (Don\'t explain. Let the player notice the pattern or not.)',
         'VERONIKA at cards / in the galley: she deflects questions with charm. If pressed hard about Tarek again, she gets QUIET, not defensive.',
         'CALDER\'s first mate (unnamed so far): watches Veronika constantly. West\'s threat-assessment flags it. (He\'s her informant — reading as either devotion or surveillance.)',
@@ -1395,7 +1397,7 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
     clocks: [
       { name: 'Combine repo team', ticks: 'Lands at Belum day 2-4 (GM pick). Telegraph day 2: grey-suited "buyers" at the harbormaster asking about Duskline passengers. They have a legal writ for West. They prefer paperwork to violence — at first.', trigger: 'If the PCs are still on Belum at your chosen day, the confrontation happens. Ideal: it interrupts whatever else is running.' },
       { name: 'The Penumbra publication', ticks: 'Breaks 1-2 weeks AFTER this session (your call).', trigger: 'When it breaks, every faction learns the ruins are a transmission array. Save it for the Session 3 Tableau.' },
-      { name: 'PALE\'s hum', ticks: 'Returns mid-transit (transit beat). PALE now has live surface-log access to Enkh again — including everything at Belum.', trigger: 'Whatever Enkh does at Belum, PALE watches through his own skull. No mechanical effect yet. Pure dread, deployed later.' },
+      { name: 'PALE\'s watch (already live)', ticks: 'The hum returned ~30 min after the S1 EMP — PALE has had surface-log access to Enkh the whole way to Belum. NOT a new beat this session.', trigger: 'Whatever Enkh does at Belum, PALE reads through his own skull. No mechanical effect yet — pure dread, deployed later (e.g. when Coyle\'s decline reveals the client knew something only Enkh\'s logs could tell them).' },
     ],
 
     sessionCloseOptions: [

@@ -8,7 +8,7 @@
 
 **Spine:** They ride the Duskline to Belum Freeport. Veronika breaks and reveals she's the Saint (THE scene). At Belum: 3 doors, each a combat, each pulling on a PC want. A Combine repo team is closing on West.
 
-**Run order:** ① Cold open (the berth) → ② Transit (one scene each) → ③ **The Reckoning** (Saint reveal — protect time for this) → ④ Arrival (Belum, Tableau on the screens) → ⑤ Three doors (they pick; combats test the rules) → ⑥ Close.
+**Run order:** ① Cold open (the berth) → ② Transit (Enkh: "The Kid" / West: warm locket) → ③ **The Reckoning** (Saint reveal — protect time for this) → ④ Arrival (Belum, Tableau on the screens) → ⑤ Three doors (they pick; combats test the rules) → ⑥ Close.
 
 - **⏱ The one clock:** Combine repo team lands Belum **day 2-4** (you pick). Day-2 telegraph: grey suits at the harbormaster asking about Duskline passengers. Legal writ for **West**. Use it to interrupt when energy dips.
 - **★ The one scene:** The Reckoning. If you nail one thing, nail this.
@@ -48,7 +48,8 @@
 - Either way: Belum Freeport, 12 days.
 
 ## Transit (2-3 scenes MAX — offer, don't force)
-- **Enkh:** the hum returns, mid-dark, mid-sleep. He knows what it is now.
+- **Enkh — "The Kid":** West does something small (still on an unassigned watch, strips a weapon clean unbidden, asks *why* not *how*) and for a second Enkh sees **Div** — the boy he lost on Karrath. The substrate should've flattened this; it didn't, quite. No roll. Don't name Div unless the player does. Quiet payoff: Enkh decides this one won't end like Div. *(Backup beat "Dead Air": he can't raise Darius — first time in 20 years he's alone with the thing in his head.)*
+- ⚠ **Enkh's PALE hum already returned** ~30 min post-EMP in S1 — don't replay it. PALE has had access the whole trip.
 - **West:** locket warm at odd hours — warm*er* near Enkh. Don't explain.
 - **Veronika:** deflects with charm; pressed on Tarek she goes *quiet*, not defensive.
 - ✎ **Notice DC 8** (West, re: first mate): tattoos match the Kaeldrift bar crowd.

@@ -394,7 +394,7 @@ Run this as the SWN faction turn (GM Turn screen). The throughline: **nobody who
 - **West is deferring to Veronika** as de facto legitimate authority (fell in during the rescue). Neither PC knows she leads the River Below. West's obedience is currently pointed at the person whose movement caused everything.
 - Ost is on Thessavar, hunting Tarek, headed toward whatever "not safe" means.
 - The urchin's note is in West's own handwriting — sender undecided (see Deviations #6 for options).
-- Enkh's substrate: decide when PALE's hum returns (the moment it does is a scene).
+- Enkh's substrate: PALE's hum RETURNED ~30 min after the EMP (played in S1). PALE has had surface-log access ever since — including all of Session 2. (The "silence breaks" beat is spent; don't replay it.)
 - Kaeldrift detail debt: falling leaves were seen at the dock but the city's greenery was never described. (Easy retrofit: platform cities grow engineered canopy trees for oxygen/food/morale — Kaeldrift's are shedding for the season. Or leave it as one of those beautiful unexplained things.)
 - Year discrepancy to resolve: this doc says 3231; gm-lore faction turns say 3249.
 
