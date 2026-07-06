@@ -8,3 +8,4 @@ screenshots/
 test-results/
 playwright-report/
 lore.html
+tools/*.html
