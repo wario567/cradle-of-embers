@@ -115,11 +115,11 @@ West spent their first year in conditioning on Synthesis Prime — white floors,
 
 *(This is Session One, the story your table already played. You know it — but hear it as a single clean narrative, because half of Session Two is the fallout from this night, and your players will reference it constantly.)*
 
-The world is **Thessavar** — an ocean world, ninety-six percent water. People live on floating platform cities and the drowned peaks of old mountains. The main city is **Kaeldrift**. And forty minutes south by boat is a private island estate called **The Still Gardens** — a place that looks like Venice slowly losing its argument with the sea, built on centuries of sunken ruins, and quietly, constantly sinking.
+The world is **Thessavar** — an ocean world, ninety-six percent water. People live on floating platform cities and the drowned peaks of old mountains. The main city is **Kaeldrift**. And forty minutes south by boat is a private island estate called **The Still Gardens** — a place that looks like Venice slowly losing its argument with the sea, built on centuries of sunken ruins, rising in terraces linked by waterfalls, and quietly, constantly sinking.
 
 That night, the estate hosted the **Thessavar Concordance** — the sector's elite, gathered to watch Arbiter Senn sign a treaty granting the Hollow Covenant the right to excavate the alien ruins beneath the ocean.
 
-Two people came to that gathering for opposite reasons. **West** was there to *protect* Senn. **Enkh** was there to *kill* her — the fifteen-thousand-credit contract. They passed each other on the canal, in boats drawn by eerie, biomechanical swans with bloodshot eyes that leave no wake. A clone in grey. An old man in a loud shirt. Neither knew the other. Both filed it away.
+Two people came to that gathering for opposite reasons. **West** was there to *protect* Senn. **Enkh** was there to *kill* her — the fifteen-thousand-credit contract. They passed each other on the canal, each carried on a small chariot-like disc drawn by a swan — gorgeous up front, wrong underneath, its eyes wet and bloodshot beneath flawless feathers, leaving no wake at all. A clone in grey. An old man in a loud shirt. Neither knew the other. Both filed it away.
 
 Before the ceremony, the Combine agent **Tarek** found West and pressed a sealed package into their hands — a letter and a locket — to be given to Senn *after* the ceremony. There would be no after.
 
