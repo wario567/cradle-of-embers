@@ -1,6 +1,11 @@
 # Cradle of Embers — Visual Reference
 **Image-generation prompts for every character, faction, and key location.**
-*Each entry is written as a standalone prompt block — copy one directly into an image generator (Midjourney, DALL-E, etc.). Style suggestion for consistency across the set: "painted sci-fi concept art, moody cinematic lighting, muted ember-and-shadow palette, detailed but not photoreal" — add that once to your generator's style/reference settings and reuse it for every prompt below.*
+*Each entry is written as a standalone prompt block — copy one directly into an image generator (ChatGPT/DALL-E, Midjourney, etc.), along with the style phrase below, to keep every portrait visually consistent.*
+
+**Style phrase — append this to every prompt:**
+> painted digital illustration with soft cel-shading, limited moody color palette with one accent hue, strong directional rim lighting, visible painterly brushwork and grain, semi-stylized realistic proportions, portrait-bust framing, plain dark background
+>
+> *(This is the RimWorld storyteller-portrait style — painted forms with a few soft-edged shading blocks rather than flat cel or full photorealism, one dramatic light source, muted near-monochrome palette per character with a single accent color, visible brush texture over clean shapes.)*
 
 ---
 
@@ -144,4 +149,43 @@
 
 ---
 
-*For consistency across a whole set of generated images: lock in one style phrase (e.g., "painted sci-fi concept art, moody cinematic lighting, ember-and-shadow palette") and append it to every prompt above.*
+*For consistency across the whole set: always append the style phrase at the top of this document to every prompt above.*
+
+---
+
+## HOW TO ADD PORTRAITS TO THE APP
+
+1. Copy a character's prompt block above, paste it into ChatGPT (or your image tool of choice), and append the style phrase.
+2. Download the generated image.
+3. Rename it to the **exact filename** shown in the table below and save it into `images/portraits/` in the repo.
+4. Commit and push (or hand the file to Claude to commit). The app will pick it up automatically — no code changes needed. If a file isn't present, the app just shows no portrait; nothing breaks.
+
+| Character / Faction | Exact filename |
+|---|---|
+| Enkh Zahli | `enkh.png` |
+| West | `west.png` |
+| Veronika | `veronika.png` |
+| Marn Coyle | `coyle.png` |
+| Darius Epps | `darius.png` |
+| Ost | `ost.png` |
+| Requisition Agent Tarek | `tarek.png` |
+| Elder Vesper | `vesper.png` |
+| Marshal Onyx Tran | `tran.png` |
+| Arbiter Senn | `senn.png` |
+| Captain Mira Calder | `calder.png` |
+| Sister Halex | `halex.png` |
+| Brother Emmerin | `emmerin.png` |
+| **Faction:** The River Below | `faction-river_below.png` |
+| **Faction:** The Pale Substrate | `faction-pale_substrate.png` |
+| **Faction:** Progenitor Combine | `faction-progenitor_combine.png` |
+| **Faction:** The Hollow Covenant | `faction-hollow_covenant.png` |
+| **Faction:** The Aureole Synod | `faction-aureole_synod.png` |
+| **Faction:** The Succession | `faction-the_succession.png` |
+| **Faction:** The Penumbra | `faction-the_penumbra.png` |
+| **Faction:** The Argent Compact | `faction-argent_compact.png` |
+| **Faction:** The Driftborn | `faction-driftborn.png` |
+
+For factions, use the faction's "Picture it" line from the audio companion (or the symbology paragraph above) as the image prompt — a symbol/emblem or an environment shot works better than a character portrait for these.
+
+Square images (roughly 512×512 to 1024×1024) work best — the app displays them as small circular thumbnails.
+

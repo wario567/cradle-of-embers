@@ -30,6 +30,25 @@ function GMNotesView({ sector }) {
   const prose = txt => React.createElement('p', { style: { fontSize: 13, color: 'var(--fg-2)', lineHeight: 1.65, margin: '6px 0 0', whiteSpace: 'pre-wrap' } }, txt);
   const bullet = txt => React.createElement('li', { style: { fontSize: 12, color: 'var(--fg-2)', lineHeight: 1.6, marginBottom: 2 } }, txt);
 
+  // Portrait: shows a generated character/faction image if one exists at
+  // images/portraits/<key>.png; silently renders nothing if missing (no
+  // broken-image icon). Drop in a PNG with that exact filename any time —
+  // no code changes needed. See handouts/visual-reference.md for prompts
+  // and the filename table.
+  const Portrait = ({ portraitKey, size = 28 }) => {
+    const [failed, setFailed] = useASt(false);
+    if (!portraitKey || failed) return null;
+    return React.createElement('img', {
+      src: 'images/portraits/' + portraitKey + '.png',
+      alt: '', onError: () => setFailed(true),
+      style: {
+        width: size, height: size, borderRadius: '50%', objectFit: 'cover',
+        border: '1px solid var(--border-1)', verticalAlign: 'middle',
+        marginRight: 8, background: 'var(--bg-3)', flexShrink: 0,
+      },
+    });
+  };
+
   // Rich text: parse [[NPC:Name]], [[FACTION:Name]], [[WORLD:Name]] into clickable nav links
   const parseRichText = (text) => {
     if (!text) return null;
@@ -132,6 +151,7 @@ function GMNotesView({ sector }) {
           onClick: () => setExpandedFaction(open ? null : f.id),
           style: { display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: 'var(--bg-2)', border: '1px solid ' + (open ? 'var(--accent)' : 'var(--border-1)'), borderRadius: open ? '6px 6px 0 0' : 6, cursor: 'pointer' },
         },
+          React.createElement(Portrait, { portraitKey: 'faction-' + f.id, size: 32 }),
           React.createElement('span', { style: { flex: 1, fontWeight: 600, fontSize: 13, color: 'var(--fg-0)' } }, f.name),
           f.swnTags && React.createElement('span', { style: { fontSize: 10, color: 'var(--accent)', letterSpacing: '0.06em' } }, f.swnTags.join(' · ')),
           f.stats && React.createElement('span', { style: { fontSize: 11, color: 'var(--fg-3)', marginLeft: 8 } },
@@ -279,6 +299,7 @@ function GMNotesView({ sector }) {
           onClick: () => setExpandedPC(pcOpen ? null : pc.id),
           style: { display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px', background: 'var(--bg-2)', border: '1px solid ' + (pcOpen ? 'var(--accent)' : 'var(--border-1)'), borderRadius: pcOpen ? '6px 6px 0 0' : 6, cursor: 'pointer' },
         },
+          React.createElement(Portrait, { portraitKey: pc.id === 'pc_leased' ? 'enkh' : pc.id === 'pc_clone' ? 'west' : null, size: 32 }),
           React.createElement('span', { style: { flex: 1, fontWeight: 700, fontSize: 14, color: 'var(--fg-0)' } }, pc.playerName),
           React.createElement('span', { style: { fontSize: 11, color: 'var(--fg-3)', fontStyle: 'italic', flex: 2 } }, pc.characterConcept.slice(0, 80) + (pc.characterConcept.length > 80 ? '…' : '')),
           React.createElement('span', { style: { color: 'var(--fg-4)', fontSize: 12, flexShrink: 0 } }, pcOpen ? '▲' : '▼'),
@@ -315,12 +336,12 @@ function GMNotesView({ sector }) {
       title: c.blurb + (c.faction ? '\n\n[click → faction details]' : ''),
       onClick: () => { if (c.faction) { setGMTab('factions'); setExpandedFaction(c.faction); } },
       style: {
-        display: 'inline-block', fontSize: 10, padding: '2px 8px', margin: '2px 3px 2px 0',
+        display: 'inline-flex', alignItems: 'center', fontSize: 10, padding: '2px 8px 2px 2px', margin: '2px 3px 2px 0',
         background: 'var(--bg-3)', border: '1px solid var(--border-1)', borderRadius: 10,
         color: 'var(--accent)', cursor: c.faction ? 'pointer' : 'help', letterSpacing: '0.04em',
         borderBottom: '1px dotted var(--accent)',
       },
-    }, c.name);
+    }, React.createElement(Portrait, { portraitKey: refId, size: 18 }), c.name);
   };
 
   const CheckChip = ({ chk }) => React.createElement('div', {
