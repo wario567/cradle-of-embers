@@ -78,8 +78,10 @@ function makeMap(presetName) {
     grid.push(row);
   }
   const tokens = p.tokens.map((t, i) => ({ id: 'tok-' + Date.now() + '-' + i, ...t, init: Math.floor(Math.random() * 20) + 1 }));
-  return { cols: p.cols, rows: p.rows, grid, tokens, turn: 0, round: 1, name: presetName };
+  return { cols: p.cols, rows: p.rows, grid, tokens, turn: 0, round: 1, name: presetName, backdrop: null };
 }
+
+const DEFAULT_BACKDROP = { scale: 100, offsetX: 0, offsetY: 0, opacity: 70 };
 
 function CombatView() {
   const [map, setMap] = useCS(() => makeMap('Cargo Bay Boarding'));
@@ -92,6 +94,7 @@ function CombatView() {
   const [tf, setTf] = useCS({ x: 40, y: 80, k: 1 });
   const dragRef = useCR(null);
   const containerRef = useCR(null);
+  const fileInputRef = useCR(null);
 
   const cell = 38; // px per cell at zoom 1
   const W = map.cols * cell;
@@ -122,6 +125,23 @@ function CombatView() {
   function deleteToken(id) {
     setMap(m => ({ ...m, tokens: m.tokens.filter(t => t.id !== id) }));
     if (selTokenId === id) setSelTokenId(null);
+  }
+
+  // ── Backdrop image: upload a generated battle map, then nudge it into
+  // alignment with the grid using scale/offset/opacity controls. Stored as
+  // a data URL directly on the map object — no file/repo step needed.
+  function setBackdropImage(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      setMap(m => ({ ...m, backdrop: { ...DEFAULT_BACKDROP, src: reader.result } }));
+    };
+    reader.readAsDataURL(file);
+  }
+  function updateBackdrop(patch) {
+    setMap(m => ({ ...m, backdrop: m.backdrop ? { ...m.backdrop, ...patch } : m.backdrop }));
+  }
+  function removeBackdrop() {
+    setMap(m => ({ ...m, backdrop: null }));
   }
 
   function gridFromEvent(e) {
@@ -224,7 +244,50 @@ function CombatView() {
           style: { width: 110, fontSize: 11, padding: '4px 8px' },
         }, TOKEN_TYPES.map(t => React.createElement('option', { key: t.kind, value: t.kind }, t.label))),
         React.createElement('button', { className: showGrid ? 'primary' : 'ghost', style: { fontSize: 11 }, onClick: () => setShowGrid(g => !g) }, '# Grid'),
-        React.createElement('button', { className: showRanges ? 'primary' : 'ghost', style: { fontSize: 11 }, onClick: () => setShowRanges(r => !r) }, '◌ Ranges')
+        React.createElement('button', { className: showRanges ? 'primary' : 'ghost', style: { fontSize: 11 }, onClick: () => setShowRanges(r => !r) }, '◌ Ranges'),
+        React.createElement('input', {
+          ref: fileInputRef, type: 'file', accept: 'image/*', style: { display: 'none' },
+          onChange: e => { if (e.target.files[0]) setBackdropImage(e.target.files[0]); e.target.value = ''; },
+        }),
+        React.createElement('button', {
+          className: map.backdrop ? 'primary' : 'ghost', style: { fontSize: 11 },
+          onClick: () => fileInputRef.current && fileInputRef.current.click(),
+        }, '🖼 ' + (map.backdrop ? 'Change Map Image' : 'Upload Map Image')),
+        map.backdrop && React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: removeBackdrop }, '✕ Remove')
+      ),
+      // Backdrop alignment panel — nudge scale/offset/opacity until the grid
+      // lines up with crate corners in the generated map image.
+      map.backdrop && React.createElement('div', {
+        style: {
+          position: 'absolute', top: 12, right: 12, zIndex: 5, width: 220,
+          background: 'rgba(13,17,23,0.9)', padding: 12, border: '1px solid var(--border-soft)',
+          borderRadius: 8, backdropFilter: 'blur(6px)', display: 'flex', flexDirection: 'column', gap: 10,
+        },
+      },
+        React.createElement('div', { style: { fontSize: 11, fontWeight: 700, color: 'var(--fg-1)', letterSpacing: '0.05em', textTransform: 'uppercase' } }, 'Align Backdrop'),
+        [
+          { key: 'scale', label: 'Scale', min: 25, max: 300, step: 1, unit: '%' },
+          { key: 'opacity', label: 'Opacity', min: 0, max: 100, step: 1, unit: '%' },
+        ].map(({ key, label, min, max, step, unit }) => React.createElement('div', { key },
+          React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'var(--fg-3)', marginBottom: 2 } },
+            React.createElement('span', null, label), React.createElement('span', null, map.backdrop[key] + unit)),
+          React.createElement('input', {
+            type: 'range', min, max, step, value: map.backdrop[key], style: { width: '100%' },
+            onChange: e => updateBackdrop({ [key]: +e.target.value }),
+          }),
+        )),
+        [['offsetX', 'X'], ['offsetY', 'Y']].map(([key, label]) => React.createElement('div', { key, style: { display: 'flex', alignItems: 'center', gap: 6 } },
+          React.createElement('span', { style: { fontSize: 10, color: 'var(--fg-3)', width: 14 } }, label),
+          React.createElement('button', { className: 'ghost', style: { fontSize: 11, padding: '2px 8px' }, onClick: () => updateBackdrop({ [key]: map.backdrop[key] - 10 }) }, '−10'),
+          React.createElement('button', { className: 'ghost', style: { fontSize: 11, padding: '2px 6px' }, onClick: () => updateBackdrop({ [key]: map.backdrop[key] - 1 }) }, '−1'),
+          React.createElement('input', {
+            type: 'number', value: map.backdrop[key], style: { width: 52, fontSize: 11, textAlign: 'center' },
+            onChange: e => updateBackdrop({ [key]: +e.target.value || 0 }),
+          }),
+          React.createElement('button', { className: 'ghost', style: { fontSize: 11, padding: '2px 6px' }, onClick: () => updateBackdrop({ [key]: map.backdrop[key] + 1 }) }, '+1'),
+          React.createElement('button', { className: 'ghost', style: { fontSize: 11, padding: '2px 8px' }, onClick: () => updateBackdrop({ [key]: map.backdrop[key] + 10 }) }, '+10'),
+        )),
+        React.createElement('button', { className: 'ghost', style: { fontSize: 11 }, onClick: () => updateBackdrop(DEFAULT_BACKDROP) }, '↺ Reset Alignment')
       ),
       // Help (bottom)
       React.createElement('div', { style: { position: 'absolute', bottom: 12, left: 12, zIndex: 5, fontFamily: 'JetBrains Mono', fontSize: 10, color: 'var(--fg-3)', background: 'rgba(13,17,23,0.7)', padding: '4px 10px', borderRadius: 6, border: '1px solid var(--border-soft)' } },
@@ -234,15 +297,30 @@ function CombatView() {
         width: '100%', height: '100%', style: { display: 'block', position: 'absolute', inset: 0 },
       },
         React.createElement('g', { transform: `translate(${tf.x}, ${tf.y}) scale(${tf.k})` },
+          // Backdrop image (generated battle map), aligned via scale/offset controls
+          map.backdrop && React.createElement('image', {
+            href: map.backdrop.src,
+            x: map.backdrop.offsetX,
+            y: map.backdrop.offsetY,
+            width: W * (map.backdrop.scale / 100),
+            height: H * (map.backdrop.scale / 100),
+            opacity: map.backdrop.opacity / 100,
+            preserveAspectRatio: 'none',
+          }),
           // Outer frame
           React.createElement('rect', { x: -2, y: -2, width: W + 4, height: H + 4, fill: 'none', stroke: 'var(--border-1)', strokeWidth: 1 }),
-          // Cells
+          // Cells — when a backdrop is present, floor tiles go transparent (let the
+          // art show through) while walls/cover/hazard/exit stay tinted so their
+          // mechanical meaning still reads on top of the artwork.
           map.grid.map((row, y) => row.map((t, x) => {
             const def = TERRAIN_TYPES[t];
+            const hasBackdrop = !!map.backdrop;
+            const isFloor = t === 'floor';
             return React.createElement('g', { key: x + ',' + y },
               React.createElement('rect', {
                 x: x * cell, y: y * cell, width: cell, height: cell,
                 fill: def.color,
+                fillOpacity: hasBackdrop ? (isFloor ? 0 : 0.4) : 1,
                 stroke: showGrid ? 'rgba(48, 54, 61, 0.5)' : 'none',
                 strokeWidth: 0.5,
               }),
