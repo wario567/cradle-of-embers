@@ -1432,6 +1432,132 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
     ],
   },
 
+  // ── SESSION 3 — THREE DOORS, ONE NIGHT ──────────────────────────────────────
+  session3: {
+    title: 'Session 3 — Three Doors, One Night',
+    world: 'Belum Freeport',
+    timeSkip: 'Same night as the S2 close — no time skip.',
+
+    quickRef: {
+      spine: 'One night, three doors, no dead air. Coyle: broke, dead end. Halex: Senn\'s true goal + the nun faction split, no fight. Veronika: a crate run where deniable muscle try to take West\'s locket — the session\'s ONE combat. Ends on the repo team serving the writ as a dying attacker drops one unexplained line.',
+      runOrder: [
+        '1. COLD OPEN — all three doors already open on the docks. Let them pick the order.',
+        '2. DOOR — Coyle (small, fast, no combat). The decline + the Okaro job.',
+        '3. DOOR — Halex (Senn\'s true goal + the nun split said out loud, minimal/no combat).',
+        '4. DOOR — Veronika\'s run (THE combat — the Latch come for the locket).',
+        '5. CLOSE — the repo team serves the writ on the docks. Cut to black.',
+      ],
+      theOneClock: 'COMBINE REPO TEAM lands THIS session — not banked. Serves the writ as the closing beat.',
+      theOneScene: 'The Veronika crate run — someone reaches for West\'s locket.',
+      toneTouchstone: 'No idle stretches. Every door opens fast, closes hard. This session punishes lingering.',
+      doNotReplay: 'S2\'s dock arrival and Tableau reading are already played. Open standing at all three doors.',
+    },
+
+    glossary: [
+      { term: 'The Latch', what: 'New this session. Freelance operators working a rumor, not a manifest — paid on spec by a contact who heard "a clone runs warm." No faction badge, no traceable name. NOT confirmed as PALE at the table.' },
+      { term: 'Rhax\'s syndicate', what: 'The debt-collection outfit from Session 2 prep (Coyle\'s M2). Has a "PALE-job" cyberware intake category and has been buying up Concordance witnesses\' debts. The rumor about a warm clone reached them through a loose-lipped relief-station scanner tech.' },
+      { term: 'PALE Reconstruction & Wellness (Kaeldrift)', what: 'Where Tarek is actually held, captive but nominally a "patient." Not revealed to players this session — GM-only.' },
+    ],
+
+    offScript: [
+      'They skip a door entirely: fine, Coyle and Halex both compress to a few lines. Protect the Veronika combat above everything else.',
+      'They interrogate the dying Latch operator hard: he genuinely only knows a cutout, not a client. Give the "she\'s not the only one who woke up warm" line and nothing more concrete.',
+      'They try to fight the repo team: they don\'t escalate first — legal pressure, not violence. Let a PC choose to make it violent; the team won\'t.',
+      'West tells Enkh about the locket mid-session: let it happen. Changes nothing mechanically — Enkh still has nothing in his own logs, so PALE\'s suspicion stays exactly as uncertain.',
+    ],
+
+    coldOpen: {
+      title: 'Cold Open — Three Doors, Already Open',
+      talkingPoints: [
+        'S2 ended standing at the docks with all three offers live. Don\'t replay the Tableau or the arrival — already played.',
+        '"You\'re standing on the Belum docks. Coyle\'s sign is two streets up. Veronika\'s waiting on the Duskline with a job. Sister Halex is still there, patient, watching you decide."',
+        'Let the players pick the order out loud. Whatever they pick first, telegraph the other two are still ticking: Veronika — the crates move tonight or not at all. Coyle — office closes at dusk. Halex — Emmerin\'s been held four days, she\'s scared for him.',
+        'Whichever door they don\'t pick first should visibly still be waiting when they\'re done with the first one — a face in the crowd, a runner catching up, a comm ping.',
+      ],
+      checks: [],
+      cast: ['veronika', 'coyle', 'halex'],
+    },
+
+    reveal: {
+      title: 'Door — Sister Halex (Senn\'s true goal, the nun split)',
+      talkingPoints: [
+        'This is where the players learn what the campaign is actually about.',
+        'HALEX, plainly, in her voice: "Senn wasn\'t trying to seal anything away, and she wasn\'t trying to hand it to anyone either. She was trying to build a treaty where nobody got to own it alone — not the Combine, not us, not the Succession. She thought that was the only way it didn\'t get someone killed. She was right. It got HER killed instead."',
+        'THE NUN SPLIT, named out loud: "I answer to Remembrance. I answered to HER. Marshal Tran\'s people are calling the ruins a weapon now that she\'s gone, and half my own order is starting to agree with him. I don\'t. That\'s not doctrine, that\'s just grief looking for a fight. I\'m doing this without anyone\'s blessing."',
+        'The Molt gang holds Brother Emmerin for ransom they don\'t understand the value of. Resolve fast — a short parley should be enough. If it goes loud, let it break early (morale 6); this isn\'t the session\'s set piece.',
+        'Emmerin\'s dispatch: Senn\'s own notes confirm BOTH Covenant factions are hunting Kael-7 survivors. Whether West reads the sealed dispatch is a real character beat.',
+      ],
+      checks: [
+        { when: 'Parley with the Molt', skill: 'Talk', dc: 10, success: '500cr or a favor buys Emmerin back, no fight.', fail: 'Short fight, they break early (morale 6).' },
+      ],
+      cast: ['halex', 'emmerin', 'west'],
+    },
+
+    missions: [
+      {
+        id: 's3-coyle',
+        title: 'Door — Coyle (small, fast, no combat)',
+        offeredBy: 'coyle',
+        whyUs: 'Enkh walked in expecting 15,000cr and freedom; he walks out with neither. He\'s broke, the Lease is alive, and Coyle is still the only broker he trusts.',
+        mainArcPayoff: 'Plants the Rhax-syndicate thread that pays off in the Veronika fight. Enkh clocks that Okaro\'s situation is his own, five years further down.',
+        hook: 'Coyle slides the declination across the table. "Cause of death doesn\'t match the commissioned work." Then, almost apologetic: recover a pawned pretech gyroscope from Vess Okaro, 2,000cr.',
+        talkingPoints: [
+          'Run this lean — it\'s a gut-punch, not a puzzle. Do not explain how the client knew. Let it hang.',
+          'Coyle\'s one crack if pressed hard: "I checked the routing twice and then stopped checking. You understand? I stopped checking."',
+          'Okaro is terrified, not hostile — she owes Rhax\'s syndicate, which has been quietly buying up Concordance witnesses\' debts. She surrenders the gyro if the PCs help her vanish before the next collection visit.',
+          'Resolve by Talk, not combat, if at all possible — this door exists to plant a thread, not burn a second firefight.',
+        ],
+        checks: [
+          { when: 'Talking Okaro down', skill: 'Talk', dc: 10, success: 'She surrenders the gyro, no fight.', fail: 'Reads as a hostile holdout — short scuffle with her hired guns.' },
+          { when: 'Reading her fear', skill: 'Notice', dc: 8, success: 'She\'s scared of someone worse than the PCs.', fail: 'Reads as simple defiance.' },
+        ],
+        combat: null,
+        reward: '2,000cr against a 15,000cr debt. Coyle owes a favor.',
+        leadsTo: 'The Rhax-syndicate thread, live for the Veronika fight.',
+        cast: ['coyle', 'enkh'],
+      },
+      {
+        id: 's3-veronika',
+        title: 'Door — Veronika\'s Run (THE combat)',
+        offeredBy: 'veronika',
+        whyUs: 'She saved their lives and has asked for almost nothing since. For West it lands like an order whether Veronika means it that way or not.',
+        mainArcPayoff: 'The players learn, in real time, that West\'s secret isn\'t secret to everyone anymore — someone out there already suspects what they\'re carrying.',
+        hook: 'Night crate transfer, Duskline to an outer moorage warehouse. "Medicine. Mostly." (True — meds and forged refugee IDs, River Below\'s real work.) Mid-transfer, THE LATCH hit — freelance muscle working a rumor, not a manifest.',
+        talkingPoints: [
+          'THE TELL: one Latch operator carries a handheld scanner and is visibly checking it against each PC as the fight opens — triangulating, not looting.',
+          'THE GRAB: mid-fight, one operator breaks off and goes specifically for West — a called shot, a grapple, a hand for the pocket where the locket rides warm. This is the scene\'s centerpiece — make the players FEEL someone reaching for the thing West hasn\'t told anyone about.',
+          'If the locket is actually grabbed: don\'t let it leave the scene. Let it be dropped, contested, nearly lost — the FEAR of losing it should land harder than losing it would.',
+          'The last operator down (talked down, dying, or captured — GM\'s call) says one line before going silent: "...she\'s not the only one who woke up warm." Don\'t explain it. Don\'t confirm PALE. Let it sit.',
+        ],
+        checks: [
+          { when: 'Spotting the scanner mid-fight', skill: 'Notice', dc: 10, success: 'It reads as deeply wrong before anyone understands why — these aren\'t here for the crates.', fail: 'Just another armed crew.' },
+          { when: 'Breaking the grab on West', skill: 'Exert or Punch', dc: 10, success: 'The locket stays with West.', fail: 'A terrifying beat of almost-loss before it\'s recovered anyway.' },
+        ],
+        combat: {
+          setup: 'Warehouse airlock, night, crates as cover. 3-4 Latch operators, better drilled than the Rustwater crew ever were — no wasted shots, no bravado.',
+          enemies: [
+            { name: 'Latch operator ×3', hp: 6, ac: 13, atk: '+2', dmg: '1d8', morale: 8 },
+            { name: 'Latch scanner-runner', hp: 5, ac: 12, atk: '+1', dmg: '1d6 (breaks off to grab rather than fight)', morale: 6 },
+          ],
+          terrain: 'Crate stacks = cover (+2 AC). Airlock chokepoint.',
+          twist: 'One operator breaks off entirely to go for West\'s pocket — not the fight, the locket.',
+        },
+        reward: 'Veronika\'s trust deepens (she starts answering some questions straight).',
+        leadsTo: 'The unresolved "who sent them" thread, live going into Session 4.',
+        cast: ['veronika'],
+      },
+    ],
+
+    clocks: [
+      { name: 'Combine repo team', ticks: 'Lands THIS session, not banked.', trigger: 'Serves the writ on the docks as the closing beat, right after the Veronika fight.' },
+      { name: 'The Latch / Rhax\'s syndicate suspicion', ticks: 'One rumor, third-hand, deniable.', trigger: 'Not resolved tonight. A thread for Session 4+ — who exactly sent them stays open.' },
+    ],
+
+    sessionCloseOptions: [
+      'The only close: cut straight from the Veronika fight to the gangway. "You\'re still catching your breath when you see them at the end of the gangway. Grey suits. Unhurried. One of them is holding a data-slate up like it\'s already been read into the record." The repo team serves West\'s writ, calm and certain. End on the standoff, unresolved.',
+    ],
+  },
+
   // ── SESSION 1 — THE STILL GARDENS ──────────────────────────────────────────
   session1: {
     title: 'The Still Gardens',

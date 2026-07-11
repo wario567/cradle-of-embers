@@ -5,7 +5,7 @@ const { useState: useASt, useEffect: useAEf, useMemo: useAMem, useRef: useAR } =
 // ── GM NOTES VIEW ────────────────────────────────────────────────────────────
 function GMNotesView({ sector }) {
   const lore = window.GM_LORE;
-  const [tab, setGMTab] = useASt('session2');
+  const [tab, setGMTab] = useASt('session3');
   const [expandedFaction, setExpandedFaction] = useASt(null);
   const [expandedTurn, setExpandedTurn] = useASt(null);
   const [npcSearch, setNpcSearch] = useASt('');
@@ -476,6 +476,84 @@ function GMNotesView({ sector }) {
     ),
   ) : React.createElement('div', { style: { color: 'var(--fg-3)', padding: 12 } }, 'No Session 2 data.');
 
+  // SESSION 3 TAB — same runbook shape as Session 2
+  const s3 = lore.session3;
+  const qr3 = s3 && s3.quickRef;
+  const session3Tab = s3 ? React.createElement('div', null,
+    card([
+      React.createElement('h3', { style: { margin: '0 0 4px', color: 'var(--fg-0)' } }, s3.title),
+      React.createElement('div', { style: { fontSize: 11, color: 'var(--accent)', marginBottom: 4 } }, s3.world),
+      React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-3)' } }, s3.timeSkip),
+    ]),
+    qr3 && React.createElement('div', { style: { background: 'rgba(230,160,80,0.08)', border: '1px solid var(--accent)', borderRadius: 6, padding: '14px 16px', marginBottom: 10 } },
+      React.createElement('div', { style: { fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 8, fontWeight: 700 } }, '★ At a Glance — read this first'),
+      React.createElement('div', { style: { fontSize: 13, color: 'var(--fg-1)', lineHeight: 1.6, marginBottom: 10 } }, qr3.spine),
+      React.createElement('div', { style: { display: 'grid', gap: 8 } },
+        [['Run order', qr3.runOrder], ].map(([lab, arr], i) => React.createElement('div', { key: i },
+          React.createElement('div', { style: { fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--fg-3)', marginBottom: 3 } }, lab),
+          React.createElement('ul', { style: { margin: 0, paddingLeft: 16 } }, (arr || []).map((x, j) => React.createElement('li', { key: j, style: { fontSize: 12, color: 'var(--fg-2)', lineHeight: 1.5 } }, x))),
+        )),
+        [['⏱ The one clock', qr3.theOneClock], ['★ The one scene', qr3.theOneScene], ['Tone', qr3.toneTouchstone], ['⚠ Do not replay', qr3.doNotReplay]].map(([lab, txt], i) => React.createElement('div', { key: 'kv' + i },
+          React.createElement('span', { style: { fontSize: 11, fontWeight: 700, color: 'var(--accent)' } }, lab + ': '),
+          React.createElement('span', { style: { fontSize: 12, color: 'var(--fg-2)' } }, txt),
+        )),
+      ),
+    ),
+    s3.glossary && card([
+      label('Places & Names (the glossary)'),
+      (s3.glossary || []).map((g, i) => React.createElement('div', { key: i, style: { padding: '4px 0', borderBottom: i < s3.glossary.length - 1 ? '1px solid var(--border-1)' : 'none' } },
+        React.createElement('span', { style: { fontWeight: 700, fontSize: 12, color: 'var(--fg-0)' } }, g.term + ' — '),
+        React.createElement('span', { style: { fontSize: 12, color: 'var(--fg-2)' } }, g.what),
+      )),
+    ]),
+    s3.coldOpen && React.createElement(SceneCard, { scene: s3.coldOpen }),
+    s3.reveal && React.createElement(SceneCard, { scene: s3.reveal }),
+    React.createElement('div', { style: { margin: '14px 0 6px' } }, label('Three Doors — combat only in one')),
+    (s3.missions || []).map(m => card([
+      React.createElement('h4', { style: { margin: '0 0 4px', color: 'var(--fg-0)', fontSize: 14 } }, m.title),
+      m.whyUs && React.createElement('div', { style: { fontSize: 11, background: 'rgba(120,180,120,0.08)', border: '1px solid rgba(120,180,120,0.3)', borderRadius: 4, padding: '7px 10px', margin: '4px 0 6px', color: 'var(--fg-2)' } },
+        React.createElement('b', { style: { color: '#9c9' } }, 'Why they say yes: '), m.whyUs),
+      m.mainArcPayoff && React.createElement('div', { style: { fontSize: 11, background: 'rgba(160,120,220,0.08)', border: '1px solid rgba(160,120,220,0.3)', borderRadius: 4, padding: '7px 10px', margin: '0 0 8px', color: 'var(--fg-2)' } },
+        React.createElement('b', { style: { color: '#b9f' } }, 'Main-arc payoff: '), m.mainArcPayoff),
+      React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', fontStyle: 'italic', marginBottom: 8 } }, m.hook),
+      React.createElement('ul', { style: { margin: '0 0 8px', paddingLeft: 18 } },
+        (m.talkingPoints || []).map((tp, i) => bullet(tp))),
+      (m.checks || []).map((chk, i) => React.createElement(CheckChip, { key: i, chk })),
+      m.combat && React.createElement('div', { style: { background: 'rgba(200,60,60,0.08)', border: '1px solid rgba(200,60,60,0.3)', borderRadius: 4, padding: '10px 12px', marginTop: 8 } },
+        React.createElement('div', { style: { fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#e07070', marginBottom: 4 } }, '⚔ Combat'),
+        React.createElement('div', { style: { fontSize: 12, color: 'var(--fg-2)', marginBottom: 6 } }, m.combat.setup),
+        (m.combat.enemies || []).map((e, i) => React.createElement('div', { key: i, style: { fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--fg-2)', padding: '2px 0' } },
+          `${e.name} · HP ${e.hp} · AC ${e.ac} · Atk ${e.atk} · ${e.dmg} · ML ${e.morale}`)),
+        React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-3)', marginTop: 6 } }, 'Terrain: ' + m.combat.terrain),
+        m.combat.twist && React.createElement('div', { style: { fontSize: 11, color: '#e8a87c', marginTop: 4 } }, 'Twist: ' + m.combat.twist),
+      ),
+      React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-2)', marginTop: 8 } },
+        React.createElement('b', null, 'Reward: '), m.reward),
+      React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-3)', marginTop: 2 } },
+        React.createElement('b', null, 'Leads to: '), m.leadsTo),
+      m.cast && m.cast.length ? React.createElement('div', { style: { marginTop: 8 } },
+        label('Cast'), m.cast.map(r => React.createElement(CastChip, { key: r, refId: r }))) : null,
+    ])),
+    card([
+      label('Clocks (running in the background)'),
+      (s3.clocks || []).map((c, i) => React.createElement('div', { key: i, style: { padding: '6px 0' } },
+        React.createElement('div', { style: { fontWeight: 700, fontSize: 12, color: 'var(--fg-0)' } }, '⏱ ' + c.name),
+        React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-2)', marginTop: 2 } }, c.ticks),
+        React.createElement('div', { style: { fontSize: 11, color: 'var(--fg-3)', marginTop: 2 } }, 'Trigger: ' + c.trigger),
+      )),
+    ]),
+    card([
+      label('Session Close'),
+      React.createElement('ol', { style: { margin: '4px 0 0', paddingLeft: 18 } },
+        (s3.sessionCloseOptions || []).map((o, i) => bullet(o))),
+    ]),
+    s3.offScript && React.createElement('div', { style: { background: 'rgba(120,140,200,0.08)', border: '1px solid rgba(120,140,200,0.35)', borderRadius: 6, padding: '14px 16px', marginBottom: 10 } },
+      React.createElement('div', { style: { fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#9ab', marginBottom: 8, fontWeight: 700 } }, '🧭 If they go off-script (safety net)'),
+      React.createElement('ul', { style: { margin: 0, paddingLeft: 18 } },
+        (s3.offScript || []).map((o, i) => React.createElement('li', { key: i, style: { fontSize: 12, color: 'var(--fg-2)', lineHeight: 1.6, marginBottom: 5 } }, o))),
+    ),
+  ) : React.createElement('div', { style: { color: 'var(--fg-3)', padding: 12 } }, 'No Session 3 data.');
+
   // SESSION 1 TAB
   const s1 = lore.session1;
   const session1Tab = s1 ? React.createElement('div', null,
@@ -559,8 +637,8 @@ function GMNotesView({ sector }) {
     ]))
   );
 
-  const tabs = ['session2', 'factions', 'npcs', 'turns', 'pcs', 'worlds', 'session1', 'sector'];
-  const tabLabels = { sector: 'Sector', factions: 'Factions', npcs: 'NPCs', turns: 'Turns', pcs: 'PCs', worlds: 'Worlds', session1: 'Session 1', session2: '▶ Session 2' };
+  const tabs = ['session3', 'factions', 'npcs', 'turns', 'pcs', 'worlds', 'session1', 'session2', 'sector'];
+  const tabLabels = { sector: 'Sector', factions: 'Factions', npcs: 'NPCs', turns: 'Turns', pcs: 'PCs', worlds: 'Worlds', session1: 'Session 1', session2: 'Session 2', session3: '▶ Session 3' };
 
   return React.createElement('div', { style: { height: '100%', overflowY: 'auto' } },
     React.createElement('div', { style: { padding: '20px 24px', maxWidth: 860, margin: '0 auto' } },
@@ -575,6 +653,7 @@ function GMNotesView({ sector }) {
       tab === 'worlds'   && worldsTab,
       tab === 'session1' && session1Tab,
       tab === 'session2' && session2Tab,
+      tab === 'session3' && session3Tab,
     )
   );
 }
