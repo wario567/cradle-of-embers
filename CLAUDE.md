@@ -87,7 +87,7 @@ Each character in the shared `party` array carries an optional `ownerId` + `owne
 
 ## Git workflow (for Claude sessions)
 
-**Always work off up-to-date `main`.** Past Claude sessions were spawned on stale branches and couldn't find files that already existed on `main`. At the START of every session: `git fetch origin && git merge origin/main` into your working branch before doing anything else. At the END of every session (or whenever a piece of work is complete): push your branch AND merge it back into `main`, then push `main` — never leave finished work stranded on a session branch. The user has standing permission for this merge-to-main flow.
+**Work directly on `main`.** No session/feature branches — commit and push straight to `main`. At the START of every session: `git fetch origin main && git pull origin main` before doing anything else. The user has standing permission for this direct-to-main flow.
 
 ## Campaign content — where things live
 
