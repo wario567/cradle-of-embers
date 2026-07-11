@@ -1125,6 +1125,7 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
   tableau: {
     whatItIs: 'The sector\'s trusted public news service — sober, free, syndicated to every port. Secretly published by AURIS (Aureole Synod\'s hidden AI). The name is the tell: a tableau is a staged arrangement presented as reality.',
     cadence: 'In-world: a cycle bulletin at every port, arriving in batches with ship traffic (news travels at spike-drive speed). Different ports get subtly different versions — AURIS tunes the arrangement per audience; a player who compares copies across ports can catch this. At the table: ONE issue per GM turn, posted to Discord between sessions.',
+    deliveryRuling: 'DECIDED S2: delivery is signal-based, not screen-based. An issue lands the moment the PARTY reconnects to the network after time spent dark (metaspace/drill) — the whole backlog floods in at once, read as a burst of catch-up news rather than something physically posted on a pier screen (though it may ALSO display there once docked). Twelve days of drill = twelve days of silence, all arriving together. Apply this to every future issue: it surfaces whenever the party comes back online, not on a fixed in-world calendar date.',
     curationRules: [
       'AURIS suppresses what destabilizes and amplifies what builds cohesion (and serves AURIS).',
       'It never prints falsehoods — only omissions and arrangement. The gap between GM-turn results and the bulletin IS a clue.',

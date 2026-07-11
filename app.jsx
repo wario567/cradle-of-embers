@@ -118,6 +118,7 @@ function GMNotesView({ sector }) {
       label('The Tableau — sector news (AURIS-run; nobody knows)'),
       prose(lore.tableau.whatItIs),
       label('Cadence'), prose(lore.tableau.cadence),
+      lore.tableau.deliveryRuling && [label('Delivery Ruling'), prose(lore.tableau.deliveryRuling)],
       label('Curation Rules'),
       React.createElement('ul', { style: { margin: '4px 0 0', paddingLeft: 18 } },
         (lore.tableau.curationRules || []).map((r, i) => React.createElement('li', { key: i, style: { fontSize: 12, color: 'var(--fg-2)', lineHeight: 1.6, marginBottom: 2 } }, r))),
