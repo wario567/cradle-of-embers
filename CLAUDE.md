@@ -196,6 +196,15 @@ rather than let one doc drift from the others silently.
   weak estate claim; practically free only because no jurisdiction enforces at
   a free port. West is green enough not to know the drill. The arc resolves by
   West CLAIMING personhood, not by a court granting it. See `westOwnership`.
+- **Ost and Tarek have been CAPTURED by PALE** (not AURIS — PALE has assets on
+  Thessavar, AURIS doesn't). Tarek is held as a "patient" at a PALE relief
+  station in Kaeldrift, being quietly leashed the way Enkh is; he's stayed
+  deliberately vague under questioning about which Kael-7 has the locket, so
+  PALE's knowledge is only a suspicion ("somewhere in that unit"), not
+  certainty pointing at West. Ost's exact location is left open. West has NOT
+  told Enkh about the locket. None of this is known to the players yet — see
+  `tarekOstCaptivity` in gm-lore.js. Rhae Mahler is NOT canon (unplayed prep
+  only, never introduced at the table).
 - Veronika "The Saint" leads the River Below; her diver Red Flag caused the
   Still Gardens disaster trying to photograph the vault. The Lattice beneath
   Thessavar's ocean is an active alien transmission array, now broadcasting.
