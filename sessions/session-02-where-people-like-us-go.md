@@ -225,6 +225,10 @@ Pick by clock and energy:
 - Sister Halex: on-screen, drawl established. **Faction: Remembrance, but personally loyal to the late Arbiter Senn — not Tran or the Radiance.** Players haven't met Tran yet.
 - Mira Calder: still undescribed, uninteracted — available as a fresh scene.
 - **Ost and Tarek: still silent.** Not a plot hole — the Duskline was in drill the whole voyage and no messages transmit in drill. Whatever Ost sent is queued somewhere waiting for a ship to carry it. The party only just reconnected to signal at Belum (same moment the Tableau hit). Also: Ost's own note said "not safe" — silence from someone who just warned you isn't necessarily bad news.
+- **DECIDED (going into S3): Ost and Tarek have been CAPTURED**, not just missing. Who captured them is still open — working idea: PALE and AURIS were BOTH racing to get to Tarek (he'd touched the Lattice; both AIs want what he knows), and one of them got there first. GM has not chosen which yet — leave it a mystery for now.
+- **DECIDED: West has NOT told Enkh about the locket.** Enkh doesn't know it exists. This closes off "PALE knows via Enkh's logs" as a pathway — Enkh has nothing in his logs to read.
+- **DECIDED: PALE's knowledge of the locket is a SUSPICION, not certainty.** If PALE got to Tarek, that's the likely source — but even then it would only narrow it to "somewhere in West's unit," not confirm West specifically has it (there were multiple Kael-7s in Senn's detail). Do not have PALE act with certainty this session.
+- ⚠ **Rhae Mahler is NOT canon.** She appears only in unplayed GM prep (gm-lore.js Pale Substrate NPC list) and was never introduced at the table. Do not treat her as an established character. See CLAUDE.md's canon hard-rule.
 
 ## Pending GM decisions
 

@@ -104,6 +104,17 @@ after losing all conversation memory. The repo IS your memory. Read in this orde
 1. **`sessions/session-NN-*.md` (highest NN)** — the latest session doc. The
    POST-SESSION ADDENDUM at the bottom is as-played canon and overrides the plan
    above it. Its "Live state" section is the current board.
+
+**HARD RULE — what counts as canon:** only `handouts/session-N-recap.md` files
+and the POST-SESSION ADDENDUM sections are things that ACTUALLY HAPPENED at the
+table. Everything else — the plan portion of a session doc, `gm-lore.js`
+faction NPC lists, background threads, "what each faction wants" — is UNUSED
+PREP, not established fact. A planned NPC (e.g. a faction field agent sketched
+in prep but never played) does not exist in the fiction until a recap or
+addendum says a player actually met them. Never introduce or reference planned-
+but-unplayed material as if the players already encountered it. When drafting
+new sessions, it's fine to draw villains/threads FROM prep, but treat that as
+"available raw material," not "already true."
 2. **`data/gm-lore.js`** — the structured bible. Key sections: `factions` (9
    canonical, with `swnTags` + `stats`), `factionTurns` (every GM turn ever run,
    with rolls), `factionStatePostS0`, `enkhContract` (decided threads get their
