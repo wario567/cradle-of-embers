@@ -18,7 +18,7 @@
 ### Places & names (glossary)
 - **Belum Freeport** — tonight's hub. Driftborn port, neutral, light law. Docks/promenade up top; **undercity** (the Molt's turf) below. Has a Coyle office + Argent reading room.
 - **The Duskline** — the freighter. Captain **Mira Calder**; her first mate is an RB informant.
-- **Rustwater Crew** — M1 pirates (bought the manifest). **Vess Okaro** — M2 debtor + teen nephew. **Rhax** — M2 boss ("PALE-job"). **Sister Halex** — M3 giver (Covenant/Becoming). **Brother Emmerin** — M3 objective (courier). **The Molt** / chief **Casque** — M3 gang. **Marn Coyle** — Enkh's broker.
+- **Rustwater Crew** — M1 pirates (bought the manifest). **Vess Okaro** — M2 debtor + teen nephew. **Rhax** — M2 boss ("PALE-job"). **Sister Halex** — M3 giver (Covenant/Remembrance, but loyal to the late Arbiter Senn, not Tran). **Brother Emmerin** — M3 objective (courier). **The Molt** / chief **Casque** — M3 gang. **Marn Coyle** — Enkh's broker.
 
 ### PC cheat sheet — when to call for a roll (DC 8 easy / 10 normal / 12 hard)
 - **Enkh** — good at Notice (casing), Shoot, Sneak/Exert (cyber-limbs), cold transactional Talk. *Lean into:* reading angles/threats, forcing things physically. *Weak:* warmth/Connect.
@@ -97,7 +97,7 @@ Recovery job, pawned pretech gyro, defaulter Vess Okaro (ruined ex-Concordance s
 - **Payoff:** 2,000 against a 15,000 debt — make him feel the arithmetic. Coyle owes a favor.
 
 ### M3 — The Silent Courier (Sister Halex → the Vesper road)
-**Why they say yes:** Tarek's letter — the dead-drop instruction from the one person who tried to warn them — says "Becoming has to know before Remembrance does. Trust Elder Vesper." Halex IS Becoming, asking for exactly the help that moves it forward. West: legitimate authority pulling on her architecture vs. Veronika's hold. Enkh: every thread he cares about runs through the ruins.
+**Why they say yes:** Halex is Remembrance by faction — but she served personally on Arbiter Senn's staff, and her loyalty is to Senn, not to Marshal Tran or the Radiance spreading through her own faction's leadership. Senn is dead; Halex is quietly trying to protect the last of Senn's unfinished work before Tran's wing buries or weaponizes it. West: legitimate authority pulling on her architecture vs. Veronika's hold — and this time it's a Remembrance sister going around her own chain of command. Enkh: every thread he cares about runs through the ruins.
 **Main-arc payoff:** this is the main quest in a side-quest coat — the dispatch reveals BOTH Covenant factions are hunting the Kael-7s, and completing it opens the road to Vesper (the likely Session 3 spine).
 Courier Emmerin missing 4 days in the undercity with a sealed dispatch for Vesper. Halex *asks* — but she's legitimate Covenant authority and West's architecture knows it. **Obedience collision if Veronika objects. Engineer it.**
 - **Combat:** the Molt (gang) hold him — 4× gangers [HP3 AC12 +1, 1d6, morale 6] + chief Casque [HP8 AC13 +2, 1d8]. Catwalks, steam vents (1d4 + vision, random), hostage in the kill-zone. **They break EARLY — real problem is Casque grabbing Emmerin as a shield.**
@@ -136,7 +136,7 @@ Courier Emmerin missing 4 days in the undercity with a sealed dispatch for Vespe
 7. **Veronika's PARTIAL break (not the full Reckoning)**: overheard shouting; the PCs found her burned by emotion for the first time — anger then sorrow over "Red" (Red Flag), who died back on Thessavar. Her line: *"I told him not to go, he didn't listen, now he's dead, fuckin' idiot."* She gave NO details (who he was, what "down there" means). She claims not to know what happened at the Still Gardens — **both PCs rolled and know she's holding back.** Nobody pushed. **The Saint reveal did NOT happen — still banked.** The grief is now on-screen; the confession is not.
 8. **Enkh messaged Coyle**: coded "mission completed" note, his standard post-job routine. Established Coyle's pawn-shop chain as a sector-wide black-market front (matches canon).
 9. **Comms ruling made at table**: no messages inside metaspace (spike drill); transmission is near-instant outside it. (Reconciliation with SWN lore: in-system radio/laser comms are effectively instant at table scale; BETWEEN systems there is no FTL radio in SWN — messages ride ships. The Driftborn effectively ARE the mail network, which fits their Exchange Consulate tag. Enkh's message queued in the Duskline's buffer and transmitted to Belum's exchange on drill-exit — reaching Coyle before they dock. Rule of thumb going forward: news moves at the speed of ships.)
-10. **Session ended at the three doors**, framed as: (1) Veronika's cargo move to a Belum warehouse; (2) visit the nearest Marn Coyle location for payment + new work; (3) **Covenant nuns led by Sister Halex (played with a southern drawl) asked for help** — GM ran out of prep and ended there. ⚠ **DISCREPANCY TO RESOLVE: at the table the nuns were introduced as REMEMBRANCE; canon prep has Halex as BECOMING.** (See pending decisions.) Session 3 opens on the docks with the three doors live.
+10. **Session ended at the three doors**, framed as: (1) Veronika's cargo move to a Belum warehouse; (2) visit the nearest Marn Coyle location for payment + new work; (3) **Covenant nuns led by Sister Halex (played with a southern drawl) asked for help** — GM ran out of prep and ended there. **RULED: Halex is Remembrance (as spoken at table), but personally loyal to the late Arbiter Senn, not to Marshal Tran — see gm-lore `castIndex.halex` and the reworked M3.** Session 3 opens on the docks with the three doors live.
 11. **West spotted the first mate's River Below tattoo** (inner forearm — the Surge) while working with the crew. Clue landed as planned.
 
 ## Live state going into Session 3
@@ -148,11 +148,10 @@ Courier Emmerin missing 4 days in the undercity with a sealed dispatch for Vespe
 - Locket: reacting to Enkh; West registered by it; rightness-feeling active. Nobody else knows the full pattern yet.
 - Driftborn favor: the crew promised support to the PCs — a bankable asset.
 - Combine repo team clock: unfired, lands Belum day 2-4 of THEIR stay (starts counting now).
-- Sister Halex: on-screen, drawl established, faction allegiance pending GM ruling (Remembrance as spoken vs Becoming as prepped).
+- Sister Halex: on-screen, drawl established. **Faction: Remembrance, but personally loyal to the late Arbiter Senn — not Tran or the Radiance.** Players haven't met Tran yet.
 - Mira Calder: still undescribed, uninteracted — available as a fresh scene.
 
 ## Pending GM decisions
 
-1. **Halex: Remembrance or Becoming?** If Becoming (as prepped), the M3 mission stands as designed and the "nuns of the Remembrance" line gets quietly smoothed over. If Remembrance (as spoken), M3 becomes a trap or a Tran-side approach — spicier, but rewires the road to Vesper. Decide before Session 3.
-2. **What Veronika's cargo actually is** — prep says relief meds + forged refugee IDs. Confirm or adjust.
-3. **When the repo team lands** relative to the party's Belum stay.
+1. **What Veronika's cargo actually is** — prep says relief meds + forged refugee IDs. Confirm or adjust.
+2. **When the repo team lands** relative to the party's Belum stay.

@@ -154,8 +154,11 @@ after losing all conversation memory. The repo IS your memory. Read in this orde
   Div (the old sealed-cargo captain thread was renamed Odessa Marr); comms
   rule: no messages in drill, in-system near-instant, BETWEEN systems mail
   rides ships (Driftborn are the de facto mail network). The Belum three-door
-  sandbox is now SESSION 3 material. ⚠ Pending ruling: Halex spoken as
-  Remembrance at table vs prepped as Becoming. West's ownership is CONTESTED,
+  sandbox is now SESSION 3 material. RULED: Sister Halex is Remembrance by
+  faction (as spoken at table), but personally loyal to the late Arbiter Senn
+  (her former principal), not to Marshal Tran or the Radiance — she's quietly
+  working against her own faction's hardliners to protect Senn's unfinished
+  work. West's ownership is CONTESTED,
   not free — Combine repossession lien vs Covenant auction purchase vs Senn's
   weak estate claim; practically free only because no jurisdiction enforces at
   a free port. West is green enough not to know the drill. The arc resolves by
