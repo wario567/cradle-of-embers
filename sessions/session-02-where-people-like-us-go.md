@@ -224,6 +224,7 @@ Pick by clock and energy:
 - Combine repo team clock: unfired, lands Belum day 2-4 of THEIR stay (starts counting now).
 - Sister Halex: on-screen, drawl established. **Faction: Remembrance, but personally loyal to the late Arbiter Senn — not Tran or the Radiance.** Players haven't met Tran yet.
 - Mira Calder: still undescribed, uninteracted — available as a fresh scene.
+- **Ost and Tarek: still silent.** Not a plot hole — the Duskline was in drill the whole voyage and no messages transmit in drill. Whatever Ost sent is queued somewhere waiting for a ship to carry it. The party only just reconnected to signal at Belum (same moment the Tableau hit). Also: Ost's own note said "not safe" — silence from someone who just warned you isn't necessarily bad news.
 
 ## Pending GM decisions
 
