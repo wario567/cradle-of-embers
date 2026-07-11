@@ -118,3 +118,41 @@ Courier Emmerin missing 4 days in the undercity with a sealed dispatch for Vespe
 
 ---
 *Tableau bulletin: `handouts/tableau-issue-01.md` (post to Discord). Full cast blurbs + hover links: app → GM Notes → Session 2.*
+
+---
+
+# POST-SESSION ADDENDUM — What Actually Happened (Canon)
+
+*Session played on a Tuesday, ~2.5 hours of play after ~45 min of leveling. The session covered ONLY the transit; the Belum sandbox (three doors, Reckoning full reveal, repo clock) is now the SESSION 3 material. Player recap: `handouts/session-2-recap.md`.*
+
+## As played
+
+1. **Opened with a table recap** (Still Gardens events, locket warmth, Veronika's rescue, Senn's death, the divers, the departure), then **leveling**: PCs awarded **+3 XP → Level 2** (~45 min spent allocating).
+2. **Whole session took place aboard the Duskline** in transit (12-day voyage, Thessavar → Belum). Voyage-length ruling: the Duskline is a working freighter with a drive-1 spike drive — ~6 days per hex plus days of normal-space transit to and from safe drill points at each end. 12 days for a neighboring hex is canon.
+3. **Duskline crew established**: Driftborn spacers in soft worn beige linen; Mira Calder captains, crew of ~5-10 who stay with the ship. **Mira has NOT been described or interacted with yet.** River Below and the Driftborn are friendly — a natural near-alliance (Veronika booked passage with Mira).
+4. **The PCs worked the ship**: Enkh and Darius as experienced hands (both have crewed before, possibly know Driftborn culture), West by falling in / defaulting to helpful. In return the Driftborn crew extended **a promise of support to the three PCs** — a real favor bank, use it later.
+5. **NEW NPC — Asha Kei**: a boy of 14-15 on the Duskline crew, slight New-York-ish accent, who talked with Enkh and reminded him strongly of Div. ("The Kid" beat fired through Asha rather than through West as planned — better, honestly.) **NOTE: this REPLACES the old background-thread "Asha Kei" (freighter captain with sealed cargo) — that thread's captain has been renamed. Asha Kei is canonically this boy now.**
+6. **The locket, as played**: grew warmer all voyage; West worked out it reacts to ENKH (warmest near him). Since first touch (a little electric zap — the device *registering* West, same as the Lattice registered Tarek), West's baseline anxiety/trepidation has been replaced by a feeling of *rightness* — "can't put a foot wrong" — magnified tenfold in direct contact. Table framing used: the locket is "fixing" West's DNA / removing a genetic hindrance. **GM wants to develop: people will want to take it; if lost, West's flaw returns. The zap may mean the Lattice is now aware of West.** (See gm-lore `locketState` for the reconciled mechanics + future beats.)
+7. **Veronika's PARTIAL break (not the full Reckoning)**: overheard shouting; the PCs found her burned by emotion for the first time — anger then sorrow over "Red" (Red Flag), who died back on Thessavar. Her line: *"I told him not to go, he didn't listen, now he's dead, fuckin' idiot."* She gave NO details (who he was, what "down there" means). She claims not to know what happened at the Still Gardens — **both PCs rolled and know she's holding back.** Nobody pushed. **The Saint reveal did NOT happen — still banked.** The grief is now on-screen; the confession is not.
+8. **Enkh messaged Coyle**: coded "mission completed" note, his standard post-job routine. Established Coyle's pawn-shop chain as a sector-wide black-market front (matches canon).
+9. **Comms ruling made at table**: no messages inside metaspace (spike drill); transmission is near-instant outside it. (Reconciliation with SWN lore: in-system radio/laser comms are effectively instant at table scale; BETWEEN systems there is no FTL radio in SWN — messages ride ships. The Driftborn effectively ARE the mail network, which fits their Exchange Consulate tag. Enkh's message queued in the Duskline's buffer and transmitted to Belum's exchange on drill-exit — reaching Coyle before they dock. Rule of thumb going forward: news moves at the speed of ships.)
+10. **Session ended at the three doors**, framed as: (1) Veronika's cargo move to a Belum warehouse; (2) visit the nearest Marn Coyle location for payment + new work; (3) **Covenant nuns led by Sister Halex (played with a southern drawl) asked for help** — GM ran out of prep and ended there. ⚠ **DISCREPANCY TO RESOLVE: at the table the nuns were introduced as REMEMBRANCE; canon prep has Halex as BECOMING.** (See pending decisions.) Session 3 opens on the docks with the three doors live.
+11. **West spotted the first mate's River Below tattoo** (inner forearm — the Surge) while working with the crew. Clue landed as planned.
+
+## Live state going into Session 3
+
+- PCs are **Level 2**. Party currently: West, Enkh (+ Darius NPC, + Veronika aboard).
+- Docked (or docking) at Belum Freeport. All three doors offered, none entered.
+- Coyle has already received Enkh's "mission completed" code — the decline scene is loaded and waiting at his storefront.
+- Veronika: grief on-screen, Saint reveal banked, players know she's hiding something.
+- Locket: reacting to Enkh; West registered by it; rightness-feeling active. Nobody else knows the full pattern yet.
+- Driftborn favor: the crew promised support to the PCs — a bankable asset.
+- Combine repo team clock: unfired, lands Belum day 2-4 of THEIR stay (starts counting now).
+- Sister Halex: on-screen, drawl established, faction allegiance pending GM ruling (Remembrance as spoken vs Becoming as prepped).
+- Mira Calder: still undescribed, uninteracted — available as a fresh scene.
+
+## Pending GM decisions
+
+1. **Halex: Remembrance or Becoming?** If Becoming (as prepped), the M3 mission stands as designed and the "nuns of the Remembrance" line gets quietly smoothed over. If Remembrance (as spoken), M3 becomes a trap or a Tran-side approach — spicier, but rewires the road to Vesper. Decide before Session 3.
+2. **What Veronika's cargo actually is** — prep says relief meds + forged refugee IDs. Confirm or adjust.
+3. **When the repo team lands** relative to the party's Belum stay.

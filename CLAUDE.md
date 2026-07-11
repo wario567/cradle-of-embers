@@ -145,7 +145,17 @@ after losing all conversation memory. The repo IS your memory. Read in this orde
   failed assassin of Senn; played by **Daniel**) and West / K7G2-87459-WST
   (Kael-7 Grade 2 clone, they/them, 18 months old, owner Senn is dead; played
   by **Kisa**). Real submitted backgrounds live in `handouts/enkh-daniel-
-  background.md` and `handouts/west-kisa-background.md` — treat as canon. West's ownership is CONTESTED,
+  background.md` and `handouts/west-kisa-background.md` — treat as canon.
+  **PCs are LEVEL 2** (+3 XP awarded after S1, leveled at S2 open).
+- S2 as-played covered ONLY the Duskline transit (see the S2 addendum — it
+  overrides the plan): Veronika's PARTIAL break happened (grief over Red, no
+  Saint reveal — that's still banked); the locket quiets West's fear-leash
+  (see `locketState`); Asha Kei is canonically a Duskline deck boy who echoes
+  Div (the old sealed-cargo captain thread was renamed Odessa Marr); comms
+  rule: no messages in drill, in-system near-instant, BETWEEN systems mail
+  rides ships (Driftborn are the de facto mail network). The Belum three-door
+  sandbox is now SESSION 3 material. ⚠ Pending ruling: Halex spoken as
+  Remembrance at table vs prepped as Becoming. West's ownership is CONTESTED,
   not free — Combine repossession lien vs Covenant auction purchase vs Senn's
   weak estate claim; practically free only because no jurisdiction enforces at
   a free port. West is green enough not to know the drill. The arc resolves by
