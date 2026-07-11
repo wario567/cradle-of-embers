@@ -1,122 +1,195 @@
 # Session 2 — Where People Like Us Go
-**Format: streamlined runbook. Full detail lives in the app → GM Notes → Session 2 tab.**
-**Time skip: ~12 days (Duskline transit, Thessavar → Belum Freeport). GM Turn 4 covers this month.**
+
+> *Twelve days in the black. Thessavar behind you, a point of blue light and then nothing. Belum Freeport ahead — a port that has never once slowed down to be beautiful.*
+
+**Player characters:**
+- **Enkh Zahli** — Level 2. Believes his contract may be fulfilled; expects to collect 15,000 from Coyle. Doesn't know it's PALE, doesn't know PALE reads his logs.
+- **West** (K7G2-87459-WST) — Level 2. Deferring to Veronika without understanding why. Carrying a warm, unsplit locket and Tarek's letter, secret from everyone.
+
+**The engine of the session:** A working freighter, twelve days dark. Three people who were never meant to share a boat learn each other — and one of them, Veronika, cracks open just far enough to show the players a grief she's never let anyone see. Then Belum: a port in turmoil over a disaster the players caused without meaning to, three doors offering three different pressures, and a legal team quietly closing in on West from behind.
+
+**Tone:** Brennan Lee Mulligan — beautiful, then it costs something. Every beat earns the next with a **but** (complication) or a **therefore** (consequence) — never "and then."
 
 ---
 
-## ★ AT A GLANCE — read this first
+## GM Briefing — What Is Actually True (Players Don't Get This)
 
-**Spine:** They ride the Duskline to Belum Freeport. Veronika breaks and reveals she's the Saint (THE scene). At Belum: 3 doors, each a combat, each pulling on a PC want. A Combine repo team is closing on West.
+**The locket.** It is repairing what it reads as damage — for West, that's the Combine's engineered fear-leash (the anxiety that punishes acting against sanctioned purpose). The rightness-feeling is real, but it is *unmuting* a confidence that was always there, not creating one. It is a dependency arc: if the locket is ever taken, the flaw returns, harder for having been gone. It warms near Enkh because it wants to fix him next — PALE's affect-flattening reads as damage too. He hasn't touched it.
 
-**Run order:** ① Cold open (the berth) → ② Transit (Enkh: "The Kid" / West: warm locket) → ③ **The Reckoning** (Saint reveal — protect time for this) → ④ Arrival (Belum, Tableau on the screens) → ⑤ Three doors (they pick; combats test the rules) → ⑥ Close.
+**Enkh's contract.** The client is PALE, through cutout broker Marn Coyle. The contract has a proof-of-kill clause, and PALE knows — from Enkh's own substrate logs — that he never fired. Payment will be declined: *"Cause of death doesn't match the commissioned work."* Enkh does not know how the client could possibly know. Neither should the players, not yet.
 
-- **⏱ The one clock:** Combine repo team lands Belum **day 2-4** (you pick). Day-2 telegraph: grey suits at the harbormaster asking about Duskline passengers. Legal writ for **West**. Use it to interrupt when energy dips.
-- **★ The one scene:** The Reckoning. If you nail one thing, nail this.
-- **Tone:** Brennan Lee Mulligan — beautiful, then it costs something. BUT / THEREFORE, never "and then."
-- **⚠ Do not replay:** S1's dockside line, boarding, launch — all played. Open in transit.
+**Sister Halex.** Remembrance by faction, but personally loyal to the late Arbiter Senn — not to Marshal Tran or the Radiance spreading through her own leadership. She is quietly trying to protect the last of Senn's unfinished work before Tran's wing buries or weaponizes it. This makes her ask a Remembrance sister going around her own chain of command — spicier than the original Becoming-envoy plan, and it still opens the road to Vesper.
 
-### Places & names (glossary)
-- **Belum Freeport** — tonight's hub. Driftborn port, neutral, light law. Docks/promenade up top; **undercity** (the Molt's turf) below. Has a Coyle office + Argent reading room.
-- **The Duskline** — the freighter. Captain **Mira Calder**; her first mate is an RB informant.
-- **Rustwater Crew** — M1 pirates (bought the manifest). **Vess Okaro** — M2 debtor + teen nephew. **Rhax** — M2 boss ("PALE-job"). **Sister Halex** — M3 giver (Covenant/Remembrance, but loyal to the late Arbiter Senn, not Tran). **Brother Emmerin** — M3 objective (courier). **The Molt** / chief **Casque** — M3 gang. **Marn Coyle** — Enkh's broker.
+**The repo team.** A Combine recovery team with a legal writ for West is 2-4 days behind the Duskline, tracing a manifest leak sold at Belum's data-exchange. They are legal-first, not violent-first.
 
-### PC cheat sheet — when to call for a roll (DC 8 easy / 10 normal / 12 hard)
-- **Enkh** — good at Notice (casing), Shoot, Sneak/Exert (cyber-limbs), cold transactional Talk. *Lean into:* reading angles/threats, forcing things physically. *Weak:* warmth/Connect.
-- **West** — good at Shoot/Punch, Notice (threat assessment is their JOB — free flags), Exert, tactics. *Lean into:* combat, protecting civilians, surprise rounds. *Weak:* lying under social pressure.
+**The Penumbra's bomb.** Proof that the Thessavar ruins are a transmission array is armed and ready to publish — not this session. Save it for the Tableau's second issue.
 
 ---
 
-## Pre-session: what the factions did (30-second scan)
+## The Geography
 
-| Faction | Did | Why it matters tonight |
-|---|---|---|
-| **Combine** | Probate filed — Kael-7s revert to Combine; repo team traced the Duskline | **THE CLOCK.** Repo team lands Belum day 2-4 |
-| **PALE** | Won Thessavar reconstruction contract | Locked the ruins behind relief work. Still holds Enkh's leash |
-| **Penumbra** | Stole PALE survey data; preparing to publish "the ruins are a transmission array" | Breaks AFTER this session — save for Tableau #2 |
-| **Synod** | Detected the signal; AURIS can't decode it | AI god is scared. Nothing visible yet |
-| **Covenant** | Frigates repaired; Tran ascendant; diplomats recalled | Both Covenant factions now want the Kael-7s (see M3) |
-| **Succession** | Jurisdiction claim rebuffed; frigates stay | Slow legal siege of Thessavar |
-| **Argent** | Sanctuary = refugee center | Pell holds the best disaster eyewitness archive |
-| **Driftborn** | Only ones flying; rates capped for relief | Duskline left in this window |
-| **River Below** | Went quiet; schism brewing over Red Flag | The Saint is on your ship |
+- **The Duskline** — a Driftborn working freighter, drive-1 spike (slow: ~6 days per hex, plus normal-space burn at each end — this is why a neighboring hex took 12 days). Crewed by Driftborn spacers in soft worn beige linen, captained by Mira Calder, a crew of 5-10 who stay with the ship.
+- **Belum Freeport** — a Driftborn-served independent port, neutral, light law. Docks and promenade sit up top; the **undercity** below is a warren of maintenance corridors and gang territory (the Molt's turf). Has a Coyle assay-shop franchise and an Argent Compact reading room. The whole port is currently loud with Thessavar news — doubled security, journalist swarms, THE RIVER RISES scrawled on a container and half scrubbed off.
 
-## Cold open — in the black (S1 ended with the launch)
-- Dockside line, boarding, AND launch — **all played in S1. Don't replay any of it.**
-- Open a few hours out. Engine hum. First quiet since the island went under. *"You're in the black. What do you do?"*
-- **First new scene:** the berth. Assassin, bodyguard, bartender — first breath. Let them talk, or pointedly not.
-- *Optional fresh Veronika line* (never said in play): "Where do people like us go, when there's nowhere on that rock left to stand?" Or let silence work.
-- Either way: Belum Freeport, 12 days.
+---
 
-## Transit (2-3 scenes MAX — offer, don't force)
-- **Enkh — "The Kid":** West does something small (still on an unassigned watch, strips a weapon clean unbidden, asks *why* not *how*) and for a second Enkh sees **Div** — the boy he lost on Karrath. The substrate should've flattened this; it didn't, quite. No roll. Don't name Div unless the player does. Quiet payoff: Enkh decides this one won't end like Div.
-- **Darius is aboard** (boarded at Thessavar) — use him. Knew Div too, so he may catch Enkh softening toward West. Does the warm people-work Enkh can't; as a working-class PALE-skeptic, he'll likely *respect* Veronika when the Saint reveal lands.
-- ⚠ **Enkh's PALE hum already returned** ~30 min post-EMP in S1 — don't replay it. PALE has had access the whole trip.
-- **West:** locket warm at odd hours — warm*er* near Enkh. Don't explain.
-- **Veronika:** deflects with charm; pressed on Tarek she goes *quiet*, not defensive.
-- ✎ **Notice DC 8** (West, re: first mate): tattoos match the Kaeldrift bar crowd.
-- ✎ **Know DC 8** (Belum research): freeport, light law, Argent reading room, Coyle franchise office.
+## Cast for Tonight
 
-## THE RECKONING — Veronika breaks (scene of the session)
-- **Trigger** (pick): newsfeed casualty lists reach the ship · a PC pushes past her charm · after M1's ID wafers.
-- Starts as **anger**, not tears. "I told him to WAIT." → Red Flag was 22, died believing what she taught him, no grave. → "Senn is dead — WORSE than dead. The Gardens are gone. And every port is grinding its teeth over who did it."
-- **The reveal:** *"They call me the Saint. The River Below is mine. The boy who died down there was mine too."*
-- **Her motives = RB's stakes:** (1) if RB gets blamed, the movement is exterminated; (2) half her cells whisper "we woke a god" like it's a victory — she must define Red Flag's death before the radicals do; (3) she has to know what's really down there. Belum = her cell hears about Red Flag from HER.
-- **West:** the authority she fell in behind just confessed her movement killed Senn. "She's looking at you. What do you do?" Don't resolve it.
-- **Enkh:** her people did his job for free and cost him 15k. If he says it — let it detonate.
-- ✎ Notice DC 8 (none of it is performance) · Talk DC 10 (what was Red Flag doing? → "He wasn't trying to wake anything. He was trying to take a PICTURE.")
-- After: no apology, no loyalty ask. *"You know what I am now. What you do with it is yours."*
+- **Veronika "The Saint"** — head of the River Below, the PCs' rescuer. Aboard the Duskline. Breaks partway open this session over the death of **Red Flag** — grief and rage, no details given. The full Saint reveal is not tonight.
+- **Darius Epps** — Enkh's oldest friend, aboard the ship (boarded at Thessavar). Knew Div; may catch Enkh softening toward West. A working-class PALE-skeptic who'd likely respect Veronika once she opens up.
+- **Marn Coyle** — Enkh's broker. Mid-50s, professionally bland, scrupulously neutral, afraid of his client. His storefront is on Belum.
+- **Sister Halex** — Covenant nun (Remembrance, secretly loyal to Senn), southern drawl. Approaches the party at Belum with an ask.
+- **Vess Okaro** — ruined ex-Concordance catering director, in debt to a syndicate that's quietly buying up witnesses' debts.
+- **Brother Emmerin** — Covenant courier, missing four days in the Belum undercity, held by the Molt gang.
+- **Mira Calder** — Driftborn captain of the Duskline. Not yet described or interacted with — available as a fresh scene.
+- *(Referenced, offscreen:)* **Marshal Tran** — Remembrance's military commander, the one Halex is quietly working against.
 
-## Arrival — Belum Freeport (sandbox opens — the sector is in turmoil)
-- **The whole port is about Thessavar.** Doubled security, journalist swarms, THE RIVER RISES scrawled on a container (half scrubbed off). The disaster is the weather, not backstory.
-- **The Tableau plays on the pier screens** — read the handout (`handouts/tableau-issue-01.md`), including the **Rumor Ledger**: whispers of "the Saint," an unidentified woman marshaling swan boats, a shuttered Kaeldrift bar, and salvage crews saying something down there is *transmitting*. If the Reckoning already happened, watch Veronika while it plays; if not, bank her reaction as a clue.
-- **If West asks "am I free / who owns me now?"** → **Contested, not free.** Three claims (Combine repo lien / Covenant bought the Kael-7 line / Senn's weak estate claim), none of them "West owns West." Practically free on Belum because nobody with jurisdiction is here to enforce; property again the moment they dock somewhere that cares. West is green enough not to know the drill — don't correct their guesses; the truth arrives later via Ost/Tarek and lands harder. Ready line: *"Contested. The Combine says you're theirs. Others disagree. Nobody here settles it or enforces it — so for now you're whatever you decide to be. Careful where you dock."* (Full logic: gm-lore `westOwnership`.)
-- Fish for: Combine probate line (West: *that means her*). PALE-as-hero (Enkh: *his creditor*).
-- Veronika catches herself giving them orders — "…do what you want. You're not mine." West feels the dropped handhold.
-- ✎ **Know/Connect DC 10:** the Tableau never speculates on the CAUSE. Every other outlet does. Odd.
-- **CLOCK: Combine repo team lands day 2-4.** Telegraph day 2 (grey suits at the harbormaster).
+---
 
-## Three doors (each has a combat — pick what they bite)
+# COLD OPEN — IN THE BLACK
 
-**Design note:** none of these are side quests. Each is pulled by a PC's own want, and each leaks a main-arc secret. The sandbox is "which pressure do you answer first," not "which errand do you pick."
+*S1 ended with the crew launching into the black — dockside line, boarding, and launch all played. Don't replay any of it.*
 
-### M1 — The Quiet Run (Veronika, 400cr each)
-**Why they say yes:** she saved their lives and has asked for *nothing* — until now. Refusing her first ask costs the relationship; for West it lands like an order.
-**Main-arc payoff:** the ID wafers = first hard evidence of who Veronika is. And the pirates *bought the Duskline manifest* from a data-broker — the same leak the Combine used to trace West. Someone is selling passenger data.
-Night crate transfer, Duskline → outer moorage warehouse. "Medicine. Mostly." (True: meds + forged refugee IDs — RB's real work.)
-- **Combat:** 5 Rustwater pirates hit the airlock mid-transfer (think crates = pretech salvage). 4× [HP4 AC12 +1, 1d6] + bosun [HP8 AC13 +2, 1d8]. Morale 7/8 — breaks fast. Crates = cover. **Round 3: floodlights — patrol inbound in 5 rounds.**
-- ✎ Notice DC 10 (casing: spot the spotters, deny surprise) · Talk DC 10 (walk them off) · Know DC 8 (spilled wafers = quality forged IDs)
-- **Interrogate the leak:** a talked-down pirate reveals the manifest was FOR SALE at the harbor data-exchange. Anyone could still be buying it. (The repo team did.)
-- **Payoff:** Veronika trust unlocked — she starts answering some questions straight.
+Open a few hours out. Engine hum. The first quiet anyone has had since the island went under.
 
-### M2 — Small Money (Coyle) — **RUN THE DECLINE FIRST**
-**Why they say yes:** Enkh walked in expecting 15,000 and freedom; he walks out with neither. He's broke, the Lease is alive, and the only broker he trusts is offering the next job. Not fun — necessary.
-**Main-arc payoff:** the decline ("how could the client know?") IS the arc. And Okaro's other debt was bought by a syndicate that's been *buying up Concordance survivors' debts* — someone is collecting witnesses with ledgers instead of guns. Okaro is Enkh's future, five years down.
-Recovery job, pawned pretech gyro, defaulter Vess Okaro (ruined ex-Concordance staffer), 2,000cr.
-- **Combat:** her "security" works for the debt syndicate — posted to prevent her vanishing before "asset intake." 3× hired guns [HP5 AC13 +2, 1d8] + Rhax [HP10 AC14 +3, 1d8+1]. Shelving cover (collapses on 5+ dmg). **Civilians in the crossfire — West's instincts fire.** Twist: Rhax IDs Enkh's cyberware — "PALE-job" — because his intake list has a *category* for people like Enkh.
-- ✎ Sneak DC 10 (split the guards 2/2) · Notice/Talk DC 8 (Okaro's terrified, not hostile) · Talk DC 12 (no-fight resolution; reduced fight remains)
-- **Payoff:** 2,000 against a 15,000 debt — make him feel the arithmetic. Coyle owes a favor.
+> *"You're in the black. What do you do?"*
 
-### M3 — The Silent Courier (Sister Halex → the Vesper road)
-**Why they say yes:** Halex is Remembrance by faction — but she served personally on Arbiter Senn's staff, and her loyalty is to Senn, not to Marshal Tran or the Radiance spreading through her own faction's leadership. Senn is dead; Halex is quietly trying to protect the last of Senn's unfinished work before Tran's wing buries or weaponizes it. West: legitimate authority pulling on her architecture vs. Veronika's hold — and this time it's a Remembrance sister going around her own chain of command. Enkh: every thread he cares about runs through the ruins.
-**Main-arc payoff:** this is the main quest in a side-quest coat — the dispatch reveals BOTH Covenant factions are hunting the Kael-7s, and completing it opens the road to Vesper (the likely Session 3 spine).
-Courier Emmerin missing 4 days in the undercity with a sealed dispatch for Vesper. Halex *asks* — but she's legitimate Covenant authority and West's architecture knows it. **Obedience collision if Veronika objects. Engineer it.**
-- **Combat:** the Molt (gang) hold him — 4× gangers [HP3 AC12 +1, 1d6, morale 6] + chief Casque [HP8 AC13 +2, 1d8]. Catwalks, steam vents (1d4 + vision, random), hostage in the kill-zone. **They break EARLY — real problem is Casque grabbing Emmerin as a shield.**
-- ✎ Connect/Notice DC 10 (track him; fail = they fortify, +1 enemy) · Talk DC 10 (ransom 500cr or a favor instead of blood) · Notice DC 8 (case the den = surprise round)
-- **Payoff:** the dispatch says **both** Covenant factions are hunting the Kael-7s — Combine legally, Tran's people otherwise. Halex can arrange passage to Vesper. Does West read the sealed dispatch? (Tarek said trust Vesper; the seal says don't open.)
+- **First new scene: the berth.** Assassin, bodyguard, bartender, and Darius, who wouldn't let Enkh leave alone. First time they breathe. Let them talk, or pointedly not.
+- Optional fresh Veronika line (never said in play): *"So. Where do people like us go, when there's nowhere on that rock left to stand?"* Or let the silence do the work.
+- Either way: bound for Belum Freeport, twelve days out.
 
-## Session close (pick by clock/energy)
-1. **Clean:** Veronika — "I'm going somewhere that isn't safe. You could come."
-2. **Hard:** repo team serves the writ at the docks. Cut to black on the standoff.
+---
+
+# TRANSIT — TWELVE DAYS
+
+*Offer, don't force. Two or three scenes, no more.*
+
+- **Enkh — "The Kid."** West does something small — sits too still on a watch nobody assigned, strips a weapon clean unbidden, asks *why* not *how* — and for a second Enkh sees Div. The substrate should have flattened this. It didn't, quite. No roll. Don't name Div aloud unless the player does. Quiet payoff: Enkh decides this one won't end like Div did.
+- **Darius is aboard** — use him. Does the warm people-work Enkh can't.
+- **West.** The locket rides warm in a pocket — warmer near Enkh. Don't explain.
+- **Veronika.** Deflects with charm; pressed on Tarek she goes quiet, not defensive.
+- ⚠ Enkh's PALE hum already returned ~30 minutes post-EMP in Session 1 — don't replay it. PALE has had access the whole trip.
+
+**Checks:**
+- ✎ Notice DC 8 (West, re: the first mate) — his tattoos match the Kaeldrift bar crowd.
+- ✎ Know DC 8 (Belum research) — freeport, light law, Argent reading room, Coyle franchise office.
+
+---
+
+# THE RECKONING — VERONIKA BREAKS
+
+*The centerpiece of the session. Protect time for it.*
+
+**Trigger** (pick one): a casualty list reaches the ship · a PC pushes past her charm · after the crate-run mission, if run.
+
+Starts as anger, not tears.
+
+> **VERONIKA:** "I told him to wait."
+
+Red Flag was twenty-two. Died believing what she taught him. No grave.
+
+> **VERONIKA:** "Senn is dead — worse than dead. The Gardens are gone. And every port is grinding its teeth over who did it."
+
+**The reveal** (banked, not necessarily tonight): *"They call me the Saint. The River Below is mine. The boy who died down there was mine too."*
+
+**Her motives**, if it lands: if the sector learns River Below caused the disaster, the movement gets exterminated; half her own cells are calling it a victory and she has to define Red Flag's death before they do; she needs to know what's actually down there.
+
+- **West:** the authority she fell in behind just confessed to something enormous. *"She's looking at you. What do you do?"* Don't resolve it for the player.
+- **Enkh:** her people did his job for free and cost him 15,000 credits. If he says that out loud — let it detonate.
+
+**Checks:**
+- ✎ Notice DC 8 — none of it is performance.
+- ✎ Talk DC 10 — what was Red Flag actually trying to do? *"He wasn't trying to wake anything. He was trying to take a picture."*
+
+After: no apology, no loyalty ask. *"You know what I am now. What you do with it is yours."*
+
+---
+
+# ARRIVAL — BELUM FREEPORT
+
+*The sandbox opens. The sector is in turmoil.*
+
+- The whole port is about Thessavar. This isn't backstory — it's the weather.
+- **The Tableau plays** — read the handout (`handouts/tableau-issue-01.md`), including the Rumor Ledger: whispers of "the Saint," an unidentified woman marshaling swan boats, a shuttered Kaeldrift bar, salvage crews saying something down there is transmitting. If the Reckoning already happened, watch Veronika's face while it plays.
+- Fish for: the Combine probate line (West — *that means her*); PALE-as-hero relief coverage (Enkh — *his creditor*).
+- Veronika catches herself giving orders — *"…do what you want. You're not mine."* West feels the dropped handhold.
+- **If West asks "am I free — who owns me now?"** Don't answer "you're free." *"Contested. The Combine says you're theirs. Others disagree. Nobody here will settle it or enforce it — so for now you're whatever you decide to be. Careful where you dock."* Three claims, none of them "West owns West." The truth arrives later, harder.
+- ✎ Know/Connect DC 10 — the Tableau never speculates on the cause. Every other outlet does. Odd.
+- **⏱ Clock starts:** Combine repo team lands day 2-4. Telegraph day 2 — grey suits at the harbormaster's office.
+
+---
+
+# THE THREE DOORS
+
+*None of these are side quests. Each is pulled by a want the PC already has, and each leaks a main-arc secret. The sandbox is "which pressure do you answer first," not "which errand do you pick." Offer all three at once — don't gate them in sequence.*
+
+## Door One — The Quiet Run (Veronika, 400cr each)
+
+**Why they say yes:** she saved their lives and has asked for nothing — until now. For West it lands like an order.
+**Main-arc payoff:** the ID wafers are the first hard evidence of who Veronika really is. The pirates bought the Duskline's manifest from a data-broker — the same leak the repo team used.
+
+Night crate transfer, Duskline to an outer moorage warehouse. "Medicine. Mostly." (True — meds and forged refugee IDs, River Below's real work.)
+
+- **Combat:** five Rustwater pirates hit the airlock mid-transfer. Four ×[HP 4, AC 12, +1, 1d6] + a bosun [HP 8, AC 13, +2, 1d8]. Morale 7/8, breaks fast. Crates as cover. Round 3: floodlights, patrol inbound in five rounds.
+- ✎ Notice DC 10 (casing — spot the spotters) · Talk DC 10 (walk them off) · Know DC 8 (spilled wafers = quality forged IDs)
+- **Interrogate the leak:** a talked-down pirate reveals the manifest was for sale at the harbor exchange. Anyone could still be buying it.
+- **Payoff:** Veronika's trust — she starts answering some questions straight.
+
+## Door Two — Small Money (Coyle) — run the decline first
+
+**Why they say yes:** Enkh walked in expecting 15,000 and freedom; he walks out with neither. He's broke, the Lease is alive, and the only broker he trusts is right there.
+**Main-arc payoff:** the decline is the arc. Okaro's debt was bought by a syndicate quietly collecting Concordance witnesses. She's Enkh's future, five years down.
+
+Coyle slides the declination across the table. *"Cause of death doesn't match the commissioned work."* Sympathetic, precise, afraid. Pressed hard, his one crack: *"I checked the routing twice and then stopped checking. You understand? I stopped checking."* Do not explain how the client knew. Then: a small job — recover a pawned pretech gyroscope from Vess Okaro, 2,000cr.
+
+- **Combat:** her "security" works for the debt syndicate. Three hired guns [HP 5, AC 13, +2, 1d8] + Rhax [HP 10, AC 14, +3, 1d8+1]. Shelving cover, collapses on 5+ damage. Civilians in the crossfire. Twist: Rhax IDs Enkh's cyberware — *"PALE-job"* — his intake list has a category for people like him.
+- ✎ Sneak DC 10 (split the guards) · Notice/Talk DC 8 (she's terrified, not hostile) · Talk DC 12 (no-fight resolution; reduced fight remains)
+- **Payoff:** 2,000 against a 15,000 debt. Coyle owes a favor.
+
+## Door Three — The Silent Courier (Sister Halex → the road to Vesper)
+
+**Why they say yes:** Halex is Remembrance, but personally loyal to Senn — trying to protect Senn's unfinished work before Tran's wing gets to it. For West: legitimate authority pulling against Veronika's hold, and a Remembrance sister quietly working around her own chain of command.
+**Main-arc payoff:** the dispatch reveals both Covenant factions are hunting the Kael-7s, and completing it opens the road to Elder Vesper.
+
+Brother Emmerin, missing four days in the undercity with a sealed dispatch for Vesper. Halex asks, but she's legitimate Covenant authority and West's architecture knows it.
+
+- **Combat:** the Molt gang holds him. Four gangers [HP 3, AC 12, +1, 1d6, morale 6] + chief Casque [HP 8, AC 13, +2, 1d8]. Catwalks, random steam vents (1d4 + vision block), hostage in the kill-zone. They break early — the real problem is Casque grabbing Emmerin as a shield.
+- ✎ Connect/Notice DC 10 (track him) · Talk DC 10 (ransom instead of blood) · Notice DC 8 (case the den — surprise round)
+- **Payoff:** confirmation both factions are hunting the Kael-7s. Halex can arrange passage to Vesper. Does West read the sealed dispatch?
+
+---
+
+# SESSION CLOSE
+
+Pick by clock and energy:
+
+1. **Clean:** Veronika — *"I'm going somewhere that isn't safe. You could come."*
+2. **Hard:** the repo team serves the writ at the docks. Cut to black on the standoff.
 3. **Quiet:** West alone. Locket, letter, dispatch. Three papers, three authorities. *Whose order do you follow now?*
 
-## 🧭 If they go off-script (safety net)
-- **Skip all missions, just leave Belum:** the repo team lands anyway; Veronika's M1 is her whole reason for being here (she'll ask directly). Reckoning + repo confrontation alone = a full session.
-- **Run from the repo team:** it becomes a chase/heist, not a standoff. They're legal-first, not violent-first — West could even be served and have to *decide* whether to comply.
-- **Split up (Enkh→Coyle, West→Halex):** let them. Missions are independent. Intercut. This is ideal — reward it.
-- **Attack Veronika at the reveal:** she doesn't fight back. "You want to space me, space me. But my people didn't mean for this, and somebody has to answer. I'd rather it be me than them."
-- **Invent a fourth thing:** say yes, borrow the nearest statblock, pull the main-arc thread that fits. The three doors are examples of the sandbox, not its walls.
+---
+
+## GM Quick-Reference — The But/Therefore Spine
+
+1. The crew works the ship — **but** West only knows how to fall in, not choose — **therefore** the Driftborn's favor is earned on autopilot, not by will.
+2. The locket keeps warming near Enkh — **but** neither PC knows why — **therefore** the mystery deepens exactly when West most needs the confidence it lends.
+3. Veronika breaks over Red Flag — **but** she stops short of the full confession — **therefore** the players know she's hiding something and still can't name it.
+4. Enkh reports the job complete — **but** the client already knows the truth — **therefore** the decline, when it lands, will feel impossible to explain.
+5. Belum is a port already living its own turmoil — **but** the party is dead in the center of the news — **therefore** every door they open pulls them further into a story that's already about them.
+6. Three doors open at once — **but** a legal team is closing from behind — **therefore** whichever pressure they answer first, the others keep ticking.
 
 ---
+
+## If They Go Off-Script (Safety Net)
+
+- **Skip all missions, just leave Belum:** the repo team lands anyway; Veronika's ask is her whole reason for being here. The Reckoning plus the repo confrontation alone is a full session.
+- **Run from the repo team:** it becomes a chase, not a standoff — they're legal-first, not violent-first.
+- **Split up:** let them. Missions are independent — intercut them. This is ideal play, reward it.
+- **Attack Veronika at the reveal:** she doesn't fight back. *"You want to space me, space me. But my people didn't mean for this, and somebody has to answer. I'd rather it be me than them."*
+- **Invent a fourth thing:** say yes, borrow the nearest statblock, pull the main-arc thread that fits.
+
+---
+
 *Tableau bulletin: `handouts/tableau-issue-01.md` (post to Discord). Full cast blurbs + hover links: app → GM Notes → Session 2.*
 
 ---
@@ -125,7 +198,7 @@ Courier Emmerin missing 4 days in the undercity with a sealed dispatch for Vespe
 
 *Session played on a Tuesday, ~2.5 hours of play after ~45 min of leveling. The session covered ONLY the transit; the Belum sandbox (three doors, Reckoning full reveal, repo clock) is now the SESSION 3 material. Player recap: `handouts/session-2-recap.md`.*
 
-## As played
+## Deviations from plan
 
 1. **Opened with a table recap** (Still Gardens events, locket warmth, Veronika's rescue, Senn's death, the divers, the departure), then **leveling**: PCs awarded **+3 XP → Level 2** (~45 min spent allocating).
 2. **Whole session took place aboard the Duskline** in transit (12-day voyage, Thessavar → Belum). Voyage-length ruling: the Duskline is a working freighter with a drive-1 spike drive — ~6 days per hex plus days of normal-space transit to and from safe drill points at each end. 12 days for a neighboring hex is canon.
@@ -136,7 +209,7 @@ Courier Emmerin missing 4 days in the undercity with a sealed dispatch for Vespe
 7. **Veronika's PARTIAL break (not the full Reckoning)**: overheard shouting; the PCs found her burned by emotion for the first time — anger then sorrow over "Red" (Red Flag), who died back on Thessavar. Her line: *"I told him not to go, he didn't listen, now he's dead, fuckin' idiot."* She gave NO details (who he was, what "down there" means). She claims not to know what happened at the Still Gardens — **both PCs rolled and know she's holding back.** Nobody pushed. **The Saint reveal did NOT happen — still banked.** The grief is now on-screen; the confession is not.
 8. **Enkh messaged Coyle**: coded "mission completed" note, his standard post-job routine. Established Coyle's pawn-shop chain as a sector-wide black-market front (matches canon).
 9. **Comms ruling made at table**: no messages inside metaspace (spike drill); transmission is near-instant outside it. (Reconciliation with SWN lore: in-system radio/laser comms are effectively instant at table scale; BETWEEN systems there is no FTL radio in SWN — messages ride ships. The Driftborn effectively ARE the mail network, which fits their Exchange Consulate tag. Enkh's message queued in the Duskline's buffer and transmitted to Belum's exchange on drill-exit — reaching Coyle before they dock. Rule of thumb going forward: news moves at the speed of ships.)
-10. **Session ended at the three doors**, framed as: (1) Veronika's cargo move to a Belum warehouse; (2) visit the nearest Marn Coyle location for payment + new work; (3) **Covenant nuns led by Sister Halex (played with a southern drawl) asked for help** — GM ran out of prep and ended there. **RULED: Halex is Remembrance (as spoken at table), but personally loyal to the late Arbiter Senn, not to Marshal Tran — see gm-lore `castIndex.halex` and the reworked M3.** Session 3 opens on the docks with the three doors live.
+10. **Session ended at the three doors**, framed as: (1) Veronika's cargo move to a Belum warehouse; (2) visit the nearest Marn Coyle location for payment + new work; (3) **Covenant nuns led by Sister Halex (played with a southern drawl) asked for help** — GM ran out of prep and ended there. **RULED: Halex is Remembrance (as spoken at table), but personally loyal to the late Arbiter Senn, not to Marshal Tran — see gm-lore `castIndex.halex` and the reworked Door Three.** Session 3 opens on the docks with the three doors live.
 11. **West spotted the first mate's River Below tattoo** (inner forearm — the Surge) while working with the crew. Clue landed as planned.
 12. **The Tableau's first issue arrived and was read aloud**, DELIVERY RULING (standing going forward): it lands as a signal-catchup burst the moment the ship drops out of drill and reconnects — not something physically read off a pier screen. Twelve days in metaspace = twelve days of dark comms; the whole backlog floods in at once as they re-enter the system, which lined up with reaching Belum. GM read the **Thessavar disaster headline** and the **Combine-claims-Senn's-assets line** aloud in full; the rest of the issue was summarized/skipped at the table. Full issue still needs posting to Discord (see `handouts/tableau-issue-01.md` — a Discord-formatted version is ready to paste). **Apply this same delivery model to future issues**: they arrive whenever the party reconnects to the network after time dark, not on a fixed in-world schedule.
 

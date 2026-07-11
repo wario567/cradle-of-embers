@@ -124,9 +124,31 @@ after losing all conversation memory. The repo IS your memory. Read in this orde
    schema: turnSummary, scenes with talkingPoints/checks/cast, missions with
    whyUs + mainArcPayoff + full combat blocks, clocks, close options) and add
    the tab to GMNotesView in app.jsx. Mirror it as `sessions/session-NN-*.md`
-   (streamlined talking-points format — the GM reads this AT the table).
+   using the STANDARD SKELETON below (the GM reads this AT the table) —
+   check it against `session-01-the-still-gardens.md` before calling it done.
 4. After the session is played: write the post-session addendum in the session
    doc, update `castIndex`/hooks/threads, and write the player recap.
+
+**Standard session-doc skeleton** (every `sessions/session-NN-*.md`, in this order —
+`session-01-the-still-gardens.md` is the reference example):
+1. `# Session N — Title`, then a `>` epigraph blockquote (1-2 lines, scene-setting).
+2. `**Player characters:**` — bullet per PC, current status/level/what they want.
+3. `**The engine of the session:**` — one paragraph, what drives the night.
+4. `**Tone:**` — one line.
+5. `## GM Briefing — What Is Actually True (Players Don't Get This)`
+6. `## The Geography`
+7. `## Cast for Tonight` — bullet per NPC appearing.
+8. Beat-by-beat body as **top-level `#` headers** (COLD OPEN, then named beats/
+   acts) — bullets and ✎ check callouts inside each, NOT prose walls (that was
+   explicitly rejected — streamlined talking points only, see design rules below).
+9. `## GM Quick-Reference — The But/Therefore Spine` — 6-9 lines, each beat as
+   "X — but Y — therefore Z".
+10. `## If They Go Off-Script (Safety Net)` if the session is sandboxy.
+11. `# POST-SESSION ADDENDUM — What Actually Happened (Canon)` — added after
+    the session is played; never edit the plan above it, only append below.
+Keep the section ORDER and HEADER LEVELS consistent across every session doc —
+if a new session's structure wants to diverge, update this skeleton first
+rather than let one doc drift from the others silently.
 
 **Design rules the user cares about** (learned across sessions):
 - Session docs must be STREAMLINED — talking points, not prose walls. The GM
