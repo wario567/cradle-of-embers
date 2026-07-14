@@ -559,7 +559,7 @@ The Duskline — the merchant freighter the players escape on in Session 1 — i
           name: 'Captain Mira Calder',
           role: 'Duskline captain, chartered by Veronika for the Thessavar → Belum run',
           trait: 'Pragmatic, professional, runs a clean ship and asks no questions she doesn\'t want answers to',
-          secret: 'Her first mate is a River Below informant (Surge tattoo on the inner forearm, spotted by West in transit). She knows. She doesn\'t care — he\'s the best mate she\'s ever had. River Below and the Driftborn are natural near-allies.',
+          secret: 'Her first mate, Johnny Rotten (yes, that\'s the name he goes by — River Below to the bone), is a River Below informant (Surge tattoo on the inner forearm, spotted by West in transit). She knows. She doesn\'t care — he\'s the best mate she\'s ever had. River Below and the Driftborn are natural near-allies.',
           appearance: 'Mid-40s, comfortable in confined spaces, reflexively aware of every exit. Short red hair going grey at the temples. Clean hands and a clean ship — both are signals about who she is.',
           voice: 'Economical. States facts and prices. Does not ask questions she does not want answered. Has a dry humor that surfaces when she is comfortable. When she is done with a conversation she simply stops talking.',
           plotPotential: 'STATUS (post-S2): still not directly described or interacted with — available as a fresh on-screen scene whenever wanted. AS PLAYED: Veronika booked the party\'s passage aboard the Duskline at Kaeldrift (normal berths, not a covert extraction); the 12-day transit to Belum is Session 2. Enkh and Darius worked the ship as experienced hands; in return the crew extended a real favor to the three PCs.',
@@ -868,7 +868,7 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
           action: 'Buy Asset',
           detail: 'Fleet-Elder Brask expands the Thessavar trade run. Spends 2 Wealth → gains Free Merchant Fleet (dedicated route: Duskline + two vessels).',
           statChange: 'Wealth 4→2',
-          narrative: 'Concordance season drives passenger traffic. Captain Mira Calder takes the Duskline\'s regular slot. Her first mate begins his River Below reporting.',
+          narrative: 'Concordance season drives passenger traffic. Captain Mira Calder takes the Duskline\'s regular slot. Her first mate Johnny Rotten begins his River Below reporting.',
         },
         {
           faction: 'progenitor_combine',
@@ -1028,7 +1028,7 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
           faction: 'driftborn',
           action: 'Move Asset',
           detail: 'Free Merchant Fleet moves to Concordance-season position in Thessavar orbit. Duskline docks at Kaeldrift supply pier.',
-          narrative: 'Captain Mira Calder\'s manifest shows filtration equipment delivery. Her first mate files his River Below report — but the cell is running cold and Veronika has gone quiet behind her bar. He doesn\'t know the heist is already in motion. The Duskline will be at the Kaeldrift freight pier when everything goes wrong — which is why it becomes the players\' way off the planet.',
+          narrative: 'Captain Mira Calder\'s manifest shows filtration equipment delivery. Her first mate Johnny Rotten files his River Below report — but the cell is running cold and Veronika has gone quiet behind her bar. He doesn\'t know the heist is already in motion. The Duskline will be at the Kaeldrift freight pier when everything goes wrong — which is why it becomes the players\' way off the planet.',
         },
         {
           faction: 'progenitor_combine',
@@ -1167,7 +1167,7 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
     'vesper':     { name: 'Elder Vesper', blurb: 'Hollow Covenant / Becoming faction leader. Tarek\'s note says trust her. West\'s nominal chain of command. Has not appeared on screen yet.', faction: 'hollow_covenant' },
     'tran':       { name: 'Marshal Onyx Tran', blurb: 'Hollow Covenant / Remembrance military commander. Radiance-infected, increasingly reckless. Thinks the vault is a weapon cache. Offscreen so far.', faction: 'hollow_covenant' },
     'senn':       { name: 'Arbiter Senn', blurb: 'Hollow Covenant diplomat, West\'s late owner, Enkh\'s late target. Killed by the defense-system geyser mid-treaty-signing. No body recovered.', faction: 'hollow_covenant' },
-    'calder':     { name: 'Captain Mira Calder', blurb: 'Driftborn captain of the Duskline — the ship Veronika chartered. Pragmatic, asks no questions. Her first mate is a River Below informant (she knows, doesn\'t care).', faction: 'driftborn' },
+    'calder':     { name: 'Captain Mira Calder', blurb: 'Driftborn captain of the Duskline — the ship Veronika chartered. Pragmatic, asks no questions. Her first mate, Johnny Rotten, is a River Below informant (she knows, doesn\'t care).', faction: 'driftborn' },
     'halex':      { name: 'Sister Halex', blurb: 'Covenant nun at Belum, leads a small group of sisters. Southern drawl (established S2). Asked the PCs for help at S2\'s close. RULED (post-S2): Remembrance by faction, but served personally on Arbiter Senn\'s staff and is loyal to Senn, not to Marshal Tran or the Radiance. Quietly protecting Senn\'s unfinished work from her own faction\'s hardliners — see Mission 3, "The Silent Courier."', faction: 'hollow_covenant' },
     'asha':       { name: 'Asha Kei', blurb: 'Duskline deck boy, 14-15, slight New-York-ish accent. Talked with Enkh in transit — reminded him strongly of Div (the "Kid" echo fired through him). Quick, watchful, works hard. NOT the sealed-cargo captain (that thread renamed to Odessa Marr).', faction: 'driftborn' },
     'emmerin':    { name: 'Brother Emmerin', blurb: 'NEW — Covenant courier missing in the Belum undercity, carrying a sealed dispatch for Vesper. Held by the Molt gang.', faction: 'hollow_covenant' },
@@ -1246,7 +1246,7 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
     // ── PLACES & NAMES — the glossary you keep forgetting ────────────────
     glossary: [
       { term: 'Belum Freeport', what: 'This session\'s hub. Driftborn-served independent port. Neutral, busy, light law. Has an Argent Compact reading room and a Coyle assay office. Two levels: the docks/promenade (up top) and the undercity (maintenance warrens, the Molt\'s turf).' },
-      { term: 'The Duskline', what: 'The Driftborn freighter carrying them, chartered by Veronika. Captain: Mira Calder. Her first mate is a River Below informant.' },
+      { term: 'The Duskline', what: 'The Driftborn freighter carrying them, chartered by Veronika. Captain: Mira Calder. Her first mate, Johnny Rotten, is a River Below informant.' },
       { term: 'Kaeldrift', what: 'The Thessavar platform city they LEFT (last session). Veronika\'s bar is there. Referenced, not visited.' },
       { term: 'Rustwater Crew', what: 'M1 dock pirates. Bought the Duskline manifest; think the crates are salvage. Leader: the bosun.' },
       { term: 'Vess Okaro', what: 'M2. Ruined ex-Concordance catering director, in debt, hiding with hired guns. A witness being reeled in. Has a teenage nephew with her.' },
@@ -1310,7 +1310,7 @@ Linkin Park undertones: duality is her core tension. She was made to follow, but
         'DARIUS IS ABOARD (boarded at Thessavar) — use him. He\'s the one person who knew Enkh BEFORE, and he watches Enkh soften toward West with quiet interest (he knew Div too — he may be the only other person who\'d catch the echo). Good transit texture: Darius needling Enkh about the dead contract and the debt, doing the warm people-work Enkh can\'t, and — being a working-class PALE-skeptic — likely to RESPECT Veronika once the Saint reveal lands rather than recoil. He can voice what Enkh won\'t.',
         'WEST: the locket rides in a pocket. Warm at odd hours — warmer when West is near ENKH. (Don\'t explain. Let the player notice the pattern or not.)',
         'VERONIKA at cards / in the galley: she deflects questions with charm. If pressed hard about Tarek again, she gets QUIET, not defensive.',
-        'CALDER\'s first mate (unnamed so far): watches Veronika constantly. West\'s threat-assessment flags it. (He\'s her informant — reading as either devotion or surveillance.)',
+        'CALDER\'s first mate, Johnny Rotten: watches Veronika constantly. West\'s threat-assessment flags it. (He\'s her informant — reading as either devotion or surveillance.)',
         'Optional overhear: Calder on comms — "…no, Thessavar\'s closed to everything but relief runs. Rates are triple if you can get a slot. Whole sector\'s talking about it."',
       ],
       checks: [
@@ -2350,7 +2350,7 @@ The open threads — pull on whichever the table is hungriest for:
       'The thing in the vault is the Lattice — a pre-human Architect consciousness archive, now broadcasting across the sector on psionic frequencies. River Below rang a bell that cannot be un-rung and has no idea. Several factions with the right receivers are about to start asking what woke up on Thessavar.',
       'The locket is a paired Architect receiver that splits in two. The Lattice reads PALE\'s flattening of Player 1\'s affect as damage and tries to give feeling back; it reads Player 2\'s genetic obedience as a constraint and gives them awareness of the gap. Optional powers — Tarek\'s note begs them not to divide it.',
       'Arbiter Senn had a secondary copy of the excavation treaty already signed and filed with a neutral Exchange notary on Kaeldrift. Her death does not actually stop the Covenant\'s legal claim to the ruins. It just means nobody knows the treaty exists yet.',
-      'The Duskline captain Mira Calder runs a clean ship, but her first mate is a River Below informant — and Veronika is aboard. River Below has a quiet line on the party from day one.',
+      'The Duskline captain Mira Calder runs a clean ship, but her first mate Johnny Rotten is a River Below informant — and Veronika is aboard. River Below has a quiet line on the party from day one.',
       'When the EMP rolled out, PALE\'s read access to Player 1\'s substrate went dark for the first time in ten years. PALE noticed the gap. So, for one second, did he.',
     ],
 
