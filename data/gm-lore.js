@@ -565,6 +565,15 @@ The Duskline — the merchant freighter the players escape on in Session 1 — i
           plotPotential: 'STATUS (post-S2): still not directly described or interacted with — available as a fresh on-screen scene whenever wanted. AS PLAYED: Veronika booked the party\'s passage aboard the Duskline at Kaeldrift (normal berths, not a covert extraction); the 12-day transit to Belum is Session 2. Enkh and Darius worked the ship as experienced hands; in return the crew extended a real favor to the three PCs.',
         },
         {
+          name: 'Johnny Rotten',
+          role: 'Duskline first mate, River Below informant',
+          trait: 'Watchful, quietly devoted, hides it behind ordinary crew work',
+          secret: 'Reports on Veronika to the River Below cell — Calder knows and doesn\'t care, he\'s the best mate she\'s ever had.',
+          appearance: 'Surge tattoo (River Below\'s symbol) on the inner forearm — the tell West spotted while working alongside the crew during the S2 transit. Same punky style as the crowd at Veronika\'s bar back in Kaeldrift.',
+          voice: 'Not yet played — a working Driftborn spacer\'s economy, presumably.',
+          plotPotential: 'AS PLAYED (S2): West noticed his tattoo (Notice DC 8) and clocked the match to the Kaeldrift bar crowd. He watches Veronika constantly — reading as either devotion or surveillance. Unplayed prep beyond that: his reporting cadence is tracked in the faction-turn log (`factionTurns`) — he began filing on Veronika around GM Turn 4 and is currently "running cold" since the cell went quiet after Red Flag\'s death.',
+        },
+        {
           name: 'Captain Odessa Marr',
           role: 'Driftborn captain, six months into a cargo she regrets',
           trait: 'Methodical, usually unflappable — currently flappable',
